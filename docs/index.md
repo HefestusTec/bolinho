@@ -3,7 +3,7 @@
 Documentação do da solução FullStack **Bolinho**.
 
 
-Esta documentação gera automaticamente um {==arquivo em PDF==} de seu conteúdo, este pode ser baixado [aqui](https://github.com/Hefestus/bolinho/raw/gh-pages/pdf/document.pdf).
+Esta documentação gera automaticamente um {==arquivo em PDF==} de seu conteúdo, este pode ser baixado [aqui](https://github.com/HefestusTec/bolinho/raw/gh-pages/pdf/document.pdf).
 
 !!! info ""
 
