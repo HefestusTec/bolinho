@@ -1,6 +1,8 @@
 site_name: Bolinho
 
 repo_url: https://github.com/HefestusTec/bolinho
+repo_name: HefestusTec/bolinho
+
 
 theme:
     name: material
