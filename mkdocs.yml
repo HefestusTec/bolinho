@@ -1,0 +1,76 @@
+site_name: Bolinho
+
+repo_url: https://github.com/HefestusTec/bolinho
+
+theme:
+    name: material
+
+    palette:
+        scheme: slate
+        primary: blue grey
+        accent: indigo
+
+    locale: pt_BR
+    features:
+        - navigation.sections
+        - navigation.tabs
+        # - navigation.tabs.sticky      Faz com que a navigation tab esteja sempre visivel
+        - navigation.top
+        - navigation.tracking
+        - navigation.path
+        - navigation.indexes
+        - search.highlight
+        - search.share
+        - search.suggest
+        - toc.follow
+        - content.code.copy
+        # - content.tabs.link           # Para criar Tabs de código
+
+
+#docs_dir: 'docsSrc'
+#site_dir: 'docs'
+
+plugins:
+    - search:
+        separator: '[\s\-,:!=\[\]()"`/]+|\.(?!\d)|&[lg]t;|(?!\b)(?=[A-Z][a-z])'
+    - with-pdf:
+        author: Hefestus
+        cover_subtitle: Sistema de leitura e interpretação de dados
+        toc_title: Tabela de conteúdos
+        # two_columns_level: 3                # Exporta o PDF como duas colunas
+        #custom_template_path: docs/styles.scss
+    - pdf-export
+
+markdown_extensions:
+    - pymdownx.highlight:
+        anchor_linenums: true
+        use_pygments: true      # Renderiza todos os códigos durante a build ao inves de no runtime
+        auto_title: true
+    #- pymdownx.tabbed:         # Para criar Tabs de código
+    #    alternate_style: true
+    - pymdownx.inlinehilite
+    - pymdownx.snippets
+    - admonition
+    - pymdownx.details
+    - pymdownx.superfences
+    - pymdownx.critic
+    - pymdownx.caret
+    - pymdownx.keys
+    - pymdownx.mark
+    - pymdownx.tilde
+    - attr_list
+    - pymdownx.emoji:
+        emoji_index: !!python/name:materialx.emoji.twemoji
+        emoji_generator: !!python/name:materialx.emoji.to_svg
+
+nav:
+    - Home: 
+        - index.md
+        - setup.md
+    - API Python - Hardware:
+        - apiPython/index.md
+    - API JavaScript - Python:
+        - apiJs/index.md
+    - Sobre:
+        - sobre/index.md
+        - sobre/licenca.md
