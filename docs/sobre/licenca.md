@@ -1,5 +1,27 @@
 # Licença
 
+Este software é distribuído sob a licença **[GNU General Public License v3.0](http://www.gnu.org/licenses/)**
+
+>   ```md
+    <!--
+    Copyright (C) 2023 Hefestus
+        
+>   Bolinho is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+    
+>   Bolinho is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+    
+>   You should have received a copy of the GNU General Public License
+    along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
+    -->
+    ```
+
+
 ## Projetos inclusos
 
 * Python Eel - [ver licença](https://github.com/python-eel/Eel/blob/master/LICENSE)
