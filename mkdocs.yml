@@ -30,6 +30,8 @@ theme:
         accent: indigo
 
     locale: pt_BR
+    language: pt-BR                     # lingua do mkdocs-material
+
     features:
         - navigation.sections
         - navigation.tabs
@@ -38,16 +40,26 @@ theme:
         - navigation.tracking
         - navigation.path
         - navigation.indexes
+        - navigation.footer
         - search.highlight
         - search.share
         - search.suggest
         - toc.follow
         - content.code.copy
         # - content.tabs.link           # Para criar Tabs de código
+    icon:
+        admonition:
+            admonition-windows: simple/windows
+            admonition-linux: simple/linux
+            admonition-raspi: simple/raspberrypi
+            admonition-pc: fontawesome/solid/computer
 
 
 #docs_dir: 'docsSrc'
 #site_dir: 'docs'
+
+extra_css:
+  - stylesheets/extra.css
 
 plugins:
     - search:
@@ -82,6 +94,8 @@ markdown_extensions:
     - pymdownx.emoji:
         emoji_index: !!python/name:materialx.emoji.twemoji
         emoji_generator: !!python/name:materialx.emoji.to_svg
+    - toc:
+        permalink: true
 
 nav:
     - Home: 
@@ -93,4 +107,3 @@ nav:
         - apiJs/index.md
     - Sobre:
         - sobre/index.md
-        - sobre/licenca.md
