@@ -8,6 +8,8 @@ permissions:
   contents: write
 jobs:
   deploy:
+    env:
+        ENABLE_PDF_EXPORT: 1
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3

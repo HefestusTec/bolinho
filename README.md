@@ -1,6 +1,6 @@
-#  <img src="https://user-images.githubusercontent.com/107453198/215298318-5b22f010-db06-4e72-ba36-b223f9617ed3.png" width="45" height="45" alt="Logo"/> Bolinho
+#  <img src="docs/resources/LogoBolinho512.png" width="45" height="45" alt="Logo"/> Bolinho
 
-Uma solução fullstack para sistemas...
+Uma solução fullstack extremamente versátil e escalonável para sistemas de coleta, processamento e interação com dados!
 
 # Documentação
 
