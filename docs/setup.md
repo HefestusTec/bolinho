@@ -88,6 +88,8 @@ Para criar uma build temos 2 opções:
     mkdocs build
     ```
 
+!!! note
+    O arquivo `mkdocs.yml` está configurado para apenas exportar os PDFs caso a ***environment variable*** `ENABLE_PDF_EXPORT` for `1`
 
 para mais informações sobre a documentação visitar [ZRafaF/ReadTheDocksBase](https://github.com/ZRafaF/ReadTheDocksBase)
 
