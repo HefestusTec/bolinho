@@ -23,7 +23,8 @@ repo_name: HefestusTec/bolinho
 
 theme:
     name: material
-
+    logo: resources/LogoBolinho.png
+    favicon: resources/LogoBolinho.png
     palette:
         scheme: slate
         primary: blue grey
