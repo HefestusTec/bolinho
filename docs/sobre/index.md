@@ -44,4 +44,4 @@ Este software é distribuído sob a licença **[GNU General Public License v3.0]
 
 ___
 
-Agradecemos do fundo do coração todos os autores dos diferentes projetos utilizados, **software livre** é humanidade, muito obrigado a todos.
+Agradecemos do fundo do coração todos os autores dos diferentes projetos utilizados, **software livre** é liberdade, muito obrigado a todos.
