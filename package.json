@@ -5,6 +5,6 @@
 		"startEel": "cd src && python main.py",
 		"buildWeb": "cd src/web && npm run build",
 		"buildBin": "cd src/web && npm run build && cd.. && python -m eel main.py web/build --onefile",
-		"installDep": "npm install && cd src/web && npm install && npm install @fontsource/roboto"
+		"installDep": "npm install && cd src/web && npm install"
 	}
 }
