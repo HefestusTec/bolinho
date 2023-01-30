@@ -1,38 +1,105 @@
+button {
+	border: none;
+}
+
 .App {
-  text-align: center;
+	background-color: #f2f2f2;
+	display: flex;
+	height: 100vh;
+	width: auto;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.side-bar {
+	height: 100%;
+	width: 20%;
+	min-width: 80px;
+	box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.side-bar-header {
+	height: 15%;
+	background: #444444;
+	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+	color: #f2f2f2;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.side-bar-button-ul {
+	list-style-type: none;
+	padding-left: 0px;
+	padding-top: 4vh;
+	justify-content: space-between;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+
+	margin: 0;
+	height: 68vh;
 }
 
-.App-link {
-  color: #61dafb;
+.side-bar-button-li {
+	display: block;
+	flex: 0 1 auto; /* Default */
+	height: 15%;
+	padding-bottom: 8%;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.side-bar-button {
+	height: 100%;
+	display: flex;
+	align-items: center;
+	float: left;
+	color: #444444;
+	font-family: Roboto;
+	font-size: 2.2vmax;
+	font-weight: 700;
+	border-radius: 0px 15px 15px 0px;
+}
+
+.side-bar-button-icon {
+	height: auto;
+	width: 25%;
+	text-align: center;
+	margin-right: 5%;
+}
+
+.side-bar-button-active {
+	background-color: white;
+	width: 95%;
+	box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.5);
+}
+
+.side-bar-button-inactive {
+	background-color: #dfdfdf;
+	width: 85%;
+	transition-duration: 200ms;
+	box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.side-bar-button-inactive:hover {
+	background-color: white;
+	width: 90%;
+	cursor: pointer;
+	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+.side-bar-button-inactive:active {
+	background-color: #1797f85c;
+	width: 90%;
+	box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+.side-bar-footer {
+	position: absolute;
+	min-width: 80px;
+	bottom: 0px;
+	width: 20vw;
+	height: 15%;
+	justify-content: center;
+	background-image: url(./components/resources/LogoSchumacher.png);
+	background-position: center; /* Center the image */
+	background-repeat: no-repeat; /* Do not repeat the image */
+	background-size: 80%; /* Resize the background image to cover the entire container */
+}
+
+.content {
+	height: 100%;
+	width: auto;
 }

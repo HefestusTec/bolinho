@@ -1,41 +1,25 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import SideBar from "./components/sideBar";
 
-export const eel = window.eel
-try{
-  eel.set_host( 'ws://localhost:8080' )
+export const eel = window.eel;
+try {
+	eel.set_host("ws://localhost:8080");
+} catch {}
 
-}catch{
-
-}
-
-
-async function printOne(){
-  let returnValue = await eel.get_one()();
-  alert(returnValue, 2);
+async function printOne() {
+	let returnValue = await eel.get_one()();
+	alert(returnValue, 2);
 }
 
 printOne();
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+	return (
+		<div className="App">
+			<SideBar></SideBar>
+			<div>content</div>
+		</div>
+	);
 }
 
 export default App;
