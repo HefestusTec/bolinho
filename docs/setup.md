@@ -46,6 +46,15 @@ ___
 
 ## Instalando dependências
 
+``` bash
+npm install
+
+npm run installDep
+
+pip install bottle bottle-websocket future whichcraft pyinstaller
+
+pip install eel
+```
 
 ___
 

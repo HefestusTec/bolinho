@@ -1,9 +1,10 @@
 {
-    "cSpell.language": "en,pt-BR",
-    "licenser.author": "Hefestus",
-    "licenser.license": "GPLv3",
-    "licenser.projectName": "Bolinho",
-    "licenser.customHeader": "@FILENAME@ - @PROJECT@\n\nCopyright @YEAR@ @AUTHOR@\n\nThis is my license..."
-
-
+	"cSpell.language": "en,pt-BR",
+	"licenser.author": "Hefestus",
+	"licenser.license": "GPLv3",
+	"licenser.projectName": "Bolinho",
+	"licenser.customHeader": "@FILENAME@ - @PROJECT@\n\nCopyright @YEAR@ @AUTHOR@\n\nThis is my license...",
+	"editor.defaultFormatter": "esbenp.prettier-vscode",
+	"prettier.tabWidth": 4,
+	"prettier.useTabs": true
 }

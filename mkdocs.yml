@@ -104,9 +104,11 @@ nav:
     - Home: 
         - index.md
         - setup.md
-    - API Python - Hardware:
-        - apiPython/index.md
-    - API JavaScript - Python:
-        - apiJs/index.md
+    - Back End:
+        - backEnd/index.md
+    - Front End:
+        - frontEnd/index.md
+    - API:
+        - api/index.md
     - Sobre:
         - sobre/index.md
