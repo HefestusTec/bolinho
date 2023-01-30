@@ -17,6 +17,7 @@
 
 import React, { Component } from "react";
 import { eel } from "../App";
+import "./sideBar.css";
 
 import InicioIcon from "./resources/InicioIcon.svg";
 import CalibrarIcon from "./resources/CalibrarIcon.svg";
@@ -24,7 +25,6 @@ import ControlarIcon from "./resources/ControlarIcon.svg";
 import ConfigIcon from "./resources/ConfigIcon.svg";
 import SobreIcon from "./resources/SobreIcon.svg";
 
-import LogoSchumacher from "./resources/LogoSchumacher.png";
 import LogoBolinho512 from "./resources/LogoBolinho512.png";
 
 async function printOne() {
