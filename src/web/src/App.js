@@ -1,5 +1,5 @@
 import "./App.css";
-import SideBar from "./components/sideBar";
+import SideBar from "./components/sideBar/sideBar";
 
 export const eel = window.eel;
 try {
