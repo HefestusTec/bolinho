@@ -16,7 +16,7 @@ printOne();
 function App() {
 	return (
 		<div className="App">
-			<SideBar></SideBar>
+			<SideBar />
 			<div>content</div>
 		</div>
 	);

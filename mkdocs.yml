@@ -71,6 +71,7 @@ plugins:
           enabled_if_env: ENABLE_PDF_EXPORT
           # two_columns_level: 3                # Exporta o PDF como duas colunas
           #custom_template_path: docs/styles.scss
+          #render_js: true
     - pdf-export:
           enabled_if_env: ENABLE_PDF_EXPORT
 

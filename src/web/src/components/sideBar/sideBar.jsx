@@ -16,7 +16,6 @@
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
 
 import React, { useState } from "react";
-import PropTypes from "prop-types";
 import { eel } from "../../App";
 import styleModule from "./sideBar.module.css";
 
@@ -34,8 +33,8 @@ async function printOne() {
 	alert(returnValue);
 }
 
-function SideBar(props) {
-	const [currentPage, setCurrentPage] = useState(props.currentPage);
+function SideBar({ initialPage = "Início" }) {
+	const [currentPage, setCurrentPage] = useState(initialPage);
 	const buttonNames = ["Início", "Calibrar", "Controlar", "Config.", "Sobre"];
 
 	printOne();
@@ -111,12 +110,5 @@ function SideBar(props) {
 		</div>
 	);
 }
-
-SideBar.propTypes = {
-	currentPage: PropTypes.string,
-};
-SideBar.defaultProps = {
-	currentPage: "Início",
-};
 
 export default SideBar;
