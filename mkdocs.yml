@@ -53,6 +53,7 @@ theme:
             admonition-linux: simple/linux
             admonition-raspi: simple/raspberrypi
             admonition-pc: fontawesome/solid/computer
+            return: material/keyboard-return
 
 #docs_dir: 'docsSrc'
 #site_dir: 'docs'
@@ -69,6 +70,7 @@ plugins:
           copyright: Copyright &copy; 2023 Hefestus.
           toc_title: Tabela de conteúdos
           enabled_if_env: ENABLE_PDF_EXPORT
+          toc_level: 3
           # two_columns_level: 3                # Exporta o PDF como duas colunas
           #custom_template_path: docs/styles.scss
           #render_js: true
@@ -104,14 +106,17 @@ markdown_extensions:
           permalink: true
 
 nav:
-    - Home:
-          - index.md
-          - setup.md
+    - Início:
+          - Início: index.md
+          - Setup: setup.md
     - Back End:
-          - backEnd/index.md
+          - Back End: backEnd/index.md
     - Front End:
-          - frontEnd/index.md
+          - Front End: frontEnd/index.md
     - API:
-          - api/index.md
+          - API: api/index.md
+          - Tipos de Dados: api/tiposDeDados.md
+          - Carregar e salvar dados: api/carregarESalvarDados.md
+          - Operação: api/operacao.md
     - Sobre:
-          - sobre/index.md
+          - Sobre: sobre/index.md
