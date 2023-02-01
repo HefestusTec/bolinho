@@ -15,9 +15,12 @@
 // You should have received a copy of the GNU General Public License
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
 
-import React, { Component } from "react";
-import { eel } from "../App";
-import "./sideBar.css";
+import React, { useState } from "react";
+import PropTypes from "prop-types";
+import { eel } from "../../App";
+import styleModule from "./sideBar.module.css";
+
+import Header from "../header/header";
 
 import InicioIcon from "./resources/InicioIcon.svg";
 import CalibrarIcon from "./resources/CalibrarIcon.svg";
@@ -25,47 +28,38 @@ import ControlarIcon from "./resources/ControlarIcon.svg";
 import ConfigIcon from "./resources/ConfigIcon.svg";
 import SobreIcon from "./resources/SobreIcon.svg";
 
-import LogoBolinho512 from "./resources/LogoBolinho512.png";
-
 async function printOne() {
 	let returnValue = await eel.get_one()();
 	returnValue += 20;
 	alert(returnValue);
 }
 
-class SideBar extends Component {
-	state = {
-		currentPage: "Início",
-		buttonNames: ["Início", "Calibrar", "Controlar", "Config", "Sobre"],
+function SideBar(props) {
+	const [currentPage, setCurrentPage] = useState(props.currentPage);
+	const buttonNames = ["Início", "Calibrar", "Controlar", "Config.", "Sobre"];
+
+	printOne();
+
+	const changePage = (event) => {
+		const buttonId = event.currentTarget.id;
+		if (buttonId === currentPage) return;
+		setCurrentPage(buttonId);
 	};
-	render() {
-		printOne();
-		return (
-			<div className="side-bar">
-				<div className="side-bar-header">Bolinho</div>
-				<ul className="side-bar-button-ul">
-					{this.state.buttonNames.map((bName) => (
-						<li key={bName} className="side-bar-button-li">
-							{this.createButton(bName)}
-						</li>
-					))}
-				</ul>
-				<div className="side-bar-footer"></div>
-			</div>
-		);
-	}
+	const getButtonAttrib = (buttonName) => {
+		const buttonStyle =
+			currentPage === buttonName
+				? [
+						styleModule.side_bar_button,
+						styleModule.side_bar_button_active,
+				  ]
+				: [
+						styleModule.side_bar_button,
+						styleModule.side_bar_button_inactive,
+				  ];
 
-	getButtonAttrib(buttonName) {
-		const { currentPage } = this.state;
-
-		const buttonStyle = "side-bar-button side-bar-button-";
-
-		return currentPage === buttonName
-			? buttonStyle + "active"
-			: buttonStyle + "inactive";
-	}
-
-	createButton(buttonName) {
+		return buttonStyle.join(" ");
+	};
+	const createButton = (buttonName) => {
 		let imgPath;
 		switch (buttonName) {
 			case "Início":
@@ -77,7 +71,7 @@ class SideBar extends Component {
 			case "Controlar":
 				imgPath = ControlarIcon;
 				break;
-			case "Config":
+			case "Config.":
 				imgPath = ConfigIcon;
 				break;
 			case "Sobre":
@@ -88,16 +82,41 @@ class SideBar extends Component {
 		}
 
 		return (
-			<button className={this.getButtonAttrib(buttonName)}>
+			<button
+				className={getButtonAttrib(buttonName)}
+				id={buttonName}
+				onClick={changePage}
+			>
 				<img
-					className="side-bar-button-icon"
+					className={styleModule.side_bar_button_icon}
 					src={imgPath}
 					alt={buttonName}
 				/>
 				{buttonName}
 			</button>
 		);
-	}
+	};
+
+	return (
+		<div className={styleModule.side_bar}>
+			<Header />
+			<ul className={styleModule.side_bar_button_ul}>
+				{buttonNames.map((bName) => (
+					<li key={bName} className={styleModule.side_bar_button_li}>
+						{createButton(bName)}
+					</li>
+				))}
+			</ul>
+			<div className={styleModule.side_bar_footer}></div>
+		</div>
+	);
 }
+
+SideBar.propTypes = {
+	currentPage: PropTypes.string,
+};
+SideBar.defaultProps = {
+	currentPage: "Início",
+};
 
 export default SideBar;
