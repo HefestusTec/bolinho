@@ -25,7 +25,7 @@ Esta página reúne as API calls relacionadas à operação do equipamento.
 
 ## Controle Manual
 
-### manual_experiment_head_up()
+### manual_control_head_up()
 
 !!! quote ""
     Envia uma solicitação para levantar o cabeçote de prova
@@ -33,7 +33,7 @@ Esta página reúne as API calls relacionadas à operação do equipamento.
     > Caso essa solicitação seja enviada durante um **ensaio automático** este irá ser interrompido, e aguardará o comando para reiniciar
 
 
-### manual_experiment_head_down()
+### manual_control_head_down()
 
 !!! quote ""
     Envia uma solicitação para descer o cabeçote de prova
@@ -58,6 +58,9 @@ ___
 
 ### start_auto_experiment()
 
+!!! quote ""
+    Inicia o experimento automático
+
 ### pause_experiment()
 
 !!! quote ""
@@ -70,3 +73,6 @@ ___
     Retorna o experimento.
 
 ### end_experiment()
+
+!!! quote ""
+    Encerra o experimento.
