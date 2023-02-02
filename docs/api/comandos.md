@@ -17,7 +17,7 @@
  along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
 -->
 
-# Operação
+# Comandos
 
 Esta página reúne as API calls relacionadas à operação do equipamento.
 
@@ -25,21 +25,12 @@ Esta página reúne as API calls relacionadas à operação do equipamento.
 
 ## Controle Manual
 
-### manual_control_head_up()
+### manual_control_head( dist )
 
 !!! quote ""
-    Envia uma solicitação para levantar o cabeçote de prova
+    Envia uma solicitação para movimentar o cabeçote de prova, podendo ser positivo ou negativo
 
     > Caso essa solicitação seja enviada durante um **ensaio automático** este irá ser interrompido, e aguardará o comando para reiniciar
-
-
-### manual_control_head_down()
-
-!!! quote ""
-    Envia uma solicitação para descer o cabeçote de prova
-
-    > Caso essa solicitação seja enviada durante um **ensaio automático** este irá ser interrompido, e aguardará o comando para reiniciar
-___
 
 ## Calibração
 

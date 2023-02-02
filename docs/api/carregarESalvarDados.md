@@ -21,70 +21,81 @@
 
 Esta página reúne as API calls relacionadas ao registro e carregamento de dados 
 
-## Experimentos
 
-### get_experiment_data(experiment_index)
-
-!!! quote ""
-    Retorna os dados de um determinado experimento.
-
-    ``` python
-    return(db[experiment_index])
-    ```
-
-### get_new_experiment_data(experiment_index, data_index)
-
-!!! quote ""
-    Retorna os dados de um determinado experimento a partir do `data_index`.
-
-    ``` python
-    return(new_data)
-    ```
-
-___
-
-## Dados do usuário
-
-### get_user_settings()
-
-!!! quote ""
-    Retorna a configuração global do usuário.
-
-### set_user_settings(user_settings)
-
-!!! quote ""
-    Seta a configuração global do usuário.
-
-___
-
-## Parâmetros de ensaio
+## Parâmetros de pré-ensaio
 
 ### get_auto_stop_params()
 
 !!! quote ""
-    Retorna os parâmetros de parada automática do equipamento.
+    Retorna os parâmetros de [`autoStopParams`](./tiposDeDados.md#autostopparams) (parada automática) do equipamento.
+
+    ``` js
+    let myStopParams = eel.get_auto_stop_params();
+    ```
 
 ### set_auto_stop_params()
 
 !!! quote ""
-    Seta os parâmetros de parada automática do equipamento.
+    Seta os parâmetros de [`autoStopParams`](./tiposDeDados.md#autostopparams) (parada automática) do equipamento.
 
-### set_experiment_settings(settings)
+    ``` js
+    const autoStopParams = {
+        forceLossLimit: 20, // Caso a força exercida caia mais de 20% o experimento será parado
+        maxForce: 10000,    // Limite de força maxima em newtons
+        maxTravel: 100,     // Limite de deslocamento em mm
+        maxTime: 600        // Tempo máximo de ensaio em segundos
+    };
+
+    eel.set_auto_stop_params(autoStopParams);
+    ```
+
+### set_experiment_settings( settings )
 
 !!! quote ""
-    Seta a configuração do ensaio.
+    Seta a [`experimentSettings`](./tiposDeDados.md#experimentsettings) (configuração do ensaio).
 
-    * Direção
-    * Velocidade
-    * Tipo de ensaio
+    ``` js
+    const experimentSettings = {
+        compress: true,    // (Moverá para cima ou para baixo?) Se verdadeiro o teste sera feito "Apertando" o experimento, do contrário será "Puxando".
+        zAxisSpeed: 5,  // Velocidade do eixo z durante o experimento em mm/s 
+    };
 
-### set_experiment_body_params(experiment_body_params)
+    eel.set_experiment_settings(experimentSettings);
+    ```
+
+### set_experiment_body_params( experiment_body_params )
 
 !!! quote ""
-    Seta os parâmetros do **corpo de prova** que será testado.
+    Seta os parâmetros do [`ExperimentBodyParams`](./tiposDeDados.md#experimentbodyparams) (parâmetros do corpo de prova) que será testado.
+    
+    ``` js
+    const experimentBodyParams = new ExperimentBodyParams();
 
-    * Formato (Retângulo, cilindro, Tubo)
-    * Area (Largura x profundidade ou diâmetro interno / externo)
+    eel.set_experiment_body_params(experimentBodyParams);
+    ```
+___
+
+## Dados durante ensaio
+
+### get_experiment_data( experiment_index )
+
+!!! quote ""
+    Retorna uma `array` de [`DataPoint`](./tiposDeDados.md#datapoint) de um determinado experimento.
+
+    ``` js
+    experimentData = await eel.get_experiment_data(2);
+    ```
+    
+### get_new_experiment_data( experiment_index, data_index )
+
+!!! quote ""
+    Retorna uma `array` de [`DataPoint`](./tiposDeDados.md#datapoint) de um determinado experimento a partir de um `data_index`.
+
+    Este método é útil para realizar o *fetch* de dados sem precisar gastar recursos com o carregamento de dados já recebidos.
+
+    ``` js
+    newData = await eel.get_new_experiment_data(2, 354);
+    ```
 
 ___
 
@@ -100,26 +111,49 @@ ___
 !!! quote ""
     Retorna os parâmetros do equipamento
 
+### set_equipment_params()
+
+!!! quote ""
+    Seta os parâmetros do equipamento
 ___
 
-## Manipulação de materiais
+## Manipulação da base de dados de materiais
 
-### get_material_data(material_index)
-
-!!! quote ""
-    Retorna os dados de um material, retorna valor especifico caso o material não exista
-
-### set_material_data(material, material_index)
+### get_material_data( material_index )
 
 !!! quote ""
-    Seta dos dados do material em um index específico
+    Retorna os dados de um [`MaterialData`](./tiposDeDados.md#materialdata), retorna `NULL` caso o material não exista.
+    
+    ``` js
+    materialDataAtIndex = await eel.get_material_data(2);
+    ```
 
-### find_materials_by_batch(material_batch)
+### set_material_data( material, material_index )
 
 !!! quote ""
-    Encontra e retorna uma lista de materiais com um lote específico
+    Seta dos dados do [`MaterialData`](./tiposDeDados.md#materialdata) em um index específico
 
-### find_materials_by_name(material_name)
+    ``` js
+    materialData = new MaterialData()
+
+    eel.set_material_data(materialData);
+    ```
+
+### find_materials_by_batch( material_batch )
 
 !!! quote ""
-    Encontra e retorna uma lista de materiais com um nome específico
+    Encontra e retorna uma lista de [`MaterialData`](./tiposDeDados.md#materialdata) com um lote específico.
+    Retorna `NULL` caso não encontre.
+    ``` js
+    materialsWithBatchX = await eel.find_materials_by_batch(832);
+    ```
+
+### find_materials_by_name( material_name )
+
+!!! quote ""
+    Encontra e retorna uma lista de [`MaterialData`](./tiposDeDados.md#materialdata) com um nome específico
+    Retorna `NULL` caso não encontre.
+    ``` js
+    materialsWithNameX = await eel.find_materials_by_name("Aço 22");
+    ```
+
