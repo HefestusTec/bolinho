@@ -117,6 +117,6 @@ nav:
           - API: api/index.md
           - Tipos de Dados: api/tiposDeDados.md
           - Carregar e salvar dados: api/carregarESalvarDados.md
-          - Operação: api/operacao.md
+          - Comandos: api/comandos.md
     - Sobre:
           - Sobre: sobre/index.md

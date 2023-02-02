@@ -24,23 +24,23 @@ Este software é distribuído sob a licença **[GNU General Public License v3.0]
     ```
 
 
-### Projetos inclusos
+### Projetos de terceiros inclusos
 
 * Python Eel - [ver licença](https://github.com/python-eel/Eel/blob/master/LICENSE)
 
 * Chart.js - [ver licença](https://github.com/chartjs/Chart.js/blob/master/LICENSE.md)
 
-
-
-### Tema utilizado
+* MkDocs - [ver licença](https://www.mkdocs.org/about/license/)
 
 * Material for MkDocs - [ver licença](https://github.com/squidfunk/mkdocs-material/blob/master/LICENSE)
-
-### Plugins
 
 * MkDocs With PDF - [ver licença](https://github.com/orzih/mkdocs-with-pdf/blob/master/LICENSE)
 
 * MkDocs PDF Export Plugin - [ver licença](https://github.com/zhaoterryy/mkdocs-pdf-export-plugin/blob/master/LICENSE.md)
+
+* Roboto family of fonts - [ver licença](https://github.com/googlefonts/roboto/blob/main/LICENSE)
+
+* React - [ver licença](https://github.com/facebook/react/blob/main/LICENSE)
 
 ___
 

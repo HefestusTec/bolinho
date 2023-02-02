@@ -20,3 +20,11 @@
 # API
 
 Aqui poderão ser encontradas todas as `calls` disponíveis na API.
+
+Esses métodos estão expostas ao **FrontEnt** através do objeto **eel** e o fornece acesso aos dados armazenados, à base de dados e ao hardware. 
+
+Esta *API reference* mostrará os métodos sendo chamadas pelo front-end em JavaScript. 
+
+Esta solução faz uso da biblioteca [eel](https://github.com/python-eel/Eel) para a comunicação entre o front e o back-end.
+
+Todas a comunicação entre o front e o back-end são **assíncronas**
