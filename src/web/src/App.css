@@ -34,3 +34,9 @@ button {
 ::-webkit-scrollbar-thumb:hover {
 	background: #949494;
 }
+
+.content_area {
+	width: 100%;
+	height: 96vh;
+	padding: 1%;
+}

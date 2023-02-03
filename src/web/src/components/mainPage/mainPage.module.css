@@ -22,9 +22,8 @@
 	width: 100%;
 	padding-left: 0.5%;
 	display: grid;
-	margin: 0.5%;
-	column-gap: 1%;
-	row-gap: 1%;
+	column-gap: 1vw;
+	row-gap: 2vh;
 	grid-template-columns: repeat(13, 1fr);
 	grid-template-rows: repeat(13, 1fr);
 }

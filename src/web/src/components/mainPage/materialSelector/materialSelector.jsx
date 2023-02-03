@@ -23,7 +23,7 @@ function MaterialSelector() {
 	//const [graphData, setGraphData] = useState(makeConstData());
 
 	return (
-		<div className={styleModule.material_selector_component}>
+		<div className={styleModule.material_selector}>
 			<div className={styleModule.selector_header}>
 				<div className={styleModule.selector_header_text}>
 					Selecionar Material

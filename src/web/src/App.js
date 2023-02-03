@@ -18,7 +18,9 @@ function App() {
 	return (
 		<div className="App">
 			<SideBar />
-			<MainPage />
+			<div className="content_area">
+				<MainPage />
+			</div>
 		</div>
 	);
 }

@@ -20,6 +20,7 @@ import GraphComponent from "../graphComponent/graphComponent";
 import MaterialSelector from "./materialSelector/materialSelector";
 //import { eel } from "../../App";
 import styleModule from "./mainPage.module.css";
+import MaterialsInspector from "./materialsInspector/materialsInspector";
 
 function MainPage() {
 	//const [graphData, setGraphData] = useState(makeConstData());
@@ -28,6 +29,7 @@ function MainPage() {
 		<div className={styleModule.content}>
 			<MaterialSelector />
 			<GraphComponent className={styleModule.graph} />
+			<MaterialsInspector />
 		</div>
 	);
 }
