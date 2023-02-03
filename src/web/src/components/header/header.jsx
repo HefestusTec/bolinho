@@ -16,8 +16,6 @@
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
 import styleModule from "./header.module.css";
 
-import LogoBolinho512 from "./resources/LogoBolinho512.png";
-
 function Header() {
 	return (
 		<div className={styleModule.header}>

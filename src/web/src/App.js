@@ -1,5 +1,6 @@
 import "./App.css";
 import SideBar from "./components/sideBar/sideBar";
+import MainPage from "./components/mainPage/mainPage";
 
 export const eel = window.eel;
 try {
@@ -17,7 +18,7 @@ function App() {
 	return (
 		<div className="App">
 			<SideBar />
-			<div>content</div>
+			<MainPage />
 		</div>
 	);
 }

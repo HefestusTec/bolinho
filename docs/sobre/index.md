@@ -28,7 +28,7 @@ Este software é distribuído sob a licença **[GNU General Public License v3.0]
 
 * Python Eel - [ver licença](https://github.com/python-eel/Eel/blob/master/LICENSE)
 
-* Chart.js - [ver licença](https://github.com/chartjs/Chart.js/blob/master/LICENSE.md)
+* Recharts - [ver licença](https://github.com/recharts/recharts/blob/master/LICENSE)
 
 * MkDocs - [ver licença](https://www.mkdocs.org/about/license/)
 
@@ -41,6 +41,8 @@ Este software é distribuído sob a licença **[GNU General Public License v3.0]
 * Roboto family of fonts - [ver licença](https://github.com/googlefonts/roboto/blob/main/LICENSE)
 
 * React - [ver licença](https://github.com/facebook/react/blob/main/LICENSE)
+
+* rc-slider - [ver licença](https://github.com/react-component/slider/blob/master/LICENSE)
 
 ___
 
