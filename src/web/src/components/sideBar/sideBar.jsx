@@ -19,7 +19,7 @@ import React, { useState } from "react";
 import { eel } from "../../App";
 import styleModule from "./sideBar.module.css";
 
-import Header from "../header/header";
+import Header from "./header/header";
 
 import InicioIcon from "./resources/InicioIcon.svg";
 import CalibrarIcon from "./resources/CalibrarIcon.svg";

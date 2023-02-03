@@ -14,21 +14,23 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
-
 import React from "react";
-import GraphComponent from "../graphComponent/graphComponent";
-import MaterialSelector from "./materialSelector/materialSelector";
-//import { eel } from "../../App";
-import styleModule from "./mainPage.module.css";
 
-function MainPage() {
-	//const [graphData, setGraphData] = useState(makeConstData());
+import styleModule from "./materialSelectorButton.module.css";
 
+function MaterialSelectorButton() {
 	return (
-		<div className={styleModule.content}>
-			<MaterialSelector />
-			<GraphComponent className={styleModule.graph} />
-		</div>
+		<li>
+			<button className={styleModule.material_selector_button}>
+				<div className={styleModule.material_selector_side}>
+					<div className={styleModule.add_sign}>+</div>
+				</div>
+				<div className={styleModule.material_selector_text}>
+					[592] Aço carbono 12
+				</div>
+			</button>
+		</li>
 	);
 }
-export default MainPage;
+
+export default MaterialSelectorButton;

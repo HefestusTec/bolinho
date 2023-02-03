@@ -33,7 +33,41 @@ import {
 	ResponsiveContainer,
 } from "recharts";
 
+class DataPoint {
+	constructor(force = 0, pos = 0) {
+		this.force = force;
+		this.pos = pos;
+	}
+}
+
+function getRandomInt(min, max) {
+	min = Math.ceil(min);
+	max = Math.floor(max);
+	return Math.floor(Math.random() * (max - min) + min); // The maximum is exclusive and the minimum is inclusive
+}
+
+const makeRandomData = () => {
+	let randData = [];
+	for (let i = 0; i < getRandomInt(5, 30); i++) {
+		randData.push(new DataPoint(getRandomInt(5, 30), i * 10));
+	}
+	return randData;
+};
+
+const makeConstData = () => {
+	return [
+		new DataPoint(40, 0),
+		new DataPoint(20, 10),
+		new DataPoint(0, 15),
+		new DataPoint(100, 20),
+		new DataPoint(10, 30),
+		new DataPoint(30, 50),
+	];
+};
+
 function GraphComponent({ initialData = [] }) {
+	const [data1] = useState(makeConstData);
+	const [data2] = useState(makeRandomData);
 	const [currentData] = useState(initialData);
 	const [leftHandlePos, setLeftHandlePos] = useState(0);
 	const [rightHandlePos, setRightHandlePos] = useState(100);
@@ -44,8 +78,14 @@ function GraphComponent({ initialData = [] }) {
 		setRightHandlePos(event[1]);
 	}
 
+	let largestDataMax = 0;
+
 	const isDataMaxBigger = (dataMax) => {
-		setDataRightMax(dataMax);
+		if (dataMax > largestDataMax) {
+			largestDataMax = dataMax;
+			setDataRightMax(dataMax);
+		}
+
 		if (dataMax > rightHandlePos) {
 			return true;
 		}
@@ -53,11 +93,10 @@ function GraphComponent({ initialData = [] }) {
 	};
 
 	return (
-		<React.Fragment>
+		<div className={styleModule.graph_component}>
 			<ResponsiveContainer width="100%" height="90%">
 				<LineChart
 					right={50}
-					data={currentData}
 					margin={{
 						top: 15,
 						right: 25,
@@ -95,9 +134,21 @@ function GraphComponent({ initialData = [] }) {
 					<Tooltip />
 					<Legend verticalAlign="top" />
 					<Line
+						animationDuration={"200ms"}
+						data={data1}
 						type="monotone"
 						dataKey="force"
+						name="Material 1"
 						stroke="#19E5A0"
+						strokeWidth={4}
+					/>
+					<Line
+						animationDuration={"200ms"}
+						data={data2}
+						type="monotone"
+						dataKey="force"
+						name="Material 2"
+						stroke="#1797F8"
 						strokeWidth={4}
 					/>
 				</LineChart>
@@ -132,7 +183,7 @@ function GraphComponent({ initialData = [] }) {
 					></Slider>
 				</div>
 			</div>
-		</React.Fragment>
+		</div>
 	);
 }
 export default GraphComponent;
