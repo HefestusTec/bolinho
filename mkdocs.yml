@@ -111,6 +111,8 @@ nav:
           - Setup: setup.md
     - Back End:
           - Back End: backEnd/index.md
+          - DBHandler: backEnd/DBHandler.md
+          - DataHandler: backEnd/DataHandler.md
     - Front End:
           - Front End: frontEnd/index.md
     - API:
