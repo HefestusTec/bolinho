@@ -34,9 +34,8 @@
 	height: 100%;
 	width: 100%;
 	position: relative;
-	resize: horizontal;
-	transition-duration: 500ms;
-	transition-timing-function: ease-out;
+	/*
+	transition-duration: 500ms;*/
 }
 
 .graph_area_mini {
@@ -96,18 +95,20 @@
 	height: 100%;
 	width: 20%;
 	background-color: black;
-	animation-duration: 1s;
 }
 
 .side_bar_hidden {
+	/*
 	animation-name: slide;
 	animation-duration: 1s;
+	*/
+	display: none;
 }
 @keyframes slide {
 	from {
-		width: 20%;
+		opacity: 100%;
 	}
 	to {
-		width: 0;
+		opacity: 0;
 	}
 }

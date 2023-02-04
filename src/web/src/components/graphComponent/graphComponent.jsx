@@ -31,6 +31,7 @@ import {
 	Legend,
 	Label,
 	ResponsiveContainer,
+	ReferenceArea,
 } from "recharts";
 
 class DataPoint {
@@ -138,7 +139,7 @@ function GraphComponent({ initialData = [] }) {
 							bottom: 0,
 						}}
 					>
-						<CartesianGrid strokeDasharray="3 3" />
+						<CartesianGrid strokeDasharray="6 6" />
 						<XAxis
 							allowDataOverflow={true}
 							dataKey={"pos"}
@@ -168,22 +169,24 @@ function GraphComponent({ initialData = [] }) {
 						<Tooltip />
 						<Legend verticalAlign="top" />
 						<Line
-							animationDuration={200}
+							isAnimationActive={false}
+							dot={true}
 							data={data1}
 							type="monotone"
 							dataKey="force"
 							name="Material 1"
 							stroke="#19E5A0"
-							strokeWidth={4}
+							strokeWidth={3}
 						/>
 						<Line
-							animationDuration={200}
+							isAnimationActive={false}
+							dot={true}
 							data={data2}
 							type="monotone"
 							dataKey="force"
 							name="Material 2"
 							stroke="#1797F8"
-							strokeWidth={4}
+							strokeWidth={3}
 						/>
 					</LineChart>
 				</ResponsiveContainer>
