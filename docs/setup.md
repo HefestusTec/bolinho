@@ -51,9 +51,7 @@ npm install
 
 npm run installDep
 
-pip install bottle bottle-websocket future whichcraft pyinstaller
-
-pip install eel
+pip install -r requirements.txt
 ```
 
 ___
@@ -67,15 +65,8 @@ Para realizar uma build da documentação siga as instruções a seguir
 ### Instalando dependências
 
 ``` bash
-pip install mkdocs
-
-pip install mkdocs-material
-
-pip install mkdocs-with-pdf
-
-pip install mkdocs-pdf-export-plugin
+pip install -r docs/requirements.txt
 ```
-
 
 ### Build
 
