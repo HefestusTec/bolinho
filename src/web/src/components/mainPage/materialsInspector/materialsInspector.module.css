@@ -1,0 +1,79 @@
+/**
+ * Copyright (C) 2023 Hefestus
+ * 
+ * This file is part of Bolinho.
+ * 
+ * Bolinho is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * Bolinho is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
+ */
+.material_inspector {
+	grid-column-start: 1;
+	grid-column-end: 7;
+	grid-row-start: 9;
+	grid-row-end: 14;
+	background-color: #dfdfdf;
+	display: flex;
+	flex-direction: column;
+	border-radius: 20px;
+	overflow: hidden;
+	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.material_inspector_header {
+	background: #444444;
+	height: 5.5vh;
+	display: flex;
+	position: relative;
+	align-items: center;
+	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.material_inspector_header_text {
+	width: 70%;
+	color: white;
+	font-family: "Roboto";
+	font-style: normal;
+	font-weight: 700;
+	font-size: 1.3vmax;
+	text-align: center;
+}
+
+.material_inspector_header_color {
+	width: 30%;
+	height: 100%;
+	background-color: #1797f8;
+}
+.material_inspector_content {
+	height: calc(100% - 5.5vh);
+	width: 100%;
+	display: flex;
+	float: left;
+}
+
+.material_inspector_search_area {
+	background-color: #dfdfdf;
+	width: 35%;
+	box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.material_inspector_description {
+	background-color: #ffffff;
+	padding: 2%;
+	width: 65%;
+	color: #444444;
+	font-family: Roboto;
+	font-size: 18px;
+	font-weight: 400;
+	text-align: left;
+	box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
+}

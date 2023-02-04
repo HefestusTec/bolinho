@@ -1,0 +1,68 @@
+/**
+ * Copyright (C) 2023 Hefestus
+ * 
+ * This file is part of Bolinho.
+ * 
+ * Bolinho is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * Bolinho is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+.material_selector_button {
+	width: 97%;
+	height: 7vh;
+	background: #f2f2f2;
+	border-radius: 10px;
+	margin-bottom: 1.3vh;
+	display: flex;
+	float: left;
+	padding: 0;
+	align-items: center;
+	overflow: hidden;
+	transition-duration: 200ms;
+}
+
+.material_selector_button:hover {
+	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+	transform: translateX(0.5vw);
+}
+
+.material_selector_button:active {
+	box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
+	transform: translateX(0.5vw);
+}
+
+.material_selector_side {
+	width: 4vw;
+	height: 100%;
+	display: flex;
+	align-items: center;
+}
+
+.add_sign {
+	padding-left: 0.5vw;
+	width: 100%;
+	font-family: "Roboto";
+	font-style: normal;
+	font-weight: 700;
+	font-size: 2.3vmax;
+	color: #444444;
+}
+
+.material_selector_text {
+	padding-left: 1vw;
+	font-family: "Roboto";
+	font-style: normal;
+	font-weight: 700;
+	font-size: 1.3vmax;
+	color: #444444;
+}
