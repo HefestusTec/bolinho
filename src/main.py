@@ -15,10 +15,9 @@
 # You should have received a copy of the GNU General Public License
 # along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
 
-from os import system
-import eel
+# from os import system
 
-import src.DBHandler.DBHandler as DBHandler
+import eel
 
 
 @eel.expose
@@ -27,8 +26,6 @@ def get_one():
 
 
 def start_eel():
-    dbh = DBHandler("db.sqlite3")
-
     app = "chrome"
 
     eel.init("web/build", [".tsx", ".ts", ".jsx", ".js", ".html"])
@@ -40,7 +37,8 @@ def start_eel():
     )
     page_name = "index.html"
 
-    eel_cmdline_args = "--kiosk"
+    # enable hardware acceleration
+    eel_cmdline_args = "--kiosk --enable-features=WebComponentsV0Enabled --enable-webgl-draft-extensions --enable-accelerated-2d-canvas --enable-gpu-rasterization --enable-threaded-compositing --enable-native-gpu-memory-buffers --enable-zero-copy --enable-gpu-compositing --enable-oop-rasterization"
 
     try:
         eel.start(page_name, mode=app, **eel_kwargs, cmdline_args=[eel_cmdline_args])
