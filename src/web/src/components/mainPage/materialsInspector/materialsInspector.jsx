@@ -30,7 +30,7 @@ function MaterialsInspector() {
 				></div>
 			</div>
 			<div className={styleModule.material_inspector_content}>
-				<div className={styleModule.material_inspector_serch_area}>
+				<div className={styleModule.material_inspector_search_area}>
 					search area
 				</div>
 				<div className={styleModule.material_inspector_description}>

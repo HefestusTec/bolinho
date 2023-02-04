@@ -17,42 +17,36 @@
  * along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-.content {
-	height: 100%;
-	width: 100%;
-	padding-left: 0.5%;
-	display: grid;
-	column-gap: 1vw;
-	row-gap: 2vh;
-	grid-template-columns: repeat(13, 1fr);
-	grid-template-rows: repeat(13, 1fr);
-}
-
-.ensaio_button {
-	grid-column-start: 11;
-	grid-column-end: 14;
-	grid-row-start: 10;
-	grid-row-end: 13;
-	background: #19e5a0;
+.extra_options {
+	grid-column-start: 7;
+	grid-column-end: 11;
+	grid-row-start: 9;
+	grid-row-end: 14;
+	background: #ffffff;
 	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 	border-radius: 10px 10px 10px 10px;
-	color: #f2f2f2;
+	overflow: hidden;
+}
+
+.extra_options_header {
+	background: #444444;
+	height: 6vh;
+	width: 100%;
+	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+	display: flex;
+	align-items: center;
+}
+.extra_options_header_text {
+	width: 100%;
+	color: white;
 	font-family: "Roboto";
 	font-style: normal;
 	font-weight: 700;
-	line-height: 112px;
-	font-size: 4vmax;
-	transition-duration: 150ms;
+	font-size: 1.3vmax;
+	text-align: center;
 }
-
-.ensaio_button:hover {
-	background: #1bbd87;
-	transform: translateY(-1vh);
-}
-
-.ensaio_button:active {
-	background: #1bbd87;
-	transform: translateY(0vh);
-
-	box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
+.extra_options_content {
+	width: 100%;
+	height: calc(100% - 5.5vh);
+	padding: 3%;
 }
