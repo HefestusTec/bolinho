@@ -1,3 +1,20 @@
+# Copyright (C) 2023 Hefestus
+#
+# This file is part of Bolinho.
+#
+# Bolinho is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# Bolinho is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
+
 import orm_sqlite
 from datetime import date, time
 from os.path import exists as file_exists
@@ -7,6 +24,15 @@ class Material(orm_sqlite.Model):
     id = orm_sqlite.IntegerField(primary_key=True)
     name = orm_sqlite.StringField()
     batch = orm_sqlite.StringField()
+
+
+class Body(orm_sqlite.Model):
+    id = orm_sqlite.IntegerField(primary_key=True)
+    body_type = orm_sqlite.StringField()
+    material = orm_sqlite.ForeignKeyField(Material)
+    param_a = orm_sqlite.FloatField()
+    param_b = orm_sqlite.FloatField()
+    height = orm_sqlite.FloatField()
 
 
 class Experiment(orm_sqlite.Model):
@@ -21,15 +47,6 @@ class Experiment(orm_sqlite.Model):
     maxTime = orm_sqlite.TimeField()
     compress = orm_sqlite.BooleanField()
     z_axis_speed = orm_sqlite.FloatField()
-
-
-class Body(orm_sqlite.Model):
-    id = orm_sqlite.IntegerField(primary_key=True)
-    body_type = orm_sqlite.StringField()
-    material = orm_sqlite.ForeignKeyField(Material)
-    param_a = orm_sqlite.FloatField()
-    param_b = orm_sqlite.FloatField()
-    height = orm_sqlite.FloatField()
 
 
 class Reading(orm_sqlite.Model):
@@ -56,6 +73,10 @@ class DBHandler:
         material = Material(data)
         material.save()
 
+    def add_body(self, data: dict):
+        body = Body(data)
+        body.save()
+
     def add_experiment(self, data: dict):
         experiment = Experiment(data)
         experiment.save()
@@ -66,6 +87,24 @@ class DBHandler:
 
     def get_materials(self):
         return Material.objects.all()
+
+    def get_material_by_id(self, id: int):
+        return Material.objects.get(pk=id)
+
+    def get_bodies(self):
+        return Body.objects.all()
+
+    def get_bodies_by_id(self, id: int):
+        return Body.objects.get(pk=id)
+
+    def get_bodies_by_material(self, material: Material):
+        return Body.objects.filter(material=material).all()
+
+    def get_bodies_by_type(self, body_type: str):
+        return Body.objects.filter(body_type=body_type).all()
+
+    def get_bodies_by_material_and_type(self, material: Material, body_type: str):
+        return Body.objects.filter(material=material, body_type=body_type).all()
 
     def get_experiments(self):
         return Experiment.objects.order_by(Experiment.date.desc()).all()
