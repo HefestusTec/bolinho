@@ -72,6 +72,7 @@ function GraphComponent({ initialData = [] }) {
 	const [leftHandlePos, setLeftHandlePos] = useState(0);
 	const [rightHandlePos, setRightHandlePos] = useState(100);
 	const [dataRightMax, setDataRightMax] = useState(100);
+	const [showSideBar, setShowSideBar] = useState(true);
 
 	function handleChange(event) {
 		setLeftHandlePos(event[0]);
@@ -92,97 +93,140 @@ function GraphComponent({ initialData = [] }) {
 		return false;
 	};
 
+	const getSideBarDisplay = () => {
+		return showSideBar ? "block" : "none";
+	};
+
+	const getOpenSideBarButtonClassName = () => {
+		return showSideBar
+			? [
+					styleModule.open_side_bar_button,
+					styleModule.open_side_bar_button_active,
+			  ].join(" ")
+			: [
+					styleModule.open_side_bar_button,
+					styleModule.open_side_bar_button_inactive,
+			  ].join(" ");
+	};
+
+	const toggleSideBar = () => {
+		setShowSideBar(!showSideBar);
+	};
+
+	const getGraphAreaClassName = () => {
+		return showSideBar
+			? [styleModule.graph_area, styleModule.graph_area_mini].join(" ")
+			: [styleModule.graph_area].join(" ");
+	};
+
+	const getSideBarClassName = () => {
+		return showSideBar
+			? [styleModule.side_bar].join(" ")
+			: [styleModule.side_bar, styleModule.side_bar_hidden].join(" ");
+	};
+
 	return (
 		<div className={styleModule.graph_component}>
-			<ResponsiveContainer width="100%" height="90%">
-				<LineChart
-					right={50}
-					margin={{
-						top: 15,
-						right: 25,
-						left: -5,
-						bottom: 0,
-					}}
-				>
-					<CartesianGrid strokeDasharray="3 3" />
-					<XAxis
-						allowDataOverflow={true}
-						dataKey={"pos"}
-						type="number"
-						domain={[
-							leftHandlePos,
-							(dataMax) =>
-								isDataMaxBigger(dataMax)
-									? rightHandlePos
-									: dataMax,
-						]}
+			<div className={getGraphAreaClassName()}>
+				<ResponsiveContainer width="100%" height="90%">
+					<LineChart
+						right={50}
+						margin={{
+							top: 15,
+							right: 25,
+							left: -5,
+							bottom: 0,
+						}}
 					>
-						<Label
-							value="Posição [mm]"
-							offset={0}
-							position="insideBottom"
+						<CartesianGrid strokeDasharray="3 3" />
+						<XAxis
+							allowDataOverflow={true}
+							dataKey={"pos"}
+							type="number"
+							domain={[
+								leftHandlePos,
+								(dataMax) =>
+									isDataMaxBigger(dataMax)
+										? rightHandlePos
+										: dataMax,
+							]}
+						>
+							<Label
+								value="Posição [mm]"
+								offset={0}
+								position="insideBottom"
+							/>
+						</XAxis>
+						<YAxis>
+							<Label
+								value="Força [N]"
+								angle={-90}
+								position="insideLeft"
+								offset={20}
+							/>
+						</YAxis>
+						<Tooltip />
+						<Legend verticalAlign="top" />
+						<Line
+							animationDuration={200}
+							data={data1}
+							type="monotone"
+							dataKey="force"
+							name="Material 1"
+							stroke="#19E5A0"
+							strokeWidth={4}
 						/>
-					</XAxis>
-					<YAxis>
-						<Label
-							value="Força [N]"
-							angle={-90}
-							position="insideLeft"
-							offset={20}
+						<Line
+							animationDuration={200}
+							data={data2}
+							type="monotone"
+							dataKey="force"
+							name="Material 2"
+							stroke="#1797F8"
+							strokeWidth={4}
 						/>
-					</YAxis>
-					<Tooltip />
-					<Legend verticalAlign="top" />
-					<Line
-						animationDuration={"200ms"}
-						data={data1}
-						type="monotone"
-						dataKey="force"
-						name="Material 1"
-						stroke="#19E5A0"
-						strokeWidth={4}
-					/>
-					<Line
-						animationDuration={"200ms"}
-						data={data2}
-						type="monotone"
-						dataKey="force"
-						name="Material 2"
-						stroke="#1797F8"
-						strokeWidth={4}
-					/>
-				</LineChart>
-			</ResponsiveContainer>
-			<div className={styleModule.bottom_part}>
-				<div className={styleModule.slider}>
-					<Slider
-						range
-						draggableTrack
-						pushable={3}
-						max={dataRightMax}
-						defaultValue={[leftHandlePos, rightHandlePos]}
-						onChange={handleChange}
-						trackStyle={{
-							backgroundColor: "#DDDDDD",
-							height: "1.5vh",
-						}}
-						railStyle={{
-							height: "1.5vh",
-							backgroundColor: "#F4F4F4",
-						}}
-						handleStyle={{
-							border: "none",
-							backgroundColor: "#FFFFFF",
-							opacity: 1,
-							height: "3vh",
-							width: "2.5vw",
-							boxShadow: "0px 0px 2px 2px rgba(0, 0, 0, 0.25)",
-							marginTop: "-0.9vh",
-							borderRadius: 5,
-						}}
-					></Slider>
+					</LineChart>
+				</ResponsiveContainer>
+				<div className={styleModule.side_bar_button_div}>
+					<button
+						className={getOpenSideBarButtonClassName()}
+						onClick={toggleSideBar}
+					></button>
+				</div>
+				<div className={styleModule.bottom_part}>
+					<div className={styleModule.slider}>
+						<Slider
+							range
+							draggableTrack
+							pushable={3}
+							max={dataRightMax}
+							defaultValue={[leftHandlePos, rightHandlePos]}
+							onChange={handleChange}
+							trackStyle={{
+								backgroundColor: "#DDDDDD",
+								cursor: "e-resize",
+								height: "1.5vh",
+							}}
+							railStyle={{
+								height: "1.5vh",
+								backgroundColor: "#F4F4F4",
+							}}
+							handleStyle={{
+								border: "none",
+								backgroundColor: "#FFFFFF",
+								opacity: 1,
+								height: "3vh",
+								width: "2.5vw",
+								boxShadow:
+									"0px 0px 2px 2px rgba(0, 0, 0, 0.25)",
+								marginTop: "-0.9vh",
+								borderRadius: 5,
+							}}
+						></Slider>
+					</div>
 				</div>
 			</div>
+			<div className={getSideBarClassName()} display={"none"}></div>
 		</div>
 	);
 }

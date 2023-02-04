@@ -139,21 +139,15 @@ ___
     eel.set_material_data(materialData);
     ```
 
-### find_materials_by_batch( material_batch )
+### get_material_list( filter )
 
 !!! quote ""
-    Encontra e retorna uma lista de [`MaterialData`](./tiposDeDados.md#materialdata) com um lote específico.
+    Encontra e retorna a lista completa de [`MaterialData`](./tiposDeDados.md#materialdata).
+
+    Podem ser passado `filter` para busca com filtros
+
     Retorna `NULL` caso não encontre.
     ``` js
-    materialsWithBatchX = await eel.find_materials_by_batch(832);
-    ```
-
-### find_materials_by_name( material_name )
-
-!!! quote ""
-    Encontra e retorna uma lista de [`MaterialData`](./tiposDeDados.md#materialdata) com um nome específico
-    Retorna `NULL` caso não encontre.
-    ``` js
-    materialsWithNameX = await eel.find_materials_by_name("Aço 22");
+    materialsList = await eel.get_material_list(name="Madeira");
     ```
 

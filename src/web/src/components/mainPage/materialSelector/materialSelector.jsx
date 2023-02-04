@@ -28,6 +28,23 @@ function MaterialSelector() {
 				<div className={styleModule.selector_header_text}>
 					Selecionar Material
 				</div>
+				<div className={styleModule.selector_header_bottom}>
+					<input
+						type="text"
+						className={styleModule.selector_header_search}
+						placeholder="Buscar"
+					></input>
+					<button
+						className={styleModule.selector_header_search_button}
+					></button>
+					<div className={styleModule.selector_header_filter}>
+						<button
+							className={
+								styleModule.selector_header_filter_button
+							}
+						></button>
+					</div>
+				</div>
 			</div>
 			<ul className={styleModule.selector_content_ul}>
 				<MaterialSelectorButton />
