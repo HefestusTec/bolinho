@@ -1,6 +1,7 @@
 import "./App.css";
 import SideBar from "./components/sideBar/sideBar";
 import MainPage from "./components/mainPage/mainPage";
+import FpsMeter from "./components/fpsMeter/fpsMeter";
 
 export const eel = window.eel;
 try {
@@ -17,6 +18,7 @@ printOne();
 function App() {
 	return (
 		<div className="App">
+			<FpsMeter />
 			<SideBar />
 			<div className="content_area">
 				<MainPage />

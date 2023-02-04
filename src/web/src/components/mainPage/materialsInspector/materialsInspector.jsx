@@ -31,7 +31,7 @@ function MaterialsInspector() {
 			</div>
 			<div className={styleModule.material_inspector_content}>
 				<div className={styleModule.material_inspector_serch_area}>
-					serch area
+					search area
 				</div>
 				<div className={styleModule.material_inspector_description}>
 					Material: Aço carbono Lote: 1202 Fornecedor: MinasLTDA
