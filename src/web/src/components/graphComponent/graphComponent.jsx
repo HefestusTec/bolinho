@@ -31,7 +31,6 @@ import {
 	Legend,
 	Label,
 	ResponsiveContainer,
-	ReferenceArea,
 } from "recharts";
 
 class DataPoint {
@@ -69,12 +68,11 @@ const makeConstData = () => {
 function GraphComponent({ initialData = [] }) {
 	const [data1] = useState(makeConstData);
 	const [data2] = useState(makeRandomData);
-	const [currentData] = useState(initialData);
+	//const [currentData] = useState(initialData);
 	const [leftHandlePos, setLeftHandlePos] = useState(0);
 	const [rightHandlePos, setRightHandlePos] = useState(100);
 	const [dataRightMax, setDataRightMax] = useState(100);
 	const [showSideBar, setShowSideBar] = useState(true);
-
 	function handleChange(event) {
 		setLeftHandlePos(event[0]);
 		setRightHandlePos(event[1]);
@@ -92,10 +90,6 @@ function GraphComponent({ initialData = [] }) {
 			return true;
 		}
 		return false;
-	};
-
-	const getSideBarDisplay = () => {
-		return showSideBar ? "block" : "none";
 	};
 
 	const getOpenSideBarButtonClassName = () => {
