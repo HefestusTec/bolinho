@@ -2,8 +2,12 @@
 
 # install dependencies
 sudo apt-get update
+
 # install chrome
 sudo apt-get install -y chromium-browser
+
+# install npm
+sudo apt-get install -y npm
 
 # enable chromium hardware acceleration
 sudo apt-get install -y libgl1-mesa-dri libgl1-mesa-glx libgbm-dev
