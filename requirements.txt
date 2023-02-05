@@ -4,5 +4,4 @@ future
 whichcraft
 pyinstaller
 eel
-sqlite
 orm-sqlite
