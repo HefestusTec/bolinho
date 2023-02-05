@@ -24,7 +24,7 @@
 	grid-row-end: 9;
 	background: #ffffff;
 	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-	border-radius: 10px 10px 10px 10px;
+	border-radius: clamp(2px, 3vh, 20px);
 	right: 0px;
 	display: flex;
 	overflow: hidden;
@@ -46,13 +46,13 @@
 	height: 2vw;
 	width: 2vw;
 	position: absolute;
-	right: 0.1vw;
-	top: 0.1vh;
+	right: clamp(10px, 0.1vw, 20px);
+	top: clamp(5px, 0.1vh, 20px);
 }
 .open_side_bar_button {
 	padding: 0;
-	height: 100%;
-	width: 100%;
+	height: clamp(20px, 2vw, 50px);
+	width: clamp(20px, 2vw, 50px);
 	background: none;
 	background-repeat: no-repeat;
 	background-position: center;

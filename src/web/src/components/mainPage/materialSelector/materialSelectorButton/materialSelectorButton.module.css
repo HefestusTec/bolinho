@@ -19,10 +19,10 @@
 
 .material_selector_button {
 	width: 97%;
-	height: 7vh;
+	height: clamp(30px, 7vh, 200px);
 	background: #f2f2f2;
 	border-radius: 10px;
-	margin-bottom: 1.3vh;
+	margin-bottom: clamp(5px, 1.5vh, 20px);
 	display: flex;
 	float: left;
 	padding: 0;

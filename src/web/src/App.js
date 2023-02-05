@@ -18,7 +18,6 @@ printOne();
 function App() {
 	return (
 		<div className="App">
-			<FpsMeter />
 			<SideBar />
 			<div className="content_area">
 				<MainPage />
