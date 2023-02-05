@@ -1,13 +1,13 @@
-# Apresentação
+# Home
 
-Documentação do da solução FullStack **Bolinho**.
+Documentation of the FullStack solution **bolinho**.
 
+This documentation automatically generates a {==PDF file==} from it's content. You can download it [here](https://github.com/HefestusTec/bolinho/raw/gh-pages/pdf/document.pdf).
 
-Esta documentação gera automaticamente um {==arquivo em PDF==} de seu conteúdo, este pode ser baixado [aqui](https://github.com/HefestusTec/bolinho/raw/gh-pages/pdf/document.pdf).
 
 !!! info ""
 
-    Gostou dessa documentação? visite o repositório [ZRafaF/ReadTheDocksBase](https://github.com/ZRafaF/ReadTheDocksBase) para mais informações :smile:.
+    Did you like this documentation? You can check out the repo [ZRafaF/ReadTheDocksBase](https://github.com/ZRafaF/ReadTheDocksBase) for more info :smile:.
 
 
-Utilize as ***Tabs*** a cima para navegar pelo site.
+Use the **Tabs** above to navigate through the documentation.

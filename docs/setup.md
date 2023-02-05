@@ -1,12 +1,12 @@
 # Setup
 
-Nessa página serão mostrados o passo a passo para ser possível criar uma *build* deste projeto.
+This page will define the step-by-step to build this project.
 
-Este projeto assume que você possui a versão mais recente de [Python](https://www.python.org/), de **PIP** e **GIT**, caso precise instalar por favor visite [https://www.python.org/downloads/](https://www.python.org/downloads/).
+This project assumes you have the latest version of [Python](https://www.python.org/), **PIP** and **GIT**,
 
-Este projeto foi testado e desenvolvido com a versão `Python 3.10.x`
+This project was developed using python version `Python 3.10.x`
 
-## Clonando o repositório
+## Clone the repo
 
 ``` bash
 git clone https://github.com/HefestusTec/bolinho
@@ -14,9 +14,9 @@ git clone https://github.com/HefestusTec/bolinho
 cd bolinho
 ```
 
-## Criando ambiente virtual
+## Creating a virtual environment
 
-> Esse passo não é obrigatório, mas sim **recomendado**
+> The following step isn't mandatory but **recommended**.
 
 ``` bash
 python3 -m pip install --user virtualenv
@@ -24,7 +24,7 @@ python3 -m pip install --user virtualenv
 python -m venv venv
 ```
 
-Com isso um ambiente virtual chamado `venv` será criado no diretório do projeto.
+The a directory `venv` should be created in the root folder.
 
 Para ativar:
 

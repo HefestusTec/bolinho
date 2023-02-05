@@ -106,8 +106,8 @@ markdown_extensions:
           permalink: true
 
 nav:
-    - Início:
-          - Início: index.md
+    - Home:
+          - Home: index.md
           - Setup: setup.md
     - Back End:
           - Back End: backEnd/index.md

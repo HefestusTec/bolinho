@@ -1,10 +1,10 @@
 {
 	"scripts": {
 		"startWeb": "cd src/web && npm run start",
-		"start": "cd src/web && npm run build && cd.. && python main.py",
+		"start": "cd src/web && npm run build && cd .. && python main.py",
 		"startEel": "cd src && python main.py",
 		"buildWeb": "cd src/web && npm run build",
-		"buildBin": "cd src/web && npm run build && cd.. && python -m eel main.py web/build --onefile",
+		"buildBin": "cd src/web && npm run build && cd .. && python -m eel main.py web/build --onefile --name Bolinho --icon ./src/web/public/favicon.ico",
 		"installDep": "npm install && cd src/web && npm install"
 	}
 }
