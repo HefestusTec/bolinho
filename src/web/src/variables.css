@@ -1,0 +1,49 @@
+/**
+ * Copyright (C) 2023 Hefestus
+ * 
+ * This file is part of Bolinho.
+ * 
+ * Bolinho is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * Bolinho is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+/* This file tracks all css variables in the project */
+
+html {
+	--background_color: #ffffff; /* Background color of the components */
+	--primary_color: #444444; /* Primary color, for example this is the color of the headers */
+	--primary_color_shader: #525252; /* Search bar color */
+	--secondary_color: #888888; /* Search button color */
+	--side_bar_button_inactive_color: #dfdfdf;
+	--background2_color: #dfdfdf; /* Second background color of the components */
+	--content_background_color: #f2f2f2; /* Background color of the content area */
+	--font_color: #444444; /* Main font color */
+	--font_color_inverted: #f2f2f2; /* Inverted font color */
+	--invert_icon: 0%; /* Auto invert color of icons */
+	--positive_button_color: #19e590; /* Color of positive buttons, such as go, start etc. */
+	--logo_schumacher: url(./components/sideBar/resources/LogoSchumacher.png);
+}
+[data_theme="dark"] {
+	--background_color: #272727;
+	--primary_color: #242424;
+	--primary_color_shader: #8d8d8d;
+	--secondary_color: #888888;
+	--side_bar_button_inactive_color: #181818;
+	--background2_color: #2e2e2e;
+	--content_background_color: #202020;
+	--font_color: #f2f2f2;
+	--font_color_inverted: #f2f2f2;
+	--invert_icon: 100%;
+	--positive_button_color: #1fb652;
+	--logo_schumacher: url(./components/sideBar/resources/LogoSchumacherDark.png);
+}

@@ -16,13 +16,14 @@
  * You should have received a copy of the GNU General Public License
  * along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
  */
+@import url(../../variables.css);
 
 .graph_component {
 	grid-column-start: 5;
 	grid-column-end: 14;
 	grid-row-start: 1;
 	grid-row-end: 9;
-	background: #ffffff;
+	background: var(--background_color);
 	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 	border-radius: clamp(2px, 3vh, 20px);
 	right: 0px;
@@ -58,7 +59,6 @@
 	background-position: center;
 	background-size: 80%;
 	transition-duration: 200ms;
-	background-image: url(./resources/retractMenu.svg);
 }
 
 .open_side_bar_button:hover {
@@ -72,12 +72,14 @@
 	transition-duration: 200ms;
 
 	background-image: url(./resources/retractMenu.svg);
+	filter: invert(var(--invert_icon));
 }
 
 .open_side_bar_button_inactive {
 	transition-duration: 200ms;
 
 	background-image: url(./resources/expandMenu.svg);
+	filter: invert(var(--invert_icon));
 }
 
 .bottom_part {
@@ -111,4 +113,8 @@
 	to {
 		opacity: 0;
 	}
+}
+
+.graph_slider .trackStyle {
+	background-color: #6d6d6d;
 }

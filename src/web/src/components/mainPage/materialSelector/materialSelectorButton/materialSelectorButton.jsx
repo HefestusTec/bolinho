@@ -21,7 +21,10 @@ import styleModule from "./materialSelectorButton.module.css";
 function MaterialSelectorButton() {
 	return (
 		<li>
-			<button className={styleModule.material_selector_button}>
+			<button
+				className={styleModule.material_selector_button}
+				aria-label="Material Selector"
+			>
 				<div className={styleModule.material_selector_side}>
 					<div className={styleModule.add_sign}>+</div>
 				</div>

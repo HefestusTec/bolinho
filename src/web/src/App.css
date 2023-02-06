@@ -1,9 +1,11 @@
+@import url(./variables.css);
+
 button {
 	border: none;
 }
 
 .App {
-	background-color: #f2f2f2;
+	background-color: var(--content_background_color);
 	display: flex;
 	height: 100vh;
 	width: auto;
@@ -39,4 +41,19 @@ button {
 	width: 100%;
 	height: 95vh;
 	padding: 1%;
+}
+
+.toggle_theme_button {
+	position: fixed;
+	top: 15px;
+	left: 15px;
+	height: 50px;
+}
+
+.toggle_theme_button:hover {
+	background-color: #858585;
+}
+
+.toggle_theme_button:active {
+	background-color: #494949;
 }
