@@ -16,7 +16,6 @@
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
 
 import React, { useState } from "react";
-import { eel } from "../../App";
 import styleModule from "./sideBar.module.css";
 
 import Header from "./header/header";
@@ -27,17 +26,9 @@ import ControlarIcon from "./resources/ControlarIcon.svg";
 import ConfigIcon from "./resources/ConfigIcon.svg";
 import SobreIcon from "./resources/SobreIcon.svg";
 
-async function printOne() {
-	let returnValue = await eel.get_one()();
-	returnValue += 20;
-	alert(returnValue);
-}
-
 function SideBar({ initialPage = "Início" }) {
 	const [currentPage, setCurrentPage] = useState(initialPage);
 	const buttonNames = ["Início", "Calibrar", "Controlar", "Config.", "Sobre"];
-
-	printOne();
 
 	const changePage = (event) => {
 		const buttonId = event.currentTarget.id;
