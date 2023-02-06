@@ -18,9 +18,9 @@
 import React, { useState } from "react";
 import styleModule from "./graphComponent.module.css";
 
-import Slider from "rc-slider";
 import "rc-slider/assets/index.css";
 import ChartComponent from "./chartComponent/chartComponent";
+import SliderComponent from "./sliderComponent/sliderComponent";
 
 class DataPoint {
 	constructor(force = 0, pos = 0) {
@@ -62,10 +62,6 @@ function GraphComponent({ initialData = [] }) {
 	const [rightHandlePos, setRightHandlePos] = useState(100);
 	const [dataRightMax, setDataRightMax] = useState(100);
 	const [showSideBar, setShowSideBar] = useState(true);
-	function handleChange(event) {
-		setLeftHandlePos(event[0]);
-		setRightHandlePos(event[1]);
-	}
 
 	let largestDataMax = 0;
 
@@ -122,40 +118,7 @@ function GraphComponent({ initialData = [] }) {
 					></button>
 				</div>
 				<div className={styleModule.bottom_part}>
-					<div className={styleModule.slider}>
-						<Slider
-							className={styleModule.graph_slider}
-							ariaLabelForHandle={"zoom-in-out"}
-							range
-							draggableTrack
-							pushable={3}
-							max={dataRightMax}
-							defaultValue={[leftHandlePos, rightHandlePos]}
-							onChange={handleChange}
-							trackStyle={{
-								backgroundColor: "#6d6d6d",
-								cursor: "e-resize",
-								height: "1.5vh",
-								opacity: "40%",
-							}}
-							railStyle={{
-								height: "1.5vh",
-								backgroundColor: "#bdbdbd",
-								opacity: "20%",
-							}}
-							handleStyle={{
-								border: "none",
-								backgroundColor: "#FFFFFF",
-								opacity: 1,
-								height: "3vh",
-								width: "2.5vw",
-								boxShadow:
-									"0px 0px 2px 2px rgba(0, 0, 0, 0.25)",
-								marginTop: "-0.9vh",
-								borderRadius: 5,
-							}}
-						></Slider>
-					</div>
+					<SliderComponent></SliderComponent>
 				</div>
 			</div>
 			<div className={getSideBarClassName()} display={"none"}></div>

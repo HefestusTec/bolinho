@@ -44,8 +44,10 @@
 }
 
 .chart_component_div {
+	padding-left: 1vw;
+	padding-right: 1vw;
 	height: 90%;
-	width: 100%;
+	width: fill;
 }
 .side_bar_button_div {
 	height: 2vw;
@@ -93,10 +95,6 @@
 	width: 100%;
 }
 
-.slider {
-	width: 88%;
-}
-
 .side_bar {
 	height: 100%;
 	width: 20%;
@@ -117,8 +115,4 @@
 	to {
 		opacity: 0;
 	}
-}
-
-.graph_slider .trackStyle {
-	background-color: #6d6d6d;
 }
