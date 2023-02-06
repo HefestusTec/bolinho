@@ -20,18 +20,7 @@ import styleModule from "./graphComponent.module.css";
 
 import Slider from "rc-slider";
 import "rc-slider/assets/index.css";
-
-import {
-	LineChart,
-	Line,
-	XAxis,
-	YAxis,
-	CartesianGrid,
-	Tooltip,
-	Legend,
-	Label,
-	ResponsiveContainer,
-} from "recharts";
+import ChartComponent from "./chartComponent/chartComponent";
 
 class DataPoint {
 	constructor(force = 0, pos = 0) {
@@ -119,71 +108,12 @@ function GraphComponent({ initialData = [] }) {
 			? [styleModule.side_bar].join(" ")
 			: [styleModule.side_bar, styleModule.side_bar_hidden].join(" ");
 	};
-
 	return (
 		<div className={styleModule.graph_component}>
 			<div className={getGraphAreaClassName()}>
-				<ResponsiveContainer width="100%" height="90%">
-					<LineChart
-						right={50}
-						margin={{
-							top: 15,
-							right: 25,
-							left: -5,
-							bottom: 0,
-						}}
-					>
-						<CartesianGrid strokeDasharray="6 6" />
-						<XAxis
-							allowDataOverflow={true}
-							dataKey={"pos"}
-							type="number"
-							domain={[
-								leftHandlePos,
-								(dataMax) =>
-									isDataMaxBigger(dataMax)
-										? rightHandlePos
-										: dataMax,
-							]}
-						>
-							<Label
-								value="Posição [mm]"
-								offset={0}
-								position="insideBottom"
-							/>
-						</XAxis>
-						<YAxis>
-							<Label
-								value="Força [N]"
-								angle={-90}
-								position="insideLeft"
-								offset={20}
-							/>
-						</YAxis>
-						<Tooltip />
-						<Legend verticalAlign="top" />
-						<Line
-							isAnimationActive={false}
-							dot={true}
-							data={data1}
-							type="linear"
-							dataKey="force"
-							name="Material 1"
-							stroke="#19E5A0"
-							strokeWidth={3}
-						/>
-						<Line
-							isAnimationActive={false}
-							dot={true}
-							data={data2}
-							type="monotone"
-							dataKey="force"
-							name="Material 2"
-							stroke="#1797F8"
-							strokeWidth={3}
-						/>
-					</LineChart>
-				</ResponsiveContainer>
+				<div className={styleModule.chart_component_div}>
+					<ChartComponent></ChartComponent>
+				</div>
 				<div className={styleModule.side_bar_button_div}>
 					<button
 						className={getOpenSideBarButtonClassName()}
