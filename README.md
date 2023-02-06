@@ -44,5 +44,3 @@ As for running the program we have a few options:
 * Build binaries. `npm run buildBin`
 > * You can build the "binaries", more like a python environment wrapper, it uses [PyInstaller](https://pyinstaller.org/en/stable/) to generate the bins.
 > * The output path is `bolinho/src/dist/`
-Construir binários da aplicação completa `npm run buildBin`
-    > O *output path* é `src/dist/`
