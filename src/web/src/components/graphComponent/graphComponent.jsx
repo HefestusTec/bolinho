@@ -188,11 +188,14 @@ function GraphComponent({ initialData = [] }) {
 					<button
 						className={getOpenSideBarButtonClassName()}
 						onClick={toggleSideBar}
+						aria-label="Toggle Graph SideBar"
 					></button>
 				</div>
 				<div className={styleModule.bottom_part}>
 					<div className={styleModule.slider}>
 						<Slider
+							className={styleModule.graph_slider}
+							ariaLabelForHandle={"zoom-in-out"}
 							range
 							draggableTrack
 							pushable={3}
@@ -200,13 +203,15 @@ function GraphComponent({ initialData = [] }) {
 							defaultValue={[leftHandlePos, rightHandlePos]}
 							onChange={handleChange}
 							trackStyle={{
-								backgroundColor: "#DDDDDD",
+								backgroundColor: "#6d6d6d",
 								cursor: "e-resize",
 								height: "1.5vh",
+								opacity: "40%",
 							}}
 							railStyle={{
 								height: "1.5vh",
-								backgroundColor: "#F4F4F4",
+								backgroundColor: "#bdbdbd",
+								opacity: "20%",
 							}}
 							handleStyle={{
 								border: "none",

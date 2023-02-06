@@ -16,22 +16,24 @@
  * You should have received a copy of the GNU General Public License
  * along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
  */
+@import url(../../../variables.css);
+
 .material_selector {
 	grid-column-start: 1;
 	grid-column-end: 5;
 	grid-row-start: 1;
 	grid-row-end: 9;
-	background-color: #dfdfdf;
+	background-color: var(--background2_color);
 	display: flex;
 	flex-direction: column;
-	border-radius: 20px;
+	border-radius: clamp(2px, 3vh, 20px);
 	overflow: hidden;
 	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
 
 .selector_header {
-	background: #444444;
-	height: 12vh;
+	background: var(--primary_color);
+	height: clamp(50px, 12vh, 150px);
 	position: relative;
 	align-items: center;
 	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
@@ -42,11 +44,11 @@
 .selector_header_text {
 	width: 100%;
 	height: 45%;
-	color: white;
+	color: var(--font_color_inverted);
 	font-family: "Roboto";
 	font-style: normal;
 	font-weight: 700;
-	font-size: 1.4vmax;
+	font-size: clamp(0.8rem, 1.5vw, 1.3rem);
 	text-align: center;
 }
 
@@ -58,24 +60,27 @@
 }
 
 .selector_header_search {
-	background-color: #525252;
+	background-color: var(--primary_color_shader);
 	width: 60%;
 	margin-left: 1.6vw;
 	padding-left: 1vw;
 	font-family: "Roboto";
 	font-weight: 600;
-	font-size: 1.3vmax;
+	font-size: clamp(0.8rem, 1.2vw, 1.3rem);
 	border: none;
 	box-shadow: inset 0px 2px 2px rgba(0, 0, 0, 0.25);
-	color: white;
+	color: var(--font_color_inverted);
 	border-radius: 15px 0px 0px 15px;
 }
 .selector_header_search_button {
-	width: 3vw;
+	width: clamp(25px, 3vw, 40px);
 	margin-top: 1px;
 	border-radius: 0px 15px 15px 0px;
-	background-color: #888888;
-	background-image: url(./resources/searchIconr.svg);
+	background-color: var(--secondary_color);
+	background-image: url(./resources/searchIcon.svg);
+
+	/*filter: invert(var(--invert_icon));*/
+
 	background-position: center;
 	background-repeat: no-repeat;
 	background-size: 55%;
@@ -100,10 +105,11 @@
 	justify-content: center;
 }
 .selector_header_filter_button {
-	width: 60%;
-	height: 100%;
+	width: clamp(25px, 5vh, 60px);
 	background: none;
-	background-image: url(./resources/filterList.svg);
+	background-image: url(./resources/filterIcon.svg);
+	/*filter: invert(var(--invert_icon));*/
+
 	background-position: center;
 	background-repeat: no-repeat;
 	background-size: 100%;

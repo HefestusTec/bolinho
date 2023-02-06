@@ -16,22 +16,24 @@
  * You should have received a copy of the GNU General Public License
  * along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
  */
+
+@import url(../../../variables.css);
+
 .material_inspector {
 	grid-column-start: 1;
 	grid-column-end: 7;
 	grid-row-start: 9;
 	grid-row-end: 14;
-	background-color: #dfdfdf;
 	display: flex;
 	flex-direction: column;
-	border-radius: 20px;
+	border-radius: clamp(2px, 3vh, 20px);
 	overflow: hidden;
 	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
 
 .material_inspector_header {
-	background: #444444;
-	height: 5.5vh;
+	background: var(--primary_color);
+	height: clamp(20px, 5.5vh, 75px);
 	display: flex;
 	position: relative;
 	align-items: center;
@@ -40,11 +42,11 @@
 
 .material_inspector_header_text {
 	width: 70%;
-	color: white;
+	color: var(--font_color_inverted);
 	font-family: "Roboto";
 	font-style: normal;
 	font-weight: 700;
-	font-size: 1.3vmax;
+	font-size: clamp(0.8rem, 1.5vw, 1.3rem);
 	text-align: center;
 }
 
@@ -54,23 +56,24 @@
 	background-color: #1797f8;
 }
 .material_inspector_content {
-	height: calc(100% - 5.5vh);
+	height: calc(100% - clamp(20px, 5.5vh, 75px));
 	width: 100%;
 	display: flex;
 	float: left;
 }
 
 .material_inspector_search_area {
-	background-color: #dfdfdf;
+	background-color: var(--background2_color);
 	width: 35%;
 	box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
+	color: var(--font_color);
 }
 
 .material_inspector_description {
-	background-color: #ffffff;
+	background-color: var(--background_color);
 	padding: 2%;
 	width: 65%;
-	color: #444444;
+	color: var(--font_color);
 	font-family: Roboto;
 	font-size: 18px;
 	font-weight: 400;

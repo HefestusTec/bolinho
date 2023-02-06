@@ -16,13 +16,15 @@
  * You should have received a copy of the GNU General Public License
  * along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
  */
-
+@import url(../../variables.css);
 .side_bar {
+	--side-bar-width: 25vw;
+
 	height: 100%;
-	width: 25vw;
-	min-width: 80px;
+	width: var(--side-bar-width);
+	min-width: 100px;
 	box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
-	background-color: white;
+	background-color: var(--background_color);
 }
 
 .side_bar_button_ul {
@@ -30,12 +32,11 @@
 	padding-left: 0px;
 	padding-top: 3vh;
 	justify-content: space-between;
-	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
 
 	margin: 0;
-	height: 68vh;
+	height: clamp(5px, 50vh, 11%);
 }
 
 .side_bar_button_li {
@@ -50,12 +51,13 @@
 	display: flex;
 	align-items: center;
 	float: left;
-	color: #444444;
+	color: var(--font_color);
 	font-family: Roboto;
 	font-size: 2.2vmax;
 	font-weight: 700;
 	border-radius: 0px 15px 15px 0px;
 	transition-duration: 200ms;
+	overflow: hidden;
 }
 
 .side_bar_button_icon {
@@ -63,28 +65,29 @@
 	width: 25%;
 	text-align: center;
 	margin-right: 5%;
+	filter: invert(var(--invert_icon));
 }
 
 .side_bar_button_active {
-	background-color: white;
+	background-color: var(--background_color);
 	width: 95%;
 
 	border-width: 0px 0px 5px 0px;
 	border-style: solid;
-	border-color: #444444;
+	border-color: var(--primary_color);
 
 	border-radius: 0px 15px 15px 0px;
 	box-shadow: 0px 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
 
 .side_bar_button_inactive {
-	background-color: #dfdfdf;
+	background-color: var(--side_bar_button_inactive_color);
 	width: 85%;
 	box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
 
 .side_bar_button_inactive:hover {
-	background-color: white;
+	background-color: var(--background_color);
 	width: 90%;
 	cursor: pointer;
 
@@ -97,9 +100,13 @@
 	box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
 .side_bar_footer {
-	height: 15%;
+	height: 20vh;
+	width: 15vw;
+	position: fixed;
+	bottom: 0;
+	left: 1.5vw;
 	justify-content: center;
-	background-image: url(./resources/LogoSchumacher.png);
+	background-image: var(--logo_schumacher);
 	background-position: center; /* Center the image */
 	background-repeat: no-repeat; /* Do not repeat the image */
 	background-size: 80%; /* Resize the background image to cover the entire container */

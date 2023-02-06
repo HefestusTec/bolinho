@@ -36,12 +36,14 @@ function MaterialSelector() {
 					></input>
 					<button
 						className={styleModule.selector_header_search_button}
+						aria-label="Search Button"
 					></button>
 					<div className={styleModule.selector_header_filter}>
 						<button
 							className={
 								styleModule.selector_header_filter_button
 							}
+							aria-label="Filter Button"
 						></button>
 					</div>
 				</div>
