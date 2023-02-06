@@ -17,14 +17,9 @@
 import Slider from "rc-slider";
 import styleModule from "./sliderComponent.module.css";
 
-function SliderComponent({
-	setLeftHandlePos = 0,
-	setRightHandlePos = 100,
-	dataRightMax = 100,
-}) {
+function SliderComponent({ setChartMinMax, dataRightMax = 100 }) {
 	function handleChange(event) {
-		setLeftHandlePos(event[0]);
-		setRightHandlePos(event[1]);
+		setChartMinMax(event[0], event[1]);
 	}
 	return (
 		<Slider

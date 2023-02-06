@@ -23,9 +23,9 @@ import ChartComponent from "./chartComponent/chartComponent";
 import SliderComponent from "./sliderComponent/sliderComponent";
 
 class DataPoint {
-	constructor(force = 0, pos = 0) {
-		this.force = force;
-		this.pos = pos;
+	constructor(x = 0, y = 0) {
+		this.x = x;
+		this.y = y;
 	}
 }
 
@@ -45,12 +45,11 @@ const makeRandomData = () => {
 
 const makeConstData = () => {
 	return [
-		new DataPoint(40, 0),
-		new DataPoint(20, 10),
-		new DataPoint(0, 15),
-		new DataPoint(100, 20),
-		new DataPoint(10, 30),
-		new DataPoint(30, 50),
+		new DataPoint(0, 10),
+		new DataPoint(10, 40),
+		new DataPoint(20, 20),
+		new DataPoint(25, 30),
+		new DataPoint(30, 10),
 	];
 };
 
@@ -64,18 +63,6 @@ function GraphComponent({ initialData = [] }) {
 	const [showSideBar, setShowSideBar] = useState(true);
 
 	let largestDataMax = 0;
-
-	const isDataMaxBigger = (dataMax) => {
-		if (dataMax > largestDataMax) {
-			largestDataMax = dataMax;
-			setDataRightMax(dataMax);
-		}
-
-		if (dataMax > rightHandlePos) {
-			return true;
-		}
-		return false;
-	};
 
 	const getOpenSideBarButtonClassName = () => {
 		return showSideBar
@@ -104,11 +91,23 @@ function GraphComponent({ initialData = [] }) {
 			? [styleModule.side_bar].join(" ")
 			: [styleModule.side_bar, styleModule.side_bar_hidden].join(" ");
 	};
+
+	const setChartMinMax = (min, max) => {
+		setLeftHandlePos(min);
+		setRightHandlePos(max);
+	};
+
 	return (
 		<div className={styleModule.graph_component}>
 			<div className={getGraphAreaClassName()}>
 				<div className={styleModule.chart_component_div}>
-					<ChartComponent></ChartComponent>
+					<ChartComponent
+						sliderValue={{
+							min: leftHandlePos,
+							max: rightHandlePos,
+						}}
+						dataPointsArray={data1}
+					></ChartComponent>
 				</div>
 				<div className={styleModule.side_bar_button_div}>
 					<button
@@ -118,7 +117,7 @@ function GraphComponent({ initialData = [] }) {
 					></button>
 				</div>
 				<div className={styleModule.bottom_part}>
-					<SliderComponent></SliderComponent>
+					<SliderComponent setChartMinMax={setChartMinMax} />
 				</div>
 			</div>
 			<div className={getSideBarClassName()} display={"none"}></div>

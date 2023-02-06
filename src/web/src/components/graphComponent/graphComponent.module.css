@@ -83,7 +83,6 @@
 
 .open_side_bar_button_inactive {
 	transition-duration: 200ms;
-
 	background-image: url(./resources/expandMenu.svg);
 	filter: invert(var(--invert_icon));
 }

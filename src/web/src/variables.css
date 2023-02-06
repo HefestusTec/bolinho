@@ -41,8 +41,8 @@ html {
 	--side_bar_button_inactive_color: #181818;
 	--background2_color: #2e2e2e;
 	--content_background_color: #202020;
-	--font_color: #f2f2f2;
-	--font_color_inverted: #f2f2f2;
+	--font_color: #bbbbbb;
+	--font_color_inverted: #bbbbbb;
 	--invert_icon: 100%;
 	--positive_button_color: #1fb652;
 	--logo_schumacher: url(./components/sideBar/resources/LogoSchumacherDark.png);

@@ -14,6 +14,7 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
+import React, { useState } from "react";
 
 import { Line } from "react-chartjs-2";
 
@@ -26,6 +27,7 @@ import {
 	Title,
 	Tooltip,
 	Legend,
+	scales,
 } from "chart.js";
 ChartJS.register(
 	CategoryScale,
@@ -34,41 +36,67 @@ ChartJS.register(
 	LineElement,
 	Title,
 	Tooltip,
-	Legend
+	Legend,
+	scales
 );
-class DataPoint {
-	constructor(force = 0, pos = 0) {
-		this.force = force;
-		this.pos = pos;
-	}
-}
-const makeConstData = () => {
-	return [1, 22, 33, 3, 2, 20];
-};
-const options = {
-	responsive: true,
-	maintainAspectRatio: false,
 
-	plugins: {
-		legend: {
-			position: "top",
+function ChartComponent({
+	sliderValue = { min: 0, max: 100 },
+	dataPointsArray = [],
+}) {
+	const getMaxDataValues = () => {
+		if (dataPointsArray.length <= 0) return { x: 0, y: 0 };
+		const maxX = dataPointsArray[dataPointsArray.length - 1].x;
+		const maxY = Math.max(...dataPointsArray.map((o) => o.y));
+		return { x: maxX, y: maxY };
+	};
+	const [chartData] = useState({
+		datasets: [
+			{
+				label: "Material 1",
+				data: dataPointsArray,
+				fill: false,
+				borderColor: "rgb(75, 192, 192)", // Color of the line
+			},
+		],
+	});
+	const [maxDataValues] = useState(getMaxDataValues());
+	const getMaxValue = () => {
+		console.log(sliderValue.max);
+		if (sliderValue.max <= maxDataValues.x) return sliderValue.max;
+		return getMaxDataValues().x;
+	};
+	const chartOptions = {
+		responsive: true,
+		maintainAspectRatio: false,
+		normalized: true,
+		animation: false,
+		parsing: false,
+		/*
+		parsing: {
+			xAxisKey: "x",
+			yAxisKey: "y",
+		},*/
+		scales: {
+			x: {
+				type: "linear",
+				min: sliderValue.min,
+				max: getMaxValue(),
+			},
+			y: {
+				type: "linear",
+				min: 0,
+				max: maxDataValues.y,
+			},
 		},
-	},
-};
-const data = {
-	labels: "as",
-	datasets: [
-		{
-			label: "My First Dataset",
-			data: [65, 59, 80, 81, 56, 55, 90],
-			fill: false,
-			borderColor: "rgb(75, 192, 192)",
-			tension: 0.1,
+		plugins: {
+			legend: {
+				position: "top",
+			},
 		},
-	],
-};
-function ChartComponent() {
-	return <Line data={data} options={options} />;
+	};
+
+	return <Line data={chartData} options={chartOptions} />;
 }
 
 export default ChartComponent;
