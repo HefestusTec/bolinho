@@ -1,0 +1,17 @@
+name: pr-test 
+on:
+  pull_request:
+    branches:
+      - main
+permissions:
+  contents: write
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          python-version: 3.x
+      - run: pip install -r requirements.txt
+      - run: npm run installDep
+      - run: npm run buildBin
