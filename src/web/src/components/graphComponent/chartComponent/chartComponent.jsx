@@ -29,6 +29,9 @@ import {
 	Legend,
 	scales,
 } from "chart.js";
+
+import { ExperimentPlotData } from "../../../classes";
+
 ChartJS.register(
 	CategoryScale,
 	LinearScale,
@@ -42,29 +45,19 @@ ChartJS.register(
 
 function ChartComponent({
 	sliderValue = { min: 0, max: 100 },
-	dataPointsArray = [],
+	experimentPlotDataArray = [new ExperimentPlotData()],
+	allMaxDataValues = 50,
 }) {
-	const getMaxDataValues = () => {
-		if (dataPointsArray.length <= 0) return { x: 0, y: 0 };
-		const maxX = dataPointsArray[dataPointsArray.length - 1].x;
-		const maxY = Math.max(...dataPointsArray.map((o) => o.y));
-		return { x: maxX, y: maxY };
+	const getDataSets = () => {
+		return experimentPlotDataArray.map((object) => object.dataset);
 	};
 	const [chartData] = useState({
-		datasets: [
-			{
-				label: "Material 1",
-				data: dataPointsArray,
-				fill: false,
-				borderColor: "rgb(75, 192, 192)", // Color of the line
-			},
-		],
+		datasets: getDataSets(),
 	});
-	const [maxDataValues] = useState(getMaxDataValues());
-	const getMaxValue = () => {
-		console.log(sliderValue.max);
+	const [maxDataValues] = useState(allMaxDataValues);
+	const getXMaxValue = () => {
 		if (sliderValue.max <= maxDataValues.x) return sliderValue.max;
-		return getMaxDataValues().x;
+		return experimentPlotDataArray[0].maxDataValues.x;
 	};
 	const chartOptions = {
 		responsive: true,
@@ -81,7 +74,7 @@ function ChartComponent({
 			x: {
 				type: "linear",
 				min: sliderValue.min,
-				max: getMaxValue(),
+				max: getXMaxValue(),
 			},
 			y: {
 				type: "linear",
