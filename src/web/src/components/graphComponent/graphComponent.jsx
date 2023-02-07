@@ -32,7 +32,7 @@ function getRandomInt(min, max) {
 const makeRandomData = () => {
 	let randData = [];
 	for (let i = 0; i < getRandomInt(5, 30); i++) {
-		randData.push(new DataPoint(i * 2, getRandomInt(5, 30)));
+		randData.push(new DataPoint(i * 5, getRandomInt(5, 30)));
 	}
 	return randData;
 };

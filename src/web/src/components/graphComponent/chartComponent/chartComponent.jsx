@@ -57,7 +57,7 @@ function ChartComponent({
 	const [maxDataValues] = useState(allMaxDataValues);
 	const getXMaxValue = () => {
 		if (sliderValue.max <= maxDataValues.x) return sliderValue.max;
-		return experimentPlotDataArray[0].maxDataValues.x;
+		return maxDataValues.x;
 	};
 	const chartOptions = {
 		responsive: true,
