@@ -17,26 +17,26 @@
  along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
 -->
 
-# Tipos de Dados
+# Data types
 
-Aqui serão apresentados todos os tipos de dados customizados
+All different data types will be shown in this page
 
 ## DataPoint
 !!! quote ""
     ``` js title=""
     class DataPoint {
-        constructor(force=0, pos=0) {
-            this.force = force;
-            this.pos = pos;
+        constructor(x=0, y=0) {
+            this.x = x; // The label "x" HAS to be a STRING
+            this.y = y;
         }
     }
     ```
-    > * `force`: Força instantânea no momento de medição
-        * tipo: `float`
-        * unidade: `N`
-    * `pos`: Posição instantânea no momento de medição
-        * tipo: `float`
-        * unidade: `mm`
+    > * `x`: Position at the mesure moment
+        * type: `String`
+        * Unity: `mm`
+    * `y`: Force at the mesure moment
+        * Type: `float`
+        * Unity: `N`
 
 ___
 
@@ -45,24 +45,24 @@ ___
 !!! quote ""
     ``` js title=""
     const autoStopParams = {
-        forceLossLimit: 20, // Caso a força exercida caia mais de 20% o experimento será parado
-        maxForce: 10000,    // Limite de força maxima em newtons
-        maxTravel: 100,     // Limite de deslocamento em mm
-        maxTime: 600        // Tempo máximo de ensaio em segundos
+        forceLossLimit: 20, // Max force loss to trigger auto-stop
+        maxForce: 10000,    // Max force limit
+        maxTravel: 100,     // Travel limit
+        maxTime: 600        // Experiment time limit
     };
     ```
-    > * `forceLossLimit`: Informa o limite máximo de queda de força para a parada automática do ensaio
-        * tipo: `float`
-        * unidade: `%`
-    * `maxForce`: Informa o limite de força máxima para parada automática do ensaio
-        * tipo: `float`
-        * unidade: `N`
-    * `maxTravel`: Informa a distância maxima que o cabeçote poderá percorrer durante o ensaio.
-        * tipo: `float`
-        * unidade: `mm`
-    * `maxTime`: Informa o limite de tempo parada automática do ensaio
-        * tipo: `float`
-        * unidade: `s`
+    > * `forceLossLimit`: Max force loss to trigger auto-stop.
+        * Type: `float`
+        * Unity: `%`
+    * `maxForce`: Max force limit to trigger auto-stop.
+        * Type: `float`
+        * Unity: `N`
+    * `maxTravel`: Max distance the experiment head can travel during the experiment.
+        * Type: `float`
+        * Unity: `mm`
+    * `maxTime`: Experiment time limit.
+        * Type: `float`
+        * Unity: `s`
 
 ___
 
@@ -76,11 +76,11 @@ ___
     };
     ```
     > * `compress`: Informa qual a direção o experimento ocorrerá, podendo esse ser "descendo" ou seja comprimindo o corpo de prova, ou "subindo" expandindo o corpo de prova
-        * tipo: `bool`
-        * unidade: N/A
+        * Type: `bool`
+        * Unity: N/A
     * `zAxisSpeed`: Velocidade que o eixo z se moverá durante o experimento
-        * tipo: `float`
-        * unidade: `mm/s`
+        * Type: `float`
+        * Unity: `mm/s`
 
 ___
 
@@ -101,29 +101,29 @@ ___
         * 1 = Retângulo
         * 2 = Cilindro
         * 3 = Tubo
-        * tipo: `int`
-        * unidade: N/A
+        * Type: `int`
+        * Unity: N/A
     * `paramA`: Parâmetro 'a' do corpo
         * Retângulo = largura
         * Cilindro = Diâmetro Externo
         * Tubo = Diâmetro Externo
-        * tipo: `float`
-        * unidade: `mm`
+        * Type: `float`
+        * Unity: `mm`
     * `paramB`: Parâmetro 'b' do corpo
         * Retângulo = profundidade
         * Cilindro = NULL
         * Tubo = Diâmetro Interno
-        * tipo: `float`
-        * unidade: `mm`
+        * Type: `float`
+        * Unity: `mm`
     * `height`: Altura do corpo de prova
-        * tipo: `float`
-        * unidade: `mm`
+        * Type: `float`
+        * Unity: `mm`
 
 ___
 
 ## MaterialData
 !!! quote ""
-    Esta classe é um *template* do tipo de material que um experimento pode ter
+    Esta classe é um *template* do Type de material que um experimento pode ter
     ``` js title=""
     class MaterialData {
         constructor(name="Padrão", batch=0, index=0) {
@@ -134,14 +134,14 @@ ___
     }
     ```
     > * `name`: Nome do material
-        * tipo: `String`
-        * unidade: N/A
+        * Type: `String`
+        * Unity: N/A
     * `batch`: Lote do material
-        * tipo: `int`
-        * unidade: N/A    
+        * Type: `int`
+        * Unity: N/A    
     * `index`: Índice do material na db de materiais
-        * tipo: `int`
-        * unidade: N/A
+        * Type: `int`
+        * Unity: N/A
 
 ___
 
@@ -159,11 +159,11 @@ ___
     }
     ```
     > * `material`: Material que esse experimento foi feito
-        * tipo: [`MaterialData`](#materialdata)
-        * unidade: N/A
+        * Type: [`MaterialData`](#materialdata)
+        * Unity: N/A
     * `reading`: Data points da leitura do experimento
-        * tipo: [`array[DataPoint]`](#datapoint)
-        * unidade: N/A    
+        * Type: [`array[DataPoint]`](#datapoint)
+        * Unity: N/A    
     * `index`: Índice do experimento na db de experimento
-        * tipo: `int`
-        * unidade: N/A
+        * Type: `int`
+        * Unity: N/A

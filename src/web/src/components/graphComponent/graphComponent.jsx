@@ -18,27 +18,10 @@
 import React, { useState } from "react";
 import styleModule from "./graphComponent.module.css";
 
-import Slider from "rc-slider";
 import "rc-slider/assets/index.css";
-
-import {
-	LineChart,
-	Line,
-	XAxis,
-	YAxis,
-	CartesianGrid,
-	Tooltip,
-	Legend,
-	Label,
-	ResponsiveContainer,
-} from "recharts";
-
-class DataPoint {
-	constructor(force = 0, pos = 0) {
-		this.force = force;
-		this.pos = pos;
-	}
-}
+import ChartComponent from "./chartComponent/chartComponent";
+import SliderComponent from "./sliderComponent/sliderComponent";
+import { DataPoint, ExperimentPlotData } from "../../classes";
 
 function getRandomInt(min, max) {
 	min = Math.ceil(min);
@@ -49,48 +32,42 @@ function getRandomInt(min, max) {
 const makeRandomData = () => {
 	let randData = [];
 	for (let i = 0; i < getRandomInt(5, 30); i++) {
-		randData.push(new DataPoint(getRandomInt(5, 30), i * 10));
+		randData.push(new DataPoint(i * 2, getRandomInt(5, 30)));
 	}
 	return randData;
 };
 
 const makeConstData = () => {
 	return [
-		new DataPoint(40, 0),
-		new DataPoint(20, 10),
-		new DataPoint(0, 15),
-		new DataPoint(100, 20),
-		new DataPoint(10, 30),
-		new DataPoint(30, 50),
+		new DataPoint(0, 10),
+		new DataPoint(10, 40),
+		new DataPoint(20, 20),
+		new DataPoint(25, 30),
+		new DataPoint(30, 10),
 	];
 };
 
 function GraphComponent({ initialData = [] }) {
-	const [data1] = useState(makeConstData);
-	const [data2] = useState(makeRandomData);
-	//const [currentData] = useState(initialData);
+	const getMaxData = () => {
+		let maxX = 0;
+		let maxY = Number.MIN_VALUE;
+		experimentArray.forEach((element) => {
+			if (element.maxDataValues.x > maxX) maxX = element.maxDataValues.x;
+			if (element.maxDataValues.y > maxY) maxY = element.maxDataValues.y;
+		});
+		console.log({ x: maxX, y: maxY });
+		return { x: maxX, y: maxY };
+	};
+
+	const [experimentArray] = useState([
+		new ExperimentPlotData("Experimento 1", makeConstData(), "#19e590"),
+		new ExperimentPlotData("Experimento 2", makeRandomData(), "#1797F8"),
+	]);
+
 	const [leftHandlePos, setLeftHandlePos] = useState(0);
 	const [rightHandlePos, setRightHandlePos] = useState(100);
-	const [dataRightMax, setDataRightMax] = useState(100);
+	const [maxDataValues] = useState(getMaxData());
 	const [showSideBar, setShowSideBar] = useState(true);
-	function handleChange(event) {
-		setLeftHandlePos(event[0]);
-		setRightHandlePos(event[1]);
-	}
-
-	let largestDataMax = 0;
-
-	const isDataMaxBigger = (dataMax) => {
-		if (dataMax > largestDataMax) {
-			largestDataMax = dataMax;
-			setDataRightMax(dataMax);
-		}
-
-		if (dataMax > rightHandlePos) {
-			return true;
-		}
-		return false;
-	};
 
 	const getOpenSideBarButtonClassName = () => {
 		return showSideBar
@@ -120,70 +97,24 @@ function GraphComponent({ initialData = [] }) {
 			: [styleModule.side_bar, styleModule.side_bar_hidden].join(" ");
 	};
 
+	const setChartMinMax = (min, max) => {
+		setLeftHandlePos(min);
+		setRightHandlePos(max);
+	};
+
 	return (
 		<div className={styleModule.graph_component}>
 			<div className={getGraphAreaClassName()}>
-				<ResponsiveContainer width="100%" height="90%">
-					<LineChart
-						right={50}
-						margin={{
-							top: 15,
-							right: 25,
-							left: -5,
-							bottom: 0,
+				<div className={styleModule.chart_component_div}>
+					<ChartComponent
+						sliderValue={{
+							min: leftHandlePos,
+							max: rightHandlePos,
 						}}
-					>
-						<CartesianGrid strokeDasharray="6 6" />
-						<XAxis
-							allowDataOverflow={true}
-							dataKey={"pos"}
-							type="number"
-							domain={[
-								leftHandlePos,
-								(dataMax) =>
-									isDataMaxBigger(dataMax)
-										? rightHandlePos
-										: dataMax,
-							]}
-						>
-							<Label
-								value="Posição [mm]"
-								offset={0}
-								position="insideBottom"
-							/>
-						</XAxis>
-						<YAxis>
-							<Label
-								value="Força [N]"
-								angle={-90}
-								position="insideLeft"
-								offset={20}
-							/>
-						</YAxis>
-						<Tooltip />
-						<Legend verticalAlign="top" />
-						<Line
-							isAnimationActive={false}
-							dot={true}
-							data={data1}
-							type="linear"
-							dataKey="force"
-							name="Material 1"
-							stroke="#19E5A0"
-							strokeWidth={3}
-						/>
-						<Line
-							isAnimationActive={false}
-							dot={true}
-							data={data2}
-							type="monotone"
-							dataKey="force"
-							name="Material 2"
-							stroke="#1797F8"
-							strokeWidth={3}
-						/>
-					</LineChart>
-				</ResponsiveContainer>
+						experimentPlotDataArray={experimentArray}
+						allMaxDataValues={maxDataValues}
+					></ChartComponent>
+				</div>
 				<div className={styleModule.side_bar_button_div}>
 					<button
 						className={getOpenSideBarButtonClassName()}
@@ -192,40 +123,10 @@ function GraphComponent({ initialData = [] }) {
 					></button>
 				</div>
 				<div className={styleModule.bottom_part}>
-					<div className={styleModule.slider}>
-						<Slider
-							className={styleModule.graph_slider}
-							ariaLabelForHandle={"zoom-in-out"}
-							range
-							draggableTrack
-							pushable={3}
-							max={dataRightMax}
-							defaultValue={[leftHandlePos, rightHandlePos]}
-							onChange={handleChange}
-							trackStyle={{
-								backgroundColor: "#6d6d6d",
-								cursor: "e-resize",
-								height: "1.5vh",
-								opacity: "40%",
-							}}
-							railStyle={{
-								height: "1.5vh",
-								backgroundColor: "#bdbdbd",
-								opacity: "20%",
-							}}
-							handleStyle={{
-								border: "none",
-								backgroundColor: "#FFFFFF",
-								opacity: 1,
-								height: "3vh",
-								width: "2.5vw",
-								boxShadow:
-									"0px 0px 2px 2px rgba(0, 0, 0, 0.25)",
-								marginTop: "-0.9vh",
-								borderRadius: 5,
-							}}
-						></Slider>
-					</div>
+					<SliderComponent
+						setChartMinMax={setChartMinMax}
+						dataRightMax={maxDataValues.x}
+					/>
 				</div>
 			</div>
 			<div className={getSideBarClassName()} display={"none"}></div>

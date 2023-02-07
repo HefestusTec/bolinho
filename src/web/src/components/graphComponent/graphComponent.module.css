@@ -43,6 +43,12 @@
 	width: 80%;
 }
 
+.chart_component_div {
+	padding-left: 1vw;
+	padding-right: 1vw;
+	height: 90%;
+	width: fill;
+}
 .side_bar_button_div {
 	height: 2vw;
 	width: 2vw;
@@ -77,7 +83,6 @@
 
 .open_side_bar_button_inactive {
 	transition-duration: 200ms;
-
 	background-image: url(./resources/expandMenu.svg);
 	filter: invert(var(--invert_icon));
 }
@@ -87,10 +92,6 @@
 	justify-content: center;
 	padding-top: 1vh;
 	width: 100%;
-}
-
-.slider {
-	width: 88%;
 }
 
 .side_bar {
@@ -113,8 +114,4 @@
 	to {
 		opacity: 0;
 	}
-}
-
-.graph_slider .trackStyle {
-	background-color: #6d6d6d;
 }
