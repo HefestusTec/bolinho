@@ -4,14 +4,17 @@ on:
     branches:
       - main
 permissions:
-  contents: write
+  contents: read
 jobs:
-  release:
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
         with:
           python-version: 3.x
-      - run: pip install -r requirements.txt
-      - run: npm run installDep
-      - run: npm run buildBin
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+          npm run installDep
+      - name: Build app binaries
+        run: npm run buildBin
