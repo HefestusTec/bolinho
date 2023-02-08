@@ -2,6 +2,12 @@ name: Documentation Report
 description: Submit an update request for the [documentation](https://hefestustec.github.io/bolinho/)
 labels: [documentation]
 body:
+  - type: textarea
+    attributes:
+      label: Description
+      description: A description of the update request
+    validations:
+        required: true
   - type: checkboxes
     attributes:
       label: Affected area 
@@ -29,7 +35,7 @@ body:
         - label: Update to existing page
     validations:
       required: true
-  - type: textarea
+  - type: input
     attributes:
       label: Page/topic name
       description: Which page or topic of the documentation is affected.
