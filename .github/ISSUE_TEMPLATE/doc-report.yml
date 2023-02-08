@@ -1,0 +1,43 @@
+name: Documentation Report
+description: Submit an update request for the [documentation](https://hefestustec.github.io/bolinho/)
+labels: [documentation]
+body:
+  - type: checkboxes
+    attributes:
+      label: Affected area 
+      description: You can mark more than one
+      options:
+        - label: Front-End
+        - label: Back-End
+        - label: Other
+    validations:
+      required: true
+  - type: checkboxes
+    attributes:
+      label: Documentation version 
+      options:
+        - label: Web
+        - label: PDF
+    validations:
+      required: false
+  - type: checkboxes
+    attributes:
+      label: Modification type 
+      options:
+        - label: Addition
+        - label: Removal
+        - label: Update to existing page
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Page/topic name
+      description: Which page or topic of the documentation is affected.
+    validations:
+        required: false
+  - type: textarea
+    attributes:
+      label: Suggestion
+      description: A suggestion written in `markdown` for the update
+    validations:
+        required: false
