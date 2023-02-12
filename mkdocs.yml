@@ -117,8 +117,8 @@ nav:
           - Front End: frontEnd/index.md
     - API:
           - API: api/index.md
-          - Tipos de Dados: api/tiposDeDados.md
-          - Carregar e salvar dados: api/carregarESalvarDados.md
-          - Comandos: api/comandos.md
-    - Sobre:
-          - Sobre: sobre/index.md
+          - Data Types: api/dataTypes.md
+          - Load and Save Data: api/loadAndSaveData.md
+          - Commands: api/commands.md
+    - About:
+          - About: about/index.md

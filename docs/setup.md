@@ -19,7 +19,7 @@ cd bolinho
 > The following step isn't mandatory but **recommended**.
 
 ``` bash
-python3 -m pip install --user virtualenv
+python -m pip install --user virtualenv
 
 python -m venv venv
 ```
@@ -44,7 +44,7 @@ ou
     ```
 ___
 
-## Instalando dependências
+## Installing dependencies
 
 ``` bash
 npm install
@@ -56,13 +56,11 @@ pip install -r requirements.txt
 
 ___
 
-## Documentação
+## Documentation
 
-> Esse passo apenas é necessário para quem desejar editar a documentação
+> The following step is only required for those that want to **edit the documentation**.
 
-Para realizar uma build da documentação siga as instruções a seguir
-
-### Instalando dependências
+### Installing dependencies
 
 ``` bash
 pip install -r docs/requirements.txt
@@ -70,11 +68,11 @@ pip install -r docs/requirements.txt
 
 ### Build
 
-Para criar uma build temos 2 opções:
+We have two options to create a build:
 
-* **Servidor local**:
+* **Serve**:
     
-    Essa é a opção utilizada para debug, ela irá abir o site estático em uma das portas do localhost.
+    This option is used for debugging, it will open the static page in one of the localhost ports.
     
     ``` bash title=""
     mkdocs serve
@@ -82,14 +80,17 @@ Para criar uma build temos 2 opções:
 
 * **Build**:
     
-    Essa é a opção cria uma build do projeto e a coloca no diretório padrão `site`, caso esse não esteja presente ele sera criado automaticamente durante o processo.
+    This option creates a build of the documentation and saves it on de directory `/site/`.
     
     ``` bash title=""
     mkdocs build
     ```
 
 !!! note
-    O arquivo `mkdocs.yml` está configurado para apenas exportar os PDFs caso a ***environment variable*** `ENABLE_PDF_EXPORT` for `1`
+    Be aware of the **Environment Variable** `ENABLE_PDF_EXPORT`, it will only generate the PDF if this variable is set to `1`.
 
-para mais informações sobre a documentação visitar [ZRafaF/ReadTheDocksBase](https://github.com/ZRafaF/ReadTheDocksBase)
+    You can change the `mkdocs.yml` file and remove this line if you so choose.
+
+
+For more info about the documentation please checkout [ZRafaF/ReadTheDocksBase](https://github.com/ZRafaF/ReadTheDocksBase).
 
