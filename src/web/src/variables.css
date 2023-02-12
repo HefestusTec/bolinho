@@ -33,6 +33,20 @@ html {
 	--positive_button_color: #19e590; /* Color of positive buttons, such as go, start etc. */
 	--logo_schumacher: url(./components/sideBar/resources/LogoSchumacher.png);
 }
+[data_theme="light"] {
+	--background_color: #ffffff; /* Background color of the components */
+	--primary_color: #444444; /* Primary color, for example this is the color of the headers */
+	--primary_color_shader: #525252; /* Search bar color */
+	--secondary_color: #888888; /* Search button color */
+	--side_bar_button_inactive_color: #dfdfdf;
+	--background2_color: #dfdfdf; /* Second background color of the components */
+	--content_background_color: #f2f2f2; /* Background color of the content area */
+	--font_color: #444444; /* Main font color */
+	--font_color_inverted: #f2f2f2; /* Inverted font color */
+	--invert_icon: 0%; /* Auto invert color of icons */
+	--positive_button_color: #19e590; /* Color of positive buttons, such as go, start etc. */
+	--logo_schumacher: url(./components/sideBar/resources/LogoSchumacher.png);
+}
 [data_theme="dark"] {
 	--background_color: #272727;
 	--primary_color: #242424;
