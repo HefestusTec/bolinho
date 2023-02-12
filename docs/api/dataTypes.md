@@ -75,10 +75,10 @@ ___
         zAxisSpeed: 5
     };
     ```
-    > * `compress`: Informa qual a direção o experimento ocorrerá, podendo esse ser "descendo" ou seja comprimindo o corpo de prova, ou "subindo" expandindo o corpo de prova
+    > * `compress`: Dictates if the experiment head move up or down. true = compress | false = expand.
         * Type: `bool`
         * Unity: N/A
-    * `zAxisSpeed`: Velocidade que o eixo z se moverá durante o experimento
+    * `zAxisSpeed`: Z axis speed during the experiment.
         * Type: `float`
         * Unity: `mm/s`
 
@@ -90,32 +90,32 @@ ___
     ``` js title=""
     class ExperimentBodyParams {
         constructor(type=0, paramA=0, paramB=0, height=0) {
-            this.type = type;       // Formato do corpo | 1 = Retângulo | 2 = Cilindro | 3 = Tubo
-            this.paramA = paramA;   // Parâmetro 'a' do corpo | Retângulo = largura | Cilindro = Diam. Externo | Tubo = Diam. Externo
-            this.paramB = paramB;   // Parâmetro 'b' do corpo | Retângulo = profundidade | Cilindro = NULL | Tubo = Diam. Interno
-            this.height = height;   // Altura do corpo de prova
+            this.type = type;       // Body format | 1 = Rectangle | 2 = Cylinder | 3 = Tube
+            this.paramA = paramA;   // Param 'a' of the body | Rectangle = length | Cylinder = External diameter | Tube = External diameter
+            this.paramB = paramB;   // Parâmetro 'b' do corpo | Rectangle = depth | Cylinder = NULL | Tube = Internal diameter
+            this.height = height;   // Height of the test body
         }
     }
     ```
-    > * `type`: Formato do corpo
-        * 1 = Retângulo
-        * 2 = Cilindro
-        * 3 = Tubo
+    > * `type`: Body format
+        * 1 = Rectangle
+        * 2 = Cylinder
+        * 3 = Tube
         * Type: `int`
         * Unity: N/A
-    * `paramA`: Parâmetro 'a' do corpo
-        * Retângulo = largura
-        * Cilindro = Diâmetro Externo
-        * Tubo = Diâmetro Externo
+    * `paramA`: Param 'a' of the body
+        * Rectangle = length
+        * Cylinder = External diameter
+        * Tube = External diameter
         * Type: `float`
         * Unity: `mm`
     * `paramB`: Parâmetro 'b' do corpo
-        * Retângulo = profundidade
-        * Cilindro = NULL
-        * Tubo = Diâmetro Interno
+        * Rectangle = depth
+        * Cylinder = NULL
+        * Tube = Internal diameter
         * Type: `float`
         * Unity: `mm`
-    * `height`: Altura do corpo de prova
+    * `height`: Height of the test body
         * Type: `float`
         * Unity: `mm`
 
@@ -123,7 +123,7 @@ ___
 
 ## MaterialData
 !!! quote ""
-    Esta classe é um *template* do Type de material que um experimento pode ter
+    The following class is a *template* of the material type an experiment can have.
     ``` js title=""
     class MaterialData {
         constructor(name="Padrão", batch=0, index=0) {
@@ -133,13 +133,13 @@ ___
         }
     }
     ```
-    > * `name`: Nome do material
+    > * `name`: Material name
         * Type: `String`
         * Unity: N/A
-    * `batch`: Lote do material
+    * `batch`: Material batch
         * Type: `int`
         * Unity: N/A    
-    * `index`: Índice do material na db de materiais
+    * `index`: Index of the material on the data base
         * Type: `int`
         * Unity: N/A
 
@@ -147,7 +147,7 @@ ___
 
 ## Experiment
 !!! quote ""
-    Esta classe é um *template* de um experimento completo
+    The following class is a *template* of a full experiment.
 
     ``` js title=""
     class Experiment {
@@ -158,12 +158,12 @@ ___
         }
     }
     ```
-    > * `material`: Material que esse experimento foi feito
+    > * `material`: Material of the experiment
         * Type: [`MaterialData`](#materialdata)
         * Unity: N/A
-    * `reading`: Data points da leitura do experimento
+    * `reading`: Data points of the experiment reading
         * Type: [`array[DataPoint]`](#datapoint)
         * Unity: N/A    
-    * `index`: Índice do experimento na db de experimento
+    * `index`: Index of the experiment on the data base
         * Type: `int`
         * Unity: N/A

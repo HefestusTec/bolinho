@@ -17,53 +17,54 @@
  along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
 -->
 
-# Comandos
+# Commands
 
-Esta página reúne as API calls relacionadas à operação do equipamento.
+This page gathers all the API calls related to instructions to the equipment.
 
-> Por exemplo, controle manual, inicio de tarefas etc.
+> Eg. manual control, start tasks etc.
 
-## Controle Manual
+## Manual Control
 
 ### manual_control_head( dist )
 
 !!! quote ""
-    Envia uma solicitação para movimentar o cabeçote de prova, podendo ser positivo ou negativo
+    Sends a **solicitation** to move the experiment head, this movement can be positive or negative.
 
-    > Caso essa solicitação seja enviada durante um **ensaio automático** este irá ser interrompido, e aguardará o comando para reiniciar
+    > If the solicitation is sent during a **automatic experiment** it will halt the experiment and wait for the restart command.
+    este irá ser interrompido, e aguardará o comando para reiniciar
 
-## Calibração
+## Calibration
 
 ### start_z_axis_calibration()
 
 !!! quote ""
-    Inicia a calibração do eixo Z
+    Starts the calibration of the Z axis.
 
 ### start_load_cell_calibration()
 
 !!! quote ""
-    Inicia a calibração da célula de carga.
+    Starts the calibration of the load cell.
 ___
 
-## Controle de experimento
+## Experiment commands
 
 ### start_auto_experiment()
 
 !!! quote ""
-    Inicia o experimento automático
+    Starts an automatic experiment.
 
 ### pause_experiment()
 
 !!! quote ""
-    Pausa o experimento e aguarda o comando do usuário
+    Pauses the current experiment and awaits the user commands.
 
 
 ### resume_experiment()
 
 !!! quote ""
-    Retorna o experimento.
+    Resumes the current experiment.
 
 ### end_experiment()
 
 !!! quote ""
-    Encerra o experimento.
+    Finishes the current experiment.

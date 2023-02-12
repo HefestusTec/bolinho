@@ -17,17 +17,17 @@
  along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
 -->
 
-# Carregar e salvar dados
+# Load and Save Data
 
-Esta página reúne as API calls relacionadas ao registro e carregamento de dados 
+This page gathers all the API calls related to loading and saving data. 
 
 
-## Parâmetros de pré-ensaio
+## Pre-experiment params
 
 ### get_auto_stop_params()
 
 !!! quote ""
-    Retorna os parâmetros de [`autoStopParams`](./tiposDeDados.md#autostopparams) (parada automática) do equipamento.
+    Returns the [`autoStopParams`](./dataTypes.md#autostopparams) from the machine.
 
     ``` js
     let myStopParams = eel.get_auto_stop_params();
@@ -36,14 +36,14 @@ Esta página reúne as API calls relacionadas ao registro e carregamento de dado
 ### set_auto_stop_params()
 
 !!! quote ""
-    Seta os parâmetros de [`autoStopParams`](./tiposDeDados.md#autostopparams) (parada automática) do equipamento.
+    Sets the equipments [`autoStopParams`](./dataTypes.md#autostopparams).
 
     ``` js
     const autoStopParams = {
-        forceLossLimit: 20, // Caso a força exercida caia mais de 20% o experimento será parado
-        maxForce: 10000,    // Limite de força maxima em newtons
-        maxTravel: 100,     // Limite de deslocamento em mm
-        maxTime: 600        // Tempo máximo de ensaio em segundos
+        forceLossLimit: 20, // If theres a loss of force greater than 20% the experiment will be halted
+        maxForce: 10000,    // Maximum force limit in Newtons
+        maxTravel: 100,     // Maximum travel in mm
+        maxTime: 600        // Maximum experiment time in seconds
     };
 
     eel.set_auto_stop_params(autoStopParams);
@@ -52,12 +52,12 @@ Esta página reúne as API calls relacionadas ao registro e carregamento de dado
 ### set_experiment_settings( settings )
 
 !!! quote ""
-    Seta a [`experimentSettings`](./tiposDeDados.md#experimentsettings) (configuração do ensaio).
+    Sets the [`experimentSettings`](./dataTypes.md#experimentsettings).
 
     ``` js
     const experimentSettings = {
-        compress: true,    // (Moverá para cima ou para baixo?) Se verdadeiro o teste sera feito "Apertando" o experimento, do contrário será "Puxando".
-        zAxisSpeed: 5,  // Velocidade do eixo z durante o experimento em mm/s 
+        compress: true, // (Should the experiment head move up or down?) true = compressing | false = expanding
+        zAxisSpeed: 5,  // Z axis speed during the experiment in mm/s 
     };
 
     eel.set_experiment_settings(experimentSettings);
@@ -66,7 +66,7 @@ Esta página reúne as API calls relacionadas ao registro e carregamento de dado
 ### set_experiment_body_params( experiment_body_params )
 
 !!! quote ""
-    Seta os parâmetros do [`ExperimentBodyParams`](./tiposDeDados.md#experimentbodyparams) (parâmetros do corpo de prova) que será testado.
+    Sets the [`ExperimentBodyParams`](./dataTypes.md#experimentbodyparams);
     
     ``` js
     const experimentBodyParams = new ExperimentBodyParams();
@@ -75,12 +75,12 @@ Esta página reúne as API calls relacionadas ao registro e carregamento de dado
     ```
 ___
 
-## Dados durante ensaio
+## Experiment Data
 
 ### get_experiment_data( experiment_index )
 
 !!! quote ""
-    Retorna uma `array` de [`DataPoint`](./tiposDeDados.md#datapoint) de um determinado experimento.
+    Returns an `array` of [`DataPoint`](./dataTypes.md#datapoint) from an experiment.
 
     ``` js
     experimentData = await eel.get_experiment_data(2);
@@ -89,9 +89,9 @@ ___
 ### get_new_experiment_data( experiment_index, data_index )
 
 !!! quote ""
-    Retorna uma `array` de [`DataPoint`](./tiposDeDados.md#datapoint) de um determinado experimento a partir de um `data_index`.
+    Returns an `array` of [`DataPoint`](./dataTypes.md#datapoint) from an experiment from an `data_index` onwards.
 
-    Este método é útil para realizar o *fetch* de dados sem precisar gastar recursos com o carregamento de dados já recebidos.
+    This method is used to fetch new data points, without needing to update the already received data.
 
     ``` js
     newData = await eel.get_new_experiment_data(2, 354);
@@ -99,30 +99,39 @@ ___
 
 ___
 
-## Parâmetros do equipamento
+## Equipment Params
 
 ### get_calibration_params()
 
 !!! quote ""
-    Retorna os parâmetros de calibração.
+    Get the calibration params.
+    ``` js
+    calibrationParams = await eel.get_calibration_params();
+    ```
 
 ### get_equipment_params()
 
 !!! quote ""
-    Retorna os parâmetros do equipamento
+    Get the equipment params.
+    ``` js
+    calibrationParams = await eel.get_calibration_params();
+    ```
 
 ### set_equipment_params()
 
 !!! quote ""
-    Seta os parâmetros do equipamento
+    Set the equipment params.
+    ``` js
+    eel.set_equipment_params( myEquipmentParams );
+    ```
 ___
 
-## Manipulação da base de dados de materiais
+## Manipulating the data base
 
 ### get_material_data( material_index )
 
 !!! quote ""
-    Retorna os dados de um [`MaterialData`](./tiposDeDados.md#materialdata), retorna `NULL` caso o material não exista.
+    Gets the [`MaterialData`](./dataTypes.md#materialdata) of a material, returns `NULL` if the index doesn't exists.
     
     ``` js
     materialDataAtIndex = await eel.get_material_data(2);
@@ -131,7 +140,7 @@ ___
 ### set_material_data( material, material_index )
 
 !!! quote ""
-    Seta dos dados do [`MaterialData`](./tiposDeDados.md#materialdata) em um index específico
+    Sets the [`MaterialData`](./dataTypes.md#materialdata) of a material is a specific index.
 
     ``` js
     materialData = new MaterialData()
@@ -142,11 +151,12 @@ ___
 ### get_material_list( filter )
 
 !!! quote ""
-    Encontra e retorna a lista completa de [`MaterialData`](./tiposDeDados.md#materialdata).
+    Finds and returns a `list` of [`MaterialData`](./dataTypes.md#materialdata) that can be filtered.
 
-    Podem ser passado `filter` para busca com filtros
+    You can pass a `filter` to make a filtered search.
 
-    Retorna `NULL` caso não encontre.
+    Returns `NULL` if theres no material that matches the filter.
+
     ``` js
     materialsList = await eel.get_material_list(name="Madeira");
     ```
