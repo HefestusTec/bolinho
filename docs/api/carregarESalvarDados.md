@@ -151,3 +151,20 @@ ___
     materialsList = await eel.get_material_list(name="Madeira");
     ```
 
+## Global configuration
+
+### save_global_config( JSON )
+
+!!! quote ""
+    Use this method to pass a JSON to the back-end, so it can be saved on the machine.
+    ``` js
+    eel.save_global_config(myGlobalConfigJSON);
+    ```
+
+### load_global_config()
+
+!!! quote ""
+    Use this method to load the global config from the machine
+    ``` js
+    globalConfigurations = await eel.load_global_config();
+    ```
