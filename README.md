@@ -36,6 +36,10 @@ As for running the program we have a few options:
 
 * Run only the backend `npm run startEel`
 
+* Serve the full application `npm run serve`
+    > This command will start the eel as headless and start the web serve, it doesn't need to build the front end before executing. **Less performant**.
+
+
 * Run the full application `npm run start`
     > With this command it will first build the react front end, then run the python script.
 
