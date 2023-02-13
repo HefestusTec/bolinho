@@ -18,9 +18,7 @@ import React from "react";
 
 import styleModule from "./materialSelectorButton.module.css";
 
-import { Material } from "../../../../classes";
-
-function MaterialSelectorButton({ material = new Material() }) {
+function MaterialSelectorButton({ material }) {
 	return (
 		<li key={material.index}>
 			<button

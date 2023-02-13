@@ -18,6 +18,7 @@ import { createContext } from "react";
 
 export const globalConfigDefault = {
 	theme: "light",
+	animation: true,
 	absoluteMaximumForce: 10000,
 };
 

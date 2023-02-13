@@ -45,7 +45,7 @@ function MaterialSelector({ materialList }) {
 		<div className={styleModule.material_selector}>
 			<div className={styleModule.selector_header}>
 				<div className={styleModule.selector_header_text}>
-					Selecionar Material
+					Selecionar Experimento
 				</div>
 				<div className={styleModule.selector_header_bottom}>
 					<input

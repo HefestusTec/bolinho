@@ -18,6 +18,7 @@
 # from os import system
 
 import eel
+import ExposeFunctions
 from argparse import ArgumentParser
 
 parser = ArgumentParser()
@@ -30,11 +31,6 @@ parser.add_argument(
 )
 
 run_as_development = parser.parse_args().development
-
-
-@eel.expose
-def get_one():
-    return 1
 
 
 def start_eel():

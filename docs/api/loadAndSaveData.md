@@ -52,7 +52,7 @@ This page gathers all the API calls related to loading and saving data.
 ### set_experiment_settings( settings )
 
 !!! quote ""
-    Sets the [`experimentSettings`](./dataTypes.md#experimentsettings).
+    Sets the [`experimentSettings`](./dataTypes.md#experimentparams).
 
     ``` js
     const experimentSettings = {
@@ -66,7 +66,7 @@ This page gathers all the API calls related to loading and saving data.
 ### set_experiment_body_params( experiment_body_params )
 
 !!! quote ""
-    Sets the [`ExperimentBodyParams`](./dataTypes.md#experimentbodyparams);
+    Sets the [`ExperimentBodyParams`](./dataTypes.md#bodyparams);
     
     ``` js
     const experimentBodyParams = new ExperimentBodyParams();
@@ -131,7 +131,7 @@ ___
 ### get_material_data( material_index )
 
 !!! quote ""
-    Gets the [`MaterialData`](./dataTypes.md#materialdata) of a material, returns `NULL` if the index doesn't exists.
+    Gets the [`MaterialData`](./dataTypes.md#material) of a material, returns `NULL` if the index doesn't exists.
     
     ``` js
     materialDataAtIndex = await eel.get_material_data(2);
@@ -140,7 +140,7 @@ ___
 ### set_material_data( material, material_index )
 
 !!! quote ""
-    Sets the [`MaterialData`](./dataTypes.md#materialdata) of a material is a specific index.
+    Sets the [`MaterialData`](./dataTypes.md#material) of a material is a specific index.
 
     ``` js
     materialData = new MaterialData()
@@ -151,7 +151,7 @@ ___
 ### get_material_list( filter )
 
 !!! quote ""
-    Finds and returns a `list` of [`MaterialData`](./dataTypes.md#materialdata) that can be filtered.
+    Finds and returns a `list` of [`MaterialData`](./dataTypes.md#material) that can be filtered.
 
     You can pass a `filter` to make a filtered search.
 
