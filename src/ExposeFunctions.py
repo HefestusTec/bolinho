@@ -83,15 +83,22 @@ class Experiment:
         self.data_array = data_array
         self.extra_info = extra_info
 
+
 class Supplier:
     def __init__(self, name="NONE", email=""):
         self.name = name
         self.email = email
-        
+
 
 class Material:
     def __init__(
-        self, index=0, name="NONE", batch=0, experiment_array=[], supplier=Supplier(), extra_info=""
+        self,
+        index=0,
+        name="NONE",
+        batch=0,
+        experiment_array=[],
+        supplier=Supplier(),
+        extra_info="",
     ):
         self.index = index
         self.name = name
