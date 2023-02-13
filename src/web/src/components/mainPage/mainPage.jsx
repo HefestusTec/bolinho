@@ -15,7 +15,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
 
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import GraphComponent from "../graphComponent/graphComponent";
 import MaterialSelector from "./materialSelector/materialSelector";
 //import { eel } from "../../App";
@@ -25,10 +25,9 @@ import ExtraOptions from "./extraOptions/extraOptions";
 
 import GlobalConfigContext from "../../contexts/globalConfigContext";
 
-function MainPage() {
+function MainPage({ materialList }) {
 	//const [graphData, setGraphData] = useState(makeConstData());
 	const [globalConfig, setGlobalConfig] = useContext(GlobalConfigContext);
-
 	// THIS IS JUST FOR DEBUG
 	const toggleTheme = () => {
 		if (globalConfig.theme === "dark") {
@@ -40,7 +39,7 @@ function MainPage() {
 
 	return (
 		<div className={styleModule.content}>
-			<MaterialSelector />
+			<MaterialSelector materialList={materialList} />
 			<GraphComponent className={styleModule.graph} />
 			<MaterialsInspector />
 			<ExtraOptions />

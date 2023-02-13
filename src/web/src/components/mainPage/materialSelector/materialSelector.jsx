@@ -14,13 +14,32 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
-import React from "react";
+import React, { useState } from "react";
 
 import styleModule from "./materialSelector.module.css";
 import MaterialSelectorButton from "./materialSelectorButton/materialSelectorButton";
 
-function MaterialSelector() {
+function MaterialSelector({ materialList }) {
 	//const [graphData, setGraphData] = useState(makeConstData());
+	const createButton = (material) => {
+		return (
+			<MaterialSelectorButton
+				material={material}
+			></MaterialSelectorButton>
+		);
+	};
+
+	const makeButtons = () => {
+		let buttonArray = [];
+		console.log("app ", materialList);
+
+		try {
+			materialList.forEach((element) => {
+				buttonArray.push(createButton(element));
+			});
+		} catch (error) {}
+		return buttonArray;
+	};
 
 	return (
 		<div className={styleModule.material_selector}>
@@ -48,21 +67,7 @@ function MaterialSelector() {
 					</div>
 				</div>
 			</div>
-			<ul className={styleModule.selector_content_ul}>
-				<MaterialSelectorButton />
-				<MaterialSelectorButton />
-				<MaterialSelectorButton />
-				<MaterialSelectorButton />
-				<MaterialSelectorButton />
-				<MaterialSelectorButton />
-				<MaterialSelectorButton />
-				<MaterialSelectorButton />
-				<MaterialSelectorButton />
-				<MaterialSelectorButton />
-				<MaterialSelectorButton />
-				<MaterialSelectorButton />
-				<MaterialSelectorButton />
-			</ul>
+			<ul className={styleModule.selector_content_ul}>{makeButtons()}</ul>
 		</div>
 	);
 }

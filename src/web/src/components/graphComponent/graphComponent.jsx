@@ -55,7 +55,6 @@ function GraphComponent({ initialData = [] }) {
 			if (element.maxDataValues.x > maxX) maxX = element.maxDataValues.x;
 			if (element.maxDataValues.y > maxY) maxY = element.maxDataValues.y;
 		});
-		console.log({ x: maxX, y: maxY });
 		return { x: maxX, y: maxY };
 	};
 

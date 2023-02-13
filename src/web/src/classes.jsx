@@ -45,3 +45,27 @@ export class ExperimentPlotData {
 		return { x: maxX, y: maxY };
 	}
 }
+
+export class Experiment {
+	constructor(experimentParams = "NONE", dataArray = [], extraInfo = "NONE") {
+		this.experimentParams = experimentParams;
+		this.dataArray = dataArray;
+		this.extraInfo = extraInfo;
+	}
+}
+
+export class Material {
+	constructor(
+		name = "NONE",
+		supplier = "NONE",
+		batch = 0,
+		experimentList = [],
+		index = 0
+	) {
+		this.name = name;
+		this.supplier = supplier;
+		this.batch = batch;
+		this.experimentList = experimentList;
+		this.index = index;
+	}
+}

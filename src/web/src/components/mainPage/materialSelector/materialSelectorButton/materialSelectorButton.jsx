@@ -18,9 +18,11 @@ import React from "react";
 
 import styleModule from "./materialSelectorButton.module.css";
 
-function MaterialSelectorButton() {
+import { Material } from "../../../../classes";
+
+function MaterialSelectorButton({ material = new Material() }) {
 	return (
-		<li>
+		<li key={material.index}>
 			<button
 				className={styleModule.material_selector_button}
 				aria-label="Material Selector"
@@ -29,7 +31,7 @@ function MaterialSelectorButton() {
 					<div className={styleModule.add_sign}>+</div>
 				</div>
 				<div className={styleModule.material_selector_text}>
-					[592] Aço carbono 12
+					[{material.batch}] {material.name}
 				</div>
 			</button>
 		</li>
