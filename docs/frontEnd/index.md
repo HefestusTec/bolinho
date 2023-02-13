@@ -1,6 +1,6 @@
 # Front End
 
-## Arquitetura de componentes
+## Component architecture
 
 ```mermaid
 flowchart TD

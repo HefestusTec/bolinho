@@ -29,7 +29,7 @@ The a directory `venv` should be created in the root folder.
 Para ativar:
 
 
-!!! admonition-windows "Ativação no **Windows**"
+!!! admonition-windows "**Windows** activation"
 
     ``` bash title=""
     venv/Scripts/activate
@@ -37,7 +37,7 @@ Para ativar:
 
 ou
 
-!!! admonition-linux "Ativação no **Linux**"
+!!! admonition-linux "**Linux** activation"
 
     ``` bash title=""
     source venv/bin/activate

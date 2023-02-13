@@ -29,13 +29,13 @@ theme:
         primary: blue grey
         accent: indigo
 
-    locale: pt_BR
-    language: pt-BR # lingua do mkdocs-material
+    #locale: pt_BR
+    #language: pt-BR # lingua do mkdocs-material
 
     features:
         - navigation.sections
         - navigation.tabs
-        # - navigation.tabs.sticky      Faz com que a navigation tab esteja sempre visivel
+        - navigation.tabs.sticky      #Faz com que a navigation tab esteja sempre visivel
         - navigation.top
         - navigation.tracking
         - navigation.path
@@ -66,11 +66,11 @@ plugins:
           separator: '[\s\-,:!=\[\]()"`/]+|\.(?!\d)|&[lg]t;|(?!\b)(?=[A-Z][a-z])'
     - with-pdf:
           author: Hefestus
-          cover_subtitle: Sistema de leitura e interpretação de dados
+          cover_subtitle: Solution for data gathering, processing and interaction
           copyright: Copyright &copy; 2023 Hefestus.
-          toc_title: Tabela de conteúdos
+          toc_title: Table of contents
           enabled_if_env: ENABLE_PDF_EXPORT
-          toc_level: 3
+          toc_level: 2
           # two_columns_level: 3                # Exporta o PDF como duas colunas
           #custom_template_path: docs/styles.scss
           #render_js: true
