@@ -69,7 +69,7 @@
 }
 
 .side_bar_button_active {
-	background-color: var(--background_color);
+	background-color: var(--button_active_color);
 	width: 95%;
 
 	border-width: 0px 0px 5px 0px;
@@ -81,7 +81,7 @@
 }
 
 .side_bar_button_inactive {
-	background-color: var(--side_bar_button_inactive_color);
+	background-color: var(--button_inactive_color);
 	width: 85%;
 	box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
 }

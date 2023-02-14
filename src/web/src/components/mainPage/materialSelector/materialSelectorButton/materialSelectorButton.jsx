@@ -22,6 +22,16 @@ import DropdownButton from "./dropdownButton/dropdownButton";
 export default function MaterialSelectorButton({ material }) {
 	const [dropdown, setDropdown] = useState(false);
 
+	const getButtonClassName = () => {
+		if (dropdown) {
+			return [
+				styleModule.material_selector_button,
+				styleModule.material_selector_button_active,
+			].join(" ");
+		}
+		return [styleModule.material_selector_button].join(" ");
+	};
+
 	const getDropdownClassName = () => {
 		if (dropdown) {
 			return [styleModule.dropdown_ul].join(" ");
@@ -57,7 +67,7 @@ export default function MaterialSelectorButton({ material }) {
 	return (
 		<li key={material.index} className={styleModule.material_selector_li}>
 			<button
-				className={styleModule.material_selector_button}
+				className={getButtonClassName()}
 				aria-label="Material Selector"
 				onClick={toggleDropDown}
 			>

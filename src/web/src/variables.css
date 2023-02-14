@@ -24,7 +24,8 @@ html {
 	--primary_color: #444444; /* Primary color, for example this is the color of the headers */
 	--primary_color_shader: #525252; /* Search bar color */
 	--secondary_color: #888888; /* Search button color */
-	--side_bar_button_inactive_color: #dfdfdf;
+	--button_active_color: #ffffff;
+	--button_inactive_color: #cecece;
 	--background2_color: #dfdfdf; /* Second background color of the components */
 	--content_background_color: #f2f2f2; /* Background color of the content area */
 	--font_color: #444444; /* Main font color */
@@ -50,7 +51,8 @@ html {
 	--primary_color: #444444; /* Primary color, for example this is the color of the headers */
 	--primary_color_shader: #525252; /* Search bar color */
 	--secondary_color: #888888; /* Search button color */
-	--side_bar_button_inactive_color: #dfdfdf;
+	--button_active_color: #ffffff;
+	--button_inactive_color: #cecece;
 	--background2_color: #dfdfdf; /* Second background color of the components */
 	--content_background_color: #f2f2f2; /* Background color of the content area */
 	--font_color: #444444; /* Main font color */
@@ -65,7 +67,8 @@ html {
 	--primary_color: #242424;
 	--primary_color_shader: #525252;
 	--secondary_color: #888888;
-	--side_bar_button_inactive_color: #181818;
+	--button_active_color: #383838;
+	--button_inactive_color: #1d1d1d;
 	--background2_color: #2e2e2e;
 	--content_background_color: #202020;
 	--font_color: #bbbbbb;

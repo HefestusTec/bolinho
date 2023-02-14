@@ -70,16 +70,30 @@ class ExperimentParams:
         self.z_speed = z_speed
 
 
+class Date:
+    def __init__(
+        self,
+        day=1,
+        month=1,
+        year=2023,
+    ):
+        self.day = day
+        self.month = month
+        self.year = year
+
+
 class Experiment:
     def __init__(
         self,
         index=0,
+        date=Date(),
         experiment_params=ExperimentParams(),
         data_array=[],
         extra_info="",
     ):
         self.experiment_params = experiment_params
         self.index = index
+        self.date = date
         self.data_array = data_array
         self.extra_info = extra_info
 
@@ -116,9 +130,10 @@ experiment_data_base = [
         extra_info="Feito pelo hermes",
     ),
     Experiment(index=1, data_array=get_random_data_points(15)),
-    Experiment(index=2, data_array=get_random_data_points(60)),
+    Experiment(index=2, date=Date(3, 11, 2011), data_array=get_random_data_points(60)),
     Experiment(
         index=3,
+        date=Date(22, 11, 2011),
         data_array=get_random_data_points(46),
         extra_info="Cilindro em óleo",
     ),
@@ -138,11 +153,15 @@ def get_experiment_list():
 
 @eel.expose
 def get_experiment_at(index):
-    print(len(experiment_data_base))
     if len(experiment_data_base) - 1 < index:
         return None
     return json.dumps(experiment_data_base[index].__dict__)
 
+@eel.expose
+def get_experiment_date_at(index):
+    if len(experiment_data_base) - 1 < index:
+        return None
+    return json.dumps(experiment_data_base[index].date.__dict__)
 
 @eel.expose
 def get_material_list():

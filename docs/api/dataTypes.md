@@ -138,6 +138,33 @@ ___
 
 ___
 
+## Date
+!!! quote ""
+    ``` python
+    class Date:
+        def __init__(
+            self,
+            day=1,
+            month=1,
+            year=2023,
+        ):
+            self.day = day
+            self.month = month
+            self.year = year
+    ```
+    > * `day`: Day.
+        * Type: `int`
+        * Unity: N/A
+    * `month`: Month.
+        * Type: `int`
+        * Unity: N/A  
+    * `year`: Year.
+        * Type: `int`
+        * Unity: N/A   
+
+___
+
+
 ## Experiment
 !!! quote ""
     ``` python
@@ -145,6 +172,7 @@ ___
         def __init__(
             self,
             index=0,
+            date=Date(),
             experiment_params=ExperimentParams(),
             data_array=[],
             extra_info="",
@@ -157,6 +185,9 @@ ___
     > * `index`: Index (or key) of the experiment on the data base.
         * Type: `int`
         * Unity: N/A
+    * `date`: Date of the experiment.
+        * Type: [`Date`](#date)
+        * Unity: N/A    
     * `experiment_params`: Parameters of the experiment.
         * Type: [`ExperimentParams`](#experimentparams)
         * Unity: N/A    
