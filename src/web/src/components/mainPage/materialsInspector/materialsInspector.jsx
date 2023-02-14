@@ -18,7 +18,7 @@ import React from "react";
 
 import styleModule from "./materialsInspector.module.css";
 
-function MaterialsInspector() {
+function MaterialsInspector({ experimentList }) {
 	return (
 		<div className={styleModule.material_inspector}>
 			<div className={styleModule.material_inspector_header}>

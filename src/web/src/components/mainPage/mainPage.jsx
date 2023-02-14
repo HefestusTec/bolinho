@@ -15,7 +15,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
 
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import GraphComponent from "../graphComponent/graphComponent";
 import MaterialSelector from "./materialSelector/materialSelector";
 //import { eel } from "../../App";
@@ -24,10 +24,14 @@ import MaterialsInspector from "./materialsInspector/materialsInspector";
 import ExtraOptions from "./extraOptions/extraOptions";
 
 import GlobalConfigContext from "../../contexts/globalConfigContext";
+import ExperimentsContext from "./contexts/experimentsContext";
 
 function MainPage({ materialList }) {
 	//const [graphData, setGraphData] = useState(makeConstData());
 	const [globalConfig, setGlobalConfig] = useContext(GlobalConfigContext);
+
+	const [experimentList, setExperimentList] = useState([]);
+
 	// THIS IS JUST FOR DEBUG
 	const toggleTheme = () => {
 		if (globalConfig.theme === "dark") {
@@ -38,15 +42,22 @@ function MainPage({ materialList }) {
 	};
 
 	return (
-		<div className={styleModule.content}>
-			<MaterialSelector materialList={materialList} />
-			<GraphComponent className={styleModule.graph} />
-			<MaterialsInspector />
-			<ExtraOptions />
-			<button className={styleModule.ensaio_button} onClick={toggleTheme}>
-				Ensaio
-			</button>
-		</div>
+		<ExperimentsContext.Provider
+			value={[experimentList, setExperimentList]}
+		>
+			<div className={styleModule.content}>
+				<MaterialSelector materialList={materialList} />
+				<GraphComponent className={styleModule.graph} />
+				<MaterialsInspector />
+				<ExtraOptions />
+				<button
+					className={styleModule.ensaio_button}
+					onClick={toggleTheme}
+				>
+					Ensaio
+				</button>
+			</div>
+		</ExperimentsContext.Provider>
 	);
 }
 export default MainPage;

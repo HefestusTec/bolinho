@@ -28,7 +28,7 @@
 }
 .material_selector_button {
 	width: 85%;
-	height: clamp(30px, 7vw, 7vh);
+	height: clamp(30px, 6vh, 45px);
 	background: var(--button_inactive_color);
 	box-shadow: inset 0px 2px 2px rgba(0, 0, 0, 0.25);
 
