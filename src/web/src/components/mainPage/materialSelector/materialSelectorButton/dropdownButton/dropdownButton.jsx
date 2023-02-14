@@ -14,15 +14,24 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
-import { createContext } from "react";
+import React from "react";
 
-export const globalConfigDefault = {
-	theme: "light", // light | dark
-	animationSpeed: "slow", // fast | slow | off
-	animateGraph: "on", // on | off
-	absoluteMaximumForce: 10000,
-};
+import styleModule from "./dropdownButton.module.css";
 
-const GlobalConfigContext = createContext([globalConfigDefault, () => {}]);
-
-export default GlobalConfigContext;
+export default function DropdownButton({ experimentIndex }) {
+	return (
+		<li key={experimentIndex}>
+			<button
+				className={styleModule.dropdown_button}
+				aria-label="Material Selector"
+			>
+				<div className={styleModule.dropdown_button_side}>
+					<div className={styleModule.add_sign}>+</div>
+				</div>
+				<div className={styleModule.dropdown_button_text}>
+					Experimento {experimentIndex}
+				</div>
+			</button>
+		</li>
+	);
+}

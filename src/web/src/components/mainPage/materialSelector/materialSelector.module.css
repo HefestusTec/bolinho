@@ -84,7 +84,7 @@
 	background-position: center;
 	background-repeat: no-repeat;
 	background-size: 55%;
-	transition-duration: 150ms;
+	transition-duration: var(--animation_fast);
 	padding: 0;
 }
 
@@ -113,7 +113,7 @@
 	background-position: center;
 	background-repeat: no-repeat;
 	background-size: 100%;
-	transition-duration: 100ms;
+	transition-duration: var(--animation_fast);
 	padding: 0;
 }
 
@@ -127,7 +127,6 @@
 }
 .selector_content_ul {
 	padding-top: 1.5vh;
-	height: 100%;
 	padding-left: 0.6vw;
 	padding-right: 0.6vw;
 	list-style-type: none;

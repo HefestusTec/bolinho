@@ -31,7 +31,6 @@ function MaterialSelector({ materialList }) {
 
 	const makeButtons = () => {
 		let buttonArray = [];
-		console.log("app ", materialList);
 
 		try {
 			materialList.forEach((element) => {

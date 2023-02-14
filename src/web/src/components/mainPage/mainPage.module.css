@@ -41,7 +41,7 @@
 	font-style: normal;
 	font-weight: 700;
 	font-size: 4vmax;
-	transition-duration: 150ms;
+	transition-duration: var(--animation_fast);
 }
 
 .ensaio_button:hover {

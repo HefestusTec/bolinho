@@ -56,7 +56,7 @@
 	font-size: 2.2vmax;
 	font-weight: 700;
 	border-radius: 0px 15px 15px 0px;
-	transition-duration: 200ms;
+	transition-duration: var(--animation_fast);
 	overflow: hidden;
 }
 
@@ -95,7 +95,7 @@
 	box-shadow: 0px 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
 .side_bar_button_inactive:active {
-	background-color: #1797f85c;
+	background-color: var(--active_color);
 	width: 90%;
 	box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
 }

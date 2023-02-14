@@ -14,26 +14,63 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
-import React from "react";
+import React, { useState } from "react";
 
 import styleModule from "./materialSelectorButton.module.css";
+import DropdownButton from "./dropdownButton/dropdownButton";
 
-function MaterialSelectorButton({ material }) {
+export default function MaterialSelectorButton({ material }) {
+	const [dropdown, setDropdown] = useState(false);
+
+	const getDropdownClassName = () => {
+		if (dropdown) {
+			return [styleModule.dropdown_ul].join(" ");
+		}
+		return [styleModule.dropdown_ul, styleModule.dropdown_hidden].join(" ");
+	};
+
+	const getAddSign = () => {
+		if (dropdown) return "-";
+
+		return "+";
+	};
+
+	const toggleDropDown = () => {
+		setDropdown(!dropdown);
+	};
+
+	const createButton = (experimentIdx) => {
+		return (
+			<DropdownButton experimentIndex={experimentIdx}></DropdownButton>
+		);
+	};
+
+	const makeExperimentButtons = () => {
+		let buttonArray = [];
+		const experiment_array = material.experiment_array;
+		experiment_array.forEach((element) => {
+			buttonArray.push(createButton(element));
+		});
+		return buttonArray;
+	};
+
 	return (
-		<li key={material.index}>
+		<li key={material.index} className={styleModule.material_selector_li}>
 			<button
 				className={styleModule.material_selector_button}
 				aria-label="Material Selector"
+				onClick={toggleDropDown}
 			>
 				<div className={styleModule.material_selector_side}>
-					<div className={styleModule.add_sign}>+</div>
+					<div className={styleModule.add_sign}>{getAddSign()}</div>
 				</div>
 				<div className={styleModule.material_selector_text}>
 					[{material.batch}] {material.name}
 				</div>
 			</button>
+			<ul className={getDropdownClassName()}>
+				{makeExperimentButtons()}
+			</ul>
 		</li>
 	);
 }
-
-export default MaterialSelectorButton;
