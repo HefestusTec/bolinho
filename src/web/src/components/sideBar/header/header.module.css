@@ -45,12 +45,12 @@
 .header_name {
 	font-style: normal;
 	font-weight: 700;
-	font-size: 3vmax;
+	font-size: var(--font_xl);
 	width: 100%;
 	text-align: center;
 }
 .header_copyright {
-	font-size: 0.7vmax;
+	font-size: var(--font_xs);
 	position: absolute;
 	bottom: 5px;
 	right: 5px;

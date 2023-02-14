@@ -14,22 +14,14 @@ try {
 	eel.set_host("ws://localhost:8080");
 } catch {}
 
-async function printOne() {
-	const returnValue = JSON.parse(await eel.get_material_list()());
-	alert(returnValue, 2);
-}
-
 const getMaterialList = async () => {
 	try {
 		const materialList = JSON.parse(await eel.get_material_list()());
-		console.log(materialList);
 		return materialList;
 	} catch (error) {
 		return [];
 	}
 };
-
-printOne();
 
 function App() {
 	const [globalConfig, setGlobalConfig] = useState(globalConfigDefault);
@@ -50,7 +42,12 @@ function App() {
 	};
 	return (
 		<GlobalConfigContext.Provider value={[globalConfig, setGlobalConfig]}>
-			<div className="App" data_theme={globalConfig.theme}>
+			<div
+				className="App"
+				data_theme={globalConfig.theme}
+				animation_speed={globalConfig.animationSpeed}
+				animate_graph={globalConfig.animateGraph}
+			>
 				<SideBar />
 				<div className="content_area">
 					<MainPage materialList={materialList} />

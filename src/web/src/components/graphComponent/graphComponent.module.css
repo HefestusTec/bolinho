@@ -35,8 +35,8 @@
 	height: 100%;
 	width: 100%;
 	position: relative;
-	/*
-	transition-duration: 500ms;*/
+
+	transition-duration: var(--graph_animation);
 }
 
 .graph_area_mini {
@@ -64,7 +64,7 @@
 	background-repeat: no-repeat;
 	background-position: center;
 	background-size: 80%;
-	transition-duration: 200ms;
+	transition-duration: var(--animation_fast);
 }
 
 .open_side_bar_button:hover {
@@ -75,14 +75,14 @@
 	transform: translateY(0vh);
 }
 .open_side_bar_button_active {
-	transition-duration: 200ms;
+	transition-duration: var(--animation_fast);
 
 	background-image: url(./resources/retractMenu.svg);
 	filter: invert(var(--invert_icon));
 }
 
 .open_side_bar_button_inactive {
-	transition-duration: 200ms;
+	transition-duration: var(--animation_fast);
 	background-image: url(./resources/expandMenu.svg);
 	filter: invert(var(--invert_icon));
 }
@@ -101,17 +101,18 @@
 }
 
 .side_bar_hidden {
-	/*
 	animation-name: slide;
-	animation-duration: 1s;
-	*/
-	display: none;
+	animation-duration: var(--graph_animation);
+	animation-fill-mode: forwards;
 }
 @keyframes slide {
 	from {
-		opacity: 100%;
+		width: 20%;
 	}
 	to {
-		opacity: 0;
+		width: 0px;
+	}
+	100% {
+		display: none;
 	}
 }

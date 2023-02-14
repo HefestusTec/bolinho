@@ -38,6 +38,23 @@ All different data types will be shown in this page
 
 ___
 
+## DataPointArray
+!!! quote ""
+    ``` python
+    class DataPointArray:
+        def __init__(self, id=0, data_array=[]):
+            self.id = id
+            self.data_array = data_array 
+    ```
+    > * `id`: Identification (or key) of this element on the data base.
+        * type: `int`
+        * Unity: `mm`
+    * `data_array`: Array of data points, this is the "reading" of an experiment.
+        * Type: [`[DataPoint...]`](#datapoint)
+        * Unity: N/A
+
+___
+
 ## AutoStopParams
 
 !!! quote ""
@@ -138,30 +155,61 @@ ___
 
 ___
 
+## Date
+!!! quote ""
+    ``` python
+    class Date:
+        def __init__(
+            self,
+            day=1,
+            month=1,
+            year=2023,
+        ):
+            self.day = day
+            self.month = month
+            self.year = year
+    ```
+    > * `day`: Day.
+        * Type: `int`
+        * Unity: N/A
+    * `month`: Month.
+        * Type: `int`
+        * Unity: N/A  
+    * `year`: Year.
+        * Type: `int`
+        * Unity: N/A   
+
+___
+
+
 ## Experiment
 !!! quote ""
     ``` python
     class Experiment:
         def __init__(
             self,
-            index=0,
+            id=0,
+            date=Date(),
             experiment_params=ExperimentParams(),
-            data_array=[],
+            data_array_id=0,
             extra_info="",
         ):
             self.experiment_params = experiment_params
-            self.index = index
-            self.data_array = data_array
+            self.id = id
+            self.data_array_id = data_array_id
             self.extra_info = extra_info
     ```
-    > * `index`: Index (or key) of the experiment on the data base.
+    > * `id`: id (or key) of the experiment on the data base.
         * Type: `int`
         * Unity: N/A
+    * `date`: Date of the experiment.
+        * Type: [`Date`](#date)
+        * Unity: N/A    
     * `experiment_params`: Parameters of the experiment.
         * Type: [`ExperimentParams`](#experimentparams)
         * Unity: N/A    
-    * `data_array`: Array of data points, this is the "reading" of an experiment.
-        * Type: [`[DataPoint...]`](#datapoint)
+    * `data_array_id`: Identification (or key) of this experiment [`DataPointArray`](#datapointarray) or "reading", on the data base
+        * Type: `int`
         * Unity: N/A
     * `extra_info`: Extra information about the experiment.
         * Type: `String`
@@ -191,17 +239,17 @@ ___
     ``` python
     class Material:
         def __init__(
-            self, index=0, name="NONE", batch=0, experiment_array=[], supplier=Supplier(), extra_info=""
+            self, id=0, name="NONE", batch=0, experiment_array=[], supplier=Supplier(), extra_info=""
         ):
-            self.index = index
+            self.id = id
             self.name = name
             self.batch = batch
-            # array of the indexes of experiments with this material
+            # array of the ids of experiments with this material
             self.experiment_array = experiment_array
             self.supplier = supplier
             self.extra_info = extra_info
     ```
-    > * `index`: Index (or key) of the material on the data base.
+    > * `id`: Id (or key) of the material on the data base.
         * Type: `int`
         * Unity: N/A
     * `name`: Name of the material.
@@ -210,7 +258,7 @@ ___
     * `batch`: Batch of the material.
         * Type: `int`
         * Unity: N/A
-    * `experiment_array`: Array with the `indexes` or `keys` of the [experiments](#experiment) made with this material.
+    * `experiment_array`: Array with the `ids` or `keys` of the [experiments](#experiment) made with this material.
         * Type: `[int...]`
         * Unity: N/A
     * `supplier`: Supplier of the material.
