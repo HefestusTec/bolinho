@@ -14,12 +14,56 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
-import React from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { eel } from "../../../App";
 import ExperimentButton from "./experimentButton/experimentButton";
+import ExperimentsContext from "../contexts/experimentsContext";
 
 import styleModule from "./experimentsInspector.module.css";
 
-export default function ExperimentsInspector({ experimentList }) {
+const getExperimentPairs = async (experimentList) => {
+	try {
+		const experimentPairs = JSON.parse(
+			await eel.get_experiment_pairs(experimentList)()
+		);
+		return experimentPairs;
+	} catch (error) {
+		return {};
+	}
+};
+
+export default function ExperimentsInspector() {
+	const [experimentList] = useContext(ExperimentsContext);
+	const [experimentPairs, setExperimentPairs] = useState({
+		experiment: null,
+		material: null,
+	});
+
+	useEffect(() => {
+		getExperimentPairs(experimentList).then((response) => {
+			setExperimentPairs(response);
+		});
+	}, [experimentList]);
+
+	const createButton = (pair) => {
+		return (
+			<ExperimentButton
+				experiment={pair.experiment}
+				materialName={pair.material.name}
+			></ExperimentButton>
+		);
+	};
+
+	const makeButtons = () => {
+		let buttonArray = [];
+		try {
+			experimentPairs.forEach((element) => {
+				buttonArray.push(createButton(element));
+			});
+		} catch (error) {}
+		return buttonArray;
+	};
+
 	return (
 		<div className={styleModule.material_inspector}>
 			<div className={styleModule.material_inspector_header}>
@@ -37,12 +81,7 @@ export default function ExperimentsInspector({ experimentList }) {
 							styleModule.material_inspector_search_area_ul
 						}
 					>
-						<ExperimentButton />
-						<ExperimentButton />
-						<ExperimentButton />
-						<ExperimentButton />
-						<ExperimentButton />
-						<ExperimentButton />
+						{makeButtons()}
 					</ul>
 				</div>
 				<div className={styleModule.material_inspector_description}>

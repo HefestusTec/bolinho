@@ -15,20 +15,30 @@
 // You should have received a copy of the GNU General Public License
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
 
-import React from "react";
-
+import React, { useContext } from "react";
+import ExperimentsContext from "../../contexts/experimentsContext";
 import styleModule from "./experimentButton.module.css";
 
-export default function ExperimentButton({ experiment }) {
+export default function ExperimentButton({ experiment, materialName }) {
+	const [experimentList, setExperimentList] = useContext(ExperimentsContext);
+
+	const removeSelf = () => {
+		setExperimentList((experimentList) =>
+			experimentList.filter((element) => element == experiment.id)
+		);
+	};
 	return (
 		<li>
-			<button className={styleModule.experiment_button}>
+			<button
+				className={styleModule.experiment_button}
+				onClick={removeSelf}
+			>
 				<div className={styleModule.experiment_text}>
 					<div className={styleModule.experiment_material_text}>
-						Material
+						{materialName}
 					</div>
 					<div className={styleModule.experiment_experiment_text}>
-						Exp1 [01/01/2022]
+						Exp{experiment.id} [01/01/2022]
 					</div>
 				</div>
 			</button>

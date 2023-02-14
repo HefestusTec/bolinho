@@ -172,6 +172,16 @@ def get_experiment_at(id):
 
 
 @eel.expose
+def get_multiple_experiments(ids):
+    experiment_data_array = []
+    for experimentId in ids:
+        if experimentId < len(experiment_data_base):
+            experiment_data_array.append(experiment_data_base[experimentId])
+    return json.dumps(experiment_data_array, default=lambda x: x.__dict__)
+
+
+
+@eel.expose
 def get_material_list():
     return json.dumps(material_data_base, default=lambda x: x.__dict__)
 
@@ -181,3 +191,25 @@ def get_material_at(id):
     if len(material_data_base) - 1 < id:
         return None
     return json.dumps(material_data_base[id], default=lambda x: x.__dict__)
+
+@eel.expose
+def get_material_with_experiment(experiment_id):
+    print(experiment_id)
+    for material in material_data_base:
+        if(experiment_id in material.experiment_array):
+            return material
+    return None
+
+@eel.expose
+def get_experiment_pair(ids):
+    experiment_pairs_array = []
+    for experimentId in ids:
+        if experimentId < len(experiment_data_base):
+            pair = {
+                'material': get_material_with_experiment(experimentId),
+                'experiment': experiment_data_base[experimentId]
+            }
+            experiment_pairs_array.append(pair)
+
+
+    return json.dumps(experiment_pairs_array, default=lambda x: x.__dict__)
