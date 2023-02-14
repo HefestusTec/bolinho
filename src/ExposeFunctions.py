@@ -33,6 +33,12 @@ class DataPoint:
         self.y = y
 
 
+class DataPointArray:
+    def __init__(self, id=0, data_array=[]):
+        self.id = id
+        self.data_array = data_array
+
+
 class AutoStopParams:
     def __init__(self, force_loss=20, max_force=1000, max_travel=100, max_time=600):
         self.force_loss = force_loss
@@ -85,16 +91,16 @@ class Date:
 class Experiment:
     def __init__(
         self,
-        index=0,
+        id=0,
         date=Date(),
         experiment_params=ExperimentParams(),
-        data_array=[],
+        data_array_id=0,
         extra_info="",
     ):
         self.experiment_params = experiment_params
-        self.index = index
+        self.id = id
         self.date = date
-        self.data_array = data_array
+        self.data_array_id = data_array_id
         self.extra_info = extra_info
 
 
@@ -107,42 +113,49 @@ class Supplier:
 class Material:
     def __init__(
         self,
-        index=0,
+        id=0,
         name="NONE",
         batch=0,
         experiment_array=[],
         supplier=Supplier(),
         extra_info="",
     ):
-        self.index = index
+        self.id = id
         self.name = name
         self.batch = batch
-        # array of the indexes of experiments with this material
+        # array of the ids of experiments with this material
         self.experiment_array = experiment_array
         self.supplier = supplier
         self.extra_info = extra_info
 
 
+data_point_array_data_base = [
+    DataPointArray(0, get_random_data_points(23)),
+    DataPointArray(1, get_random_data_points(15)),
+    DataPointArray(2, get_random_data_points(46)),
+    DataPointArray(3, get_random_data_points(60)),
+]
+
 experiment_data_base = [
     Experiment(
-        index=0,
-        data_array=get_random_data_points(23),
+        id=0,
+        data_array_id=0,
         extra_info="Feito pelo hermes",
     ),
-    Experiment(index=1, data_array=get_random_data_points(15)),
-    Experiment(index=2, date=Date(3, 11, 2011), data_array=get_random_data_points(60)),
+    Experiment(id=1, data_array_id=1),
+    Experiment(id=2, date=Date(3, 11, 2011), data_array_id=2),
     Experiment(
-        index=3,
+        id=3,
         date=Date(22, 11, 2011),
-        data_array=get_random_data_points(46),
+        data_array_id=3,
         extra_info="Cilindro em óleo",
     ),
 ]
 
 material_data_base = [
-    Material(index=0, name="Aço", batch=23, experiment_array=[0, 2]),
-    Material(index=1, name="PLA", batch=2, experiment_array=[1]),
-    Material(index=2, name="ABS", batch=0, experiment_array=[3]),
+    Material(id=0, name="Aço", batch=23, experiment_array=[0, 2]),
+    Material(id=1, name="PLA", batch=2, experiment_array=[1]),
+    Material(id=2, name="ABS", batch=0, experiment_array=[3]),
 ]
 
 
@@ -152,16 +165,11 @@ def get_experiment_list():
 
 
 @eel.expose
-def get_experiment_at(index):
-    if len(experiment_data_base) - 1 < index:
+def get_experiment_at(id):
+    if len(experiment_data_base) - 1 < id:
         return None
-    return json.dumps(experiment_data_base[index].__dict__)
+    return json.dumps(experiment_data_base[id], default=lambda x: x.__dict__)
 
-@eel.expose
-def get_experiment_date_at(index):
-    if len(experiment_data_base) - 1 < index:
-        return None
-    return json.dumps(experiment_data_base[index].date.__dict__)
 
 @eel.expose
 def get_material_list():
@@ -169,7 +177,7 @@ def get_material_list():
 
 
 @eel.expose
-def get_material_at(index):
-    if len(material_data_base) - 1 < index:
+def get_material_at(id):
+    if len(material_data_base) - 1 < id:
         return None
-    return json.dumps(material_data_base[index], default=lambda x: x.__dict__)
+    return json.dumps(material_data_base[id], default=lambda x: x.__dict__)

@@ -20,33 +20,32 @@ import styleModule from "./dropdownButton.module.css";
 
 const getExperimentDate = async (index) => {
 	try {
-		const date = JSON.parse(await eel.get_experiment_date_at(index)());
-		return date;
+		return JSON.parse(await eel.get_experiment_at(index)());
 	} catch (error) {
 		return 0;
 	}
 };
 
 export default function DropdownButton({ experimentIndex }) {
-	const [experimentDate, setExperimentDate] = useState(0);
+	const [experiment, setExperiment] = useState(0);
 
 	useEffect(() => {
 		getExperimentDate(experimentIndex).then((response) => {
-			setExperimentDate(response);
+			setExperiment(response);
 		});
 	}, [experimentIndex]);
 
 	const getFormattedDate = () => {
 		try {
 			const day =
-				experimentDate.day.toString().length === 2
-					? experimentDate.day.toString()
-					: 0 + experimentDate.day.toString();
+				experiment.date.day.toString().length === 2
+					? experiment.date.day.toString()
+					: 0 + experiment.date.day.toString();
 			const month =
-				experimentDate.month.toString().length === 2
-					? experimentDate.month.toString()
-					: 0 + experimentDate.month.toString();
-			const date = `${day}/${month}/${experimentDate.year}`;
+				experiment.date.month.toString().length === 2
+					? experiment.date.month.toString()
+					: 0 + experiment.date.month.toString();
+			const date = `${day}/${month}/${experiment.date.year}`;
 			return date;
 		} catch (error) {
 			return 0;
