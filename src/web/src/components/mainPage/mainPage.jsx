@@ -20,13 +20,13 @@ import GraphComponent from "../graphComponent/graphComponent";
 import MaterialSelector from "./materialSelector/materialSelector";
 //import { eel } from "../../App";
 import styleModule from "./mainPage.module.css";
-import MaterialsInspector from "./materialsInspector/materialsInspector";
+import ExperimentsInspector from "./experimentsInspector/experimentsInspector";
 import ExtraOptions from "./extraOptions/extraOptions";
 
 import GlobalConfigContext from "../../contexts/globalConfigContext";
 import ExperimentsContext from "./contexts/experimentsContext";
 
-function MainPage({ materialList }) {
+export default function MainPage({ materialList }) {
 	//const [graphData, setGraphData] = useState(makeConstData());
 	const [globalConfig, setGlobalConfig] = useContext(GlobalConfigContext);
 
@@ -48,16 +48,15 @@ function MainPage({ materialList }) {
 			<div className={styleModule.content}>
 				<MaterialSelector materialList={materialList} />
 				<GraphComponent className={styleModule.graph} />
-				<MaterialsInspector />
+				<ExperimentsInspector />
 				<ExtraOptions />
 				<button
 					className={styleModule.ensaio_button}
 					onClick={toggleTheme}
 				>
-					Ensaio
+					ENSAIO
 				</button>
 			</div>
 		</ExperimentsContext.Provider>
 	);
 }
-export default MainPage;

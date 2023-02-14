@@ -65,9 +65,21 @@
 .material_inspector_search_area {
 	background-color: var(--background2_color);
 	width: 35%;
-	box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
+	box-shadow: inset -2px 0px 4px rgba(0, 0, 0, 0.25);
 	color: var(--font_color);
 	font-size: var(--font_s);
+}
+
+.material_inspector_search_area_ul {
+	height: calc(100% - 1.5vh);
+	padding-left: 0;
+	margin: 0;
+	padding-top: 1.5vh;
+
+	padding-right: 0.5vw;
+	list-style-type: none;
+	overflow-y: scroll;
+	overflow-x: hidden;
 }
 
 .material_inspector_description {

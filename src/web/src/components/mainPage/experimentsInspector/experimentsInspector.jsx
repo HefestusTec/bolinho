@@ -15,10 +15,11 @@
 // You should have received a copy of the GNU General Public License
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
 import React from "react";
+import ExperimentButton from "./experimentButton/experimentButton";
 
-import styleModule from "./materialsInspector.module.css";
+import styleModule from "./experimentsInspector.module.css";
 
-function MaterialsInspector({ experimentList }) {
+export default function ExperimentsInspector({ experimentList }) {
 	return (
 		<div className={styleModule.material_inspector}>
 			<div className={styleModule.material_inspector_header}>
@@ -31,7 +32,18 @@ function MaterialsInspector({ experimentList }) {
 			</div>
 			<div className={styleModule.material_inspector_content}>
 				<div className={styleModule.material_inspector_search_area}>
-					search area
+					<ul
+						className={
+							styleModule.material_inspector_search_area_ul
+						}
+					>
+						<ExperimentButton />
+						<ExperimentButton />
+						<ExperimentButton />
+						<ExperimentButton />
+						<ExperimentButton />
+						<ExperimentButton />
+					</ul>
 				</div>
 				<div className={styleModule.material_inspector_description}>
 					Material: Aço carbono Lote: 1202 Fornecedor: MinasLTDA
@@ -43,5 +55,3 @@ function MaterialsInspector({ experimentList }) {
 		</div>
 	);
 }
-
-export default MaterialsInspector;
