@@ -41,6 +41,7 @@ def start_eel():
     eel_kwargs = dict(
         host="localhost",
         port=8080,
+        shutdown_delay=3,
         # size=(1280, 800),
     )
     page_name = "index.html"

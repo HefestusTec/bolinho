@@ -43,7 +43,7 @@
 	font-family: "Roboto";
 	font-style: normal;
 	font-weight: 700;
-	font-size: clamp(0.8rem, 1.5vw, 1.3rem);
+	font-size: var(--font_m);
 	text-align: center;
 }
 .extra_options_content {
@@ -51,4 +51,5 @@
 	height: calc(100% - clamp(20px, 5.5vh, 75px));
 	padding: 3%;
 	color: var(--font_color);
+	font-size: var(--font_s);
 }

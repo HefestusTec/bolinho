@@ -46,7 +46,7 @@
 	font-family: "Roboto";
 	font-style: normal;
 	font-weight: 700;
-	font-size: clamp(0.8rem, 1.5vw, 1.3rem);
+	font-size: var(--font_m);
 	text-align: center;
 }
 
@@ -67,6 +67,7 @@
 	width: 35%;
 	box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
 	color: var(--font_color);
+	font-size: var(--font_s);
 }
 
 .material_inspector_description {
@@ -75,7 +76,7 @@
 	width: 65%;
 	color: var(--font_color);
 	font-family: Roboto;
-	font-size: 18px;
+	font-size: var(--font_s);
 	font-weight: 400;
 	text-align: left;
 	box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);

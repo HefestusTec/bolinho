@@ -19,9 +19,6 @@
 
 @import url(../../../../../variables.css);
 
-.dropdown_li {
-}
-
 .dropdown_button {
 	width: 97%;
 	height: clamp(20px, 4vw, 4vh);
@@ -62,7 +59,7 @@
 	font-family: "Roboto";
 	font-style: normal;
 	font-weight: 700;
-	font-size: 2.3vmax;
+	font-size: var(--font_m);
 	color: var(--font_color);
 }
 
@@ -71,6 +68,6 @@
 	font-family: "Roboto";
 	font-style: normal;
 	font-weight: 700;
-	font-size: 1.3vmax;
+	font-size: var(--font_xs);
 	color: var(--font_color);
 }

@@ -40,7 +40,7 @@
 	font-family: "Roboto";
 	font-style: normal;
 	font-weight: 700;
-	font-size: 4vmax;
+	font-size: var(--font_xl);
 	transition-duration: var(--animation_fast);
 }
 

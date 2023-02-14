@@ -48,7 +48,7 @@
 	font-family: "Roboto";
 	font-style: normal;
 	font-weight: 700;
-	font-size: clamp(0.8rem, 1.5vw, 1.3rem);
+	font-size: var(--font_m);
 	text-align: center;
 }
 
@@ -66,7 +66,7 @@
 	padding-left: 1vw;
 	font-family: "Roboto";
 	font-weight: 600;
-	font-size: clamp(0.8rem, 1.2vw, 1.3rem);
+	font-size: var(--font_m);
 	border: none;
 	box-shadow: inset 0px 2px 2px rgba(0, 0, 0, 0.25);
 	color: var(--font_color_inverted);
