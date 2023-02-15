@@ -14,36 +14,14 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
-import React, { useState, useEffect, useContext } from "react";
-import { eel } from "../../../App";
+import React, { useContext } from "react";
 import ExperimentButton from "./experimentButton/experimentButton";
 import ExperimentsContext from "../contexts/experimentsContext";
 
 import styleModule from "./experimentsInspector.module.css";
 
-const getExperimentPairs = async (experimentList) => {
-	try {
-		const experimentPairs = JSON.parse(
-			await eel.get_experiment_pairs(experimentList)()
-		);
-		return experimentPairs;
-	} catch (error) {
-		return {};
-	}
-};
-
 export default function ExperimentsInspector() {
 	const [experimentList] = useContext(ExperimentsContext);
-	const [experimentPairs, setExperimentPairs] = useState({
-		experiment: null,
-		material: null,
-	});
-
-	useEffect(() => {
-		getExperimentPairs(experimentList).then((response) => {
-			setExperimentPairs(response);
-		});
-	}, [experimentList]);
 
 	const createButton = (pair) => {
 		return (
@@ -57,7 +35,7 @@ export default function ExperimentsInspector() {
 	const makeButtons = () => {
 		let buttonArray = [];
 		try {
-			experimentPairs.forEach((element) => {
+			experimentList.forEach((element) => {
 				buttonArray.push(createButton(element));
 			});
 		} catch (error) {}

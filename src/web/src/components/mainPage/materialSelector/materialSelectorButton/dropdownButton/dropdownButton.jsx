@@ -27,6 +27,16 @@ const getExperimentDate = async (index) => {
 	}
 };
 
+const getExperimentPair = async (id) => {
+	try {
+		const experimentPair = JSON.parse(await eel.get_experiment_dict(id)());
+		console.log(experimentPair);
+		return experimentPair;
+	} catch (error) {
+		return {};
+	}
+};
+
 export default function DropdownButton({ experimentIndex }) {
 	const [experimentList, setExperimentList] = useContext(ExperimentsContext);
 	const [experiment, setExperiment] = useState(0);
@@ -55,11 +65,20 @@ export default function DropdownButton({ experimentIndex }) {
 	};
 
 	const buttonClicked = () => {
-		if (experimentList.includes(experimentIndex)) return;
-		setExperimentList((experimentList) => [
-			...experimentList,
-			experimentIndex,
-		]);
+		getExperimentPair(experimentIndex).then((response) => {
+			// Checking if the experiment id already exists in the experiment list
+			if (
+				experimentList.some(
+					(e) => e.experiment.id === response.experiment.id
+				)
+			) {
+				return;
+			}
+			setExperimentList((experimentList) => [
+				...experimentList,
+				response,
+			]);
+		});
 	};
 
 	return (

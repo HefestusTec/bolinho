@@ -200,16 +200,16 @@ def get_material_with_experiment(experiment_id):
             return material
     return None
 
+
 @eel.expose
-def get_experiment_pair(ids):
-    experiment_pairs_array = []
-    for experimentId in ids:
-        if experimentId < len(experiment_data_base):
-            pair = {
-                'material': get_material_with_experiment(experimentId),
-                'experiment': experiment_data_base[experimentId]
-            }
-            experiment_pairs_array.append(pair)
+def get_experiment_dict(id):
+    material_fragment =  get_material_with_experiment(id)
+    experiment_fragment = experiment_data_base[id]
+    data_array_fragment = data_point_array_data_base[experiment_fragment.data_array_id]
+    pair = {
+        'material': material_fragment,
+        'experiment': experiment_fragment,
+        'data_array': data_array_fragment
+    }
 
-
-    return json.dumps(experiment_pairs_array, default=lambda x: x.__dict__)
+    return json.dumps(pair, default=lambda x: x.__dict__)

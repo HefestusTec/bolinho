@@ -23,10 +23,30 @@ export default function ExperimentButton({ experiment, materialName }) {
 	const [experimentList, setExperimentList] = useContext(ExperimentsContext);
 
 	const removeSelf = () => {
-		setExperimentList((experimentList) =>
-			experimentList.filter((element) => element == experiment.id)
+		const newCartData = experimentList.filter(
+			(d) => d.experiment.id !== experiment.id
 		);
+
+		setExperimentList(newCartData);
 	};
+
+	const getFormattedDate = () => {
+		try {
+			const day =
+				experiment.date.day.toString().length === 2
+					? experiment.date.day.toString()
+					: 0 + experiment.date.day.toString();
+			const month =
+				experiment.date.month.toString().length === 2
+					? experiment.date.month.toString()
+					: 0 + experiment.date.month.toString();
+			const date = `${day}/${month}/${experiment.date.year}`;
+			return date;
+		} catch (error) {
+			return 0;
+		}
+	};
+
 	return (
 		<li>
 			<button
@@ -38,7 +58,7 @@ export default function ExperimentButton({ experiment, materialName }) {
 						{materialName}
 					</div>
 					<div className={styleModule.experiment_experiment_text}>
-						Exp{experiment.id} [01/01/2022]
+						Exp{experiment.id} [{getFormattedDate()}]
 					</div>
 				</div>
 			</button>
