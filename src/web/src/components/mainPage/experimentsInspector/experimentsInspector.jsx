@@ -14,11 +14,34 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
-import React from "react";
+import React, { useContext } from "react";
+import ExperimentButton from "./experimentButton/experimentButton";
+import ExperimentsContext from "../contexts/experimentsContext";
 
-import styleModule from "./materialsInspector.module.css";
+import styleModule from "./experimentsInspector.module.css";
 
-function MaterialsInspector() {
+export default function ExperimentsInspector() {
+	const [experimentList] = useContext(ExperimentsContext);
+
+	const createButton = (pair) => {
+		return (
+			<ExperimentButton
+				experiment={pair.experiment}
+				materialName={pair.material.name}
+			></ExperimentButton>
+		);
+	};
+
+	const makeButtons = () => {
+		let buttonArray = [];
+		try {
+			experimentList.forEach((element) => {
+				buttonArray.push(createButton(element));
+			});
+		} catch (error) {}
+		return buttonArray;
+	};
+
 	return (
 		<div className={styleModule.material_inspector}>
 			<div className={styleModule.material_inspector_header}>
@@ -31,7 +54,13 @@ function MaterialsInspector() {
 			</div>
 			<div className={styleModule.material_inspector_content}>
 				<div className={styleModule.material_inspector_search_area}>
-					search area
+					<ul
+						className={
+							styleModule.material_inspector_search_area_ul
+						}
+					>
+						{makeButtons()}
+					</ul>
 				</div>
 				<div className={styleModule.material_inspector_description}>
 					Material: Aço carbono Lote: 1202 Fornecedor: MinasLTDA
@@ -43,5 +72,3 @@ function MaterialsInspector() {
 		</div>
 	);
 }
-
-export default MaterialsInspector;

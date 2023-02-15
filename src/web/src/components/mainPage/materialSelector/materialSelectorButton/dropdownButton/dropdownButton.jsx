@@ -14,9 +14,10 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { eel } from "../../../../../App";
 import styleModule from "./dropdownButton.module.css";
+import ExperimentsContext from "../../../contexts/experimentsContext";
 
 const getExperimentDate = async (index) => {
 	try {
@@ -26,7 +27,17 @@ const getExperimentDate = async (index) => {
 	}
 };
 
+const getExperimentPair = async (id) => {
+	try {
+		const experimentPair = JSON.parse(await eel.get_experiment_dict(id)());
+		return experimentPair;
+	} catch (error) {
+		return {};
+	}
+};
+
 export default function DropdownButton({ experimentIndex }) {
+	const [experimentList, setExperimentList] = useContext(ExperimentsContext);
 	const [experiment, setExperiment] = useState(0);
 
 	useEffect(() => {
@@ -52,14 +63,32 @@ export default function DropdownButton({ experimentIndex }) {
 		}
 	};
 
+	const buttonClicked = () => {
+		getExperimentPair(experimentIndex).then((response) => {
+			// Checking if the experiment id already exists in the experiment list
+			if (
+				experimentList.some(
+					(e) => e.experiment.id === response.experiment.id
+				)
+			) {
+				return;
+			}
+			setExperimentList((experimentList) => [
+				...experimentList,
+				response,
+			]);
+		});
+	};
+
 	return (
 		<li key={experimentIndex}>
 			<button
 				className={styleModule.dropdown_button}
 				aria-label="Material Selector"
+				onClick={buttonClicked}
 			>
 				<div className={styleModule.dropdown_button_side}>
-					<div className={styleModule.add_sign}>+</div>
+					<div className={styleModule.add_sign}></div>
 				</div>
 				<div className={styleModule.dropdown_button_text}>
 					Experimento {experimentIndex} [{getFormattedDate()}]

@@ -15,58 +15,59 @@
 // You should have received a copy of the GNU General Public License
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styleModule from "./graphComponent.module.css";
 
 import "rc-slider/assets/index.css";
 import ChartComponent from "./chartComponent/chartComponent";
 import SliderComponent from "./sliderComponent/sliderComponent";
-import { DataPoint, ExperimentPlotData } from "../../classes";
+import { ExperimentPlotData } from "../../classes";
 
-function getRandomInt(min, max) {
-	min = Math.ceil(min);
-	max = Math.floor(max);
-	return Math.floor(Math.random() * (max - min) + min); // The maximum is exclusive and the minimum is inclusive
-}
-
-const makeRandomData = () => {
-	let randData = [];
-	for (let i = 0; i < getRandomInt(5, 30); i++) {
-		randData.push(new DataPoint(i * 5, getRandomInt(5, 30)));
-	}
-	return randData;
+const defaultMaxValues = {
+	plotDataArray: [],
+	maxValues: { x: 100, y: 100 },
 };
 
-const makeConstData = () => {
-	return [
-		new DataPoint(0, 10),
-		new DataPoint(10, 40),
-		new DataPoint(20, 20),
-		new DataPoint(25, 30),
-		new DataPoint(30, 10),
-	];
+const getMaxData = (experimentArray) => {
+	if (experimentArray.length === 0) return defaultMaxValues;
+	let maxX = 0;
+	let maxY = Number.MIN_VALUE;
+	experimentArray.forEach((element) => {
+		if (element.maxDataValues.x > maxX) maxX = element.maxDataValues.x;
+		if (element.maxDataValues.y > maxY) maxY = element.maxDataValues.y;
+	});
+	return { x: maxX, y: maxY };
 };
 
-function GraphComponent({ initialData = [] }) {
-	const getMaxData = () => {
-		let maxX = 0;
-		let maxY = Number.MIN_VALUE;
-		experimentArray.forEach((element) => {
-			if (element.maxDataValues.x > maxX) maxX = element.maxDataValues.x;
-			if (element.maxDataValues.y > maxY) maxY = element.maxDataValues.y;
-		});
-		return { x: maxX, y: maxY };
-	};
-
-	const [experimentArray] = useState([
-		new ExperimentPlotData("Experimento 1", makeConstData(), "#19e590"),
-		new ExperimentPlotData("Experimento 2", makeRandomData(), "#1797F8"),
-	]);
+function GraphComponent({ experimentList }) {
+	const [experimentArray, setExperimentArray] = useState(defaultMaxValues);
 
 	const [leftHandlePos, setLeftHandlePos] = useState(0);
 	const [rightHandlePos, setRightHandlePos] = useState(100);
-	const [maxDataValues] = useState(getMaxData());
+
 	const [showSideBar, setShowSideBar] = useState(true);
+
+	useEffect(() => {
+		const generateExperimentPlotData = () => {
+			let experimentPlotArray = [];
+			experimentList.forEach((element) => {
+				experimentPlotArray.push(
+					new ExperimentPlotData(
+						element.material.name,
+						element.data_array,
+						"#" + Math.floor(Math.random() * 16777215).toString(16)
+					)
+				);
+			});
+			return experimentPlotArray;
+		};
+		const plotDataArray = generateExperimentPlotData();
+		const maxVals = getMaxData(plotDataArray);
+		setExperimentArray({
+			plotDataArray: plotDataArray,
+			maxValues: maxVals,
+		});
+	}, [experimentList]);
 
 	const getOpenSideBarButtonClassName = () => {
 		return showSideBar
@@ -110,8 +111,8 @@ function GraphComponent({ initialData = [] }) {
 							min: leftHandlePos,
 							max: rightHandlePos,
 						}}
-						experimentPlotDataArray={experimentArray}
-						allMaxDataValues={maxDataValues}
+						experimentPlotDataArray={experimentArray.plotDataArray}
+						allMaxDataValues={experimentArray.maxValues}
 					></ChartComponent>
 				</div>
 				<div className={styleModule.side_bar_button_div}>
@@ -124,7 +125,7 @@ function GraphComponent({ initialData = [] }) {
 				<div className={styleModule.bottom_part}>
 					<SliderComponent
 						setChartMinMax={setChartMinMax}
-						dataRightMax={maxDataValues.x}
+						dataRightMax={experimentArray.maxValues.x}
 					/>
 				</div>
 			</div>

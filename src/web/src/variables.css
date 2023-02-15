@@ -40,11 +40,12 @@ html {
 
 	--graph_animation: 350ms;
 
+	--font_xxs: 1em;
 	--font_xs: 1.2em;
 	--font_s: 1.6em;
 	--font_m: 2em;
 	--font_l: 3.2em;
-	--font_xl: 4.2em;
+	--font_xl: 4em;
 }
 [data_theme="light"] {
 	--background_color: #ffffff; /* Background color of the components */
