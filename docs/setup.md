@@ -26,7 +26,7 @@ python -m venv venv
 
 The a directory `venv` should be created in the root folder.
 
-Para ativar:
+How to activate:
 
 
 !!! admonition-windows "**Windows** activation"
@@ -35,7 +35,7 @@ Para ativar:
     venv/Scripts/activate
     ```
 
-ou
+or
 
 !!! admonition-linux "**Linux** activation"
 
