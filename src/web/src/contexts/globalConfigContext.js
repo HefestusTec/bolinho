@@ -17,7 +17,9 @@
 import { createContext } from "react";
 
 export const globalConfigDefault = {
-	theme: "light",
+	theme: "light", // light | dark
+	animationSpeed: "slow", // fast | slow | off
+	animateGraph: "on", // on | off
 	absoluteMaximumForce: 10000,
 };
 

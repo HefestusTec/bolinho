@@ -18,30 +18,47 @@
  */
 @import url(../../../../variables.css);
 
+.material_selector_li {
+	border-width: 0px 0px 0.3vh 0px;
+	border-bottom-style: groove;
+	border-radius: clamp(10px, 1vw, 20px);
+	display: flex;
+	flex-direction: column;
+	margin-bottom: 2vh;
+}
 .material_selector_button {
-	width: 97%;
+	width: 85%;
 	height: clamp(30px, 7vw, 7vh);
-	background: var(--content_background_color);
-	border-radius: 10px;
+	background: var(--button_inactive_color);
+	box-shadow: inset 0px 2px 2px rgba(0, 0, 0, 0.25);
+
+	border-radius: clamp(10px, 1vw, 20px);
 	margin-bottom: clamp(5px, 1.5vh, 20px);
 	display: flex;
 	float: left;
 	padding: 0;
 	align-items: center;
 	overflow: hidden;
-	transition-duration: 200ms;
+	transition-duration: var(--animation_fast);
 }
 
 .material_selector_button:hover {
+	box-shadow: none;
 	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-	transform: translateX(0.5vw);
+	background-color: var(--content_background_color);
+	width: 90%;
 }
 
 .material_selector_button:active {
 	box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
-	transform: translateX(0.5vw);
+	background-color: var(--active_color);
 }
 
+.material_selector_button_active {
+	width: 97%;
+	background: var(--button_active_color);
+	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
 .material_selector_side {
 	width: 4vw;
 	height: 100%;
@@ -55,7 +72,7 @@
 	font-family: "Roboto";
 	font-style: normal;
 	font-weight: 700;
-	font-size: 2.3vmax;
+	font-size: var(--font_m);
 	color: var(--font_color);
 }
 
@@ -64,6 +81,44 @@
 	font-family: "Roboto";
 	font-style: normal;
 	font-weight: 700;
-	font-size: 1.3vmax;
+	font-size: var(--font_s);
 	color: var(--font_color);
+}
+
+.dropdown_ul {
+	list-style-type: none;
+	padding-left: 2vw;
+	animation: slide-in;
+	animation-duration: var(--animation_slow);
+	animation-timing-function: cubic-bezier(0.47, 1.64, 0.41, 0.7);
+}
+
+.dropdown_hidden {
+	animation: slide-out;
+	animation-duration: var(--animation_slow);
+	animation-timing-function: ease-in;
+	animation-fill-mode: forwards;
+}
+
+@keyframes slide-in {
+	from {
+		transform: translateX(-100%);
+	}
+	to {
+		transform: translateX(0);
+	}
+}
+
+@keyframes slide-out {
+	0% {
+		transform: translateX(0);
+	}
+	90% {
+		transform: translateX(-100%);
+	}
+	100% {
+		display: none;
+		position: fixed;
+		z-index: -5;
+	}
 }

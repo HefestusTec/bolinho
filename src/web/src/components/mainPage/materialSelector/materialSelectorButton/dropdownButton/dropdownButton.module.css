@@ -16,40 +16,56 @@
  * You should have received a copy of the GNU General Public License
  * along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
  */
-@import url(../../../variables.css);
 
-.extra_options {
-	grid-column-start: 7;
-	grid-column-end: 11;
-	grid-row-start: 9;
-	grid-row-end: 14;
-	background: var(--background_color);
-	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-	border-radius: clamp(2px, 3vh, 20px);
+@import url(../../../../../variables.css);
+
+.dropdown_button {
+	width: 97%;
+	height: clamp(20px, 5.5vh, 5vw);
+	background: var(--content_background_color);
+	border-radius: clamp(3px, 0.5vw, 10px);
+	margin-bottom: clamp(3px, 1vh, 10px);
+
+	display: flex;
+	float: left;
+	padding: 0;
+	align-items: center;
 	overflow: hidden;
+	transition-duration: var(--animation_fast);
 }
 
-.extra_options_header {
-	background: var(--primary_color);
-	height: clamp(20px, 5.5vh, 75px);
-	width: 100%;
-	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+.dropdown_button:hover {
+	box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
+	transform: translateX(0.5vw);
+}
+
+.dropdown_button:active {
+	box-shadow: none;
+
+	transform: translateX(0.5vw);
+	background-color: var(--active_color);
+}
+
+.dropdown_button_side {
+	width: 2.5vw;
+	height: 100%;
 	display: flex;
 	align-items: center;
 }
-.extra_options_header_text {
+
+.add_sign {
 	width: 100%;
-	color: var(--font_color_inverted);
 	font-family: "Roboto";
 	font-style: normal;
 	font-weight: 700;
 	font-size: var(--font_m);
-	text-align: center;
-}
-.extra_options_content {
-	width: 100%;
-	height: calc(100% - clamp(20px, 5.5vh, 75px));
-	padding: 3%;
 	color: var(--font_color);
-	font-size: var(--font_s);
+}
+
+.dropdown_button_text {
+	font-family: "Roboto";
+	font-style: normal;
+	font-weight: 700;
+	font-size: var(--font_xs);
+	color: var(--font_color);
 }

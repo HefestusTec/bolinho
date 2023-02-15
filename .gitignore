@@ -2,3 +2,4 @@ venv/
 site/
 .prettierignore
 *.spec
+node_modules/

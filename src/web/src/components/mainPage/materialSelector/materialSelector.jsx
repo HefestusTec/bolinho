@@ -19,14 +19,32 @@ import React from "react";
 import styleModule from "./materialSelector.module.css";
 import MaterialSelectorButton from "./materialSelectorButton/materialSelectorButton";
 
-function MaterialSelector() {
+function MaterialSelector({ materialList }) {
 	//const [graphData, setGraphData] = useState(makeConstData());
+	const createButton = (material) => {
+		return (
+			<MaterialSelectorButton
+				material={material}
+			></MaterialSelectorButton>
+		);
+	};
+
+	const makeButtons = () => {
+		let buttonArray = [];
+
+		try {
+			materialList.forEach((element) => {
+				buttonArray.push(createButton(element));
+			});
+		} catch (error) {}
+		return buttonArray;
+	};
 
 	return (
 		<div className={styleModule.material_selector}>
 			<div className={styleModule.selector_header}>
 				<div className={styleModule.selector_header_text}>
-					Selecionar Material
+					Selecionar Experimento
 				</div>
 				<div className={styleModule.selector_header_bottom}>
 					<input
@@ -48,21 +66,7 @@ function MaterialSelector() {
 					</div>
 				</div>
 			</div>
-			<ul className={styleModule.selector_content_ul}>
-				<MaterialSelectorButton />
-				<MaterialSelectorButton />
-				<MaterialSelectorButton />
-				<MaterialSelectorButton />
-				<MaterialSelectorButton />
-				<MaterialSelectorButton />
-				<MaterialSelectorButton />
-				<MaterialSelectorButton />
-				<MaterialSelectorButton />
-				<MaterialSelectorButton />
-				<MaterialSelectorButton />
-				<MaterialSelectorButton />
-				<MaterialSelectorButton />
-			</ul>
+			<ul className={styleModule.selector_content_ul}>{makeButtons()}</ul>
 		</div>
 	);
 }

@@ -40,8 +40,8 @@
 	font-family: "Roboto";
 	font-style: normal;
 	font-weight: 700;
-	font-size: 4vmax;
-	transition-duration: 150ms;
+	font-size: var(--font_xl);
+	transition-duration: var(--animation_fast);
 }
 
 .ensaio_button:hover {
@@ -50,7 +50,9 @@
 }
 
 .ensaio_button:active {
-	background: #1bbd87;
+	background: var(--active_color);
+	opacity: 1;
+
 	transform: translateY(0vh);
 
 	box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);

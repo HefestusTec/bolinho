@@ -24,40 +24,77 @@ html {
 	--primary_color: #444444; /* Primary color, for example this is the color of the headers */
 	--primary_color_shader: #525252; /* Search bar color */
 	--secondary_color: #888888; /* Search button color */
-	--side_bar_button_inactive_color: #dfdfdf;
+	--button_active_color: #ffffff;
+	--button_inactive_color: #cecece;
 	--background2_color: #dfdfdf; /* Second background color of the components */
 	--content_background_color: #f2f2f2; /* Background color of the content area */
 	--font_color: #444444; /* Main font color */
 	--font_color_inverted: #f2f2f2; /* Inverted font color */
 	--invert_icon: 0%; /* Auto invert color of icons */
 	--positive_button_color: #19e590; /* Color of positive buttons, such as go, start etc. */
+	--active_color: #1797f85c; /* Color when you press a button */
 	--logo_schumacher: url(./components/sideBar/resources/LogoSchumacher.png);
+
+	--animation_fast: 150ms;
+	--animation_slow: 350ms;
+
+	--graph_animation: 350ms;
+
+	--font_xs: 1.2em;
+	--font_s: 1.6em;
+	--font_m: 2em;
+	--font_l: 3.2em;
+	--font_xl: 4.2em;
 }
 [data_theme="light"] {
 	--background_color: #ffffff; /* Background color of the components */
 	--primary_color: #444444; /* Primary color, for example this is the color of the headers */
 	--primary_color_shader: #525252; /* Search bar color */
 	--secondary_color: #888888; /* Search button color */
-	--side_bar_button_inactive_color: #dfdfdf;
+	--button_active_color: #ffffff;
+	--button_inactive_color: #cecece;
 	--background2_color: #dfdfdf; /* Second background color of the components */
 	--content_background_color: #f2f2f2; /* Background color of the content area */
 	--font_color: #444444; /* Main font color */
 	--font_color_inverted: #f2f2f2; /* Inverted font color */
 	--invert_icon: 0%; /* Auto invert color of icons */
 	--positive_button_color: #19e590; /* Color of positive buttons, such as go, start etc. */
+	--active_color: #1797f85c;
 	--logo_schumacher: url(./components/sideBar/resources/LogoSchumacher.png);
 }
 [data_theme="dark"] {
 	--background_color: #272727;
 	--primary_color: #242424;
-	--primary_color_shader: #8d8d8d;
+	--primary_color_shader: #525252;
 	--secondary_color: #888888;
-	--side_bar_button_inactive_color: #181818;
+	--button_active_color: #383838;
+	--button_inactive_color: #1d1d1d;
 	--background2_color: #2e2e2e;
 	--content_background_color: #202020;
 	--font_color: #bbbbbb;
 	--font_color_inverted: #bbbbbb;
 	--invert_icon: 100%;
 	--positive_button_color: #1fb652;
+	--active_color: #1797f85c;
 	--logo_schumacher: url(./components/sideBar/resources/LogoSchumacherDark.png);
+}
+
+[animation_speed="slow"] {
+	--animation_fast: 150ms;
+	--animation_slow: 350ms;
+}
+[animation_speed="fast"] {
+	--animation_fast: 50ms;
+	--animation_slow: 150ms;
+}
+[animation_speed="off"] {
+	--animation_fast: 0;
+	--animation_slow: 0;
+}
+
+[animate_graph="on"] {
+	--graph_animation: 350ms;
+}
+[animate_graph="off"] {
+	--graph_animation: 0;
 }
