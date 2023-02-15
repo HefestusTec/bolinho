@@ -47,7 +47,10 @@ export default function MainPage({ materialList }) {
 		>
 			<div className={styleModule.content}>
 				<MaterialSelector materialList={materialList} />
-				<GraphComponent className={styleModule.graph} />
+				<GraphComponent
+					className={styleModule.graph}
+					experimentList={experimentList}
+				/>
 				<ExperimentsInspector />
 				<ExtraOptions />
 				<button

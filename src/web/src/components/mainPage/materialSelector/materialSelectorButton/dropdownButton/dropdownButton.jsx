@@ -30,7 +30,6 @@ const getExperimentDate = async (index) => {
 const getExperimentPair = async (id) => {
 	try {
 		const experimentPair = JSON.parse(await eel.get_experiment_dict(id)());
-		console.log(experimentPair);
 		return experimentPair;
 	} catch (error) {
 		return {};

@@ -14,7 +14,7 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import { Line } from "react-chartjs-2";
 
@@ -48,17 +48,21 @@ function ChartComponent({
 	experimentPlotDataArray = [new ExperimentPlotData()],
 	allMaxDataValues = 50,
 }) {
+	const [maxData, setMaxData] = useState(100);
+
 	const getDataSets = () => {
 		return experimentPlotDataArray.map((object) => object.dataset);
 	};
-	const [chartData] = useState({
-		datasets: getDataSets(),
-	});
-	const [maxDataValues] = useState(allMaxDataValues);
+
 	const getXMaxValue = () => {
-		if (sliderValue.max <= maxDataValues.x) return sliderValue.max;
-		return maxDataValues.x;
+		if (sliderValue.max <= allMaxDataValues.x) return sliderValue.max;
+		return allMaxDataValues.x;
 	};
+
+	useEffect(() => {
+		setMaxData(allMaxDataValues);
+	}, [allMaxDataValues]);
+
 	const chartOptions = {
 		responsive: true,
 		maintainAspectRatio: false,
@@ -79,7 +83,7 @@ function ChartComponent({
 			y: {
 				type: "linear",
 				min: 0,
-				max: maxDataValues.y,
+				max: maxData.y,
 			},
 		},
 		plugins: {
@@ -89,7 +93,14 @@ function ChartComponent({
 		},
 	};
 
-	return <Line data={chartData} options={chartOptions} />;
+	return (
+		<Line
+			data={{
+				datasets: getDataSets(),
+			}}
+			options={chartOptions}
+		/>
+	);
 }
 
 export default ChartComponent;
