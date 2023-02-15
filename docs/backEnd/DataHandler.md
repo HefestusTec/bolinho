@@ -18,7 +18,7 @@
 -->
 
 
-# [DataHandler.py](../../src/DataHandler.py)
+# [DataHandler.py](https://github.com/HefestusTec/bolinho/blob/main/src/DataHandler.py)
 Handles Raspberry Pi GPIO and data acquisition
 
 ## Classes

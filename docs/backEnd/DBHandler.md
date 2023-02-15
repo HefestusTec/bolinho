@@ -17,7 +17,7 @@
  along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
 -->
 
-# [DBHandler.py](../../src/DBHandler.py)
+# [DBHandler.py](https://github.com/HefestusTec/bolinho/blob/main/src/DBHandler.py)
 Defines database models using orm_sqlite
 
 ## Models
