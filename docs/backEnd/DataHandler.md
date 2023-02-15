@@ -17,8 +17,9 @@
  along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
 -->
 
+# DataHandler
 
-# [DataHandler.py](https://github.com/HefestusTec/bolinho/blob/main/src/DataHandler.py)
+## [DataHandler.py](https://github.com/HefestusTec/bolinho/blob/main/src/DataHandler.py)
 Handles Raspberry Pi GPIO and data acquisition
 
 ## Classes
