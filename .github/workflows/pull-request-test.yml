@@ -13,7 +13,6 @@ jobs:
         with:
           python-version: 3.x
       - name: Install dependencies
-        run: |
-          npm run installDep
+        run: npm run installDep
       - name: Build app binaries
         run: npm run buildBin
