@@ -14,7 +14,6 @@ jobs:
           python-version: 3.x
       - name: Install dependencies
         run: |
-          pip install -r requirements.txt
           npm run installDep
       - name: Build app binaries
         run: npm run buildBin
