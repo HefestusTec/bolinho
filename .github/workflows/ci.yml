@@ -48,8 +48,6 @@ jobs:
           rm -f ./Bolinho/src/*.spec
           mkdir Bolinho/src/web
           cp -r ./src/web/build/ ./Bolinho/src/web/build
-          cp package-lock.json ./Bolinho/
-          cp package.json ./Bolinho/          
           cp requirements.txt ./Bolinho/          
           zip -r Bolinho.zip ./Bolinho/*
       - uses: "marvinpinto/action-automatic-releases@latest"
