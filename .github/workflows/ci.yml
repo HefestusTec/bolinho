@@ -19,10 +19,13 @@ jobs:
         with:
           key: ${{ github.ref }}
           path: .cache
-      - run: pip install mkdocs-material 
-      - run: pip install mkdocs-with-pdf
-      - run: pip install mkdocs-pdf-export-plugin
-      - run: mkdocs gh-deploy --force
+      - name: Installing dep
+        run: |
+          pip install mkdocs-material
+          pip install mkdocs-with-pdf
+          pip install mkdocs-pdf-export-plugin
+      - name: Building
+        run: mkdocs gh-deploy --force
   release:
     runs-on: ubuntu-latest
     steps:
@@ -30,9 +33,25 @@ jobs:
       - uses: actions/setup-python@v4
         with:
           python-version: 3.x
-      - run: pip install -r requirements.txt
-      - run: npm run installDep
-      - run: npm run buildBin
+      - name: Installing dep
+        run: |
+          pip install -r requirements.txt
+          npm run installDep
+      - name: Build binaries
+        run: npm run buildBin
+      - name: Create Release
+        run: |
+          mkdir Bolinho
+          cp -r ./src/. ./Bolinho/
+          rm -r ./Bolinho/web
+          rm -r ./Bolinho/dist
+          rm -r ./Bolinho/__pycache__
+          rm ./Bolinho/.gitignore
+          rm ./Bolinho/*.spec
+          mkdir Bolinho/web
+          cp -r ./src/web/build/ ./Bolinho/web/build
+          cp requirements.txt ./Bolinho/
+          zip -r Bolinho.zip ./Bolinho/*
       - uses: "marvinpinto/action-automatic-releases@latest"
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
@@ -42,3 +61,4 @@ jobs:
           files: |
             src/dist/
             COPYING
+            ./Bolinho.zip
