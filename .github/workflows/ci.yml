@@ -43,11 +43,11 @@ jobs:
         run: |
           mkdir Bolinho
           cp -r ./src/. ./Bolinho/
-          rm -r ./Bolinho/web
-          rm -r ./Bolinho/dist
-          rm -r ./Bolinho/__pycache__
-          rm ./Bolinho/.gitignore
-          rm ./Bolinho/*.spec
+          rm -fr ./Bolinho/web
+          rm -fr ./Bolinho/dist
+          rm -fr ./Bolinho/__pycache__
+          rm -f ./Bolinho/.gitignore
+          rm -f ./Bolinho/*.spec
           mkdir Bolinho/web
           cp -r ./src/web/build/ ./Bolinho/web/build
           cp requirements.txt ./Bolinho/
