@@ -6,7 +6,7 @@
 		"startEel": "cd src && python main.py",
 		"buildWeb": "cd src/web && npm run build",
 		"buildBin": "cd src/web && npm run build && cd .. && python -m eel main.py web/build --onefile --name Bolinho --icon ./web/public/favicon.ico",
-		"installDep": "npm install && cd src/web && npm install"
+		"installDep": "npm install && pip install -r src/requirements.txt && cd src/web && npm install"
 	},
 	"devDependencies": {
 		"concurrently": "^7.6.0"
