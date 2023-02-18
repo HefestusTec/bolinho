@@ -34,24 +34,21 @@ jobs:
         with:
           python-version: 3.x
       - name: Installing dep
-        run: |
-          pip install -r requirements.txt
-          npm run installDep
+        run: npm run installDep
       - name: Build binaries
         run: npm run buildBin
       - name: Create Release
         run: |
-          mkdir Bolinho
-          cp -r ./src/. ./Bolinho/
-          rm -fr ./Bolinho/web
-          rm -fr ./Bolinho/build
-          rm -fr ./Bolinho/dist
-          rm -fr ./Bolinho/__pycache__
-          rm -f ./Bolinho/.gitignore
-          rm -f ./Bolinho/*.spec
-          mkdir Bolinho/web
-          cp -r ./src/web/build/ ./Bolinho/web/build
-          cp requirements.txt ./Bolinho/
+          cp -r ./src ./Bolinho/
+          rm -fr ./Bolinho/src/web
+          rm -fr ./Bolinho/src/build
+          rm -fr ./Bolinho/src/dist
+          rm -fr ./Bolinho/src/__pycache__
+          rm -f ./Bolinho/src/.gitignore
+          rm -f ./Bolinho/src/*.spec
+          mkdir Bolinho/src/web
+          cp -r ./src/web/build/ ./Bolinho/src/web/build
+          cp requirements.txt ./Bolinho/          
           zip -r Bolinho.zip ./Bolinho/*
       - uses: "marvinpinto/action-automatic-releases@latest"
         with:
@@ -61,6 +58,4 @@ jobs:
           title: "Development Build"
           files: |
             src/dist/
-            COPYING
             ./Bolinho.zip
-

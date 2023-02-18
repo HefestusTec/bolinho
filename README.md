@@ -18,17 +18,15 @@ First you will need:
 * pip
 * [npm](https://www.npmjs.com/)
 
-Start by installing all the dependencies for the frontend using
+Start by installing all the dependencies using
 
 `npm run installDep`
 
-After that you can install the necessary python packages with
-
-`pip install -r requirements.txt`
+> It will install the front-end and backend dependencies.
 
 > For more info please check out the [setup](https://hefestustec.github.io/bolinho/setup/) page of the documentation.
 
-# Running
+## Running
 
 As for running the program we have a few options:
 

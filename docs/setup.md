@@ -47,11 +47,7 @@ ___
 ## Installing dependencies
 
 ``` bash
-npm install
-
 npm run installDep
-
-pip install -r requirements.txt
 ```
 
 ___
