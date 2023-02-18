@@ -21,7 +21,7 @@
 
 .dropdown_button {
 	width: 97%;
-	height: clamp(20px, calc(var(--font_m) * 2), 7vh);
+	height: fit-content;
 	background: var(--content_background_color);
 	border-radius: clamp(3px, 0.5vw, 10px);
 	margin-bottom: clamp(3px, 1vh, 10px);
@@ -29,6 +29,8 @@
 	display: flex;
 	float: left;
 	padding: 0;
+	padding-top: 1vh;
+	padding-bottom: 1vh;
 	align-items: center;
 	overflow: hidden;
 	transition-duration: var(--animation_fast);

@@ -23,7 +23,7 @@ import json
 def get_random_data_points(dataSize):
     return_array = []
     for i in range(dataSize):
-        return_array.append(DataPoint(x=random.randint(0, 100), y=i))
+        return_array.append(DataPoint(x=i, y=random.randint(0, 100)))
     return return_array
 
 
@@ -172,6 +172,16 @@ def get_experiment_at(id):
 
 
 @eel.expose
+def get_multiple_experiments(ids):
+    experiment_data_array = []
+    for experimentId in ids:
+        if experimentId < len(experiment_data_base):
+            experiment_data_array.append(experiment_data_base[experimentId])
+    return json.dumps(experiment_data_array, default=lambda x: x.__dict__)
+
+
+
+@eel.expose
 def get_material_list():
     return json.dumps(material_data_base, default=lambda x: x.__dict__)
 
@@ -181,3 +191,25 @@ def get_material_at(id):
     if len(material_data_base) - 1 < id:
         return None
     return json.dumps(material_data_base[id], default=lambda x: x.__dict__)
+
+@eel.expose
+def get_material_with_experiment(experiment_id):
+    print(experiment_id)
+    for material in material_data_base:
+        if(experiment_id in material.experiment_array):
+            return material
+    return None
+
+
+@eel.expose
+def get_experiment_dict(id):
+    material_fragment =  get_material_with_experiment(id)
+    experiment_fragment = experiment_data_base[id]
+    data_array_fragment = data_point_array_data_base[experiment_fragment.data_array_id].data_array
+    pair = {
+        'material': material_fragment,
+        'experiment': experiment_fragment,
+        'data_array': data_array_fragment
+    }
+
+    return json.dumps(pair, default=lambda x: x.__dict__)

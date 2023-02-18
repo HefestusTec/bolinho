@@ -17,9 +17,9 @@
  along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
 -->
 
-# Backend
+# Back End
 
-# [DBHandler.py](../../src/DBHandler.py)
+## [DBHandler.py](https://github.com/HefestusTec/bolinho/blob/main/src/DBHandler.py)
 Defines database models using orm_sqlite
 
 ## [Models](DBHandler.md#models)
@@ -54,7 +54,7 @@ Handles database connection and CRUD operations
 - delete_material_by_id(self, id)
 - populate(self)
 
-# [DataHandler.py](../../src/DataHandler.py)
+# [DataHandler.py](https://github.com/HefestusTec/bolinho/blob/main/src/DataHandler.py)
 Handles Raspberry Pi GPIO and data acquisition
 
 ## [Classes](DataHandler.md#classes)
