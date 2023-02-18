@@ -35,7 +35,7 @@ theme:
     features:
         - navigation.sections
         - navigation.tabs
-        - navigation.tabs.sticky      #Faz com que a navigation tab esteja sempre visivel
+        - navigation.tabs.sticky #Faz com que a navigation tab esteja sempre visivel
         - navigation.top
         - navigation.tracking
         - navigation.path
@@ -115,6 +115,9 @@ nav:
           - DataHandler: backEnd/DataHandler.md
     - Front End:
           - Front End: frontEnd/index.md
+          - Pages: frontEnd/pages.md
+          - Components: frontEnd/components.md
+          - Contexts: frontEnd/contexts.md
     - API:
           - API: api/index.md
           - Data Types: api/dataTypes.md

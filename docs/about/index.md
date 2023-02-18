@@ -46,6 +46,8 @@ This software is licensed and distributed under the **[GNU General Public Licens
 
 * React Chart JS 2 - [see license](https://github.com/reactchartjs/react-chartjs-2/blob/master/LICENSE)
 
+* React Long Press Hook - [see license](https://github.com/minwork/use-long-press/blob/master/LICENSE)
+
 ___
 
 Agradecemos do fundo do coração todos os autores dos diferentes projetos utilizados, **software livre** é liberdade, muito obrigado a todos.

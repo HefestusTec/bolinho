@@ -20,10 +20,8 @@
 @import url(../../../variables.css);
 
 .material_inspector {
-	grid-column-start: 1;
-	grid-column-end: 7;
-	grid-row-start: 9;
-	grid-row-end: 14;
+	height: stretch;
+	width: stretch;
 	display: flex;
 	flex-direction: column;
 	border-radius: clamp(2px, 3vh, 20px);

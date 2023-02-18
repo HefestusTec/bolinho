@@ -20,6 +20,9 @@ export const globalConfigDefault = {
 	theme: "light", // light | dark
 	animationSpeed: "slow", // fast | slow | off
 	animateGraph: "on", // on | off
+	enableZoom: true, // Should zooming be enable?
+	zoomDelay: 300, // How long [ms] should I press to zoom
+	blurOnZoom: true, // Should it blur when zooming?
 	absoluteMaximumForce: 10000,
 };
 
