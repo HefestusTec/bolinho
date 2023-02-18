@@ -15,7 +15,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
 
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import GraphComponent from "../graphComponent/graphComponent";
 import MaterialSelector from "./materialSelector/materialSelector";
 //import { eel } from "../../App";
@@ -24,7 +24,7 @@ import ExperimentsInspector from "./experimentsInspector/experimentsInspector";
 import ExtraOptions from "./extraOptions/extraOptions";
 import ZoomComponent from "../zoomComponent/zoomComponent";
 
-import GlobalConfigContext from "../../contexts/globalConfigContext";
+//import GlobalConfigContext from "../../contexts/globalConfigContext";
 import ExperimentsContext from "./contexts/experimentsContext";
 
 export default function MainPage({ materialList }) {
