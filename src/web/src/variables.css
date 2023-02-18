@@ -46,6 +46,11 @@ html {
 	--font_m: 2em;
 	--font_l: 3.2em;
 	--font_xl: 4em;
+
+	--num_columns: 13;
+	--num_rows: 13;
+
+	--zoom_scale: 1.4;
 }
 [data_theme="light"] {
 	--background_color: #ffffff; /* Background color of the components */

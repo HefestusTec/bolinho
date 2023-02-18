@@ -22,43 +22,40 @@ import MaterialSelector from "./materialSelector/materialSelector";
 import styleModule from "./mainPage.module.css";
 import ExperimentsInspector from "./experimentsInspector/experimentsInspector";
 import ExtraOptions from "./extraOptions/extraOptions";
+import ZoomComponent from "../zoomComponent/zoomComponent";
 
 import GlobalConfigContext from "../../contexts/globalConfigContext";
 import ExperimentsContext from "./contexts/experimentsContext";
 
 export default function MainPage({ materialList }) {
 	//const [graphData, setGraphData] = useState(makeConstData());
-	const [globalConfig, setGlobalConfig] = useContext(GlobalConfigContext);
+	//const [globalConfig, setGlobalConfig] = useContext(GlobalConfigContext);
 
 	const [experimentList, setExperimentList] = useState([]);
-
-	// THIS IS JUST FOR DEBUG
-	const toggleTheme = () => {
-		if (globalConfig.theme === "dark") {
-			setGlobalConfig({ ...globalConfig, theme: "light" });
-			return;
-		}
-		setGlobalConfig({ ...globalConfig, theme: "dark" });
-	};
 
 	return (
 		<ExperimentsContext.Provider
 			value={[experimentList, setExperimentList]}
 		>
 			<div className={styleModule.content}>
-				<MaterialSelector materialList={materialList} />
 				<GraphComponent
 					className={styleModule.graph}
 					experimentList={experimentList}
 				/>
-				<ExperimentsInspector />
-				<ExtraOptions />
-				<button
-					className={styleModule.ensaio_button}
-					onClick={toggleTheme}
+				<ZoomComponent
+					className={styleModule.material_selector}
+					scaleOrigin="top left"
 				>
-					ENSAIO
-				</button>
+					<MaterialSelector materialList={materialList} />
+				</ZoomComponent>
+				<ZoomComponent
+					className={styleModule.experiments_inspector}
+					scaleOrigin="bottom left"
+				>
+					<ExperimentsInspector />
+				</ZoomComponent>
+				<ExtraOptions />
+				<button className={styleModule.ensaio_button}>ENSAIO</button>
 			</div>
 		</ExperimentsContext.Provider>
 	);
