@@ -21,7 +21,7 @@ export const globalConfigDefault = {
 	animationSpeed: "slow", // fast | slow | off
 	animateGraph: "on", // on | off
 	enableZoom: true, // Should zooming be enable?
-	zoomDelay: 300, // How long [ms] should I press to zoom
+	zoomDelay: 500, // How long [ms] should I press to zoom
 	backgroundBlur: true, // Should it blur when zooming?
 	absoluteMaximumForce: 10000,
 };

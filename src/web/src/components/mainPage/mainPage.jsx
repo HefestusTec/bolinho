@@ -38,10 +38,12 @@ export default function MainPage({ materialList }) {
 			value={[selectedObjectList, setSelectedObjectList]}
 		>
 			<div className={styleModule.content}>
-				<GraphComponent
-					className={styleModule.graph}
-					experimentList={selectedObjectList}
-				/>
+				<ZoomComponent
+					className={styleModule.graph_component}
+					scaleOrigin="top right"
+				>
+					<GraphComponent experimentList={selectedObjectList} />
+				</ZoomComponent>
 				<ZoomComponent
 					className={styleModule.material_selector}
 					scaleOrigin="top left"
@@ -54,7 +56,12 @@ export default function MainPage({ materialList }) {
 				>
 					<ExperimentsInspector />
 				</ZoomComponent>
-				<ExtraOptions />
+				<ZoomComponent
+					className={styleModule.extra_options}
+					scaleOrigin="bottom"
+				>
+					<ExtraOptions />
+				</ZoomComponent>
 				<button className={styleModule.ensaio_button}>ENSAIO</button>
 			</div>
 		</SelectedObjectsContext.Provider>

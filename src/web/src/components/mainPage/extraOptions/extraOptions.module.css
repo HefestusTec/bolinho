@@ -19,10 +19,7 @@
 @import url(../../../variables.css);
 
 .extra_options {
-	grid-column-start: 7;
-	grid-column-end: 11;
-	grid-row-start: 9;
-	grid-row-end: 14;
+	height: stretch;
 	background: var(--background_color);
 	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 	border-radius: clamp(2px, 3vh, 20px);
