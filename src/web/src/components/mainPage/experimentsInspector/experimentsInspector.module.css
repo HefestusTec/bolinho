@@ -102,9 +102,15 @@
 	top: 0;
 	right: 0;
 	height: 90%;
-	fill: rebeccapurple;
 	fill: white;
 	mix-blend-mode: difference;
+}
+
+.material_inspector_header .color_picker {
+	position: fixed;
+	z-index: 10;
+	transform: translateY(-50%);
+	float: right;
 }
 
 .material_inspector_content {

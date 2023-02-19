@@ -19,12 +19,14 @@ import ExperimentButton from "./experimentButton/experimentButton";
 import SelectedObjectsContext from "../contexts/selectedObjectsContext";
 import { getFormattedDate, getFormattedBodyParams } from "../../../helpers";
 import { ReactComponent as ColorIcon } from "./resources/colorSelectorIcon.svg";
+import { HexColorPicker } from "react-colorful";
 
 import styleModule from "./experimentsInspector.module.css";
 
 export default function ExperimentsInspector() {
 	const [objectList, setObjectList] = useContext(SelectedObjectsContext);
 	const [activeTriplet, setActiveTriplet] = useState(null);
+	const [colorPicker, setColorPicker] = useState(false);
 
 	const createButton = (object) => {
 		return (
@@ -177,6 +179,19 @@ export default function ExperimentsInspector() {
 		}
 	};
 
+	const makeColorPicker = () => {
+		if (colorPicker) {
+			return (
+				<HexColorPicker
+					className={styleModule.color_picker}
+					color={activeTriplet.color}
+					//onChange={activeTriplet.color}
+				/>
+			);
+		}
+		return;
+	};
+
 	return (
 		<div className={styleModule.material_inspector}>
 			<div className={styleModule.material_inspector_header}>
@@ -190,6 +205,7 @@ export default function ExperimentsInspector() {
 				<div
 					className={styleModule.material_inspector_header_color}
 					style={{ "--experiment_color": getStyleColor() }}
+					onClick={() => setColorPicker(!colorPicker)}
 				>
 					<ColorIcon
 						className={
@@ -197,6 +213,7 @@ export default function ExperimentsInspector() {
 						}
 					/>
 				</div>
+				{makeColorPicker()}
 			</div>
 			<div className={styleModule.material_inspector_content}>
 				<div className={styleModule.material_inspector_search_area}>
