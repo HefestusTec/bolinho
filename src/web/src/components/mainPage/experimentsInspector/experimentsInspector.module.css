@@ -38,6 +38,27 @@
 	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
 
+.delete_material_button {
+	height: 100%;
+	width: 10%;
+	margin-left: 2%;
+	background: none;
+	background-size: 40%;
+	background-image: url("./resources/deleteIcon.svg");
+	background-position: center;
+	background-repeat: no-repeat;
+	transition-duration: var(--animation_fast);
+}
+
+.delete_material_button:hover {
+	transform: translateY(-0.5vh);
+}
+.delete_material_button:active {
+	transform: translateY(0vh);
+
+	background-size: 35%;
+}
+
 .material_inspector_header_text {
 	width: 70%;
 	color: var(--font_color_inverted);

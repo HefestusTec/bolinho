@@ -33,7 +33,6 @@ export const getFormattedDate = (dateObject) => {
 };
 
 export const getFormattedBodyParams = (bodyParams) => {
-	console.log(bodyParams.type);
 	const getType = () => {
 		switch (bodyParams.type) {
 			case 1:

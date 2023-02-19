@@ -14,7 +14,7 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import ExperimentButton from "./experimentButton/experimentButton";
 import SelectedTripletsContext from "../contexts/selectedTripletsContext";
 import { getFormattedDate, getFormattedBodyParams } from "../../../helpers";
@@ -22,7 +22,7 @@ import { getFormattedDate, getFormattedBodyParams } from "../../../helpers";
 import styleModule from "./experimentsInspector.module.css";
 
 export default function ExperimentsInspector() {
-	const [tripletList] = useContext(SelectedTripletsContext);
+	const [tripletList, setTripletList] = useContext(SelectedTripletsContext);
 	const [activeTriplet, setActiveTriplet] = useState(null);
 
 	const createButton = (triplet) => {
@@ -132,9 +132,43 @@ export default function ExperimentsInspector() {
 		}
 	};
 
+	const activateNextExperiment = () => {
+		try {
+			tripletList.forEach((triplet) => {
+				if (triplet !== activeTriplet) {
+					setActiveTriplet(triplet);
+					return;
+				}
+			});
+		} catch (error) {}
+	};
+
+	const removeActiveExperiment = () => {
+		try {
+			const newCartData = tripletList.filter(
+				(d) => d.experiment.id !== activeTriplet.experiment.id
+			);
+
+			setTripletList(newCartData, activateNextExperiment());
+		} catch (error) {}
+	};
+
+	useEffect(() => {
+		if (tripletList.length === 0) {
+			setActiveTriplet({});
+			return;
+		} else if (tripletList.length === 1) {
+			setActiveTriplet(tripletList[0]);
+		}
+	}, [tripletList]);
+
 	return (
 		<div className={styleModule.material_inspector}>
 			<div className={styleModule.material_inspector_header}>
+				<button
+					className={styleModule.delete_material_button}
+					onClick={removeActiveExperiment}
+				></button>
 				<div className={styleModule.material_inspector_header_text}>
 					{makeMaterialIdText()} {makeHeaderText()}
 				</div>

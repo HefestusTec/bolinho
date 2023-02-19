@@ -15,8 +15,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
 
-import React, { useContext, useState, useEffect } from "react";
-import ExperimentsContext from "../../contexts/selectedTripletsContext";
+import React, { useState, useEffect } from "react";
 import { getFormattedDate } from "../../../../helpers";
 import styleModule from "./experimentButton.module.css";
 
@@ -26,7 +25,6 @@ export default function ExperimentButton({
 	activeTriplet,
 	setActiveTriplet,
 }) {
-	const [tripletList, setTripletList] = useContext(ExperimentsContext);
 	const [isActive, setIsActive] = useState(false);
 
 	useEffect(() => {
@@ -35,17 +33,10 @@ export default function ExperimentButton({
 				setIsActive(true);
 			else setIsActive(false);
 		} catch (error) {}
-	}, [activeTriplet]);
+	}, [activeTriplet, triplet]);
 
 	const removeSelf = () => {
 		setActiveTriplet(triplet);
-		return;
-
-		const newCartData = tripletList.filter(
-			(d) => d.experiment.id !== triplet.experiment.id
-		);
-
-		setTripletList(newCartData);
 	};
 
 	const getClassName = () => {
