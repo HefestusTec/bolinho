@@ -14,20 +14,24 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import ExperimentButton from "./experimentButton/experimentButton";
-import ExperimentsContext from "../contexts/experimentsContext";
+import SelectedTripletsContext from "../contexts/selectedTripletsContext";
+import { getFormattedDate, getFormattedBodyParams } from "../../../helpers";
 
 import styleModule from "./experimentsInspector.module.css";
 
 export default function ExperimentsInspector() {
-	const [experimentList] = useContext(ExperimentsContext);
+	const [tripletList] = useContext(SelectedTripletsContext);
+	const [activeTriplet, setActiveTriplet] = useState(null);
 
-	const createButton = (pair) => {
+	const createButton = (triplet) => {
 		return (
 			<ExperimentButton
-				experiment={pair.experiment}
-				materialName={pair.material.name}
+				triplet={triplet}
+				materialName={triplet.material.name}
+				activeTriplet={activeTriplet}
+				setActiveTriplet={setActiveTriplet}
 			></ExperimentButton>
 		);
 	};
@@ -35,18 +39,104 @@ export default function ExperimentsInspector() {
 	const makeButtons = () => {
 		let buttonArray = [];
 		try {
-			experimentList.forEach((element) => {
+			tripletList.forEach((element) => {
 				buttonArray.push(createButton(element));
 			});
 		} catch (error) {}
 		return buttonArray;
 	};
 
+	const makeHeaderText = () => {
+		try {
+			return activeTriplet.material.name;
+		} catch (error) {
+			return;
+		}
+	};
+	const makeMaterialIdText = () => {
+		try {
+			return "[" + activeTriplet.material.batch + "]";
+		} catch (error) {
+			return;
+		}
+	};
+
+	const makeMaterialText = () => {
+		try {
+			const formattedBodyParams = getFormattedBodyParams(
+				activeTriplet.experiment.experiment_params.body_params
+			);
+			return (
+				<React.Fragment>
+					<h1>Material</h1>
+					<b>Lote: </b>
+					{activeTriplet.material.batch}
+					<br />
+					<b>Fornecedor: </b>
+					{activeTriplet.material.supplier.name}
+					<br />
+					<b>• E-mail: </b>
+					{activeTriplet.material.supplier.email}
+					<br />
+					<b>Id: </b>
+					{activeTriplet.material.id}
+					<br />
+					<b>Info extra: </b>
+					<p>{activeTriplet.material.extra_info}</p>
+					<hr></hr>
+					<h1>Experimento</h1>
+					<b>Data: </b>
+					{getFormattedDate(activeTriplet.experiment.date)}
+					<br />
+					<b>Parâmetros: </b>
+					<br />
+					<b>• AutoStop: </b>
+					<br />
+					<>- • Queda de força: </>
+					{
+						activeTriplet.experiment.experiment_params.stop_params
+							.force_loss
+					}
+					<br />
+					<>- • Força máxima: </>
+					{
+						activeTriplet.experiment.experiment_params.stop_params
+							.max_force
+					}
+					<br />
+					<>- • Distância máxima: </>
+					{
+						activeTriplet.experiment.experiment_params.stop_params
+							.max_travel
+					}
+					<br />
+					<>- • Tempo máximo: </>
+					{
+						activeTriplet.experiment.experiment_params.stop_params
+							.max_time
+					}
+					<br />
+					<b>• Corpo de prova: </b>
+					<br />
+					<>- • {formattedBodyParams.type}</>
+					<br />
+					<>- • {formattedBodyParams.paramA}</>
+					<br />
+					<>- • {formattedBodyParams.paramB}</>
+					<br />
+					<>- • {formattedBodyParams.height}</>
+				</React.Fragment>
+			);
+		} catch (error) {
+			return;
+		}
+	};
+
 	return (
 		<div className={styleModule.material_inspector}>
 			<div className={styleModule.material_inspector_header}>
 				<div className={styleModule.material_inspector_header_text}>
-					[592] Aço carbono 12
+					{makeMaterialIdText()} {makeHeaderText()}
 				</div>
 				<div
 					className={styleModule.material_inspector_header_color}
@@ -63,10 +153,7 @@ export default function ExperimentsInspector() {
 					</ul>
 				</div>
 				<div className={styleModule.material_inspector_description}>
-					Material: Aço carbono Lote: 1202 Fornecedor: MinasLTDA
-					Ensaio: 02 Lorem ipsum dolor sit amet, consectetur
-					adipiscing elit. Nullam malesuada placerat fringilla. Ut
-					viverra, nulla vitae egestas .
+					{makeMaterialText()}
 				</div>
 			</div>
 		</div>

@@ -16,16 +16,11 @@
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
 import { createContext } from "react";
 
-export const globalConfigDefault = {
-	theme: "light", // light | dark
-	animationSpeed: "slow", // fast | slow | off
-	animateGraph: "on", // on | off
-	enableZoom: true, // Should zooming be enable?
-	zoomDelay: 300, // How long [ms] should I press to zoom
-	backgroundBlur: true, // Should it blur when zooming?
-	absoluteMaximumForce: 10000,
-};
+// Object with {
+// "material": material_fragment,
+// "experiment": experiment_fragment,
+// "data_array": data_array_fragment,
+// }
+const SelectedTripletsContext = createContext([[], () => {}]);
 
-const GlobalConfigContext = createContext([globalConfigDefault, () => {}]);
-
-export default GlobalConfigContext;
+export default SelectedTripletsContext;

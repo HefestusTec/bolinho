@@ -14,8 +14,15 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
-import { createContext } from "react";
+import React from "react";
+import styleModule from "./backgroundFader.module.css";
 
-const ExperimentsContext = createContext([[], () => {}]);
+export default function BackgroundFader({ callbackFunc, blur = false }) {
+	const getClassName = () => {
+		if (blur) return [styleModule.background, styleModule.blur].join(" ");
 
-export default ExperimentsContext;
+		return styleModule.background;
+	};
+
+	return <div className={getClassName()} onClick={callbackFunc}></div>;
+}

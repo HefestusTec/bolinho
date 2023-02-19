@@ -34,8 +34,9 @@ class DataPoint:
 
 
 class DataPointArray:
-    def __init__(self, id=0, data_array=[]):
+    def __init__(self, id=0, experiment_id=0, data_array=[]):
         self.id = id
+        self.experiment_id = experiment_id
         self.data_array = data_array
 
 
@@ -48,7 +49,7 @@ class AutoStopParams:
 
 
 class BodyParams:
-    def __init__(self, type=0, param_a=0, param_b=0, height=0):
+    def __init__(self, type=1, param_a=0, param_b=0, height=0):
         # Body format | 1 = Rectangle | 2 = Cylinder | 3 = Tube
         self.type = type
 
@@ -95,12 +96,14 @@ class Experiment:
         date=Date(),
         experiment_params=ExperimentParams(),
         data_array_id=0,
+        material_id=0,
         extra_info="",
     ):
         self.experiment_params = experiment_params
         self.id = id
         self.date = date
         self.data_array_id = data_array_id
+        self.material_id = material_id
         self.extra_info = extra_info
 
 
@@ -130,32 +133,54 @@ class Material:
 
 
 data_point_array_data_base = [
-    DataPointArray(0, get_random_data_points(23)),
-    DataPointArray(1, get_random_data_points(15)),
-    DataPointArray(2, get_random_data_points(46)),
-    DataPointArray(3, get_random_data_points(60)),
+    DataPointArray(id=0, experiment_id=0, data_array=get_random_data_points(23)),
+    DataPointArray(id=1, experiment_id=1, data_array=get_random_data_points(15)),
+    DataPointArray(id=2, experiment_id=2, data_array=get_random_data_points(46)),
+    DataPointArray(id=3, experiment_id=3, data_array=get_random_data_points(60)),
 ]
 
 experiment_data_base = [
     Experiment(
         id=0,
         data_array_id=0,
+        material_id=0,
         extra_info="Feito pelo hermes",
     ),
-    Experiment(id=1, data_array_id=1),
-    Experiment(id=2, date=Date(3, 11, 2011), data_array_id=2),
+    Experiment(id=1, data_array_id=1, material_id=1),
+    Experiment(id=2, date=Date(3, 11, 2011), data_array_id=2, material_id=0),
     Experiment(
         id=3,
         date=Date(22, 11, 2011),
         data_array_id=3,
+        material_id=2,
         extra_info="Cilindro em óleo",
     ),
 ]
 
 material_data_base = [
-    Material(id=0, name="Aço", batch=23, experiment_array=[0, 2]),
-    Material(id=1, name="PLA", batch=2, experiment_array=[1]),
-    Material(id=2, name="ABS", batch=0, experiment_array=[3]),
+    Material(
+        id=0,
+        name="Aço",
+        batch=23,
+        experiment_array=[0, 2],
+        supplier=Supplier("VALE", "compras@vale.com"),
+        extra_info="Comprado pela marta",
+    ),
+    Material(
+        id=1,
+        name="PLA",
+        batch=2,
+        experiment_array=[1],
+        supplier=Supplier("Próprio", "N/A"),
+    ),
+    Material(
+        id=2,
+        name="ABS",
+        batch=0,
+        experiment_array=[3],
+        supplier=Supplier("Minas LTDA", "minas@hotmail.com"),
+        extra_info="Cilindro molhado em óleo",
+    ),
 ]
 
 
@@ -180,7 +205,6 @@ def get_multiple_experiments(ids):
     return json.dumps(experiment_data_array, default=lambda x: x.__dict__)
 
 
-
 @eel.expose
 def get_material_list():
     return json.dumps(material_data_base, default=lambda x: x.__dict__)
@@ -192,24 +216,27 @@ def get_material_at(id):
         return None
     return json.dumps(material_data_base[id], default=lambda x: x.__dict__)
 
+
 @eel.expose
 def get_material_with_experiment(experiment_id):
     print(experiment_id)
     for material in material_data_base:
-        if(experiment_id in material.experiment_array):
+        if experiment_id in material.experiment_array:
             return material
     return None
 
 
 @eel.expose
 def get_experiment_dict(id):
-    material_fragment =  get_material_with_experiment(id)
+    material_fragment = get_material_with_experiment(id)
     experiment_fragment = experiment_data_base[id]
-    data_array_fragment = data_point_array_data_base[experiment_fragment.data_array_id].data_array
+    data_array_fragment = data_point_array_data_base[
+        experiment_fragment.data_array_id
+    ].data_array
     pair = {
-        'material': material_fragment,
-        'experiment': experiment_fragment,
-        'data_array': data_array_fragment
+        "material": material_fragment,
+        "experiment": experiment_fragment,
+        "data_array": data_array_fragment,
     }
 
     return json.dumps(pair, default=lambda x: x.__dict__)

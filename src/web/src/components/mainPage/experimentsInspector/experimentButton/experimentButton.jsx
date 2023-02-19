@@ -15,50 +15,58 @@
 // You should have received a copy of the GNU General Public License
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
 
-import React, { useContext } from "react";
-import ExperimentsContext from "../../contexts/experimentsContext";
+import React, { useContext, useState, useEffect } from "react";
+import ExperimentsContext from "../../contexts/selectedTripletsContext";
+import { getFormattedDate } from "../../../../helpers";
 import styleModule from "./experimentButton.module.css";
 
-export default function ExperimentButton({ experiment, materialName }) {
-	const [experimentList, setExperimentList] = useContext(ExperimentsContext);
+export default function ExperimentButton({
+	triplet,
+	materialName,
+	activeTriplet,
+	setActiveTriplet,
+}) {
+	const [tripletList, setTripletList] = useContext(ExperimentsContext);
+	const [isActive, setIsActive] = useState(false);
+
+	useEffect(() => {
+		try {
+			if (activeTriplet.experiment.id === triplet.experiment.id)
+				setIsActive(true);
+			else setIsActive(false);
+		} catch (error) {}
+	}, [activeTriplet]);
 
 	const removeSelf = () => {
-		const newCartData = experimentList.filter(
-			(d) => d.experiment.id !== experiment.id
+		setActiveTriplet(triplet);
+		return;
+
+		const newCartData = tripletList.filter(
+			(d) => d.experiment.id !== triplet.experiment.id
 		);
 
-		setExperimentList(newCartData);
+		setTripletList(newCartData);
 	};
 
-	const getFormattedDate = () => {
-		try {
-			const day =
-				experiment.date.day.toString().length === 2
-					? experiment.date.day.toString()
-					: 0 + experiment.date.day.toString();
-			const month =
-				experiment.date.month.toString().length === 2
-					? experiment.date.month.toString()
-					: 0 + experiment.date.month.toString();
-			const date = `${day}/${month}/${experiment.date.year}`;
-			return date;
-		} catch (error) {
-			return 0;
-		}
+	const getClassName = () => {
+		if (isActive)
+			return [
+				styleModule.experiment_button,
+				styleModule.experiment_button_active,
+			].join(" ");
+		return styleModule.experiment_button;
 	};
 
 	return (
 		<li>
-			<button
-				className={styleModule.experiment_button}
-				onClick={removeSelf}
-			>
+			<button className={getClassName()} onClick={removeSelf}>
 				<div className={styleModule.experiment_text}>
 					<div className={styleModule.experiment_material_text}>
 						{materialName}
 					</div>
 					<div className={styleModule.experiment_experiment_text}>
-						Exp{experiment.id} [{getFormattedDate()}]
+						Exp{triplet.experiment.id} [
+						{getFormattedDate(triplet.experiment.date)}]
 					</div>
 				</div>
 			</button>

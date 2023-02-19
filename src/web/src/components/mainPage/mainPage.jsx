@@ -25,7 +25,7 @@ import ExtraOptions from "./extraOptions/extraOptions";
 import ZoomComponent from "../zoomComponent/zoomComponent";
 
 //import GlobalConfigContext from "../../contexts/globalConfigContext";
-import ExperimentsContext from "./contexts/experimentsContext";
+import ExperimentsContext from "./contexts/selectedTripletsContext";
 
 export default function MainPage({ materialList }) {
 	//const [graphData, setGraphData] = useState(makeConstData());

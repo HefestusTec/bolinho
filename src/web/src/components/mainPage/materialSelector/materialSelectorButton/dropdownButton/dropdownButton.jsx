@@ -17,7 +17,8 @@
 import React, { useState, useEffect, useContext } from "react";
 import { eel } from "../../../../../App";
 import styleModule from "./dropdownButton.module.css";
-import ExperimentsContext from "../../../contexts/experimentsContext";
+import SelectedTripletsContext from "../../../contexts/selectedTripletsContext";
+import { getFormattedDate } from "../../../../../helpers";
 
 const getExperimentDate = async (index) => {
 	try {
@@ -29,15 +30,17 @@ const getExperimentDate = async (index) => {
 
 const getExperimentPair = async (id) => {
 	try {
-		const experimentPair = JSON.parse(await eel.get_experiment_dict(id)());
-		return experimentPair;
+		const experimentTriplet = JSON.parse(
+			await eel.get_experiment_dict(id)()
+		);
+		return experimentTriplet;
 	} catch (error) {
 		return {};
 	}
 };
 
 export default function DropdownButton({ experimentIndex }) {
-	const [experimentList, setExperimentList] = useContext(ExperimentsContext);
+	const [tripletList, setTripletList] = useContext(SelectedTripletsContext);
 	const [experiment, setExperiment] = useState(0);
 
 	useEffect(() => {
@@ -46,37 +49,17 @@ export default function DropdownButton({ experimentIndex }) {
 		});
 	}, [experimentIndex]);
 
-	const getFormattedDate = () => {
-		try {
-			const day =
-				experiment.date.day.toString().length === 2
-					? experiment.date.day.toString()
-					: 0 + experiment.date.day.toString();
-			const month =
-				experiment.date.month.toString().length === 2
-					? experiment.date.month.toString()
-					: 0 + experiment.date.month.toString();
-			const date = `${day}/${month}/${experiment.date.year}`;
-			return date;
-		} catch (error) {
-			return 0;
-		}
-	};
-
 	const buttonClicked = () => {
 		getExperimentPair(experimentIndex).then((response) => {
 			// Checking if the experiment id already exists in the experiment list
 			if (
-				experimentList.some(
+				tripletList.some(
 					(e) => e.experiment.id === response.experiment.id
 				)
 			) {
 				return;
 			}
-			setExperimentList((experimentList) => [
-				...experimentList,
-				response,
-			]);
+			setTripletList((experimentList) => [...experimentList, response]);
 		});
 	};
 
@@ -91,7 +74,8 @@ export default function DropdownButton({ experimentIndex }) {
 					<div className={styleModule.add_sign}></div>
 				</div>
 				<div className={styleModule.dropdown_button_text}>
-					Experimento {experimentIndex} [{getFormattedDate()}]
+					Experimento {experimentIndex} [
+					{getFormattedDate(experiment.date)}]
 				</div>
 			</button>
 		</li>
