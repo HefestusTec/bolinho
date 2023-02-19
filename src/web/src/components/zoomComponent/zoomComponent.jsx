@@ -28,13 +28,21 @@ export default function ZoomComponent({
 	const [globalConfig] = useContext(GlobalConfigContext);
 
 	const [isActive, setIsActive] = useState(false);
+	const [canZoom, setCanZoom] = useState(true);
 	const usedZoom = () => {
-		setIsActive(!isActive);
+		if (canZoom) setIsActive(!isActive);
 	};
+
+	const resetCanZoom = () => {
+		setCanZoom(true);
+	};
+
 	const bindLongPress = useLongPress(usedZoom, {
 		cancelOnMovement: true,
 		captureEvent: true,
 		threshold: globalConfig.zoomDelay,
+		onFinish: resetCanZoom,
+		onStart: resetCanZoom,
 	});
 
 	const fallBackPressed = () => {
@@ -70,7 +78,7 @@ export default function ZoomComponent({
 	};
 	const scrolled = (event) => {
 		if (event) {
-			console.log(event);
+			setCanZoom(false);
 		}
 	};
 	return (
