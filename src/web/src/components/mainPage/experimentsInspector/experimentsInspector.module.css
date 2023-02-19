@@ -70,10 +70,43 @@
 }
 
 .material_inspector_header_color {
-	width: 30%;
+	width: 20%;
 	height: 100%;
-	background-color: #1797f8;
+	position: absolute;
+	right: -1px;
+	top: 0;
+
+	border: solid;
+	border-color: white;
+	border-width: 0 0 0.4vh 0.4vh;
+	border-radius: 0 0 0 clamp(2px, 3vh, 20px);
+
+	box-sizing: border-box;
+	--experiment_color: var(--primary_color);
+
+	background-color: var(--experiment_color);
+	align-items: center;
+	transition-duration: var(--animation_fast);
 }
+.material_inspector_header_color:hover {
+	width: 25%;
+}
+.material_inspector_header_color:active {
+	width: 25%;
+	box-shadow: inset 0px 0px 5px 3px rgba(0, 0, 0, 0.5);
+	background-color: var(--active_color);
+}
+
+.material_inspector_header_color_icon {
+	position: absolute;
+	top: 0;
+	right: 0;
+	height: 90%;
+	fill: rebeccapurple;
+	fill: white;
+	mix-blend-mode: difference;
+}
+
 .material_inspector_content {
 	height: calc(100% - clamp(20px, 5.5vh, 75px));
 	width: 100%;

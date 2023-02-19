@@ -80,3 +80,6 @@ export const getFormattedBodyParams = (bodyParams) => {
 		height: getHeight(),
 	};
 };
+
+export const getRandomColor = () =>
+	"#" + Math.floor(Math.random() * 16777215).toString(16);

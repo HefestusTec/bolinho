@@ -20,7 +20,7 @@ import { getFormattedDate } from "../../../../helpers";
 import styleModule from "./experimentButton.module.css";
 
 export default function ExperimentButton({
-	triplet,
+	object,
 	materialName,
 	activeTriplet,
 	setActiveTriplet,
@@ -29,14 +29,14 @@ export default function ExperimentButton({
 
 	useEffect(() => {
 		try {
-			if (activeTriplet.experiment.id === triplet.experiment.id)
+			if (activeTriplet.experiment.id === object.experiment.id)
 				setIsActive(true);
 			else setIsActive(false);
 		} catch (error) {}
-	}, [activeTriplet, triplet]);
+	}, [activeTriplet, object]);
 
 	const removeSelf = () => {
-		setActiveTriplet(triplet);
+		setActiveTriplet(object);
 	};
 
 	const getClassName = () => {
@@ -48,16 +48,28 @@ export default function ExperimentButton({
 		return styleModule.experiment_button;
 	};
 
+	const getStyleColor = () => {
+		try {
+			return object.color;
+		} catch (error) {
+			return "FFFFFF";
+		}
+	};
+
 	return (
 		<li>
-			<button className={getClassName()} onClick={removeSelf}>
+			<button
+				className={getClassName()}
+				onClick={removeSelf}
+				style={{ "--experiment_color": getStyleColor() }}
+			>
 				<div className={styleModule.experiment_text}>
 					<div className={styleModule.experiment_material_text}>
 						{materialName}
 					</div>
 					<div className={styleModule.experiment_experiment_text}>
-						Exp{triplet.experiment.id} [
-						{getFormattedDate(triplet.experiment.date)}]
+						Exp{object.experiment.id} [
+						{getFormattedDate(object.experiment.date)}]
 					</div>
 				</div>
 			</button>

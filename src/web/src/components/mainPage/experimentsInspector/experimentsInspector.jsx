@@ -16,20 +16,21 @@
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
 import React, { useContext, useState, useEffect } from "react";
 import ExperimentButton from "./experimentButton/experimentButton";
-import SelectedTripletsContext from "../contexts/selectedTripletsContext";
+import SelectedObjectsContext from "../contexts/selectedObjectsContext";
 import { getFormattedDate, getFormattedBodyParams } from "../../../helpers";
+import { ReactComponent as ColorIcon } from "./resources/colorSelectorIcon.svg";
 
 import styleModule from "./experimentsInspector.module.css";
 
 export default function ExperimentsInspector() {
-	const [tripletList, setTripletList] = useContext(SelectedTripletsContext);
+	const [objectList, setObjectList] = useContext(SelectedObjectsContext);
 	const [activeTriplet, setActiveTriplet] = useState(null);
 
-	const createButton = (triplet) => {
+	const createButton = (object) => {
 		return (
 			<ExperimentButton
-				triplet={triplet}
-				materialName={triplet.material.name}
+				object={object}
+				materialName={object.material.name}
 				activeTriplet={activeTriplet}
 				setActiveTriplet={setActiveTriplet}
 			></ExperimentButton>
@@ -39,7 +40,7 @@ export default function ExperimentsInspector() {
 	const makeButtons = () => {
 		let buttonArray = [];
 		try {
-			tripletList.forEach((element) => {
+			objectList.forEach((element) => {
 				buttonArray.push(createButton(element));
 			});
 		} catch (error) {}
@@ -125,6 +126,12 @@ export default function ExperimentsInspector() {
 					<>- • {formattedBodyParams.paramB}</>
 					<br />
 					<>- • {formattedBodyParams.height}</>
+					<br />
+					<b>Id: </b>
+					{activeTriplet.experiment.id}
+					<br />
+					<b>Info extra: </b>
+					<p>{activeTriplet.experiment.extra_info}</p>
 				</React.Fragment>
 			);
 		} catch (error) {
@@ -134,7 +141,7 @@ export default function ExperimentsInspector() {
 
 	const activateNextExperiment = () => {
 		try {
-			tripletList.forEach((triplet) => {
+			objectList.forEach((triplet) => {
 				if (triplet !== activeTriplet) {
 					setActiveTriplet(triplet);
 					return;
@@ -145,22 +152,30 @@ export default function ExperimentsInspector() {
 
 	const removeActiveExperiment = () => {
 		try {
-			const newCartData = tripletList.filter(
+			const newCartData = objectList.filter(
 				(d) => d.experiment.id !== activeTriplet.experiment.id
 			);
 
-			setTripletList(newCartData, activateNextExperiment());
+			setObjectList(newCartData, activateNextExperiment());
 		} catch (error) {}
 	};
 
 	useEffect(() => {
-		if (tripletList.length === 0) {
+		if (objectList.length === 0) {
 			setActiveTriplet({});
 			return;
-		} else if (tripletList.length === 1) {
-			setActiveTriplet(tripletList[0]);
+		} else if (objectList.length === 1) {
+			setActiveTriplet(objectList[0]);
 		}
-	}, [tripletList]);
+	}, [objectList]);
+
+	const getStyleColor = () => {
+		try {
+			return activeTriplet.color;
+		} catch (error) {
+			return "var(--primary_color)";
+		}
+	};
 
 	return (
 		<div className={styleModule.material_inspector}>
@@ -174,7 +189,14 @@ export default function ExperimentsInspector() {
 				</div>
 				<div
 					className={styleModule.material_inspector_header_color}
-				></div>
+					style={{ "--experiment_color": getStyleColor() }}
+				>
+					<ColorIcon
+						className={
+							styleModule.material_inspector_header_color_icon
+						}
+					/>
+				</div>
 			</div>
 			<div className={styleModule.material_inspector_content}>
 				<div className={styleModule.material_inspector_search_area}>

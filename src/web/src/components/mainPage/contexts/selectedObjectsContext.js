@@ -21,6 +21,6 @@ import { createContext } from "react";
 // "experiment": experiment_fragment,
 // "data_array": data_array_fragment,
 // }
-const SelectedTripletsContext = createContext([[], () => {}]);
+const SelectedObjectsContext = createContext([[], () => {}]);
 
-export default SelectedTripletsContext;
+export default SelectedObjectsContext;

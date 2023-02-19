@@ -17,8 +17,8 @@
 import React, { useState, useEffect, useContext } from "react";
 import { eel } from "../../../../../App";
 import styleModule from "./dropdownButton.module.css";
-import SelectedTripletsContext from "../../../contexts/selectedTripletsContext";
-import { getFormattedDate } from "../../../../../helpers";
+import SelectedObjectsContext from "../../../contexts/selectedObjectsContext";
+import { getFormattedDate, getRandomColor } from "../../../../../helpers";
 
 const getExperimentDate = async (index) => {
 	try {
@@ -28,19 +28,20 @@ const getExperimentDate = async (index) => {
 	}
 };
 
-const getExperimentPair = async (id) => {
+const getExperimentObjectList = async (id) => {
 	try {
-		const experimentTriplet = JSON.parse(
+		const experimentObject = JSON.parse(
 			await eel.get_experiment_dict(id)()
 		);
-		return experimentTriplet;
+
+		return Object.assign(experimentObject, { color: getRandomColor() });
 	} catch (error) {
 		return {};
 	}
 };
 
 export default function DropdownButton({ experimentIndex }) {
-	const [tripletList, setTripletList] = useContext(SelectedTripletsContext);
+	const [objectList, setObjectList] = useContext(SelectedObjectsContext);
 	const [experiment, setExperiment] = useState(0);
 
 	useEffect(() => {
@@ -50,16 +51,15 @@ export default function DropdownButton({ experimentIndex }) {
 	}, [experimentIndex]);
 
 	const buttonClicked = () => {
-		getExperimentPair(experimentIndex).then((response) => {
+		getExperimentObjectList(experimentIndex).then((response) => {
 			// Checking if the experiment id already exists in the experiment list
 			if (
-				tripletList.some(
+				objectList.some(
 					(e) => e.experiment.id === response.experiment.id
 				)
-			) {
+			)
 				return;
-			}
-			setTripletList((experimentList) => [...experimentList, response]);
+			setObjectList((experimentList) => [...experimentList, response]);
 		});
 	};
 
