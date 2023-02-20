@@ -17,16 +17,16 @@
 import React, { useContext, useState, useEffect } from "react";
 import ExperimentButton from "./experimentButton/experimentButton";
 import SelectedObjectsContext from "../contexts/selectedObjectsContext";
-import { getFormattedDate, getFormattedBodyParams } from "../../../helpers";
 import { ReactComponent as ColorIcon } from "./resources/colorSelectorIcon.svg";
-import { HexColorPicker } from "react-colorful";
+import ColorPicker from "./colorPicker/colorPicker";
+import ExperimentDescription from "./experimentDescription/experimentDescription";
 
 import styleModule from "./experimentsInspector.module.css";
 
 export default function ExperimentsInspector() {
 	const [objectList, setObjectList] = useContext(SelectedObjectsContext);
 	const [activeTriplet, setActiveTriplet] = useState(null);
-	const [colorPicker, setColorPicker] = useState(false);
+	const [colorPickerIsActive, setColorPickerIsActive] = useState(false);
 
 	const createButton = (object) => {
 		return (
@@ -59,83 +59,6 @@ export default function ExperimentsInspector() {
 	const makeMaterialIdText = () => {
 		try {
 			return "[" + activeTriplet.material.batch + "]";
-		} catch (error) {
-			return;
-		}
-	};
-
-	const makeMaterialText = () => {
-		try {
-			const formattedBodyParams = getFormattedBodyParams(
-				activeTriplet.experiment.experiment_params.body_params
-			);
-			return (
-				<React.Fragment>
-					<h1>Material</h1>
-					<b>Lote: </b>
-					{activeTriplet.material.batch}
-					<br />
-					<b>Fornecedor: </b>
-					{activeTriplet.material.supplier.name}
-					<br />
-					<b>• E-mail: </b>
-					{activeTriplet.material.supplier.email}
-					<br />
-					<b>Id: </b>
-					{activeTriplet.material.id}
-					<br />
-					<b>Info extra: </b>
-					<p>{activeTriplet.material.extra_info}</p>
-					<hr></hr>
-					<h1>Experimento</h1>
-					<b>Data: </b>
-					{getFormattedDate(activeTriplet.experiment.date)}
-					<br />
-					<b>Parâmetros: </b>
-					<br />
-					<b>• AutoStop: </b>
-					<br />
-					<>- • Queda de força: </>
-					{
-						activeTriplet.experiment.experiment_params.stop_params
-							.force_loss
-					}
-					<br />
-					<>- • Força máxima: </>
-					{
-						activeTriplet.experiment.experiment_params.stop_params
-							.max_force
-					}
-					<br />
-					<>- • Distância máxima: </>
-					{
-						activeTriplet.experiment.experiment_params.stop_params
-							.max_travel
-					}
-					<br />
-					<>- • Tempo máximo: </>
-					{
-						activeTriplet.experiment.experiment_params.stop_params
-							.max_time
-					}
-					<br />
-					<b>• Corpo de prova: </b>
-					<br />
-					<>- • {formattedBodyParams.type}</>
-					<br />
-					<>- • {formattedBodyParams.paramA}</>
-					<br />
-					<>- • {formattedBodyParams.paramB}</>
-					<br />
-					<>- • {formattedBodyParams.height}</>
-					<br />
-					<b>Id: </b>
-					{activeTriplet.experiment.id}
-					<br />
-					<b>Info extra: </b>
-					<p>{activeTriplet.experiment.extra_info}</p>
-				</React.Fragment>
-			);
 		} catch (error) {
 			return;
 		}
@@ -179,56 +102,52 @@ export default function ExperimentsInspector() {
 		}
 	};
 
-	const makeColorPicker = () => {
-		if (colorPicker) {
-			return (
-				<HexColorPicker
-					className={styleModule.color_picker}
-					color={activeTriplet.color}
-					//onChange={activeTriplet.color}
-				/>
-			);
-		}
-		return;
-	};
-
 	return (
-		<div className={styleModule.material_inspector}>
-			<div className={styleModule.material_inspector_header}>
-				<button
-					className={styleModule.delete_material_button}
-					onClick={removeActiveExperiment}
-				></button>
-				<div className={styleModule.material_inspector_header_text}>
-					{makeMaterialIdText()} {makeHeaderText()}
-				</div>
-				<div
-					className={styleModule.material_inspector_header_color}
-					style={{ "--experiment_color": getStyleColor() }}
-					onClick={() => setColorPicker(!colorPicker)}
-				>
-					<ColorIcon
-						className={
-							styleModule.material_inspector_header_color_icon
-						}
-					/>
-				</div>
-				{makeColorPicker()}
-			</div>
-			<div className={styleModule.material_inspector_content}>
-				<div className={styleModule.material_inspector_search_area}>
-					<ul
-						className={
-							styleModule.material_inspector_search_area_ul
+		<div className={styleModule.material_inspector_div}>
+			<div className={styleModule.material_inspector}>
+				<div className={styleModule.material_inspector_header}>
+					<button
+						className={styleModule.delete_material_button}
+						onClick={removeActiveExperiment}
+					></button>
+					<div className={styleModule.material_inspector_header_text}>
+						{makeMaterialIdText()} {makeHeaderText()}
+					</div>
+					<div
+						className={styleModule.material_inspector_header_color}
+						style={{ "--experiment_color": getStyleColor() }}
+						onClick={() =>
+							setColorPickerIsActive(!colorPickerIsActive)
 						}
 					>
-						{makeButtons()}
-					</ul>
+						<ColorIcon
+							className={
+								styleModule.material_inspector_header_color_icon
+							}
+						/>
+					</div>
 				</div>
-				<div className={styleModule.material_inspector_description}>
-					{makeMaterialText()}
+				<div className={styleModule.material_inspector_content}>
+					<div className={styleModule.material_inspector_search_area}>
+						<ul
+							className={
+								styleModule.material_inspector_search_area_ul
+							}
+						>
+							{makeButtons()}
+						</ul>
+					</div>
+					<ExperimentDescription
+						activeTriplet={activeTriplet}
+					></ExperimentDescription>
 				</div>
 			</div>
+			<ColorPicker
+				activeTriplet={activeTriplet}
+				setActiveTriplet={setActiveTriplet}
+				colorPickerIsActive={colorPickerIsActive}
+				setColorPickerIsActive={setColorPickerIsActive}
+			/>
 		</div>
 	);
 }
