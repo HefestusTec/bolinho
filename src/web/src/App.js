@@ -4,6 +4,8 @@ import { useState, useEffect } from "react";
 import SideBar from "./components/sideBar/sideBar";
 import MainPage from "./components/mainPage/mainPage";
 //import FpsMeter from "./components/fpsMeter/fpsMeter";
+import { ToastContainer, toast, Zoom } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import GlobalConfigContext, {
 	globalConfigDefault,
@@ -12,7 +14,10 @@ import GlobalConfigContext, {
 export const eel = window.eel;
 try {
 	eel.set_host("ws://localhost:8080");
-} catch {}
+	toast.success("Conexão estabelecida");
+} catch {
+	toast.error("Não foi possível conectar com o backend");
+}
 
 const getMaterialList = async () => {
 	try {
@@ -56,6 +61,7 @@ function App() {
 					THEME TEMP
 				</button>
 			</div>
+			<ToastContainer className="toast_notify" transition={Zoom} />
 		</GlobalConfigContext.Provider>
 	);
 }

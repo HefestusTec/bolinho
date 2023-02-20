@@ -19,11 +19,13 @@ import { eel } from "../../../../../App";
 import styleModule from "./dropdownButton.module.css";
 import SelectedObjectsContext from "../../../contexts/selectedObjectsContext";
 import { getFormattedDate, getRandomColor } from "../../../../../helpers";
-
+import { toast } from "react-toastify";
 const getExperimentDate = async (index) => {
 	try {
 		return JSON.parse(await eel.get_experiment_at(index)());
 	} catch (error) {
+		toast.error("Não foi possível acessar o backend");
+
 		return 0;
 	}
 };
@@ -36,6 +38,8 @@ const getExperimentObjectList = async (id) => {
 
 		return Object.assign(experimentObject, { color: getRandomColor() });
 	} catch (error) {
+		toast.error("Não foi possível acessar o backend");
+
 		return {};
 	}
 };

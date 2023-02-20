@@ -57,3 +57,8 @@ button {
 .toggle_theme_button:active {
 	background-color: #494949;
 }
+
+.toast_notify {
+	animation-duration: 0;
+	font-size: var(--font_s);
+}
