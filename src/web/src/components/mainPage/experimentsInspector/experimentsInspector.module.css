@@ -25,7 +25,7 @@
 }
 .material_inspector {
 	flex: none;
-	z-index: 2;
+	z-index: 1;
 	height: stretch;
 	width: stretch;
 	border-radius: clamp(2px, 3vh, 20px);

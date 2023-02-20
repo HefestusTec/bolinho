@@ -29,6 +29,7 @@ export default function ZoomComponent({
 
 	const [isActive, setIsActive] = useState(false);
 	const [canZoom, setCanZoom] = useState(true);
+	const [zIndexVal, setZIndexVal] = useState("inherit");
 	const usedZoom = () => {
 		if (canZoom) setIsActive(!isActive);
 	};
@@ -38,7 +39,7 @@ export default function ZoomComponent({
 	};
 
 	const bindLongPress = useLongPress(usedZoom, {
-		cancelOnMovement: true,
+		cancelOnMovement: 1,
 		captureEvent: true,
 		threshold: globalConfig.zoomDelay,
 		onFinish: resetCanZoom,
@@ -55,13 +56,14 @@ export default function ZoomComponent({
 				transformOrigin: scaleOrigin,
 				transitionDuration: "var(--animation_slow)",
 				transform: "scale(var(--zoom_scale))",
-				"z-index": "2",
+				zIndex: 10,
 			};
 		}
 
 		return {
 			transformOrigin: scaleOrigin,
 			transitionDuration: "var(--animation_slow)",
+			"z-index": zIndexVal,
 		};
 	};
 
@@ -81,6 +83,14 @@ export default function ZoomComponent({
 			setCanZoom(false);
 		}
 	};
+
+	const transitioned = (property) => {
+		if (property.propertyName === "transform") {
+			if (!isActive) setZIndexVal("inherit");
+			else setZIndexVal("10");
+		}
+	};
+
 	return (
 		<React.Fragment>
 			<div
@@ -88,6 +98,7 @@ export default function ZoomComponent({
 				style={getStyle()}
 				{...bindLongPress()}
 				onScrollCapture={scrolled}
+				onTransitionEndCapture={transitioned}
 			>
 				{children}
 			</div>
