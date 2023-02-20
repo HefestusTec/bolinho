@@ -21,6 +21,7 @@ import { ReactComponent as ColorIcon } from "./resources/colorSelectorIcon.svg";
 import { ReactComponent as AcceptIcon } from "./resources/acceptIcon.svg";
 import ColorPicker from "./colorPicker/colorPicker";
 import ExperimentDescription from "./experimentDescription/experimentDescription";
+import { toast } from "react-toastify";
 
 import styleModule from "./experimentsInspector.module.css";
 
@@ -136,6 +137,26 @@ export default function ExperimentsInspector() {
 		return;
 	};
 
+	const toggleColorPickIsActive = () => {
+		if (!colorPickerIsActive) {
+			setColorPickerIsActive(true);
+			return;
+		}
+		setColorPickerIsActive(false);
+
+		try {
+			let objectListCopy = [...objectList];
+			const idx = objectListCopy.findIndex(
+				(element) =>
+					element.experiment.id === activeTriplet.experiment.id
+			);
+			objectListCopy.at(idx).color = activeTriplet.color;
+			setObjectList(objectListCopy);
+		} catch (error) {
+			toast.error("Não foi possível alterar a cor da plotagem");
+		}
+	};
+
 	return (
 		<div className={styleModule.material_inspector_div}>
 			<div className={styleModule.material_inspector}>
@@ -150,9 +171,7 @@ export default function ExperimentsInspector() {
 					<div
 						className={getHeaderColorClassName()}
 						style={{ "--experiment_color": getStyleColor() }}
-						onClick={() =>
-							setColorPickerIsActive(!colorPickerIsActive)
-						}
+						onClick={toggleColorPickIsActive}
 					>
 						{getColorPickerText()}
 						{getColorPickerIcon()}

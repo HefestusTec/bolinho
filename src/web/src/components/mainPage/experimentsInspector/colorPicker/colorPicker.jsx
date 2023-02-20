@@ -14,9 +14,8 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState } from "react";
 import { HexColorPicker } from "react-colorful";
-import SelectedObjectsContext from "../../contexts/selectedObjectsContext";
 import styleModule from "./colorPicker.module.css";
 
 export default function ColorPicker({
@@ -26,29 +25,15 @@ export default function ColorPicker({
 	setColorPickerIsActive,
 }) {
 	const [currentColor, setCurrentColor] = useState("#FFFFFF");
-	const [objectList, setObjectList] = useContext(SelectedObjectsContext);
 
-	useEffect(() => {
+	const colorChanged = (newColor) => {
+		setCurrentColor(newColor);
 		try {
 			let activeTripletCopy = { ...activeTriplet };
-			activeTripletCopy.color = currentColor;
+			activeTripletCopy.color = newColor;
 			setActiveTriplet(activeTripletCopy);
 		} catch (error) {}
-	}, [currentColor]);
-
-	useEffect(() => {
-		if (colorPickerIsActive === false) {
-			try {
-				let objectListCopy = [...objectList];
-				const idx = objectListCopy.findIndex(
-					(element) =>
-						element.experiment.id === activeTriplet.experiment.id
-				);
-				objectListCopy.at(idx).color = currentColor;
-				setObjectList(objectListCopy);
-			} catch (error) {}
-		}
-	}, [colorPickerIsActive]);
+	};
 
 	const makeClassName = () => {
 		if (colorPickerIsActive)
@@ -78,10 +63,9 @@ export default function ColorPicker({
 	return (
 		<React.Fragment>
 			<div className={makeClassName()}>
-				<HexColorPicker color={currentColor} onChange={setCurrentColor}>
+				<HexColorPicker color={currentColor} onChange={colorChanged}>
 					{makeBackDrop()}
 				</HexColorPicker>
-				<button>Aplicar</button>
 			</div>
 		</React.Fragment>
 	);
