@@ -16,6 +16,9 @@
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
 import React, { useState } from "react";
 import { HexColorPicker } from "react-colorful";
+import ClickAwayListener from "react-click-away-listener";
+import { useDebouncedCallback } from "use-debounce";
+
 import styleModule from "./colorPicker.module.css";
 
 export default function ColorPicker({
@@ -23,16 +26,36 @@ export default function ColorPicker({
 	setActiveTriplet,
 	colorPickerIsActive,
 	setColorPickerIsActive,
+	deactivateColorPicker,
+	updateDataColor,
 }) {
 	const [currentColor, setCurrentColor] = useState("#FFFFFF");
+	const [changing, setChanging] = useState(false);
+
+	// Debouncer allows to dynamically update the data color without having to update every frame
+	const debounced = useDebouncedCallback(
+		// function
+		() => {
+			setChanging(false);
+			updateDataColor();
+		},
+		// delay in ms
+		300
+	);
 
 	const colorChanged = (newColor) => {
+		debounced(newColor);
+		setChanging(true);
 		setCurrentColor(newColor);
 		try {
 			let activeTripletCopy = { ...activeTriplet };
 			activeTripletCopy.color = newColor;
 			setActiveTriplet(activeTripletCopy);
 		} catch (error) {}
+	};
+
+	const clickedOut = () => {
+		if (!changing) deactivateColorPicker();
 	};
 
 	const makeClassName = () => {
@@ -59,13 +82,17 @@ export default function ColorPicker({
 		return;
 	};
 
-	// TODO detect click outside component and close
 	return (
 		<React.Fragment>
 			<div className={makeClassName()}>
-				<HexColorPicker color={currentColor} onChange={colorChanged}>
-					{makeBackDrop()}
-				</HexColorPicker>
+				<ClickAwayListener onClickAway={clickedOut}>
+					<HexColorPicker
+						color={currentColor}
+						onChange={colorChanged}
+					>
+						{makeBackDrop()}
+					</HexColorPicker>
+				</ClickAwayListener>
 			</div>
 		</React.Fragment>
 	);

@@ -132,13 +132,7 @@ export default function ExperimentsInspector() {
 		return;
 	};
 
-	const toggleColorPickIsActive = () => {
-		if (!colorPickerIsActive) {
-			setColorPickerIsActive(true);
-			return;
-		}
-		setColorPickerIsActive(false);
-
+	const updateDataColor = () => {
 		try {
 			let objectListCopy = [...objectList];
 			const idx = objectListCopy.findIndex(
@@ -150,6 +144,21 @@ export default function ExperimentsInspector() {
 		} catch (error) {
 			toast.error("Não foi possível alterar a cor da plotagem");
 		}
+	};
+
+	const deactivateColorPicker = () => {
+		if (colorPickerIsActive) {
+			setColorPickerIsActive(false);
+			updateDataColor();
+		}
+	};
+
+	const toggleColorPickIsActive = () => {
+		if (!colorPickerIsActive) {
+			setColorPickerIsActive(true);
+			return;
+		}
+		deactivateColorPicker();
 	};
 
 	const makeHeaderColor = () => {
@@ -168,6 +177,20 @@ export default function ExperimentsInspector() {
 		} catch (error) {
 			return;
 		}
+	};
+
+	const makeColorPicker = () => {
+		if (colorPickerIsActive)
+			return (
+				<ColorPicker
+					activeTriplet={activeTriplet}
+					setActiveTriplet={setActiveTriplet}
+					colorPickerIsActive={colorPickerIsActive}
+					setColorPickerIsActive={setColorPickerIsActive}
+					deactivateColorPicker={deactivateColorPicker}
+					updateDataColor={updateDataColor}
+				/>
+			);
 	};
 
 	return (
@@ -199,12 +222,7 @@ export default function ExperimentsInspector() {
 				</div>
 			</div>
 
-			<ColorPicker
-				activeTriplet={activeTriplet}
-				setActiveTriplet={setActiveTriplet}
-				colorPickerIsActive={colorPickerIsActive}
-				setColorPickerIsActive={setColorPickerIsActive}
-			/>
+			{makeColorPicker()}
 		</div>
 	);
 }
