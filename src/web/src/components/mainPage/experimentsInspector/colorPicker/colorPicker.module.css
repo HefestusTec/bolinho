@@ -62,15 +62,6 @@
 	}
 }
 
-.color_picker {
-	/*
-	position: fixed;
-	z-index: 10;
-	transform: translateY(-50%);
-	float: right;
-    */
-}
-
 .color_picker_back_drop {
 	position: fixed;
 	left: 0;

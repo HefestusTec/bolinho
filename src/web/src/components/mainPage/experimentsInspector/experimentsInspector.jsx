@@ -18,6 +18,7 @@ import React, { useContext, useState, useEffect } from "react";
 import ExperimentButton from "./experimentButton/experimentButton";
 import SelectedObjectsContext from "../contexts/selectedObjectsContext";
 import { ReactComponent as ColorIcon } from "./resources/colorSelectorIcon.svg";
+import { ReactComponent as AcceptIcon } from "./resources/acceptIcon.svg";
 import ColorPicker from "./colorPicker/colorPicker";
 import ExperimentDescription from "./experimentDescription/experimentDescription";
 
@@ -94,12 +95,45 @@ export default function ExperimentsInspector() {
 		}
 	}, [objectList]);
 
+	const getHeaderColorClassName = () => {
+		if (colorPickerIsActive) {
+			return [
+				styleModule.material_inspector_header_color,
+				styleModule.material_inspector_header_color_active,
+			].join(" ");
+		}
+		return styleModule.material_inspector_header_color;
+	};
+
 	const getStyleColor = () => {
 		try {
 			return activeTriplet.color;
 		} catch (error) {
 			return "var(--primary_color)";
 		}
+	};
+
+	const getColorPickerIcon = () => {
+		if (colorPickerIsActive) {
+			return (
+				<AcceptIcon
+					className={styleModule.material_inspector_header_color_icon}
+				/>
+			);
+		}
+
+		return (
+			<ColorIcon
+				className={styleModule.material_inspector_header_color_icon}
+			/>
+		);
+	};
+
+	const getColorPickerText = () => {
+		if (colorPickerIsActive) {
+			return <p>Aplicar</p>;
+		}
+		return;
 	};
 
 	return (
@@ -114,17 +148,14 @@ export default function ExperimentsInspector() {
 						{makeMaterialIdText()} {makeHeaderText()}
 					</div>
 					<div
-						className={styleModule.material_inspector_header_color}
+						className={getHeaderColorClassName()}
 						style={{ "--experiment_color": getStyleColor() }}
 						onClick={() =>
 							setColorPickerIsActive(!colorPickerIsActive)
 						}
 					>
-						<ColorIcon
-							className={
-								styleModule.material_inspector_header_color_icon
-							}
-						/>
+						{getColorPickerText()}
+						{getColorPickerIcon()}
 					</div>
 				</div>
 				<div className={styleModule.material_inspector_content}>
