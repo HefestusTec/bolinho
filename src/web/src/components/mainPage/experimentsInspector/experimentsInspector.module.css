@@ -19,14 +19,19 @@
 
 @import url(../../../variables.css);
 
+.material_inspector_div {
+	height: stretch;
+	display: flex;
+}
 .material_inspector {
+	flex: none;
+	z-index: 2;
 	height: stretch;
 	width: stretch;
-	display: flex;
-	flex-direction: column;
 	border-radius: clamp(2px, 3vh, 20px);
 	overflow: hidden;
 	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+	position: relative;
 }
 
 .material_inspector_header {
@@ -36,6 +41,27 @@
 	position: relative;
 	align-items: center;
 	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.delete_material_button {
+	height: 100%;
+	width: 10%;
+	margin-left: 2%;
+	background: none;
+	background-size: 40%;
+	background-image: url("./resources/deleteIcon.svg");
+	background-position: center;
+	background-repeat: no-repeat;
+	transition-duration: var(--animation_fast);
+}
+
+.delete_material_button:hover {
+	transform: translateY(-0.5vh);
+}
+.delete_material_button:active {
+	transform: translateY(0vh);
+
+	background-size: 35%;
 }
 
 .material_inspector_header_text {
@@ -49,10 +75,60 @@
 }
 
 .material_inspector_header_color {
-	width: 30%;
+	width: 15%;
 	height: 100%;
-	background-color: #1797f8;
+	position: absolute;
+	right: -1px;
+	top: 0;
+
+	border: solid;
+	border-color: white;
+	border-width: 0 0 0.4vh 0.4vh;
+	border-radius: 0 0 0 clamp(2px, 3vh, 20px);
+
+	box-sizing: border-box;
+	--experiment_color: var(--primary_color);
+
+	background-color: var(--experiment_color);
+	align-items: center;
+	transition-duration: var(--animation_fast);
 }
+
+.material_inspector_header_color:hover {
+	width: 20%;
+}
+.material_inspector_header_color:active {
+	box-shadow: inset 0px 0px 5px 3px rgba(0, 0, 0, 0.5);
+	background-color: var(--active_color);
+}
+
+.material_inspector_header_color_active {
+	width: 30%;
+}
+.material_inspector_header_color_active:hover {
+	width: 28%;
+}
+
+.material_inspector_header_color p {
+	margin: 0;
+	height: 100%;
+	font-size: var(--font_m);
+	color: white;
+	mix-blend-mode: difference;
+	font-weight: bold;
+	margin-top: 0.5vh;
+	margin-left: 10px;
+}
+
+.material_inspector_header_color_icon {
+	position: absolute;
+	top: 0;
+	right: 0;
+	height: 90%;
+	fill: white;
+	mix-blend-mode: difference;
+}
+
 .material_inspector_content {
 	height: calc(100% - clamp(20px, 5.5vh, 75px));
 	width: 100%;
@@ -78,16 +154,4 @@
 	list-style-type: none;
 	overflow-y: scroll;
 	overflow-x: hidden;
-}
-
-.material_inspector_description {
-	background-color: var(--background_color);
-	padding: 2%;
-	width: 65%;
-	color: var(--font_color);
-	font-family: Roboto;
-	font-size: var(--font_s);
-	font-weight: 400;
-	text-align: left;
-	box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
 }

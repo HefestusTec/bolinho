@@ -48,6 +48,10 @@ This software is licensed and distributed under the **[GNU General Public Licens
 
 * React Long Press Hook - [see license](https://github.com/minwork/use-long-press/blob/master/LICENSE)
 
+* React Colorful - [see license](https://github.com/omgovich/react-colorful/blob/master/LICENSE)
+
+* React Toastify - [see license](https://github.com/fkhadra/react-toastify/blob/main/LICENSE) 
+
 ___
 
 Agradecemos do fundo do coração todos os autores dos diferentes projetos utilizados, **software livre** é liberdade, muito obrigado a todos.

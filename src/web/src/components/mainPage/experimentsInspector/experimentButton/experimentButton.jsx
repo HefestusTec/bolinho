@@ -15,50 +15,60 @@
 // You should have received a copy of the GNU General Public License
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
 
-import React, { useContext } from "react";
-import ExperimentsContext from "../../contexts/experimentsContext";
+import React, { useState, useEffect } from "react";
+import { getFormattedDate } from "../../../../helpers";
 import styleModule from "./experimentButton.module.css";
+export default function ExperimentButton({
+	object,
+	materialName,
+	activeTriplet,
+	setActiveTriplet,
+}) {
+	const [isActive, setIsActive] = useState(false);
 
-export default function ExperimentButton({ experiment, materialName }) {
-	const [experimentList, setExperimentList] = useContext(ExperimentsContext);
+	useEffect(() => {
+		try {
+			if (activeTriplet.experiment.id === object.experiment.id)
+				setIsActive(true);
+			else setIsActive(false);
+		} catch (error) {}
+	}, [activeTriplet, object]);
 
 	const removeSelf = () => {
-		const newCartData = experimentList.filter(
-			(d) => d.experiment.id !== experiment.id
-		);
-
-		setExperimentList(newCartData);
+		setActiveTriplet(object);
 	};
 
-	const getFormattedDate = () => {
+	const getClassName = () => {
+		if (isActive)
+			return [
+				styleModule.experiment_button,
+				styleModule.experiment_button_active,
+			].join(" ");
+		return styleModule.experiment_button;
+	};
+
+	const getStyleColor = () => {
 		try {
-			const day =
-				experiment.date.day.toString().length === 2
-					? experiment.date.day.toString()
-					: 0 + experiment.date.day.toString();
-			const month =
-				experiment.date.month.toString().length === 2
-					? experiment.date.month.toString()
-					: 0 + experiment.date.month.toString();
-			const date = `${day}/${month}/${experiment.date.year}`;
-			return date;
+			return object.color;
 		} catch (error) {
-			return 0;
+			return "FFFFFF";
 		}
 	};
 
 	return (
 		<li>
 			<button
-				className={styleModule.experiment_button}
+				className={getClassName()}
 				onClick={removeSelf}
+				style={{ "--experiment_color": getStyleColor() }}
 			>
 				<div className={styleModule.experiment_text}>
 					<div className={styleModule.experiment_material_text}>
 						{materialName}
 					</div>
 					<div className={styleModule.experiment_experiment_text}>
-						Exp{experiment.id} [{getFormattedDate()}]
+						Exp{object.experiment.id} [
+						{getFormattedDate(object.experiment.date)}]
 					</div>
 				</div>
 			</button>

@@ -118,6 +118,7 @@ nav:
           - Pages: frontEnd/pages.md
           - Components: frontEnd/components.md
           - Contexts: frontEnd/contexts.md
+          - Alerts: frontEnd/alerts.md
     - API:
           - API: api/index.md
           - Data Types: api/dataTypes.md

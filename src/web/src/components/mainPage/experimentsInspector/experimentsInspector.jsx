@@ -14,20 +14,29 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
-import React, { useContext } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import ExperimentButton from "./experimentButton/experimentButton";
-import ExperimentsContext from "../contexts/experimentsContext";
+import SelectedObjectsContext from "../contexts/selectedObjectsContext";
+import { ReactComponent as ColorIcon } from "./resources/colorSelectorIcon.svg";
+import { ReactComponent as AcceptIcon } from "./resources/acceptIcon.svg";
+import ColorPicker from "./colorPicker/colorPicker";
+import ExperimentDescription from "./experimentDescription/experimentDescription";
+import { toast } from "react-toastify";
 
 import styleModule from "./experimentsInspector.module.css";
 
 export default function ExperimentsInspector() {
-	const [experimentList] = useContext(ExperimentsContext);
+	const [objectList, setObjectList] = useContext(SelectedObjectsContext);
+	const [activeTriplet, setActiveTriplet] = useState(null);
+	const [colorPickerIsActive, setColorPickerIsActive] = useState(false);
 
-	const createButton = (pair) => {
+	const createButton = (object) => {
 		return (
 			<ExperimentButton
-				experiment={pair.experiment}
-				materialName={pair.material.name}
+				object={object}
+				materialName={object.material.name}
+				activeTriplet={activeTriplet}
+				setActiveTriplet={setActiveTriplet}
 			></ExperimentButton>
 		);
 	};
@@ -35,40 +44,160 @@ export default function ExperimentsInspector() {
 	const makeButtons = () => {
 		let buttonArray = [];
 		try {
-			experimentList.forEach((element) => {
+			objectList.forEach((element) => {
 				buttonArray.push(createButton(element));
 			});
 		} catch (error) {}
 		return buttonArray;
 	};
 
+	const makeHeaderText = () => {
+		try {
+			return activeTriplet.material.name;
+		} catch (error) {
+			return;
+		}
+	};
+	const makeMaterialIdText = () => {
+		try {
+			return "[" + activeTriplet.material.batch + "]";
+		} catch (error) {
+			return;
+		}
+	};
+
+	const activateNextExperiment = () => {
+		try {
+			objectList.forEach((triplet) => {
+				if (triplet !== activeTriplet) {
+					setActiveTriplet(triplet);
+					return;
+				}
+			});
+		} catch (error) {}
+	};
+
+	const removeActiveExperiment = () => {
+		try {
+			const newCartData = objectList.filter(
+				(d) => d.experiment.id !== activeTriplet.experiment.id
+			);
+
+			setObjectList(newCartData, activateNextExperiment());
+		} catch (error) {}
+	};
+
+	useEffect(() => {
+		if (objectList.length === 0) {
+			setActiveTriplet({});
+			return;
+		} else if (objectList.length === 1) {
+			setActiveTriplet(objectList[0]);
+		}
+	}, [objectList]);
+
+	const getHeaderColorClassName = () => {
+		if (colorPickerIsActive) {
+			return [
+				styleModule.material_inspector_header_color,
+				styleModule.material_inspector_header_color_active,
+			].join(" ");
+		}
+		return styleModule.material_inspector_header_color;
+	};
+
+	const getStyleColor = () => {
+		try {
+			return activeTriplet.color;
+		} catch (error) {
+			return "var(--primary_color)";
+		}
+	};
+
+	const getColorPickerIcon = () => {
+		if (colorPickerIsActive) {
+			return (
+				<AcceptIcon
+					className={styleModule.material_inspector_header_color_icon}
+				/>
+			);
+		}
+
+		return (
+			<ColorIcon
+				className={styleModule.material_inspector_header_color_icon}
+			/>
+		);
+	};
+
+	const getColorPickerText = () => {
+		if (colorPickerIsActive) {
+			return <p>Aplicar</p>;
+		}
+		return;
+	};
+
+	const toggleColorPickIsActive = () => {
+		if (!colorPickerIsActive) {
+			setColorPickerIsActive(true);
+			return;
+		}
+		setColorPickerIsActive(false);
+
+		try {
+			let objectListCopy = [...objectList];
+			const idx = objectListCopy.findIndex(
+				(element) =>
+					element.experiment.id === activeTriplet.experiment.id
+			);
+			objectListCopy.at(idx).color = activeTriplet.color;
+			setObjectList(objectListCopy);
+		} catch (error) {
+			toast.error("Não foi possível alterar a cor da plotagem");
+		}
+	};
+
 	return (
-		<div className={styleModule.material_inspector}>
-			<div className={styleModule.material_inspector_header}>
-				<div className={styleModule.material_inspector_header_text}>
-					[592] Aço carbono 12
-				</div>
-				<div
-					className={styleModule.material_inspector_header_color}
-				></div>
-			</div>
-			<div className={styleModule.material_inspector_content}>
-				<div className={styleModule.material_inspector_search_area}>
-					<ul
-						className={
-							styleModule.material_inspector_search_area_ul
-						}
+		<div className={styleModule.material_inspector_div}>
+			<div className={styleModule.material_inspector}>
+				<div className={styleModule.material_inspector_header}>
+					<button
+						className={styleModule.delete_material_button}
+						onClick={removeActiveExperiment}
+					></button>
+					<div className={styleModule.material_inspector_header_text}>
+						{makeMaterialIdText()} {makeHeaderText()}
+					</div>
+					<div
+						className={getHeaderColorClassName()}
+						style={{ "--experiment_color": getStyleColor() }}
+						onClick={toggleColorPickIsActive}
 					>
-						{makeButtons()}
-					</ul>
+						{getColorPickerText()}
+						{getColorPickerIcon()}
+					</div>
 				</div>
-				<div className={styleModule.material_inspector_description}>
-					Material: Aço carbono Lote: 1202 Fornecedor: MinasLTDA
-					Ensaio: 02 Lorem ipsum dolor sit amet, consectetur
-					adipiscing elit. Nullam malesuada placerat fringilla. Ut
-					viverra, nulla vitae egestas .
+				<div className={styleModule.material_inspector_content}>
+					<div className={styleModule.material_inspector_search_area}>
+						<ul
+							className={
+								styleModule.material_inspector_search_area_ul
+							}
+						>
+							{makeButtons()}
+						</ul>
+					</div>
+					<ExperimentDescription
+						activeTriplet={activeTriplet}
+					></ExperimentDescription>
 				</div>
 			</div>
+			<ColorPicker
+				activeTriplet={activeTriplet}
+				setActiveTriplet={setActiveTriplet}
+				colorPickerIsActive={colorPickerIsActive}
+				setColorPickerIsActive={setColorPickerIsActive}
+			/>
 		</div>
 	);
 }

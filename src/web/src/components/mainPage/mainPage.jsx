@@ -25,23 +25,25 @@ import ExtraOptions from "./extraOptions/extraOptions";
 import ZoomComponent from "../zoomComponent/zoomComponent";
 
 //import GlobalConfigContext from "../../contexts/globalConfigContext";
-import ExperimentsContext from "./contexts/experimentsContext";
+import SelectedObjectsContext from "./contexts/selectedObjectsContext";
 
 export default function MainPage({ materialList }) {
 	//const [graphData, setGraphData] = useState(makeConstData());
 	//const [globalConfig, setGlobalConfig] = useContext(GlobalConfigContext);
 
-	const [experimentList, setExperimentList] = useState([]);
+	const [selectedObjectList, setSelectedObjectList] = useState([]);
 
 	return (
-		<ExperimentsContext.Provider
-			value={[experimentList, setExperimentList]}
+		<SelectedObjectsContext.Provider
+			value={[selectedObjectList, setSelectedObjectList]}
 		>
 			<div className={styleModule.content}>
-				<GraphComponent
-					className={styleModule.graph}
-					experimentList={experimentList}
-				/>
+				<ZoomComponent
+					className={styleModule.graph_component}
+					scaleOrigin="top right"
+				>
+					<GraphComponent experimentList={selectedObjectList} />
+				</ZoomComponent>
 				<ZoomComponent
 					className={styleModule.material_selector}
 					scaleOrigin="top left"
@@ -54,9 +56,14 @@ export default function MainPage({ materialList }) {
 				>
 					<ExperimentsInspector />
 				</ZoomComponent>
-				<ExtraOptions />
+				<ZoomComponent
+					className={styleModule.extra_options}
+					scaleOrigin="bottom"
+				>
+					<ExtraOptions />
+				</ZoomComponent>
 				<button className={styleModule.ensaio_button}>ENSAIO</button>
 			</div>
-		</ExperimentsContext.Provider>
+		</SelectedObjectsContext.Provider>
 	);
 }

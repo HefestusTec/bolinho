@@ -16,6 +16,11 @@
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
 import { createContext } from "react";
 
-const ExperimentsContext = createContext([[], () => {}]);
+// Object with {
+// "material": material_fragment,
+// "experiment": experiment_fragment,
+// "data_array": data_array_fragment,
+// }
+const SelectedObjectsContext = createContext([[], () => {}]);
 
-export default ExperimentsContext;
+export default SelectedObjectsContext;

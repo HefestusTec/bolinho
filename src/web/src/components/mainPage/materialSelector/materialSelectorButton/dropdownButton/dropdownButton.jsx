@@ -17,27 +17,35 @@
 import React, { useState, useEffect, useContext } from "react";
 import { eel } from "../../../../../App";
 import styleModule from "./dropdownButton.module.css";
-import ExperimentsContext from "../../../contexts/experimentsContext";
-
+import SelectedObjectsContext from "../../../contexts/selectedObjectsContext";
+import { getFormattedDate, getRandomColor } from "../../../../../helpers";
+import { toast } from "react-toastify";
 const getExperimentDate = async (index) => {
 	try {
 		return JSON.parse(await eel.get_experiment_at(index)());
 	} catch (error) {
+		toast.error("Não foi possível acessar o backend");
+
 		return 0;
 	}
 };
 
-const getExperimentPair = async (id) => {
+const getExperimentObjectList = async (id) => {
 	try {
-		const experimentPair = JSON.parse(await eel.get_experiment_dict(id)());
-		return experimentPair;
+		const experimentObject = JSON.parse(
+			await eel.get_experiment_dict(id)()
+		);
+
+		return Object.assign(experimentObject, { color: getRandomColor() });
 	} catch (error) {
+		toast.error("Não foi possível acessar o backend");
+
 		return {};
 	}
 };
 
 export default function DropdownButton({ experimentIndex }) {
-	const [experimentList, setExperimentList] = useContext(ExperimentsContext);
+	const [objectList, setObjectList] = useContext(SelectedObjectsContext);
 	const [experiment, setExperiment] = useState(0);
 
 	useEffect(() => {
@@ -46,37 +54,16 @@ export default function DropdownButton({ experimentIndex }) {
 		});
 	}, [experimentIndex]);
 
-	const getFormattedDate = () => {
-		try {
-			const day =
-				experiment.date.day.toString().length === 2
-					? experiment.date.day.toString()
-					: 0 + experiment.date.day.toString();
-			const month =
-				experiment.date.month.toString().length === 2
-					? experiment.date.month.toString()
-					: 0 + experiment.date.month.toString();
-			const date = `${day}/${month}/${experiment.date.year}`;
-			return date;
-		} catch (error) {
-			return 0;
-		}
-	};
-
 	const buttonClicked = () => {
-		getExperimentPair(experimentIndex).then((response) => {
+		getExperimentObjectList(experimentIndex).then((response) => {
 			// Checking if the experiment id already exists in the experiment list
 			if (
-				experimentList.some(
+				objectList.some(
 					(e) => e.experiment.id === response.experiment.id
 				)
-			) {
+			)
 				return;
-			}
-			setExperimentList((experimentList) => [
-				...experimentList,
-				response,
-			]);
+			setObjectList((experimentList) => [...experimentList, response]);
 		});
 	};
 
@@ -91,7 +78,8 @@ export default function DropdownButton({ experimentIndex }) {
 					<div className={styleModule.add_sign}></div>
 				</div>
 				<div className={styleModule.dropdown_button_text}>
-					Experimento {experimentIndex} [{getFormattedDate()}]
+					Experimento {experimentIndex} [
+					{getFormattedDate(experiment.date)}]
 				</div>
 			</button>
 		</li>

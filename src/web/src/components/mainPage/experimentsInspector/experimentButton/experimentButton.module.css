@@ -20,16 +20,18 @@
 @import url(../../../../variables.css);
 
 .experiment_button {
-	width: 95%;
+	width: 90%;
 	display: flex;
 	align-items: center;
 
 	border-radius: 0px clamp(5px, 1.4vw, 10px) clamp(5px, 1.4vw, 10px) 0px;
 
 	border: solid;
-	border-color: #1797f8;
+	--experiment_color: white;
+
+	border-color: var(--experiment_color);
 	border-width: 0 0 0.9vh 0;
-	border-bottom-style: groove;
+	border-bottom-style: solid;
 
 	box-shadow: inset 0px 2px 2px rgba(0, 0, 0, 0.25);
 	padding-left: 0;
@@ -42,6 +44,17 @@
 	animation: slide-in;
 	animation-duration: var(--animation_slow);
 	animation-timing-function: cubic-bezier(0.47, 1.64, 0.41, 0.7);
+	cursor: pointer;
+}
+.experiment_button:hover {
+	box-shadow: none;
+	box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
+	background-color: var(--content_background_color);
+	width: 100%;
+}
+.experiment_button:active {
+	box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
+	background-color: var(--active_color);
 }
 
 @keyframes slide-in {
@@ -53,17 +66,23 @@
 	}
 }
 
-.experiment_button:hover {
-	box-shadow: none;
-	box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
-	background-color: var(--content_background_color);
+.experiment_button_active {
 	width: 100%;
+	background: var(--button_active_color);
+	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+	cursor: auto;
 }
-
+.experiment_button_active:hover {
+	width: 100%;
+	background: var(--button_active_color);
+	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+	cursor: auto;
+}
 .experiment_button:active {
-	box-shadow: inset 0px 2px 2px rgba(0, 0, 0, 0.25);
-	background-color: var(--active_color);
-	transform: translateX(-30%);
+	width: 100%;
+	background: var(--button_active_color);
+	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+	cursor: auto;
 }
 
 /* UNUSED */

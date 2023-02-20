@@ -55,7 +55,7 @@ function GraphComponent({ experimentList }) {
 					new ExperimentPlotData(
 						element.material.name,
 						element.data_array,
-						"#" + Math.floor(Math.random() * 16777215).toString(16)
+						element.color
 					)
 				);
 			});
