@@ -29,7 +29,7 @@ Most custom React components are here
     You can enable/disable and change the activation time on the [`GlobalConfigContext`](contexts.md#globalconfigcontext) context.
 
     ### Props 
-    ``` js
+    ``` jsx
     {
         scaleOrigin = "top",
         className = "",
@@ -46,11 +46,133 @@ Most custom React components are here
 
     ### Usage example
 
-    ``` html title=""
-    <ZoomComponent
-        className={styleModule.experiments_inspector}
-        scaleOrigin="bottom left"
-    >
-        <ExperimentsInspector />
-    </ZoomComponent>
+    ``` jsx
+    import ZoomComponent from "../zoomComponent/zoomComponent";
+    import ExperimentsInspector from "./experimentsInspector/experimentsInspector";
+
+    export default function exampleComponent(){
+        return(
+            <ZoomComponent
+                className={styleModule.experiments_inspector}
+                scaleOrigin="bottom left"
+            >
+                <ExperimentsInspector />
+            </ZoomComponent>
+        );
+    } 
+    ```
+
+
+<!--
+## MainPage
+!!! quote ""
+    This is the main page component, it takes care of the data base manipulation, settings, and access to other pages of the application.
+
+    ### `JSX`
+    This is a pseudo code of the main page component layout.
+    ```html title=""
+    <SelectedObjectsContext.Provider>
+        <div className={styleModule.content}>
+            <ZoomComponent>
+                <GraphComponent experimentList={selectedObjectList} />
+            </ZoomComponent>
+            <ZoomComponent>
+                <MaterialSelector materialList={materialList} />
+            </ZoomComponent>
+            <ZoomComponent>
+                <ExperimentsInspector />
+            </ZoomComponent>
+            <ZoomComponent>
+                <ExtraOptions />
+            </ZoomComponent>
+        </div>
+    </SelectedObjectsContext.Provider>
+    ```
+
+
+    ### Props
+    It receives a `materialList` from the `app.js`
+    ``` js
+    {
+        materialList
+    }
+    ```
+    > 
+    * `materialList`: List of materials stored on the data base.
+-->
+
+## ExperimentInspector
+
+!!! quote ""
+    This component makes use of the [`SelectedObjectsContext`](./contexts.md#selectedobjectscontext).
+
+    The experiment inspector component holds the following children:
+
+    * `ColorPicker`: Color picker component for choosing the color of the active experiment.
+    * `ExperimentButton`: Buttons that make the list of selected experiments.
+    * `ExperimentDescription`: Component that parses the description of the active material.
+
+    ### Props
+    `none`
+
+    ### Usage example
+    ``` jsx hl_lines="16"
+    import ExperimentsInspector from "./experimentsInspector/experimentsInspector";
+
+    export default function exampleComponent(){
+
+        const getMaterialList = async () => {
+            try {
+                const materialList = JSON.parse(await eel.get_material_list()());
+                return materialList;
+            } catch (error) {
+                return [];
+            }
+        };
+
+        return(
+            <SelectedObjectsContext.Provider>
+                <ExperimentsInspector />
+            </SelectedObjectsContext.Provider>
+
+        );
+    } 
+    ```
+
+## MaterialSelector
+
+!!! quote ""
+    The `MaterialSelector` component holds the following children:
+
+    * `MaterialSelectorButton`: Buttons that make the list of available experiments.
+        * `DropdownButton`: Buttons that make a dropdown, so the user can choose which experiment they want to inspect.
+
+    It can be wrapped with the [`ZoomComponent`](#zoomcomponent) to allow zooming.
+
+    ### Props
+    ``` jsx
+    {
+        materialList // List of available materials, fetched from the backend
+    }
+    ```
+
+    ### Usage example
+    ``` jsx
+    import MaterialSelector from "./materialSelector/materialSelector";
+
+    export default function exampleComponent(){
+
+        const getMaterialList = async () => {
+            try {
+                const materialList = JSON.parse(await eel.get_material_list()());
+                return materialList;
+            } catch (error) {
+                return [];
+            }
+        };
+
+        return(
+            <MaterialSelector materialList={getMaterialList} />
+        );
+    } 
     ```

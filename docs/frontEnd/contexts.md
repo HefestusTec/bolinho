@@ -23,7 +23,7 @@ This page contains all the [contexts](https://reactjs.org/docs/context.html) use
 
 ## GlobalConfigContext
 !!! quote ""
-    ``` js
+    ``` react
     {
         theme: "light", // light | dark
         animationSpeed: "slow", // fast | slow | off
@@ -35,5 +35,18 @@ This page contains all the [contexts](https://reactjs.org/docs/context.html) use
     }
     ```
 
+___
 
+## SelectedObjectsContext
+!!! quote ""
+    This context is acessible to the children of the `MainPage` component. It holds a list of the selected objects "experiments data".
+    ``` react
+    {
+        material, // material_fragment
+        experiment, // experiment_fragment
+        data_array, // data_array_fragment,
+        color, // color associated to an experiment
+    }
+    ```
+    
 ___

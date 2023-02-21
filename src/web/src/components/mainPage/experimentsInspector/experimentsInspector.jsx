@@ -161,6 +161,20 @@ export default function ExperimentsInspector() {
 		deactivateColorPicker();
 	};
 
+	const makeRemoveButton = () => {
+		try {
+			if (Object.keys(activeTriplet).length)
+				return (
+					<button
+						className={styleModule.delete_material_button}
+						onClick={removeActiveExperiment}
+					></button>
+				);
+		} catch (error) {
+			return;
+		}
+	};
+
 	const makeHeaderColor = () => {
 		try {
 			if (Object.keys(activeTriplet).length)
@@ -197,10 +211,8 @@ export default function ExperimentsInspector() {
 		<div className={styleModule.material_inspector_div}>
 			<div className={styleModule.material_inspector}>
 				<div className={styleModule.material_inspector_header}>
-					<button
-						className={styleModule.delete_material_button}
-						onClick={removeActiveExperiment}
-					></button>
+					{makeRemoveButton()}
+
 					<div className={styleModule.material_inspector_header_text}>
 						{makeHeaderText()}
 					</div>
