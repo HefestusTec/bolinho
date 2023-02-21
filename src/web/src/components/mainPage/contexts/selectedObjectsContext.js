@@ -19,7 +19,8 @@ import { createContext } from "react";
 // Object with {
 // "material": material_fragment,
 // "experiment": experiment_fragment,
-// "data_array": data_array_fragment,
+// "data_array":
+// "color": color associated to an experiment
 // }
 const SelectedObjectsContext = createContext([[], () => {}]);
 

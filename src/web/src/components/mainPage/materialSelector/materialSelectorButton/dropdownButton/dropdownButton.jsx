@@ -55,16 +55,23 @@ export default function DropdownButton({ experimentIndex }) {
 	}, [experimentIndex]);
 
 	const buttonClicked = () => {
-		getExperimentObjectList(experimentIndex).then((response) => {
-			// Checking if the experiment id already exists in the experiment list
-			if (
-				objectList.some(
-					(e) => e.experiment.id === response.experiment.id
+		getExperimentObjectList(experimentIndex)
+			.then((response) => {
+				// Checking if the experiment id already exists in the experiment list
+				if (
+					objectList.some(
+						(e) => e.experiment.id === response.experiment.id
+					)
 				)
-			)
-				return;
-			setObjectList((experimentList) => [...experimentList, response]);
-		});
+					return;
+				setObjectList((experimentList) => [
+					...experimentList,
+					response,
+				]);
+			})
+			.catch((error) => {
+				toast.error(error);
+			});
 	};
 
 	return (

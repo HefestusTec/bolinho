@@ -53,16 +53,11 @@ export default function ExperimentsInspector() {
 
 	const makeHeaderText = () => {
 		try {
-			return activeTriplet.material.name;
+			const name = activeTriplet.material.name;
+			const batch = activeTriplet.material.batch;
+			return `[${batch}] ${name}`;
 		} catch (error) {
-			return;
-		}
-	};
-	const makeMaterialIdText = () => {
-		try {
-			return "[" + activeTriplet.material.batch + "]";
-		} catch (error) {
-			return;
+			return "Selecione um experimento";
 		}
 	};
 
@@ -137,13 +132,7 @@ export default function ExperimentsInspector() {
 		return;
 	};
 
-	const toggleColorPickIsActive = () => {
-		if (!colorPickerIsActive) {
-			setColorPickerIsActive(true);
-			return;
-		}
-		setColorPickerIsActive(false);
-
+	const updateDataColor = () => {
 		try {
 			let objectListCopy = [...objectList];
 			const idx = objectListCopy.findIndex(
@@ -157,17 +146,39 @@ export default function ExperimentsInspector() {
 		}
 	};
 
-	return (
-		<div className={styleModule.material_inspector_div}>
-			<div className={styleModule.material_inspector}>
-				<div className={styleModule.material_inspector_header}>
+	const deactivateColorPicker = () => {
+		if (colorPickerIsActive) {
+			setColorPickerIsActive(false);
+			updateDataColor();
+		}
+	};
+
+	const toggleColorPickIsActive = () => {
+		if (!colorPickerIsActive) {
+			setColorPickerIsActive(true);
+			return;
+		}
+		deactivateColorPicker();
+	};
+
+	const makeRemoveButton = () => {
+		try {
+			if (Object.keys(activeTriplet).length)
+				return (
 					<button
 						className={styleModule.delete_material_button}
 						onClick={removeActiveExperiment}
 					></button>
-					<div className={styleModule.material_inspector_header_text}>
-						{makeMaterialIdText()} {makeHeaderText()}
-					</div>
+				);
+		} catch (error) {
+			return;
+		}
+	};
+
+	const makeHeaderColor = () => {
+		try {
+			if (Object.keys(activeTriplet).length)
+				return (
 					<div
 						className={getHeaderColorClassName()}
 						style={{ "--experiment_color": getStyleColor() }}
@@ -176,6 +187,36 @@ export default function ExperimentsInspector() {
 						{getColorPickerText()}
 						{getColorPickerIcon()}
 					</div>
+				);
+		} catch (error) {
+			return;
+		}
+	};
+
+	const makeColorPicker = () => {
+		if (colorPickerIsActive)
+			return (
+				<ColorPicker
+					activeTriplet={activeTriplet}
+					setActiveTriplet={setActiveTriplet}
+					colorPickerIsActive={colorPickerIsActive}
+					setColorPickerIsActive={setColorPickerIsActive}
+					deactivateColorPicker={deactivateColorPicker}
+					updateDataColor={updateDataColor}
+				/>
+			);
+	};
+
+	return (
+		<div className={styleModule.material_inspector_div}>
+			<div className={styleModule.material_inspector}>
+				<div className={styleModule.material_inspector_header}>
+					{makeRemoveButton()}
+
+					<div className={styleModule.material_inspector_header_text}>
+						{makeHeaderText()}
+					</div>
+					{makeHeaderColor()}
 				</div>
 				<div className={styleModule.material_inspector_content}>
 					<div className={styleModule.material_inspector_search_area}>
@@ -192,12 +233,8 @@ export default function ExperimentsInspector() {
 					></ExperimentDescription>
 				</div>
 			</div>
-			<ColorPicker
-				activeTriplet={activeTriplet}
-				setActiveTriplet={setActiveTriplet}
-				colorPickerIsActive={colorPickerIsActive}
-				setColorPickerIsActive={setColorPickerIsActive}
-			/>
+
+			{makeColorPicker()}
 		</div>
 	);
 }

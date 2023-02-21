@@ -37,6 +37,7 @@ The following pages are just place holders / mockups of the final application.
     * Access different sub-pages;
 
     * Generate report; and more!.
+    
 
 !!! quote ""
     ![Calibration page](p.%20Calibrar.png){ width="400",  align=left }

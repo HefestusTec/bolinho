@@ -36,6 +36,8 @@ This software is licensed and distributed under the **[GNU General Public Licens
 
 * MkDocs PDF Export Plugin - [see license](https://github.com/zhaoterryy/mkdocs-pdf-export-plugin/blob/master/LICENSE.md)
 
+* JSX Lexer - [see license](https://github.com/fcurella/jsx-lexer/blob/master/LICENSE)
+
 * Roboto family of fonts - [see license](https://github.com/googlefonts/roboto/blob/main/LICENSE)
 
 * React - [see license](https://github.com/facebook/react/blob/main/LICENSE)
@@ -51,6 +53,10 @@ This software is licensed and distributed under the **[GNU General Public Licens
 * React Colorful - [see license](https://github.com/omgovich/react-colorful/blob/master/LICENSE)
 
 * React Toastify - [see license](https://github.com/fkhadra/react-toastify/blob/main/LICENSE) 
+
+* Use Debounce - [see license](https://github.com/xnimorz/use-debounce/blob/master/LICENSE) 
+
+* Use Long Press - [see license](https://github.com/minwork/use-long-press/blob/master/LICENSE) 
 
 ___
 

@@ -2,3 +2,4 @@ mkdocs
 mkdocs-material
 mkdocs-with-pdf
 mkdocs-pdf-export-plugin
+jsx-lexer

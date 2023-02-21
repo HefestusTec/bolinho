@@ -25,7 +25,7 @@ This project is using [react-toastify](https://github.com/fkhadra/react-toastify
 
 Here is an exemple of how you can create an alert.
 
-``` js
+``` jsx
 import React from "react";
 import { toast } from "react-toastify";
 
