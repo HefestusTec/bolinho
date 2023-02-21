@@ -20,10 +20,7 @@ jobs:
           key: ${{ github.ref }}
           path: .cache
       - name: Installing dep
-        run: |
-          pip install mkdocs-material
-          pip install mkdocs-with-pdf
-          pip install mkdocs-pdf-export-plugin
+        run: pip install -r docs/requirements.txt
       - name: Building
         run: mkdocs gh-deploy --force
   release:
