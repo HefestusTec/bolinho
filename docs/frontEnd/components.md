@@ -116,7 +116,9 @@ Most custom React components are here
     `none`
 
     ### Usage example
-    ``` jsx hl_lines="16"
+
+    ``` jsx
+    import { eel } from "./App";
     import ExperimentsInspector from "./experimentsInspector/experimentsInspector";
 
     export default function exampleComponent(){
@@ -157,7 +159,9 @@ Most custom React components are here
     ```
 
     ### Usage example
+
     ``` jsx
+    import { eel } from "./App";
     import MaterialSelector from "./materialSelector/materialSelector";
 
     export default function exampleComponent(){

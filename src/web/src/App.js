@@ -3,7 +3,7 @@ import "./App.css";
 import { useState, useEffect } from "react";
 import SideBar from "./components/sideBar/sideBar";
 import MainPage from "./components/mainPage/mainPage";
-//import FpsMeter from "./components/fpsMeter/fpsMeter";
+import FpsMeter from "./components/fpsMeter/fpsMeter";
 import { ToastContainer, toast, Zoom } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -47,6 +47,7 @@ function App() {
 	};
 	return (
 		<GlobalConfigContext.Provider value={[globalConfig, setGlobalConfig]}>
+			<FpsMeter></FpsMeter>
 			<div
 				className="App"
 				data_theme={globalConfig.theme}
