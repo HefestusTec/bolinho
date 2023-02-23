@@ -7,6 +7,8 @@ import FpsMeter from "./components/fpsMeter/fpsMeter";
 import { ToastContainer, toast, Zoom } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+import SubPage from "./components/subPage/subPage";
+
 import GlobalConfigContext, {
 	globalConfigDefault,
 } from "./contexts/globalConfigContext";
@@ -44,6 +46,9 @@ function App() {
 	const [globalConfig, setGlobalConfig] = useState(globalConfigDefault);
 	const [materialList, setMaterialList] = useState([]);
 
+	// options "Início", "Calibrar", "Controlar", "Config.", "Sobre"
+	const [currentPage, setCurrentPage] = useState("Início");
+
 	useEffect(() => {
 		getMaterialList().then((response) => {
 			setMaterialList(response);
@@ -66,9 +71,16 @@ function App() {
 				animation_speed={globalConfig.animationSpeed}
 				animate_graph={globalConfig.animateGraph}
 			>
-				<SideBar />
+				<SideBar
+					currentPage={currentPage}
+					setCurrentPage={setCurrentPage}
+				/>
 				<div className="content_area">
 					<MainPage materialList={materialList} />
+					<SubPage
+						currentPage={currentPage}
+						setCurrentPage={setCurrentPage}
+					/>
 				</div>
 				<button className="toggle_theme_button" onClick={toggleTheme}>
 					THEME TEMP

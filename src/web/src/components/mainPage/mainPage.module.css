@@ -18,9 +18,21 @@
  */
 @import url(../../variables.css);
 .content {
-	height: 100%;
-	width: 100%;
-	padding-left: 0.5%;
+	position: absolute;
+	/*
+	--padding_amount: 1.5%;
+
+	bottom: var(--padding_amount);
+	top: var(--padding_amount);
+	left: var(--padding_amount);
+	right: var(--padding_amount);
+	*/
+	bottom: 0px;
+	top: 0px;
+	left: 0px;
+	right: 0px;
+	margin: 1%;
+
 	display: grid;
 	gap: 1.5%;
 	grid-template-columns: repeat(var(--num_columns), 1fr);
