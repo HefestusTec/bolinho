@@ -14,16 +14,13 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
-import React, { useContext } from "react";
+import React from "react";
 import styleModule from "./subPage.module.css";
 
 import BackgroundFader from "../backgroundFader/backgroundFader";
 import ConfigPage from "../configPage/configPage";
-import GlobalConfigContext from "../../contexts/globalConfigContext";
 
 export default function SubPage({ currentPage, setCurrentPage }) {
-	const [globalConfig] = useContext(GlobalConfigContext);
-
 	const getPage = () => {
 		switch (currentPage) {
 			case "Início":

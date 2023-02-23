@@ -20,7 +20,6 @@
 .side_bar {
 	--side-bar-width: 25vw;
 
-	z-index: 8;
 	height: 100%;
 	width: var(--side-bar-width);
 	min-width: 100px;

@@ -91,5 +91,8 @@ except:
     try:
         raise
     except:
-        eel.toastError("Exception raised")
+        try:
+            eel.toastError("Exception raised")
+        except:
+            pass
     ```
