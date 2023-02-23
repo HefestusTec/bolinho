@@ -28,6 +28,18 @@ const getMaterialList = async () => {
 	}
 };
 
+// Function exposed to the backend
+function toastError(msg) {
+	toast.error(msg);
+}
+window.eel.expose(toastError, "toastError");
+
+// Function exposed to the backend
+function toastSuccess(msg) {
+	toast.success(msg);
+}
+window.eel.expose(toastSuccess, "toastSuccess");
+
 function App() {
 	const [globalConfig, setGlobalConfig] = useState(globalConfigDefault);
 	const [materialList, setMaterialList] = useState([]);
