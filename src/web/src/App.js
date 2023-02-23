@@ -3,7 +3,7 @@ import "./App.css";
 import { useState, useEffect } from "react";
 import SideBar from "./components/sideBar/sideBar";
 import MainPage from "./components/mainPage/mainPage";
-import FpsMeter from "./components/fpsMeter/fpsMeter";
+//import FpsMeter from "./components/fpsMeter/fpsMeter";
 import { ToastContainer, toast, Zoom } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -56,14 +56,6 @@ function App() {
 		});
 	}, []);
 
-	const toggleTheme = () => {
-		if (globalConfig.theme === "dark") {
-			setGlobalConfig({ ...globalConfig, theme: "light" });
-			return;
-		}
-		setGlobalConfig({ ...globalConfig, theme: "dark" });
-	};
-
 	const createSubPages = () => {
 		return pageList.map((item) => {
 			if (currentPage !== "Início") {
@@ -82,7 +74,6 @@ function App() {
 
 	return (
 		<GlobalConfigContext.Provider value={[globalConfig, setGlobalConfig]}>
-			<FpsMeter></FpsMeter>
 			<div
 				className="App"
 				data_theme={globalConfig.theme}
@@ -98,9 +89,6 @@ function App() {
 					<MainPage materialList={materialList} />
 					{createSubPages()}
 				</div>
-				<button className="toggle_theme_button" onClick={toggleTheme}>
-					THEME TEMP
-				</button>
 			</div>
 			<ToastContainer className="toast_notify" transition={Zoom} />
 		</GlobalConfigContext.Provider>

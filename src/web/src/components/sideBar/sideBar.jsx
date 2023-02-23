@@ -26,7 +26,7 @@ import ControlarIcon from "./resources/ControlarIcon.svg";
 import ConfigIcon from "./resources/ConfigIcon.svg";
 import SobreIcon from "./resources/SobreIcon.svg";
 
-function SideBar({ currentPage, setCurrentPage, pageList }) {
+export default function SideBar({ currentPage, setCurrentPage, pageList }) {
 	const changePage = (event) => {
 		const buttonId = event.currentTarget.id;
 		if (buttonId === currentPage) return;
@@ -98,5 +98,3 @@ function SideBar({ currentPage, setCurrentPage, pageList }) {
 		</div>
 	);
 }
-
-export default SideBar;

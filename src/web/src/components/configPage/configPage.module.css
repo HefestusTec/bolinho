@@ -17,3 +17,21 @@
  * along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
  */
 @import url("../../variables.css");
+
+.theme_selector {
+	grid-column: 1 / 7;
+	grid-row: 1 / 6;
+}
+
+.toggle_theme_button {
+	width: 50%;
+	height: 20%;
+}
+
+.toggle_theme_button:hover {
+	background-color: #858585;
+}
+
+.toggle_theme_button:active {
+	background-color: #494949;
+}

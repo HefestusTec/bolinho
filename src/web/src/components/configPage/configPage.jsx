@@ -15,8 +15,37 @@
 // You should have received a copy of the GNU General Public License
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
 
+import { useContext } from "react";
 import styleModule from "./configPage.module.css";
 
+import ZoomComponent from "../zoomComponent/zoomComponent";
+import ContainerComponent from "../containerComponent/containerComponent";
+import GlobalConfigContext from "../../contexts/globalConfigContext";
+
 export default function ConfigPage() {
-	return <div className={styleModule.config_page}>Im a configPage</div>;
+	const [globalConfig, setGlobalConfig] = useContext(GlobalConfigContext);
+
+	const toggleTheme = () => {
+		if (globalConfig.theme === "dark") {
+			setGlobalConfig({ ...globalConfig, theme: "light" });
+			return;
+		}
+		setGlobalConfig({ ...globalConfig, theme: "dark" });
+	};
+
+	return (
+		<ZoomComponent
+			className={styleModule.theme_selector}
+			scaleOrigin="top left"
+		>
+			<ContainerComponent headerText="Temas">
+				<button
+					className={styleModule.toggle_theme_button}
+					onClick={toggleTheme}
+				>
+					Mudar tema temporário
+				</button>
+			</ContainerComponent>
+		</ZoomComponent>
+	);
 }

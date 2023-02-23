@@ -48,9 +48,9 @@ export default function SubPage({ myPage, currentPage, setCurrentPage }) {
 						faderIndex={1}
 					/>
 					<div className={styleModule.sub_page_div}>
-						<div className={styleModule.sub_page_header}>
+						<header className={styleModule.sub_page_header}>
 							{myPage}
-						</div>
+						</header>
 						<div className={styleModule.sub_page_content}>
 							{getPage()}
 						</div>
