@@ -20,6 +20,7 @@
 
 .background {
 	--position_type: fixed;
+	--fader_index: 2;
 
 	position: var(--position_type);
 
@@ -27,7 +28,7 @@
 	right: 0px;
 	top: 0px;
 	bottom: 0px;
-	z-index: 9;
+	z-index: var(--fader_index);
 	background-color: rgba(0, 0, 0, 0.6);
 	animation: fade-in;
 	animation-duration: var(--animation_slow);

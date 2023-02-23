@@ -19,14 +19,21 @@ import styleModule from "./backgroundFader.module.css";
 
 import GlobalConfigContext from "../../contexts/globalConfigContext";
 
-export default function BackgroundFader({ callbackFunc, fullscreen = true }) {
+export default function BackgroundFader({
+	callbackFunc,
+	fullscreen = true,
+	faderIndex = 2,
+}) {
 	const [globalConfig] = useContext(GlobalConfigContext);
 
 	const getBackgroundStyle = () => {
 		if (!fullscreen) {
-			return { "--position_type": "absolute" };
+			return {
+				"--position_type": "absolute",
+				"--fader_index": faderIndex,
+			};
 		}
-		return;
+		return { "--fader_index": faderIndex };
 	};
 
 	const getClassName = () => {

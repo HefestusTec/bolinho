@@ -70,6 +70,7 @@
 }
 .selector_header_search_button {
 	width: clamp(25px, 3vw, 40px);
+	cursor: pointer;
 
 	margin-top: 1px;
 	border-radius: 0px 10px 10px 0px;
@@ -107,6 +108,7 @@
 	background: none;
 	background-image: url(./resources/filterIcon.svg);
 	/*filter: invert(var(--invert_icon));*/
+	cursor: pointer;
 
 	background-position: center;
 	background-repeat: no-repeat;

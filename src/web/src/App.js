@@ -46,6 +46,7 @@ function App() {
 	const [globalConfig, setGlobalConfig] = useState(globalConfigDefault);
 	const [materialList, setMaterialList] = useState([]);
 
+	const pageList = ["Início", "Calibrar", "Controlar", "Config.", "Sobre"];
 	// options "Início", "Calibrar", "Controlar", "Config.", "Sobre"
 	const [currentPage, setCurrentPage] = useState("Início");
 
@@ -63,14 +64,20 @@ function App() {
 		setGlobalConfig({ ...globalConfig, theme: "dark" });
 	};
 
-	const createSubPage = () => {
-		if (currentPage !== "Início")
-			return (
-				<SubPage
-					currentPage={currentPage}
-					setCurrentPage={setCurrentPage}
-				/>
-			);
+	const createSubPages = () => {
+		return pageList.map((item) => {
+			if (currentPage !== "Início") {
+				return (
+					<SubPage
+						key={item}
+						myPage={item}
+						currentPage={currentPage}
+						setCurrentPage={setCurrentPage}
+					/>
+				);
+			}
+			return <></>;
+		});
 	};
 
 	return (
@@ -85,10 +92,11 @@ function App() {
 				<SideBar
 					currentPage={currentPage}
 					setCurrentPage={setCurrentPage}
+					pageList={pageList}
 				/>
 				<div className="content_area">
 					<MainPage materialList={materialList} />
-					{createSubPage()}
+					{createSubPages()}
 				</div>
 				<button className="toggle_theme_button" onClick={toggleTheme}>
 					THEME TEMP

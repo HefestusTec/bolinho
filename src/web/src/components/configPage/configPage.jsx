@@ -15,6 +15,8 @@
 // You should have received a copy of the GNU General Public License
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
 
+import styleModule from "./configPage.module.css";
+
 export default function ConfigPage() {
-	return <div>ConfigPage</div>;
+	return <div className={styleModule.config_page}>Im a configPage</div>;
 }
