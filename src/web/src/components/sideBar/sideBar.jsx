@@ -26,8 +26,7 @@ import ControlarIcon from "./resources/ControlarIcon.svg";
 import ConfigIcon from "./resources/ConfigIcon.svg";
 import SobreIcon from "./resources/SobreIcon.svg";
 
-function SideBar({ initialPage = "Início" }) {
-	const [currentPage, setCurrentPage] = useState(initialPage);
+function SideBar({ currentPage, setCurrentPage }) {
 	const buttonNames = ["Início", "Calibrar", "Controlar", "Config.", "Sobre"];
 
 	const changePage = (event) => {

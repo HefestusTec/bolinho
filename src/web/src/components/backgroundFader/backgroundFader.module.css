@@ -19,7 +19,10 @@
 @import url(../../variables.css);
 
 .background {
-	position: absolute;
+	--position_type: fixed;
+
+	position: var(--position_type);
+
 	left: 0px;
 	right: 0px;
 	top: 0px;

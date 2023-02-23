@@ -15,32 +15,46 @@
 // You should have received a copy of the GNU General Public License
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
 import React, { useContext } from "react";
-import styleModule from "./backgroundFader.module.css";
+import styleModule from "./subPage.module.css";
 
+import BackgroundFader from "../backgroundFader/backgroundFader";
+import ConfigPage from "../configPage/configPage";
 import GlobalConfigContext from "../../contexts/globalConfigContext";
 
-export default function BackgroundFader({ callbackFunc, fullscreen = true }) {
+export default function SubPage({ currentPage, setCurrentPage }) {
 	const [globalConfig] = useContext(GlobalConfigContext);
 
-	const getBackgroundStyle = () => {
-		if (!fullscreen) {
-			return { "--position_type": "absolute" };
+	const getPage = () => {
+		switch (currentPage) {
+			case "Início":
+				return;
+			case "Calibrar":
+				break;
+			case "Controlar":
+				break;
+			case "Config.":
+				return <ConfigPage></ConfigPage>;
+			case "Sobre":
+				break;
+			default:
+				return;
 		}
-		return;
 	};
 
-	const getClassName = () => {
-		if (globalConfig.backgroundBlur)
-			return [styleModule.background, styleModule.blur].join(" ");
-
-		return styleModule.background;
+	const getBackgroundFader = () => {
+		if (currentPage !== "Início")
+			return (
+				<BackgroundFader
+					callbackFunc={() => setCurrentPage("Início")}
+					fullscreen={false}
+				/>
+			);
 	};
 
 	return (
-		<div
-			className={getClassName()}
-			onClick={callbackFunc}
-			style={getBackgroundStyle()}
-		></div>
+		<React.Fragment>
+			<div className={styleModule.sub_page_div}>{getPage()}</div>;
+			{getBackgroundFader()}
+		</React.Fragment>
 	);
 }

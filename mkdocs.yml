@@ -126,5 +126,6 @@ nav:
           - Data Types: api/dataTypes.md
           - Load and Save Data: api/loadAndSaveData.md
           - Commands: api/commands.md
+          - Front-end exposed functions: api/frontEndExposedFunctions.md
     - About:
           - About: about/index.md

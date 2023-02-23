@@ -69,12 +69,7 @@ export default function ZoomComponent({
 
 	const createFallBack = () => {
 		if (isActive) {
-			return (
-				<BackgroundFader
-					callbackFunc={fallBackPressed}
-					blur={globalConfig.backgroundBlur}
-				/>
-			);
+			return <BackgroundFader callbackFunc={fallBackPressed} />;
 		}
 		return;
 	};
