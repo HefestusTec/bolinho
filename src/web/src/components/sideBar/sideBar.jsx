@@ -26,9 +26,7 @@ import ControlarIcon from "./resources/ControlarIcon.svg";
 import ConfigIcon from "./resources/ConfigIcon.svg";
 import SobreIcon from "./resources/SobreIcon.svg";
 
-function SideBar({ currentPage, setCurrentPage }) {
-	const buttonNames = ["Início", "Calibrar", "Controlar", "Config.", "Sobre"];
-
+export default function SideBar({ currentPage, setCurrentPage, pageList }) {
 	const changePage = (event) => {
 		const buttonId = event.currentTarget.id;
 		if (buttonId === currentPage) return;
@@ -90,7 +88,7 @@ function SideBar({ currentPage, setCurrentPage }) {
 		<div className={styleModule.side_bar}>
 			<Header />
 			<ul className={styleModule.side_bar_button_ul}>
-				{buttonNames.map((bName) => (
+				{pageList.map((bName) => (
 					<li key={bName} className={styleModule.side_bar_button_li}>
 						{createButton(bName)}
 					</li>
@@ -100,5 +98,3 @@ function SideBar({ currentPage, setCurrentPage }) {
 		</div>
 	);
 }
-
-export default SideBar;

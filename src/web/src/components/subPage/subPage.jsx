@@ -20,9 +20,9 @@ import styleModule from "./subPage.module.css";
 import BackgroundFader from "../backgroundFader/backgroundFader";
 import ConfigPage from "../configPage/configPage";
 
-export default function SubPage({ currentPage, setCurrentPage }) {
+export default function SubPage({ myPage, currentPage, setCurrentPage }) {
 	const getPage = () => {
-		switch (currentPage) {
+		switch (myPage) {
 			case "Início":
 				return;
 			case "Calibrar":
@@ -38,20 +38,27 @@ export default function SubPage({ currentPage, setCurrentPage }) {
 		}
 	};
 
-	const getBackgroundFader = () => {
-		if (currentPage !== "Início")
+	const createSubPage = () => {
+		if (currentPage === myPage) {
 			return (
-				<BackgroundFader
-					callbackFunc={() => setCurrentPage("Início")}
-					fullscreen={false}
-				/>
+				<React.Fragment>
+					<BackgroundFader
+						callbackFunc={() => setCurrentPage("Início")}
+						fullscreen={false}
+						faderIndex={1}
+					/>
+					<div className={styleModule.sub_page_div}>
+						<header className={styleModule.sub_page_header}>
+							{myPage}
+						</header>
+						<div className={styleModule.sub_page_content}>
+							{getPage()}
+						</div>
+					</div>
+				</React.Fragment>
 			);
+		}
 	};
 
-	return (
-		<React.Fragment>
-			<div className={styleModule.sub_page_div}>{getPage()}</div>;
-			{getBackgroundFader()}
-		</React.Fragment>
-	);
+	return createSubPage();
 }

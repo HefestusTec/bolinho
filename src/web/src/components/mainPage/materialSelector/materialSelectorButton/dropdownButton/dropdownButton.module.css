@@ -25,6 +25,7 @@
 	background: var(--content_background_color);
 	border-radius: clamp(3px, 0.5vw, 10px);
 	margin-bottom: clamp(3px, 1vh, 10px);
+	cursor: pointer;
 
 	display: flex;
 	float: left;

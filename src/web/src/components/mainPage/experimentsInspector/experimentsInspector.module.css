@@ -25,7 +25,6 @@
 }
 .material_inspector {
 	flex: none;
-	z-index: 1;
 	height: stretch;
 	width: stretch;
 	border-radius: clamp(2px, 3vh, 20px);
@@ -44,6 +43,7 @@
 }
 
 .delete_material_button {
+	cursor: pointer;
 	height: 100%;
 	width: 10%;
 	margin-left: 2%;
@@ -92,6 +92,7 @@
 	background-color: var(--experiment_color);
 	align-items: center;
 	transition-duration: var(--animation_fast);
+	cursor: pointer;
 }
 
 .material_inspector_header_color:hover {

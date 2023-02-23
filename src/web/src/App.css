@@ -43,21 +43,6 @@ button {
 	position: relative;
 }
 
-.toggle_theme_button {
-	position: fixed;
-	top: 15px;
-	left: 15px;
-	height: 50px;
-}
-
-.toggle_theme_button:hover {
-	background-color: #858585;
-}
-
-.toggle_theme_button:active {
-	background-color: #494949;
-}
-
 .toast_notify {
 	animation-duration: 0;
 	font-size: var(--font_s);

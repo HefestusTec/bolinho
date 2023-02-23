@@ -3,7 +3,7 @@ import "./App.css";
 import { useState, useEffect } from "react";
 import SideBar from "./components/sideBar/sideBar";
 import MainPage from "./components/mainPage/mainPage";
-import FpsMeter from "./components/fpsMeter/fpsMeter";
+//import FpsMeter from "./components/fpsMeter/fpsMeter";
 import { ToastContainer, toast, Zoom } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -46,6 +46,7 @@ function App() {
 	const [globalConfig, setGlobalConfig] = useState(globalConfigDefault);
 	const [materialList, setMaterialList] = useState([]);
 
+	const pageList = ["Início", "Calibrar", "Controlar", "Config.", "Sobre"];
 	// options "Início", "Calibrar", "Controlar", "Config.", "Sobre"
 	const [currentPage, setCurrentPage] = useState("Início");
 
@@ -55,27 +56,24 @@ function App() {
 		});
 	}, []);
 
-	const toggleTheme = () => {
-		if (globalConfig.theme === "dark") {
-			setGlobalConfig({ ...globalConfig, theme: "light" });
-			return;
-		}
-		setGlobalConfig({ ...globalConfig, theme: "dark" });
-	};
-
-	const createSubPage = () => {
-		if (currentPage !== "Início")
-			return (
-				<SubPage
-					currentPage={currentPage}
-					setCurrentPage={setCurrentPage}
-				/>
-			);
+	const createSubPages = () => {
+		return pageList.map((item) => {
+			if (currentPage !== "Início") {
+				return (
+					<SubPage
+						key={item}
+						myPage={item}
+						currentPage={currentPage}
+						setCurrentPage={setCurrentPage}
+					/>
+				);
+			}
+			return <></>;
+		});
 	};
 
 	return (
 		<GlobalConfigContext.Provider value={[globalConfig, setGlobalConfig]}>
-			<FpsMeter></FpsMeter>
 			<div
 				className="App"
 				data_theme={globalConfig.theme}
@@ -85,14 +83,12 @@ function App() {
 				<SideBar
 					currentPage={currentPage}
 					setCurrentPage={setCurrentPage}
+					pageList={pageList}
 				/>
 				<div className="content_area">
 					<MainPage materialList={materialList} />
-					{createSubPage()}
+					{createSubPages()}
 				</div>
-				<button className="toggle_theme_button" onClick={toggleTheme}>
-					THEME TEMP
-				</button>
 			</div>
 			<ToastContainer className="toast_notify" transition={Zoom} />
 		</GlobalConfigContext.Provider>

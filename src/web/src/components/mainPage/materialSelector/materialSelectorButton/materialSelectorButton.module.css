@@ -31,6 +31,7 @@
 	height: clamp(30px, 6vh, 45px);
 	background: var(--button_inactive_color);
 	box-shadow: inset 0px 2px 2px rgba(0, 0, 0, 0.25);
+	cursor: pointer;
 
 	border-radius: clamp(10px, 1vw, 20px);
 	margin-bottom: clamp(5px, 1.5vh, 20px);
