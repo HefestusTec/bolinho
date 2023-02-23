@@ -62,6 +62,17 @@ function App() {
 		}
 		setGlobalConfig({ ...globalConfig, theme: "dark" });
 	};
+
+	const createSubPage = () => {
+		if (currentPage !== "Início")
+			return (
+				<SubPage
+					currentPage={currentPage}
+					setCurrentPage={setCurrentPage}
+				/>
+			);
+	};
+
 	return (
 		<GlobalConfigContext.Provider value={[globalConfig, setGlobalConfig]}>
 			<FpsMeter></FpsMeter>
@@ -77,10 +88,7 @@ function App() {
 				/>
 				<div className="content_area">
 					<MainPage materialList={materialList} />
-					<SubPage
-						currentPage={currentPage}
-						setCurrentPage={setCurrentPage}
-					/>
+					{createSubPage()}
 				</div>
 				<button className="toggle_theme_button" onClick={toggleTheme}>
 					THEME TEMP
