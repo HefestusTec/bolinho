@@ -41,6 +41,8 @@
 	display: flex;
 	position: relative;
 	align-items: center;
+	white-space: nowrap;
+	overflow: hidden;
 }
 .header_name {
 	font-style: normal;
@@ -48,10 +50,17 @@
 	font-size: var(--font_xl);
 	width: 100%;
 	text-align: center;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 .header_copyright {
 	font-size: var(--font_xs);
 	position: absolute;
+	width: 100%;
 	bottom: 5px;
-	right: 5px;
+	text-align: right;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }

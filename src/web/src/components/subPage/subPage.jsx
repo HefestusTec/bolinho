@@ -49,7 +49,9 @@ export default function SubPage({ myPage, currentPage, setCurrentPage }) {
 					/>
 					<div className={styleModule.sub_page_div}>
 						<header className={styleModule.sub_page_header}>
-							{myPage}
+							<div className={styleModule.sub_page_header_text}>
+								{myPage}
+							</div>
 						</header>
 						<div className={styleModule.sub_page_content}>
 							{getPage()}

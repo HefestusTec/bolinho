@@ -72,6 +72,9 @@
 	font-weight: 700;
 	font-size: var(--font_m);
 	text-align: center;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 
 .material_inspector_header_color {

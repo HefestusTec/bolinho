@@ -42,6 +42,9 @@
 	font-weight: 700;
 	font-size: var(--font_m);
 	text-align: center;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 .extra_options_content {
 	padding: 3%;

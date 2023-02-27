@@ -68,6 +68,12 @@
 	filter: invert(var(--invert_icon));
 }
 
+.side_bar_button_text {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
 .side_bar_button_active {
 	background-color: var(--button_active_color);
 	width: 95%;
