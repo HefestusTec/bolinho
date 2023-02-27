@@ -58,7 +58,7 @@ export default function SideBar({ currentPage, setCurrentPage, pageList }) {
 			case "Controlar":
 				imgPath = ControlarIcon;
 				break;
-			case "Config.":
+			case "Configurar":
 				imgPath = ConfigIcon;
 				break;
 			case "Sobre":
@@ -79,7 +79,9 @@ export default function SideBar({ currentPage, setCurrentPage, pageList }) {
 					src={imgPath}
 					alt={buttonName}
 				/>
-				{buttonName}
+				<div className={styleModule.side_bar_button_text}>
+					{buttonName}
+				</div>
 			</button>
 		);
 	};

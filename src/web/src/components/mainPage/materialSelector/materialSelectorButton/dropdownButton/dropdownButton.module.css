@@ -72,4 +72,6 @@
 	font-weight: 700;
 	font-size: var(--font_xs);
 	color: var(--font_color);
+	overflow: hidden;
+	text-overflow: ellipsis;
 }

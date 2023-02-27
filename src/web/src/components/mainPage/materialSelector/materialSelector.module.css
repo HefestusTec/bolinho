@@ -47,6 +47,9 @@
 	font-weight: 700;
 	font-size: var(--font_m);
 	text-align: center;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 
 .selector_header_bottom {
@@ -67,6 +70,9 @@
 	box-shadow: inset 0px 2px 2px rgba(0, 0, 0, 0.25);
 	color: var(--font_color_inverted);
 	border-radius: 10px 0px 0px 10px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 .selector_header_search_button {
 	width: clamp(25px, 3vw, 40px);

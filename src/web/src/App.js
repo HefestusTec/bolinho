@@ -46,7 +46,7 @@ function App() {
 	const [globalConfig, setGlobalConfig] = useState(globalConfigDefault);
 	const [materialList, setMaterialList] = useState([]);
 
-	const pageList = ["Início", "Calibrar", "Controlar", "Config.", "Sobre"];
+	const pageList = ["Início", "Calibrar", "Controlar", "Configurar", "Sobre"];
 	// options "Início", "Calibrar", "Controlar", "Config.", "Sobre"
 	const [currentPage, setCurrentPage] = useState("Início");
 

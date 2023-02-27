@@ -105,8 +105,14 @@
 	font-size: var(--font_xs);
 	height: var(--font_xs);
 	font-weight: 700;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 .experiment_experiment_text {
 	font-size: var(--font_xxs);
 	height: fit-content;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }

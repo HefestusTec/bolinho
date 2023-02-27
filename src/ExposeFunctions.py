@@ -219,7 +219,6 @@ def get_material_at(id):
 
 @eel.expose
 def get_material_with_experiment(experiment_id):
-    print(experiment_id)
     for material in material_data_base:
         if experiment_id in material.experiment_array:
             return material
