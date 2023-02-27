@@ -46,6 +46,7 @@ theme:
         - search.suggest
         - toc.follow
         - content.code.copy
+        - content.code.annotate
         # - content.tabs.link           # Para criar Tabs de código
     icon:
         admonition:
@@ -121,6 +122,7 @@ nav:
           - Components: frontEnd/components.md
           - Contexts: frontEnd/contexts.md
           - Alerts: frontEnd/alerts.md
+          - Styling: frontEnd/styling.md
     - API:
           - API: api/index.md
           - Data Types: api/dataTypes.md
