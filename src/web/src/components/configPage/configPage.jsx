@@ -26,7 +26,7 @@ import CustomButton from "../customSubComponents/customButton/customButton";
 
 export default function ConfigPage() {
     const [globalConfig, setGlobalConfig] = useContext(GlobalConfigContext);
-    const [currentActive, setCurrentActive] = useState("Claro");
+    const [currentActive, setCurrentActive] = useState(globalConfig.theme);
 
     const clickCallBack = (key) => {
         setCurrentActive(key);

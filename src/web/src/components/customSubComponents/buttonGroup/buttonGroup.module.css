@@ -17,7 +17,7 @@
 
 .button {
     background-color: var(--content_background_color);
-    height: 7vh;
+    height: 8vh;
     width: 70%;
     margin-bottom: 1vh;
     box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);

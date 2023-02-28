@@ -42,7 +42,8 @@
     height: stretch;
     background-color: var(--background_color);
     padding-right: 1%;
-    border-radius: 10px 10px 0 0;
+    border-radius: 15px 15px 0 0;
     overflow: hidden;
     overflow-y: scroll;
+    box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
