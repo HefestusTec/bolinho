@@ -25,53 +25,63 @@ import ButtonGroup from "../customSubComponents/buttonGroup/buttonGroup";
 import CustomButton from "../customSubComponents/customButton/customButton";
 
 export default function ConfigPage() {
-	const [globalConfig, setGlobalConfig] = useContext(GlobalConfigContext);
-	const [currentActive, setCurrentActive] = useState("Inspec");
+    const [globalConfig, setGlobalConfig] = useContext(GlobalConfigContext);
+    const [currentActive, setCurrentActive] = useState("Claro");
 
-	const toggleTheme = () => {
-		if (globalConfig.theme === "dark") {
-			setGlobalConfig({ ...globalConfig, theme: "light" });
-			return;
-		}
-		setGlobalConfig({ ...globalConfig, theme: "dark" });
-	};
+    const clickCallBack = (key) => {
+        setCurrentActive(key);
+        setGlobalConfig({ ...globalConfig, theme: key });
+    };
 
-	return (
-		<ZoomComponent
-			className={styleModule.theme_selector}
-			scaleOrigin="top left"
-		>
-			<ContainerComponent headerText="Temas">
-				<button
-					className={styleModule.toggle_theme_button}
-					onClick={toggleTheme}
-				>
-					Mudar tema temporário
-				</button>
-				<ButtonGroup
-					currentActive={currentActive}
-					setCurrentActive={setCurrentActive}
-				>
-					<CustomButton
-						key={"as"}
-						buttonKey={"as"}
-						color={"white"}
-						iconSize="var(--font_s)"
-						className=""
-					>
-						as
-					</CustomButton>
-					<CustomButton
-						key={"sc"}
-						buttonKey={"sc"}
-						color={"white"}
-						iconSize="var(--font_s)"
-						className=""
-					>
-						sc
-					</CustomButton>
-				</ButtonGroup>
-			</ContainerComponent>
-		</ZoomComponent>
-	);
+    return (
+        <ZoomComponent
+            className={styleModule.theme_selector}
+            scaleOrigin="top left"
+        >
+            <ContainerComponent headerText="Temas">
+                <ButtonGroup
+                    currentActive={currentActive}
+                    clickCallBack={clickCallBack}
+                >
+                    <CustomButton
+                        key={"Claro"}
+                        buttonKey={"Claro"}
+                        color={"white"}
+                        iconSize="var(--font_s)"
+                        className=""
+                    >
+                        Claro
+                    </CustomButton>
+                    <CustomButton
+                        key={"Escuro"}
+                        buttonKey={"Escuro"}
+                        color={"white"}
+                        iconSize="var(--font_s)"
+                        className=""
+                    >
+                        Escuro
+                    </CustomButton>
+                    <CustomButton
+                        key={"PlaceHolder"}
+                        buttonKey={"PlaceHolder"}
+                        color={"white"}
+                        iconSize="var(--font_s)"
+                        className=""
+                    >
+                        PlaceHolder
+                    </CustomButton>
+
+                    <CustomButton
+                        key={"PlaceHolder2"}
+                        buttonKey={"PlaceHolder2"}
+                        color={"white"}
+                        iconSize="var(--font_s)"
+                        className=""
+                    >
+                        PlaceHolder2
+                    </CustomButton>
+                </ButtonGroup>
+            </ContainerComponent>
+        </ZoomComponent>
+    );
 }

@@ -19,52 +19,52 @@ import React from "react";
 import styleModule from "./customButton.module.css";
 
 function CustomButton({
-	preIcon,
-	postIcon,
-	color,
-	iconSize,
-	children,
-	className,
-	buttonKey,
-	clickCallBack,
+    preIcon,
+    postIcon,
+    color,
+    iconSize,
+    children,
+    className,
+    buttonKey,
+    clickCallBack,
 }) {
-	const buttonStyle = { "--font_color": color };
-	const iconStyle = {
-		color: color ? color : "#000000",
-		width: iconSize ? iconSize : "1em",
-		height: iconSize ? iconSize : "1em",
-		verticalAlign: "middle",
-	};
+    const buttonStyle = { "--font_color": color };
+    const iconStyle = {
+        color: color ? color : "#000000",
+        width: iconSize ? iconSize : "1em",
+        height: iconSize ? iconSize : "1em",
+        verticalAlign: "middle",
+    };
 
-	const createPreIcon = () => {
-		if (preIcon) return <preIcon.type style={iconStyle} />;
-		return;
-	};
+    const createPreIcon = () => {
+        if (preIcon) return <preIcon.type style={iconStyle} />;
+        return;
+    };
 
-	const createPostIcon = () => {
-		if (postIcon) return <postIcon.type style={iconStyle} />;
-		return;
-	};
+    const createPostIcon = () => {
+        if (postIcon) return <postIcon.type style={iconStyle} />;
+        return;
+    };
 
-	const getClassName = () => {
-		return [className, styleModule.custom_button].join(" ");
-	};
+    const getClassName = () => {
+        return [className, styleModule.custom_button].join(" ");
+    };
 
-	const clicked = () => {
-		if (clickCallBack !== undefined) {
-			clickCallBack(buttonKey);
-		}
-	};
+    const clicked = () => {
+        if (clickCallBack !== undefined) {
+            clickCallBack(buttonKey);
+        }
+    };
 
-	return (
-		<button
-			className={getClassName()}
-			style={buttonStyle}
-			onClick={clicked}
-		>
-			{createPreIcon()} {children} {createPostIcon()}
-		</button>
-	);
+    return (
+        <button
+            className={getClassName()}
+            style={buttonStyle}
+            onClick={clicked}
+        >
+            {createPreIcon()} {children} {createPostIcon()}
+        </button>
+    );
 }
 
 export default CustomButton;

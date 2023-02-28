@@ -17,13 +17,13 @@
 import { createContext } from "react";
 
 export const globalConfigDefault = {
-	theme: "light", // light | dark
-	animationSpeed: "slow", // fast | slow | off
-	animateGraph: "on", // on | off
-	enableZoom: true, // Should zooming be enable?
-	zoomDelay: 500, // How long [ms] should I press to zoom
-	backgroundBlur: true, // Should it blur when zooming?
-	absoluteMaximumForce: 10000,
+    theme: "Claro", // Claro | Escuro
+    animationSpeed: "slow", // fast | slow | off
+    animateGraph: "on", // on | off
+    enableZoom: true, // Should zooming be enable?
+    zoomDelay: 500, // How long [ms] should I press to zoom
+    backgroundBlur: true, // Should it blur when zooming?
+    absoluteMaximumForce: 10000,
 };
 
 const GlobalConfigContext = createContext([globalConfigDefault, () => {}]);

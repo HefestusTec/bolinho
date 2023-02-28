@@ -18,102 +18,102 @@
  */
 @import url(../../variables.css);
 .side_bar {
-	--side-bar-width: 25vw;
-	z-index: 2;
-	height: 100%;
-	width: var(--side-bar-width);
-	min-width: 100px;
-	box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
-	background-color: var(--background_color);
+    --side-bar-width: 25vw;
+    z-index: 2;
+    height: 100%;
+    width: var(--side-bar-width);
+    min-width: 100px;
+    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
+    background-color: var(--background_color);
 }
 
 .side_bar_button_ul {
-	list-style-type: none;
-	padding-left: 0px;
-	padding-top: 3vh;
-	justify-content: space-between;
-	flex-direction: column;
-	justify-content: space-between;
+    list-style-type: none;
+    padding-left: 0px;
+    padding-top: 3vh;
+    justify-content: space-between;
+    flex-direction: column;
+    justify-content: space-between;
 
-	margin: 0;
-	height: clamp(5px, 50vh, 11%);
+    margin: 0;
+    height: clamp(5px, 50vh, 11%);
 }
 
 .side_bar_button_li {
-	display: block;
-	flex: 0 1 auto; /* Default */
-	height: 100%;
-	padding-bottom: 2vh;
+    display: block;
+    flex: 0 1 auto; /* Default */
+    height: 100%;
+    padding-bottom: 2vh;
 }
 
 .side_bar_button {
-	height: 100%;
-	display: flex;
-	align-items: center;
-	float: left;
-	color: var(--font_color);
-	font-family: Roboto;
-	font-size: var(--font_l);
-	font-weight: 700;
-	border-radius: 0px 15px 15px 0px;
-	transition-duration: var(--animation_fast);
-	overflow: hidden;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    float: left;
+    color: var(--font_color);
+    font-family: Roboto;
+    font-size: var(--font_l);
+    font-weight: 700;
+    border-radius: 0px 15px 15px 0px;
+    transition-duration: var(--animation_fast);
+    overflow: hidden;
 }
 
 .side_bar_button_icon {
-	height: auto;
-	width: 25%;
-	text-align: center;
-	margin-right: 5%;
-	filter: invert(var(--invert_icon));
+    height: auto;
+    width: 25%;
+    text-align: center;
+    margin-right: 5%;
+    filter: invert(var(--invert_icon));
 }
 
 .side_bar_button_text {
-	white-space: nowrap;
-	overflow: hidden;
-	text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .side_bar_button_active {
-	background-color: var(--button_active_color);
-	width: 95%;
+    background-color: var(--button_active_color);
+    width: 95%;
 
-	border-width: 0px 0px 5px 0px;
-	border-style: solid;
-	border-color: var(--font_color);
+    border-width: 0px 0px 5px 0px;
+    border-style: solid;
+    border-color: var(--font_color);
 
-	border-radius: 0px 15px 15px 0px;
-	box-shadow: 0px 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 0px 15px 15px 0px;
+    box-shadow: 0px 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
 
 .side_bar_button_inactive {
-	background-color: var(--button_inactive_color);
-	width: 85%;
-	box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
+    background-color: var(--button_inactive_color);
+    width: 85%;
+    box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
 
 .side_bar_button_inactive:hover {
-	background-color: var(--background_color);
-	width: 90%;
-	cursor: pointer;
+    background-color: var(--background_color);
+    width: 90%;
+    cursor: pointer;
 
-	border-radius: 0px 15px 15px 0px;
-	box-shadow: 0px 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 0px 15px 15px 0px;
+    box-shadow: 0px 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
 .side_bar_button_inactive:active {
-	background-color: var(--active_color);
-	width: 90%;
-	box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
+    background-color: var(--active_color);
+    width: 90%;
+    box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
 .side_bar_footer {
-	height: 20vh;
-	width: 15vw;
-	position: fixed;
-	bottom: 0;
-	left: 1.5vw;
-	justify-content: center;
-	background-image: var(--logo_schumacher);
-	background-position: center; /* Center the image */
-	background-repeat: no-repeat; /* Do not repeat the image */
-	background-size: 80%; /* Resize the background image to cover the entire container */
+    height: 20vh;
+    width: 15vw;
+    position: fixed;
+    bottom: 0;
+    left: 1.5vw;
+    justify-content: center;
+    background-image: var(--logo_schumacher);
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: 80%; /* Resize the background image to cover the entire container */
 }

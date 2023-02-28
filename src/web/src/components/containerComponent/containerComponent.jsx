@@ -16,15 +16,16 @@
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
 
 import React from "react";
+import CustomButton from "../customSubComponents/customButton/customButton";
 import styleModule from "./containerComponent.module.css";
 
 export default function ContainerComponent({ children, headerText = "" }) {
-	return (
-		<div className={styleModule.container_div}>
-			<header className={styleModule.container_header}>
-				{headerText}
-			</header>
-			<div className={styleModule.container_content}>{children}</div>
-		</div>
-	);
+    return (
+        <div className={styleModule.container_div}>
+            <header className={styleModule.container_header}>
+                {headerText}
+            </header>
+            <div className={styleModule.container_content}>{children}</div>
+        </div>
+    );
 }
