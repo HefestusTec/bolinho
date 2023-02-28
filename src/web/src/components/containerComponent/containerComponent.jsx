@@ -16,7 +16,6 @@
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
 
 import React from "react";
-import CustomButton from "../customSubComponents/customButton/customButton";
 import styleModule from "./containerComponent.module.css";
 
 export default function ContainerComponent({ children, headerText = "" }) {
