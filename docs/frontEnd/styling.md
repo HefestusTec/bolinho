@@ -21,6 +21,20 @@
 
 Here we will show some tips and styling techniques used on this project.
 
+## Linking stylesheets to a component   
+
+Stylesheets are made with `style.module.css` and imported into the `.jsx` or `.tsx` allowing us to use it as an object to name `className`s.
+
+As for naming convention snake case is being used for styling names
+
+``` react
+import styleModule from "./mainPage.module.css";
+
+<div className={styleModule.my_custom_div}>
+    Im a styled div
+<div>
+
+```
 
 ## Adding ellipsis
 

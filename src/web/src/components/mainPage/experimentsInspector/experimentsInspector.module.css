@@ -65,7 +65,7 @@
 }
 
 .material_inspector_header_text {
-	width: 70%;
+	width: 75%;
 	color: var(--font_color_inverted);
 	font-family: "Roboto";
 	font-style: normal;
@@ -78,7 +78,7 @@
 }
 
 .material_inspector_header_color {
-	width: 15%;
+	width: 60px;
 	height: 100%;
 	position: absolute;
 	right: -1px;
@@ -99,7 +99,7 @@
 }
 
 .material_inspector_header_color:hover {
-	width: 20%;
+	width: 85px;
 }
 .material_inspector_header_color:active {
 	box-shadow: inset 0px 0px 5px 3px rgba(0, 0, 0, 0.5);
@@ -107,10 +107,10 @@
 }
 
 .material_inspector_header_color_active {
-	width: 30%;
+	width: 130px;
 }
 .material_inspector_header_color_active:hover {
-	width: 28%;
+	width: 150px;
 }
 
 .material_inspector_header_color p {
@@ -120,7 +120,7 @@
 	color: white;
 	mix-blend-mode: difference;
 	font-weight: bold;
-	margin-top: 0.5vh;
+	margin-top: 0.6vh;
 	margin-left: 10px;
 }
 

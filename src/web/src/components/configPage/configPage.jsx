@@ -15,15 +15,18 @@
 // You should have received a copy of the GNU General Public License
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
 
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import styleModule from "./configPage.module.css";
 
 import ZoomComponent from "../zoomComponent/zoomComponent";
 import ContainerComponent from "../containerComponent/containerComponent";
 import GlobalConfigContext from "../../contexts/globalConfigContext";
+import ButtonGroup from "../customSubComponents/buttonGroup/buttonGroup";
+import CustomButton from "../customSubComponents/customButton/customButton";
 
 export default function ConfigPage() {
 	const [globalConfig, setGlobalConfig] = useContext(GlobalConfigContext);
+	const [currentActive, setCurrentActive] = useState("Inspec");
 
 	const toggleTheme = () => {
 		if (globalConfig.theme === "dark") {
@@ -45,6 +48,29 @@ export default function ConfigPage() {
 				>
 					Mudar tema temporário
 				</button>
+				<ButtonGroup
+					currentActive={currentActive}
+					setCurrentActive={setCurrentActive}
+				>
+					<CustomButton
+						key={"as"}
+						buttonKey={"as"}
+						color={"white"}
+						iconSize="var(--font_s)"
+						className=""
+					>
+						as
+					</CustomButton>
+					<CustomButton
+						key={"sc"}
+						buttonKey={"sc"}
+						color={"white"}
+						iconSize="var(--font_s)"
+						className=""
+					>
+						sc
+					</CustomButton>
+				</ButtonGroup>
 			</ContainerComponent>
 		</ZoomComponent>
 	);

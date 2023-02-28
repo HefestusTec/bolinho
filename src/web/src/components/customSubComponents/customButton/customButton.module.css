@@ -1,0 +1,31 @@
+/**
+ * Copyright (c) 2023 Rafael F. Meneses
+ * 
+ * This software is released under the MIT License.
+ * https://opensource.org/licenses/MIT
+ */
+@import url("../../../variables.css");
+
+.custom_button {
+	--font_color: #000000;
+	color: var(--font_color);
+	font-size: var(--font_s);
+
+	font-weight: bold;
+	align-items: center;
+	display: inline;
+	white-space: nowrap;
+	overflow: hidden;
+	padding-left: 1%;
+	padding-right: 1%;
+	border-radius: 2px;
+	transition-duration: var(--animation_fast);
+}
+
+.custom_button:hover {
+	background-color: #00000034;
+}
+.custom_button:active {
+	background-color: #00000059;
+	transform: scale(0.9);
+}

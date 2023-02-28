@@ -1,0 +1,34 @@
+/**
+ * Copyright (c) 2023 Rafael F. Meneses
+ * 
+ * This software is released under the MIT License.
+ * https://opensource.org/licenses/MIT
+ */
+@import url("../../../variables.css");
+
+.button_group_div {
+	--active_color: #ffffff;
+	--inactive_color: #9c9c9c;
+	--divider_color: #51555c;
+	height: 100%;
+	align-items: center;
+}
+
+.button {
+	background-color: transparent;
+	border: none;
+	color: var(--inactive_color);
+	height: 85%;
+	width: 7em;
+}
+
+.button_active {
+	color: var(--active_color);
+}
+
+.vertical_line {
+	width: 1.5px;
+	height: 70%;
+	border-radius: 1px;
+	background-color: var(--divider_color);
+}
