@@ -19,26 +19,30 @@
 @import url(../../variables.css);
 
 .container_div {
-	height: stretch;
-	border-radius: 10px;
-	overflow: hidden;
-	display: flex;
-	flex-direction: column;
+    height: stretch;
+    border-radius: 15px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--primary_color);
+    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
 }
 .container_header {
-	background-color: var(--primary_color);
-	height: 4vh;
-	color: var(--font_color_inverted);
-	font-size: var(--font_s);
-	font-weight: bold;
-	display: flex;
-	justify-content: center;
-	align-items: center;
+    background-color: var(--primary_color);
+    height: 7vh;
+    color: var(--font_color_inverted);
+    font-size: var(--font_m);
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    padding-left: 10%;
 }
 
 .container_content {
-	height: stretch;
-	background-color: var(--background_color);
-	padding-left: 1%;
-	padding-right: 1%;
+    height: stretch;
+    background-color: var(--background_color);
+    padding-right: 1%;
+    border-radius: 10px 10px 0 0;
+    overflow: hidden;
+    overflow-y: scroll;
 }

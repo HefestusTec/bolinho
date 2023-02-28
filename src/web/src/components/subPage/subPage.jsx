@@ -29,8 +29,8 @@ export default function SubPage({ myPage, currentPage, setCurrentPage }) {
 				break;
 			case "Controlar":
 				break;
-			case "Config.":
-				return <ConfigPage></ConfigPage>;
+			case "Configurar":
+				return <ConfigPage key={myPage}></ConfigPage>;
 			case "Sobre":
 				break;
 			default:
