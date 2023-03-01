@@ -58,6 +58,8 @@ This software is licensed and distributed under the **[GNU General Public Licens
 
 * Use Long Press - [see license](https://github.com/minwork/use-long-press/blob/master/LICENSE) 
 
+* React Tooltip - [see license](https://github.com/ReactTooltip/react-tooltip/blob/master/LICENSE) 
+
 ___
 
 Agradecemos do fundo do coração todos os autores dos diferentes projetos utilizados, **software livre** é liberdade, muito obrigado a todos.

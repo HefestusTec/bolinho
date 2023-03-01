@@ -68,7 +68,7 @@ function ButtonGroup({
                 <child.type
                     buttonKey={child.key}
                     {...child.props}
-                    color={"var(--font_color)"} // Do not remove this LOC
+                    color={" "} // Do not remove this LOC
                     className={getClassName(child)}
                     clickCallBack={iWasClicked}
                 />
