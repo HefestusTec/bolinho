@@ -6,34 +6,9 @@ on:
 permissions:
   contents: write
 jobs:
-  deploy:
-    env:
-        ENABLE_PDF_EXPORT: 1
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-python@v4
-        with:
-          python-version: 3.x
-      - uses: actions/cache@v2
-        with:
-          key: ${{ github.ref }}
-          path: .cache
-      - name: Installing dep
-        run: pip install -r docs/requirements.txt
-      - name: Building
-        run: mkdocs gh-deploy --force
-      - name: Add files
-        run: |
-          git config --global user.name 'GitHub Action'
-          git config --global user.email 'action@github.com'
-          git fetch
-          git checkout gh-pages
-          git checkout ${GITHUB_REF##*/} -- src/web/build/.
-          git add -A
-          git diff-index --quiet HEAD ||  git commit -am "deploy files"
-          git push origin gh-pages
   release:
+    env:
+      ENABLE_PDF_EXPORT: 1
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -66,3 +41,21 @@ jobs:
           files: |
             src/dist/
             ./Bolinho.zip
+      - uses: actions/cache@v2
+        with:
+          key: ${{ github.ref }}
+          path: .cache
+      - name: Installing dep
+        run: pip install -r docs/requirements.txt
+      - name: Building
+        run: mkdocs gh-deploy --force
+      - name: Add files
+        run: |
+          git config --global user.name 'GitHub Action'
+          git config --global user.email 'action@github.com'
+          git fetch
+          git checkout gh-pages
+          git checkout ${GITHUB_REF##*/} -- src/web/build/.
+          git add -A
+          git diff-index --quiet HEAD ||  git commit -am "deploy files"
+          git push origin gh-pages
