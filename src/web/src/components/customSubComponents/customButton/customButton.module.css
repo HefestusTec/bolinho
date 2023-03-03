@@ -7,7 +7,6 @@
 @import url("../../../variables.css");
 
 .custom_button {
-    --font_color: #000000;
     color: var(--font_color);
     font-size: var(--font_m);
     font-weight: bold;
