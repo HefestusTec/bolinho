@@ -7,9 +7,9 @@ This documentation automatically generates a {==PDF file==} from it's content. Y
 ## You can see the React [Front-end HERE!](src/web/build/index.html)
 > This is a static version of the app, without access to the server, therefore most features won't work.
 
-!!! info ""
+> !!! info
+    Remember that you need to build the app for it to show on the static page, so run `npm run buildWeb` or something similar to build it.
 
-    Did you like this documentation? You can check out the repo [ZRafaF/ReadTheDocksBase](https://github.com/ZRafaF/ReadTheDocksBase) for more info :smile:.
 
 
 Use the **Tabs** above to navigate through the documentation.
@@ -39,3 +39,7 @@ As for running the program we have a few options:
 
     > * You can build the "binaries", more like a python environment wrapper, it uses [PyInstaller](https://pyinstaller.org/en/stable/) to generate the bins.
     > * The output path is `bolinho/src/dist/`
+
+!!! info ""
+
+    Did you like this documentation? You can check out the repo [ZRafaF/ReadTheDocksBase](https://github.com/ZRafaF/ReadTheDocksBase) for more info :smile:.

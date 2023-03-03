@@ -20,54 +20,54 @@ import styleModule from "./materialSelector.module.css";
 import MaterialSelectorButton from "./materialSelectorButton/materialSelectorButton";
 
 function MaterialSelector({ materialList }) {
-	//const [graphData, setGraphData] = useState(makeConstData());
-	const createButton = (material) => {
-		return (
-			<MaterialSelectorButton
-				material={material}
-			></MaterialSelectorButton>
-		);
-	};
+    //const [graphData, setGraphData] = useState(makeConstData());
+    const createButton = (material) => {
+        return (
+            <MaterialSelectorButton
+                material={material}
+            ></MaterialSelectorButton>
+        );
+    };
 
-	const makeButtons = () => {
-		let buttonArray = [];
+    const makeButtons = () => {
+        let buttonArray = [];
 
-		try {
-			materialList.forEach((element) => {
-				buttonArray.push(createButton(element));
-			});
-		} catch (error) {}
-		return buttonArray;
-	};
+        try {
+            materialList.forEach((element) => {
+                buttonArray.push(createButton(element));
+            });
+        } catch (error) {}
+        return buttonArray;
+    };
 
-	return (
-		<div className={styleModule.material_selector}>
-			<div className={styleModule.selector_header}>
-				<div className={styleModule.selector_header_text}>
-					Selecionar Experimento
-				</div>
-				<div className={styleModule.selector_header_bottom}>
-					<input
-						type="text"
-						className={styleModule.selector_header_search}
-						placeholder="Buscar"
-					></input>
-					<button
-						className={styleModule.selector_header_search_button}
-						aria-label="Search Button"
-					></button>
-					<div className={styleModule.selector_header_filter}>
-						<button
-							className={
-								styleModule.selector_header_filter_button
-							}
-							aria-label="Filter Button"
-						></button>
-					</div>
-				</div>
-			</div>
-			<ul className={styleModule.selector_content_ul}>{makeButtons()}</ul>
-		</div>
-	);
+    return (
+        <div className={styleModule.material_selector}>
+            <div className={styleModule.selector_header}>
+                <div className={styleModule.selector_header_text}>
+                    Selecionar Experimento
+                </div>
+                <div className={styleModule.selector_header_bottom}>
+                    <input
+                        type="text"
+                        className={styleModule.selector_header_search}
+                        placeholder="Buscar"
+                    ></input>
+                    <button
+                        className={styleModule.selector_header_search_button}
+                        aria-label="Search Button"
+                    ></button>
+                    <div className={styleModule.selector_header_filter}>
+                        <button
+                            className={
+                                styleModule.selector_header_filter_button
+                            }
+                            aria-label="Filter Button"
+                        ></button>
+                    </div>
+                </div>
+            </div>
+            <ul className={styleModule.selector_content_ul}>{makeButtons()}</ul>
+        </div>
+    );
 }
 export default MaterialSelector;
