@@ -1,5 +1,4 @@
 __pycache__/
-build/
 dist/
 venv/
 *.spec
@@ -13,7 +12,6 @@ web.pnp.js
 web/coverage
 
 # production
-web/build
 
 # misc
 web/.DS_Store
