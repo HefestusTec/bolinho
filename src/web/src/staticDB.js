@@ -304,7 +304,7 @@ export class fakeEel {
                 experiment_fragment,
                 material_fragment,
                 pair;
-            material_fragment = get_material_with_experiment(id)();
+            material_fragment = get_material_with_experiment(id);
 
             experiment_fragment = experiment_data_base[id];
             data_array_fragment =
@@ -322,22 +322,20 @@ export class fakeEel {
 }
 
 function get_material_with_experiment(experiment_id) {
-    return function get_material_with_experiment() {
-        for (
-            var material,
-                _pj_c = 0,
-                _pj_a = material_data_base,
-                _pj_b = _pj_a.length;
-            _pj_c < _pj_b;
-            _pj_c += 1
-        ) {
-            material = _pj_a[_pj_c];
+    for (
+        var material,
+            _pj_c = 0,
+            _pj_a = material_data_base,
+            _pj_b = _pj_a.length;
+        _pj_c < _pj_b;
+        _pj_c += 1
+    ) {
+        material = _pj_a[_pj_c];
 
-            if (_pj.in_es6(experiment_id, material.experiment_array)) {
-                return material;
-            }
+        if (_pj.in_es6(experiment_id, material.experiment_array)) {
+            return material;
         }
+    }
 
-        return null;
-    };
+    return null;
 }

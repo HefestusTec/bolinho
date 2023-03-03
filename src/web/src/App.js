@@ -34,6 +34,7 @@ try {
 } catch {
     toast.error("Não foi possível conectar com o backend");
     eel = new fakeEel(); // Loading a fake db
+    toast.info("Iniciando base de dados de testes");
 }
 
 const getMaterialList = async () => {
