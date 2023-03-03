@@ -4,7 +4,7 @@ Full stack solution for data gathering, processing and interaction.
 
 Bolinho has a frontend made with ReactJs, and a backend running python, it transfer data between them using the python library [eel](https://github.com/python-eel/Eel).
 
-## You can see the React [Front-end HERE!](https://hefestustec.github.io/bolinho/src/web/build/index.html)
+## You can see the React [Front-end HERE!](https://hefestustec.github.io/bolinho/src/web/build)
 > This is a static version of the app, without access to the server, therefore most features won't work.
 
 # Documentation
