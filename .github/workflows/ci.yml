@@ -23,6 +23,16 @@ jobs:
         run: pip install -r docs/requirements.txt
       - name: Building
         run: mkdocs gh-deploy --force
+      - name: Add files
+        run: |
+          git config --global user.name 'GitHub Action'
+          git config --global user.email 'action@github.com'
+          git fetch
+          git checkout gh-pages
+          git checkout ${GITHUB_REF##*/} -- src/web/build/.
+          git add -A
+          git diff-index --quiet HEAD ||  git commit -am "deploy files"
+          git push origin gh-pages
   release:
     runs-on: ubuntu-latest
     steps:
