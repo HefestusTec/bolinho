@@ -24,113 +24,117 @@ import SliderComponent from "./sliderComponent/sliderComponent";
 import { ExperimentPlotData } from "../../classes";
 
 const defaultMaxValues = {
-	plotDataArray: [],
-	maxValues: { x: 100, y: 100 },
+    plotDataArray: [],
+    maxValues: { x: 100, y: 100 },
 };
 
 const getMaxData = (experimentArray) => {
-	if (experimentArray.length === 0) return defaultMaxValues;
-	let maxX = 0;
-	let maxY = Number.MIN_VALUE;
-	experimentArray.forEach((element) => {
-		if (element.maxDataValues.x > maxX) maxX = element.maxDataValues.x;
-		if (element.maxDataValues.y > maxY) maxY = element.maxDataValues.y;
-	});
-	return { x: maxX, y: maxY };
+    if (experimentArray.length === 0) return defaultMaxValues;
+    let maxX = 0;
+    let maxY = Number.MIN_VALUE;
+    experimentArray.forEach((element) => {
+        if (element.maxDataValues.x > maxX) maxX = element.maxDataValues.x;
+        if (element.maxDataValues.y > maxY) maxY = element.maxDataValues.y;
+    });
+    return { x: maxX, y: maxY };
 };
 
 function GraphComponent({ experimentList }) {
-	const [experimentArray, setExperimentArray] = useState(defaultMaxValues);
+    const [experimentArray, setExperimentArray] = useState(defaultMaxValues);
 
-	const [leftHandlePos, setLeftHandlePos] = useState(0);
-	const [rightHandlePos, setRightHandlePos] = useState(100);
+    const [leftHandlePos, setLeftHandlePos] = useState(0);
+    const [rightHandlePos, setRightHandlePos] = useState(100);
 
-	const [showSideBar, setShowSideBar] = useState(true);
+    const [showSideBar, setShowSideBar] = useState(true);
 
-	useEffect(() => {
-		const generateExperimentPlotData = () => {
-			let experimentPlotArray = [];
-			experimentList.forEach((element) => {
-				experimentPlotArray.push(
-					new ExperimentPlotData(
-						element.material.name,
-						element.data_array,
-						element.color
-					)
-				);
-			});
-			return experimentPlotArray;
-		};
-		const plotDataArray = generateExperimentPlotData();
-		const maxVals = getMaxData(plotDataArray);
-		setExperimentArray({
-			plotDataArray: plotDataArray,
-			maxValues: maxVals,
-		});
-	}, [experimentList]);
+    useEffect(() => {
+        const generateExperimentPlotData = () => {
+            let experimentPlotArray = [];
+            experimentList.forEach((element) => {
+                try {
+                    experimentPlotArray.push(
+                        new ExperimentPlotData(
+                            element.material.name,
+                            element.data_array,
+                            element.color
+                        )
+                    );
+                } catch (error) {
+                    console.error(error);
+                }
+            });
+            return experimentPlotArray;
+        };
+        const plotDataArray = generateExperimentPlotData();
+        const maxVals = getMaxData(plotDataArray);
+        setExperimentArray({
+            plotDataArray: plotDataArray,
+            maxValues: maxVals,
+        });
+    }, [experimentList]);
 
-	const getOpenSideBarButtonClassName = () => {
-		return showSideBar
-			? [
-					styleModule.open_side_bar_button,
-					styleModule.open_side_bar_button_active,
-			  ].join(" ")
-			: [
-					styleModule.open_side_bar_button,
-					styleModule.open_side_bar_button_inactive,
-			  ].join(" ");
-	};
+    const getOpenSideBarButtonClassName = () => {
+        return showSideBar
+            ? [
+                  styleModule.open_side_bar_button,
+                  styleModule.open_side_bar_button_active,
+              ].join(" ")
+            : [
+                  styleModule.open_side_bar_button,
+                  styleModule.open_side_bar_button_inactive,
+              ].join(" ");
+    };
 
-	const toggleSideBar = () => {
-		setShowSideBar(!showSideBar);
-	};
+    const toggleSideBar = () => {
+        setShowSideBar(!showSideBar);
+    };
 
-	const getGraphAreaClassName = () => {
-		return showSideBar
-			? [styleModule.graph_area, styleModule.graph_area_mini].join(" ")
-			: [styleModule.graph_area].join(" ");
-	};
+    const getGraphAreaClassName = () => {
+        return showSideBar
+            ? [styleModule.graph_area, styleModule.graph_area_mini].join(" ")
+            : [styleModule.graph_area].join(" ");
+    };
 
-	const getSideBarClassName = () => {
-		return showSideBar
-			? [styleModule.side_bar].join(" ")
-			: [styleModule.side_bar, styleModule.side_bar_hidden].join(" ");
-	};
+    const getSideBarClassName = () => {
+        return showSideBar
+            ? [styleModule.side_bar].join(" ")
+            : [styleModule.side_bar, styleModule.side_bar_hidden].join(" ");
+    };
 
-	const setChartMinMax = (min, max) => {
-		setLeftHandlePos(min);
-		setRightHandlePos(max);
-	};
+    const setChartMinMax = (min, max) => {
+        setLeftHandlePos(min);
+        setRightHandlePos(max);
+    };
 
-	return (
-		<div className={styleModule.graph_component}>
-			<div className={getGraphAreaClassName()}>
-				<div className={styleModule.chart_component_div}>
-					<ChartComponent
-						sliderValue={{
-							min: leftHandlePos,
-							max: rightHandlePos,
-						}}
-						experimentPlotDataArray={experimentArray.plotDataArray}
-						allMaxDataValues={experimentArray.maxValues}
-					></ChartComponent>
-				</div>
-				<div className={styleModule.side_bar_button_div}>
-					<button
-						className={getOpenSideBarButtonClassName()}
-						onClick={toggleSideBar}
-						aria-label="Toggle Graph SideBar"
-					></button>
-				</div>
-				<div className={styleModule.bottom_part}>
-					<SliderComponent
-						setChartMinMax={setChartMinMax}
-						dataRightMax={experimentArray.maxValues.x}
-					/>
-				</div>
-			</div>
-			<div className={getSideBarClassName()} display={"none"}></div>
-		</div>
-	);
+    return (
+        <div className={styleModule.graph_component}>
+            <div className={getGraphAreaClassName()}>
+                <div className={styleModule.chart_component_div}>
+                    <ChartComponent
+                        sliderValue={{
+                            min: leftHandlePos,
+                            max: rightHandlePos,
+                        }}
+                        experimentPlotDataArray={experimentArray.plotDataArray}
+                        allMaxDataValues={experimentArray.maxValues}
+                    ></ChartComponent>
+                </div>
+                <div className={styleModule.side_bar_button_div}>
+                    <button
+                        className={getOpenSideBarButtonClassName()}
+                        onClick={toggleSideBar}
+                        aria-label="Toggle Graph SideBar"
+                    ></button>
+                </div>
+                <div className={styleModule.bottom_part}>
+                    <SliderComponent
+                        setChartMinMax={setChartMinMax}
+                        dataRightMax={experimentArray.maxValues.x}
+                    />
+                </div>
+            </div>
+            <div className={getSideBarClassName()} display={"none"}></div>
+        </div>
+    );
 }
 export default GraphComponent;

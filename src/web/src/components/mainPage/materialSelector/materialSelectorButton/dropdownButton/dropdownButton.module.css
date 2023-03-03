@@ -20,58 +20,58 @@
 @import url(../../../../../variables.css);
 
 .dropdown_button {
-	width: 97%;
-	height: fit-content;
-	background: var(--content_background_color);
-	border-radius: clamp(3px, 0.5vw, 10px);
-	margin-bottom: clamp(3px, 1vh, 10px);
-	cursor: pointer;
+    width: 97%;
+    height: fit-content;
+    background: var(--content_background_color);
+    border-radius: 10px;
+    margin-bottom: clamp(3px, 1vh, 10px);
+    cursor: pointer;
 
-	display: flex;
-	float: left;
-	padding: 0;
-	padding-top: 1vh;
-	padding-bottom: 1vh;
-	align-items: center;
-	overflow: hidden;
-	transition-duration: var(--animation_fast);
+    display: flex;
+    float: left;
+    padding: 0;
+    padding-top: 1vh;
+    padding-bottom: 1vh;
+    align-items: center;
+    overflow: hidden;
+    transition-duration: var(--animation_fast);
 }
 
 .dropdown_button:hover {
-	box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
-	transform: translateX(0.5vw);
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
+    transform: translateX(0.5vw);
 }
 
 .dropdown_button:active {
-	box-shadow: none;
+    box-shadow: none;
 
-	transform: translateX(0.5vw);
-	background-color: var(--active_color);
+    transform: translateX(0.5vw);
+    background-color: var(--active_color);
 }
 
 .dropdown_button_side {
-	height: 100%;
-	display: flex;
-	align-items: center;
+    height: 100%;
+    display: flex;
+    align-items: center;
 }
 
 .add_sign {
-	width: 100%;
-	font-family: "Roboto";
-	font-style: normal;
-	font-weight: 700;
-	font-size: var(--font_m);
-	color: var(--font_color);
-	padding-left: 1vw;
-	padding-right: 0.5vw;
+    width: 100%;
+    font-family: "Roboto";
+    font-style: normal;
+    font-weight: 700;
+    font-size: var(--font_m);
+    color: var(--font_color);
+    padding-left: 1vw;
+    padding-right: 0.5vw;
 }
 
 .dropdown_button_text {
-	font-family: "Roboto";
-	font-style: normal;
-	font-weight: 700;
-	font-size: var(--font_xs);
-	color: var(--font_color);
-	overflow: hidden;
-	text-overflow: ellipsis;
+    font-family: "Roboto";
+    font-style: normal;
+    font-weight: 700;
+    font-size: var(--font_xs);
+    color: var(--font_color);
+    overflow: hidden;
+    text-overflow: ellipsis;
 }

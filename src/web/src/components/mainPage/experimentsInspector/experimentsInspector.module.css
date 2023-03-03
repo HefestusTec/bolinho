@@ -20,142 +20,142 @@
 @import url(../../../variables.css);
 
 .material_inspector_div {
-	height: stretch;
-	display: flex;
+    height: stretch;
+    display: flex;
 }
 .material_inspector {
-	flex: none;
-	height: stretch;
-	width: stretch;
-	border-radius: clamp(2px, 3vh, 20px);
-	overflow: hidden;
-	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-	position: relative;
+    flex: none;
+    height: stretch;
+    width: stretch;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    position: relative;
 }
 
 .material_inspector_header {
-	background: var(--primary_color);
-	height: clamp(20px, 5.5vh, 75px);
-	display: flex;
-	position: relative;
-	align-items: center;
-	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    background: var(--primary_color);
+    height: clamp(20px, 5.5vh, 75px);
+    display: flex;
+    position: relative;
+    align-items: center;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
 
 .delete_material_button {
-	cursor: pointer;
-	height: 100%;
-	width: 10%;
-	margin-left: 2%;
-	background: none;
-	background-size: 40%;
-	background-image: url("./resources/deleteIcon.svg");
-	background-position: center;
-	background-repeat: no-repeat;
-	transition-duration: var(--animation_fast);
+    cursor: pointer;
+    height: 100%;
+    width: 10%;
+    margin-left: 2%;
+    background: none;
+    background-size: 40%;
+    background-image: url("./resources/deleteIcon.svg");
+    background-position: center;
+    background-repeat: no-repeat;
+    transition-duration: var(--animation_fast);
 }
 
 .delete_material_button:hover {
-	transform: translateY(-0.5vh);
+    transform: translateY(-0.5vh);
 }
 .delete_material_button:active {
-	transform: translateY(0vh);
+    transform: translateY(0vh);
 
-	background-size: 35%;
+    background-size: 35%;
 }
 
 .material_inspector_header_text {
-	width: 75%;
-	color: var(--font_color_inverted);
-	font-family: "Roboto";
-	font-style: normal;
-	font-weight: 700;
-	font-size: var(--font_m);
-	text-align: center;
-	white-space: nowrap;
-	overflow: hidden;
-	text-overflow: ellipsis;
+    width: 75%;
+    color: var(--font_color_inverted);
+    font-family: "Roboto";
+    font-style: normal;
+    font-weight: 700;
+    font-size: var(--font_m);
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .material_inspector_header_color {
-	width: 60px;
-	height: 100%;
-	position: absolute;
-	right: -1px;
-	top: 0;
+    width: 60px;
+    height: 100%;
+    position: absolute;
+    right: -1px;
+    top: 0;
 
-	border: solid;
-	border-color: white;
-	border-width: 0 0 0.4vh 0.4vh;
-	border-radius: 0 0 0 clamp(2px, 3vh, 20px);
+    border: solid;
+    border-color: white;
+    border-width: 0 0 0.4vh 0.4vh;
+    border-radius: 0 0 0 20px;
 
-	box-sizing: border-box;
-	--experiment_color: var(--primary_color);
+    box-sizing: border-box;
+    --experiment_color: var(--primary_color);
 
-	background-color: var(--experiment_color);
-	align-items: center;
-	transition-duration: var(--animation_fast);
-	cursor: pointer;
+    background-color: var(--experiment_color);
+    align-items: center;
+    transition-duration: var(--animation_fast);
+    cursor: pointer;
 }
 
 .material_inspector_header_color:hover {
-	width: 85px;
+    width: 85px;
 }
 .material_inspector_header_color:active {
-	box-shadow: inset 0px 0px 5px 3px rgba(0, 0, 0, 0.5);
-	background-color: var(--active_color);
+    box-shadow: inset 0px 0px 5px 3px rgba(0, 0, 0, 0.5);
+    background-color: var(--active_color);
 }
 
 .material_inspector_header_color_active {
-	width: 130px;
+    width: 130px;
 }
 .material_inspector_header_color_active:hover {
-	width: 150px;
+    width: 150px;
 }
 
 .material_inspector_header_color p {
-	margin: 0;
-	height: 100%;
-	font-size: var(--font_m);
-	color: white;
-	mix-blend-mode: difference;
-	font-weight: bold;
-	margin-top: 0.6vh;
-	margin-left: 10px;
+    margin: 0;
+    height: 100%;
+    font-size: var(--font_m);
+    color: white;
+    mix-blend-mode: difference;
+    font-weight: bold;
+    margin-top: 0.6vh;
+    margin-left: 10px;
 }
 
 .material_inspector_header_color_icon {
-	position: absolute;
-	top: 0;
-	right: 0;
-	height: 90%;
-	fill: white;
-	mix-blend-mode: difference;
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 90%;
+    fill: white;
+    mix-blend-mode: difference;
 }
 
 .material_inspector_content {
-	height: calc(100% - clamp(20px, 5.5vh, 75px));
-	width: 100%;
-	display: flex;
-	float: left;
+    height: calc(100% - clamp(20px, 5.5vh, 75px));
+    width: 100%;
+    display: flex;
+    float: left;
 }
 
 .material_inspector_search_area {
-	background-color: var(--background2_color);
-	width: 35%;
-	box-shadow: inset -2px 0px 4px rgba(0, 0, 0, 0.25);
-	color: var(--font_color);
-	font-size: var(--font_s);
+    background-color: var(--background2_color);
+    width: 35%;
+    box-shadow: inset -2px 0px 4px rgba(0, 0, 0, 0.25);
+    color: var(--font_color);
+    font-size: var(--font_s);
 }
 
 .material_inspector_search_area_ul {
-	height: calc(100% - 1.5vh);
-	padding-left: 0;
-	margin: 0;
-	padding-top: 1.5vh;
+    height: calc(100% - 1.5vh);
+    padding-left: 0;
+    margin: 0;
+    padding-top: 1.5vh;
 
-	padding-right: 0.5vw;
-	list-style-type: none;
-	overflow-y: scroll;
-	overflow-x: hidden;
+    padding-right: 0.5vw;
+    list-style-type: none;
+    overflow-y: scroll;
+    overflow-x: hidden;
 }

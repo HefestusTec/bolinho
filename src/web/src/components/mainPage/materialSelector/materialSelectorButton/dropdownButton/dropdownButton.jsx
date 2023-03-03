@@ -21,74 +21,73 @@ import SelectedObjectsContext from "../../../contexts/selectedObjectsContext";
 import { getFormattedDate, getRandomColor } from "../../../../../helpers";
 import { toast } from "react-toastify";
 const getExperimentDate = async (index) => {
-	try {
-		return JSON.parse(await eel.get_experiment_at(index)());
-	} catch (error) {
-		toast.error("Não foi possível acessar o backend");
-
-		return 0;
-	}
+    try {
+        return JSON.parse(await eel.get_experiment_at(index)());
+    } catch (error) {
+        toast.error("Não foi possível acessar o backend");
+        return 0;
+    }
 };
 
 const getExperimentObjectList = async (id) => {
-	try {
-		const experimentObject = JSON.parse(
-			await eel.get_experiment_dict(id)()
-		);
+    try {
+        const experimentObject = JSON.parse(
+            await eel.get_experiment_dict(id)()
+        );
 
-		return Object.assign(experimentObject, { color: getRandomColor() });
-	} catch (error) {
-		toast.error("Não foi possível acessar o backend");
-
-		return {};
-	}
+        return Object.assign(experimentObject, { color: getRandomColor() });
+    } catch (error) {
+        toast.error("Não foi possível acessar o backend");
+        return {};
+    }
 };
 
 export default function DropdownButton({ experimentIndex }) {
-	const [objectList, setObjectList] = useContext(SelectedObjectsContext);
-	const [experiment, setExperiment] = useState(0);
+    const [objectList, setObjectList] = useContext(SelectedObjectsContext);
+    const [experiment, setExperiment] = useState(0);
 
-	useEffect(() => {
-		getExperimentDate(experimentIndex).then((response) => {
-			setExperiment(response);
-		});
-	}, [experimentIndex]);
+    useEffect(() => {
+        getExperimentDate(experimentIndex).then((response) => {
+            setExperiment(response);
+        });
+    }, [experimentIndex]);
 
-	const buttonClicked = () => {
-		getExperimentObjectList(experimentIndex)
-			.then((response) => {
-				// Checking if the experiment id already exists in the experiment list
-				if (
-					objectList.some(
-						(e) => e.experiment.id === response.experiment.id
-					)
-				)
-					return;
-				setObjectList((experimentList) => [
-					...experimentList,
-					response,
-				]);
-			})
-			.catch((error) => {
-				toast.error(error);
-			});
-	};
+    const buttonClicked = () => {
+        getExperimentObjectList(experimentIndex)
+            .then((response) => {
+                console.log(response);
+                // Checking if the experiment id already exists in the experiment list
+                if (
+                    objectList.some(
+                        (e) => e.experiment.id === response.experiment.id
+                    )
+                )
+                    return;
+                setObjectList((experimentList) => [
+                    ...experimentList,
+                    response,
+                ]);
+            })
+            .catch((error) => {
+                toast.error(error);
+            });
+    };
 
-	return (
-		<li key={experimentIndex}>
-			<button
-				className={styleModule.dropdown_button}
-				aria-label="Material Selector"
-				onClick={buttonClicked}
-			>
-				<div className={styleModule.dropdown_button_side}>
-					<div className={styleModule.add_sign}></div>
-				</div>
-				<div className={styleModule.dropdown_button_text}>
-					Experimento {experimentIndex} [
-					{getFormattedDate(experiment.date)}]
-				</div>
-			</button>
-		</li>
-	);
+    return (
+        <li key={experimentIndex}>
+            <button
+                className={styleModule.dropdown_button}
+                aria-label="Material Selector"
+                onClick={buttonClicked}
+            >
+                <div className={styleModule.dropdown_button_side}>
+                    <div className={styleModule.add_sign}></div>
+                </div>
+                <div className={styleModule.dropdown_button_text}>
+                    Experimento {experimentIndex} [
+                    {getFormattedDate(experiment.date)}]
+                </div>
+            </button>
+        </li>
+    );
 }

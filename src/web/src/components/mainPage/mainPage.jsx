@@ -28,42 +28,42 @@ import ZoomComponent from "../zoomComponent/zoomComponent";
 import SelectedObjectsContext from "./contexts/selectedObjectsContext";
 
 export default function MainPage({ materialList }) {
-	//const [graphData, setGraphData] = useState(makeConstData());
-	//const [globalConfig, setGlobalConfig] = useContext(GlobalConfigContext);
+    //const [graphData, setGraphData] = useState(makeConstData());
+    //const [globalConfig, setGlobalConfig] = useContext(GlobalConfigContext);
 
-	const [selectedObjectList, setSelectedObjectList] = useState([]);
+    const [selectedObjectList, setSelectedObjectList] = useState([]);
 
-	return (
-		<SelectedObjectsContext.Provider
-			value={[selectedObjectList, setSelectedObjectList]}
-		>
-			<div className={styleModule.content}>
-				<ZoomComponent
-					className={styleModule.graph_component}
-					scaleOrigin="top right"
-				>
-					<GraphComponent experimentList={selectedObjectList} />
-				</ZoomComponent>
-				<ZoomComponent
-					className={styleModule.material_selector}
-					scaleOrigin="top left"
-				>
-					<MaterialSelector materialList={materialList} />
-				</ZoomComponent>
-				<ZoomComponent
-					className={styleModule.experiments_inspector}
-					scaleOrigin="bottom left"
-				>
-					<ExperimentsInspector />
-				</ZoomComponent>
-				<ZoomComponent
-					className={styleModule.extra_options}
-					scaleOrigin="bottom"
-				>
-					<ExtraOptions />
-				</ZoomComponent>
-				<button className={styleModule.ensaio_button}>ENSAIO</button>
-			</div>
-		</SelectedObjectsContext.Provider>
-	);
+    return (
+        <SelectedObjectsContext.Provider
+            value={[selectedObjectList, setSelectedObjectList]}
+        >
+            <div className={styleModule.content}>
+                <ZoomComponent
+                    className={styleModule.graph_component}
+                    scaleOrigin="top right"
+                >
+                    <GraphComponent experimentList={selectedObjectList} />
+                </ZoomComponent>
+                <ZoomComponent
+                    className={styleModule.material_selector}
+                    scaleOrigin="top left"
+                >
+                    <MaterialSelector materialList={materialList} />
+                </ZoomComponent>
+                <ZoomComponent
+                    className={styleModule.experiments_inspector}
+                    scaleOrigin="bottom left"
+                >
+                    <ExperimentsInspector />
+                </ZoomComponent>
+                <ZoomComponent
+                    className={styleModule.extra_options}
+                    scaleOrigin="bottom"
+                >
+                    <ExtraOptions />
+                </ZoomComponent>
+                <button className={styleModule.ensaio_button}>ENSAIO</button>
+            </div>
+        </SelectedObjectsContext.Provider>
+    );
 }

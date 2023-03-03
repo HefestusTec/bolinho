@@ -9,11 +9,14 @@ import "react-toastify/dist/ReactToastify.css";
 
 import SubPage from "./components/subPage/subPage";
 
+// Fake database for static pages
+import { fakeEel } from "./staticDB";
+
 import GlobalConfigContext, {
     globalConfigDefault,
 } from "./contexts/globalConfigContext";
 
-export const eel = window.eel;
+export let eel = window.eel;
 try {
     eel.set_host("ws://localhost:8080");
     toast.success("Conexão estabelecida");
@@ -30,6 +33,7 @@ try {
     window.eel.expose(toastSuccess, "toastSuccess");
 } catch {
     toast.error("Não foi possível conectar com o backend");
+    eel = new fakeEel(); // Loading a fake db
 }
 
 const getMaterialList = async () => {

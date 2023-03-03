@@ -40,12 +40,21 @@ html {
 
     --graph_animation: 350ms;
 
+    /*
     --font_xxs: 1em;
     --font_xs: 1.2em;
     --font_s: 1.6em;
     --font_m: 2em;
     --font_l: 3.2em;
     --font_xl: 4em;
+    */
+
+    --font_xxs: 10px;
+    --font_xs: 14px;
+    --font_s: 18px;
+    --font_m: 20px;
+    --font_l: 24px;
+    --font_xl: 45px;
 
     --num_columns: 13;
     --num_rows: 13;
