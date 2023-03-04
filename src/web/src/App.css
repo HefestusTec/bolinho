@@ -23,6 +23,10 @@ button {
     width: 10px;
 }
 
+::-webkit-scrollbar:horizontal {
+    height: 10px;
+}
+
 /* Track */
 ::-webkit-scrollbar-track {
     background: none;

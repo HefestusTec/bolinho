@@ -41,7 +41,6 @@
 
 .side_bar_button_li {
     display: block;
-    flex: 0 1 auto; /* Default */
     height: 100%;
     padding-bottom: 2vh;
 }
@@ -106,7 +105,7 @@
 .side_bar_footer {
     height: 20vh;
     width: 15vw;
-    position: fixed;
+    position: absolute;
     bottom: 0;
     left: 1.5vw;
     justify-content: center;

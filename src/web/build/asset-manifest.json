@@ -1,10 +1,11 @@
 {
   "files": {
-    "main.css": "./static/css/main.0feb16f8.css",
-    "main.js": "./static/js/main.96321baf.js",
+    "main.css": "./static/css/main.981ad9bc.css",
+    "main.js": "./static/js/main.ad5f8453.js",
     "static/js/787.d1d4a2c2.chunk.js": "./static/js/787.d1d4a2c2.chunk.js",
     "static/media/LogoBolinho512.png": "./static/media/LogoBolinho512.9671d4415561a3fce323.png",
     "static/media/roboto-all-400-normal.woff": "./static/media/roboto-all-400-normal.c5d001fa922fa66a147f.woff",
+    "service-worker.js": "./service-worker.js",
     "static/media/roboto-latin-400-normal.woff2": "./static/media/roboto-latin-400-normal.b009a76ad6afe4ebd301.woff2",
     "static/media/roboto-cyrillic-ext-400-normal.woff2": "./static/media/roboto-cyrillic-ext-400-normal.804378952da8a10faae2.woff2",
     "static/media/LogoSchumacher.png": "./static/media/LogoSchumacher.73c35f39a0330d92aff0.png",
@@ -26,12 +27,12 @@
     "static/media/filterIcon.svg": "./static/media/filterIcon.dabe286b0f2734345dbd.svg",
     "static/media/expandMenu.svg": "./static/media/expandMenu.3cd61fa06c3d429eb648.svg",
     "static/media/retractMenu.svg": "./static/media/retractMenu.27d97b28abb46171133c.svg",
-    "main.0feb16f8.css.map": "./static/css/main.0feb16f8.css.map",
-    "main.96321baf.js.map": "./static/js/main.96321baf.js.map",
+    "main.981ad9bc.css.map": "./static/css/main.981ad9bc.css.map",
+    "main.ad5f8453.js.map": "./static/js/main.ad5f8453.js.map",
     "787.d1d4a2c2.chunk.js.map": "./static/js/787.d1d4a2c2.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.0feb16f8.css",
-    "static/js/main.96321baf.js"
+    "static/css/main.981ad9bc.css",
+    "static/js/main.ad5f8453.js"
   ]
 }
