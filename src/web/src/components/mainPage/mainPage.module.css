@@ -18,8 +18,8 @@
  */
 @import url(../../variables.css);
 .content {
-	position: absolute;
-	/*
+    position: absolute;
+    /*
 	--padding_amount: 1.5%;
 
 	bottom: var(--padding_amount);
@@ -27,62 +27,69 @@
 	left: var(--padding_amount);
 	right: var(--padding_amount);
 	*/
-	bottom: 0px;
-	top: 0px;
-	left: 0px;
-	right: 0px;
-	margin: 1%;
+    bottom: 0px;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    margin: 1%;
 
-	display: grid;
-	gap: 1.5%;
-	grid-template-columns: repeat(var(--num_columns), 1fr);
-	grid-template-rows: repeat(var(--num_rows), 1fr);
+    display: grid;
+    gap: 1.5%;
+    grid-template-columns: repeat(var(--num_columns), 1fr);
+    grid-template-rows: repeat(var(--num_rows), 1fr);
 }
 
 .ensaio_button {
-	grid-column: 11 / 14;
-	grid-row: 10 / 13;
-	background: var(--positive_button_color);
-	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-	border-radius: 10px 10px 10px 10px;
-	color: var(--font_color_inverted);
-	font-family: "Roboto";
-	font-style: normal;
-	font-weight: 700;
-	font-size: var(--font_xl);
-	transition-duration: var(--animation_fast);
+    grid-column: 11 / 14;
+    grid-row: 10 / 13;
+    background: var(--positive_button_color);
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 10px 10px 10px 10px;
+    color: var(--font_color_inverted);
+    font-family: "Roboto";
+    font-style: normal;
+    font-weight: 700;
+    font-size: var(--font_l);
+    transition-duration: var(--animation_fast);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .ensaio_button:hover {
-	opacity: 80%;
-	transform: translateY(-1vh);
+    opacity: 80%;
+    transform: translateY(-1vh);
 }
 
 .ensaio_button:active {
-	background: var(--active_color);
-	opacity: 1;
+    background: var(--active_color);
+    opacity: 1;
 
-	transform: translateY(0vh);
+    transform: translateY(0vh);
 
-	box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
-}
-
-.graph_component {
-	grid-column: 5 / 14;
-	grid-row: 1 / 9;
+    box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
 
 .material_selector {
-	grid-column: 1 / 5;
-	grid-row: 1 / 9;
+    grid-column: span 4;
+    grid-row: span 8;
+    order: 0;
+}
+
+.graph_component {
+    grid-column: span 9;
+    grid-row: span 8;
+    order: 1;
 }
 
 .experiments_inspector {
-	grid-column: 1 / 8;
-	grid-row: 9 / 14;
+    grid-column: span 7;
+    grid-row: span 5;
+    order: 2;
 }
 
 .extra_options {
-	grid-column: 8 / 11;
-	grid-row: 9 / 14;
+    grid-column: span 3;
+    grid-row: span 5;
+    order: 3;
 }

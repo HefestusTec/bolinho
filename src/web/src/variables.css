@@ -61,6 +61,7 @@ html {
 
     --zoom_scale: 1.4;
 }
+
 [data_theme="Claro"] {
     --background_color: #ffffff; /* Background color of the components */
     --primary_color: #444444; /* Primary color, for example this is the color of the headers */
