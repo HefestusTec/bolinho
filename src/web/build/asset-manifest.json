@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "./static/css/main.981ad9bc.css",
-    "main.js": "./static/js/main.ad5f8453.js",
+    "main.js": "./static/js/main.0a7d38f9.js",
     "static/js/787.d1d4a2c2.chunk.js": "./static/js/787.d1d4a2c2.chunk.js",
     "static/media/LogoBolinho512.png": "./static/media/LogoBolinho512.9671d4415561a3fce323.png",
     "static/media/roboto-all-400-normal.woff": "./static/media/roboto-all-400-normal.c5d001fa922fa66a147f.woff",
@@ -28,11 +28,11 @@
     "static/media/expandMenu.svg": "./static/media/expandMenu.3cd61fa06c3d429eb648.svg",
     "static/media/retractMenu.svg": "./static/media/retractMenu.27d97b28abb46171133c.svg",
     "main.981ad9bc.css.map": "./static/css/main.981ad9bc.css.map",
-    "main.ad5f8453.js.map": "./static/js/main.ad5f8453.js.map",
+    "main.0a7d38f9.js.map": "./static/js/main.0a7d38f9.js.map",
     "787.d1d4a2c2.chunk.js.map": "./static/js/787.d1d4a2c2.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.981ad9bc.css",
-    "static/js/main.ad5f8453.js"
+    "static/js/main.0a7d38f9.js"
   ]
 }
