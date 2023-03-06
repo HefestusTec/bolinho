@@ -89,7 +89,7 @@ export default function ConfigPage() {
                 <a
                     data-tooltip-id="my-tooltip"
                     data-tooltip-content="Hello world!"
-                    href="#"
+                    href="/#"
                 >
                     ◕‿‿◕
                 </a>
