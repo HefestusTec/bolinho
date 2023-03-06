@@ -19,54 +19,54 @@
 @import url(../../../../variables.css);
 
 .color_picker_div {
-	flex: none;
+    flex: none;
 
-	position: relative;
-	height: fit-content;
-	animation: slide-out;
-	animation-fill-mode: forwards;
-	animation-duration: var(--animation_slow);
-	animation-timing-function: ease;
+    position: relative;
+    height: fit-content;
+    animation: slide-out;
+    animation-fill-mode: forwards;
+    animation-duration: var(--animation_slow);
+    animation-timing-function: ease;
 }
 
 @keyframes slide-out {
-	0% {
-		opacity: 1;
-		transform: translateX(-100%) translateY(-100%);
-	}
-	100% {
-		opacity: 0;
+    0% {
+        opacity: 1;
+        transform: translateX(-100%) translateY(-100%);
+    }
+    100% {
+        opacity: 0;
 
-		transform: translateX(-100%) translateY(0%);
-	}
+        transform: translateX(-100%) translateY(0%);
+    }
 }
 
 .color_picker_div_active {
-	animation: slide-in;
-	animation-fill-mode: forwards;
-	animation-duration: var(--animation_slow);
-	animation-timing-function: ease;
+    animation: slide-in;
+    animation-fill-mode: forwards;
+    animation-duration: var(--animation_slow);
+    animation-timing-function: ease;
 }
 
 @keyframes slide-in {
-	0% {
-		opacity: 0;
+    0% {
+        opacity: 0;
 
-		transform: translateX(-100%) translateY(0%);
-	}
-	100% {
-		opacity: 1;
+        transform: translateX(-100%) translateY(0%);
+    }
+    100% {
+        opacity: 1;
 
-		transform: translateX(-100%) translateY(-100%);
-	}
+        transform: translateX(-100%) translateY(-100%);
+    }
 }
 
 .color_picker_back_drop {
-	position: fixed;
-	left: 0;
-	top: 0;
-	right: 0;
-	bottom: 0;
-	background-color: rgba(0, 0, 0, 0.39);
-	pointer-events: all;
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.39);
+    pointer-events: all;
 }
