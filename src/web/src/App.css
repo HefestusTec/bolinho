@@ -11,6 +11,7 @@ button {
     height: 100svh;
 
     width: auto;
+    /* aspect-ratio: 16/9; */
 }
 
 .content {
@@ -52,4 +53,9 @@ button {
 .toast_notify {
     animation-duration: 0;
     font-size: var(--font_s);
+}
+
+.react-colorful {
+    height: 30vh !important;
+    width: 30vh !important;
 }
