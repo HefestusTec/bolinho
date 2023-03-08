@@ -1,0 +1,87 @@
+/*
+.md-typeset .admonition,
+.md-typeset details {
+	border-width: 0;
+	border-left-width: 4px;
+}
+*/
+
+/* admonition-windows */
+.md-typeset .admonition.admonition-windows,
+.md-typeset details.admonition-windows {
+	border-color: rgb(43, 71, 155);
+}
+.md-typeset .admonition-windows > .admonition-title,
+.md-typeset .admonition-windows > summary {
+	background-color: rgba(43, 71, 155, 0.1);
+}
+.md-typeset .admonition-windows > .admonition-title::before,
+.md-typeset .admonition-windows > summary::before {
+	background-color: rgb(43, 71, 155);
+	-webkit-mask-image: var(--md-admonition-icon--admonition-windows);
+	mask-image: var(--md-admonition-icon--admonition-windows);
+}
+
+/* admonition-linux */
+.md-typeset .admonition.admonition-linux,
+.md-typeset details.admonition-linux {
+	border-color: rgb(118, 43, 155);
+}
+.md-typeset .admonition-linux > .admonition-title,
+.md-typeset .admonition-linux > summary {
+	background-color: rgba(118, 43, 155, 0.1);
+}
+.md-typeset .admonition-linux > .admonition-title::before,
+.md-typeset .admonition-linux > summary::before {
+	background-color: rgb(118, 43, 155);
+	-webkit-mask-image: var(--md-admonition-icon--admonition-linux);
+	mask-image: var(--md-admonition-icon--admonition-linux);
+}
+
+/* admonition-raspi */
+.md-typeset .admonition.admonition-raspi,
+.md-typeset details.admonition-raspi {
+	border-color: rgb(197, 26, 74);
+}
+.md-typeset .admonition-raspi > .admonition-title,
+.md-typeset .admonition-raspi > summary {
+	background-color: rgba(197, 26, 74, 0.1);
+}
+.md-typeset .admonition-raspi > .admonition-title::before,
+.md-typeset .admonition-raspi > summary::before {
+	background-color: rgb(197, 26, 74);
+	-webkit-mask-image: var(--md-admonition-icon--admonition-raspi);
+	mask-image: var(--md-admonition-icon--admonition-raspi);
+}
+
+/* admonition-pc */
+.md-typeset .admonition.admonition-pc,
+.md-typeset details.admonition-pc {
+	border-color: rgb(189, 187, 187);
+}
+.md-typeset .admonition-pc > .admonition-title,
+.md-typeset .admonition-pc > summary {
+	background-color: rgba(189, 187, 187, 0.1);
+}
+.md-typeset .admonition-pc > .admonition-title::before,
+.md-typeset .admonition-pc > summary::before {
+	background-color: rgb(189, 187, 187);
+	-webkit-mask-image: var(--md-admonition-icon--admonition-pc);
+	mask-image: var(--md-admonition-icon--admonition-pc);
+}
+
+/* admonition-return */
+.md-typeset .admonition.return,
+.md-typeset details.return {
+	border-color: rgb(213, 63, 63);
+}
+.md-typeset .return > .admonition-title,
+.md-typeset .return > summary {
+	background-color: rgba(213, 63, 63, 0.1);
+}
+.md-typeset .return > .admonition-title::before,
+.md-typeset .return > summary::before {
+	background-color: rgb(213, 63, 63);
+	-webkit-mask-image: var(--md-admonition-icon--return);
+	mask-image: var(--md-admonition-icon--return);
+}
