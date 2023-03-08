@@ -10,6 +10,11 @@ body {
     height: 100vh;
     height: 100svh;
     overflow: hidden;
+
+    /* DISABLING TEX SELECTION */
+    -webkit-user-select: none; /* Safari */
+    -ms-user-select: none; /* IE 10 and IE 11 */
+    user-select: none; /* Standard syntax */
 }
 
 code {
