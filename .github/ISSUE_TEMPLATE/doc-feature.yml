@@ -1,0 +1,28 @@
+name: New Feature
+description: Requestes a new feature
+labels: [feature]
+body:
+  - type: textarea
+    attributes:
+      label: Summary
+      description: A brief summary of the feature
+    validations:
+        required: false
+  - type: checkboxes
+    attributes:
+      label: Affected area 
+      description: You can mark more than one
+      options:
+        - label: Front-End
+        - label: Back-End
+        - label: Other
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Description
+      description: A description of the feature
+    validations:
+        required: true
+
+
