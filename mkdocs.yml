@@ -116,6 +116,7 @@ nav:
           - Back End: backEnd/index.md
           - DBHandler: backEnd/DBHandler.md
           - DataHandler: backEnd/DataHandler.md
+          - Routines: backEnd/Routines.md
     - Front End:
           - Front End: frontEnd/index.md
           - Pages: frontEnd/pages.md
@@ -129,5 +130,6 @@ nav:
           - Load and Save Data: api/loadAndSaveData.md
           - Commands: api/commands.md
           - Front-end exposed functions: api/frontEndExposedFunctions.md
+          - UIapi: api/UIapi.md
     - About:
           - About: about/index.md

@@ -20,22 +20,13 @@ export let eel = window.eel;
 try {
     eel.set_host("ws://localhost:8080");
     toast.success("Conexão estabelecida");
-    // Function exposed to the backend
-    function toastError(msg) {
-        toast.error(msg);
-    }
-    window.eel.expose(toastError, "toastError");
-
-    // Function exposed to the backend
-    function toastSuccess(msg) {
-        toast.success(msg);
-    }
-    window.eel.expose(toastSuccess, "toastSuccess");
 } catch {
     toast.error("Não foi possível conectar com o backend");
     eel = new fakeEel(); // Loading a fake db
     toast.info("Iniciando base de dados de testes");
 }
+
+import("./exposedFunctionsJS");
 
 const getMaterialList = async () => {
     try {

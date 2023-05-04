@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkweb=self.webpackChunkweb||[]).push([[933],{933:function(e,o,r){r.r(o),r.d(o,{promptUserJS:function(){return u},toastErrorJS:function(){return t},toastSuccessJS:function(){return s}});var n=r(85);function t(e){n.Am.error(e)}function s(e){n.Am.success(e)}function u(e,o){return console.log(e,o),prompt(e)}window.eel.expose(t,"toastErrorJS"),window.eel.expose(s,"toastSuccessJS"),window.eel.expose(u,"promptUserJS")}}]);
+//# sourceMappingURL=933.0f96a6e2.chunk.js.map
