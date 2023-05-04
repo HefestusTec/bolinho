@@ -5,5 +5,8 @@
     "licenser.projectName": "Bolinho",
     "licenser.customHeader": "@FILENAME@ - @PROJECT@\n\nCopyright @YEAR@ @AUTHOR@\n\nThis is my license...",
     "editor.defaultFormatter": "esbenp.prettier-vscode",
-    "prettier.tabWidth": 4
+    "prettier.tabWidth": 4,
+    "[python]": {
+        "editor.defaultFormatter": "ms-python.black-formatter"
+    }
 }

@@ -25,7 +25,6 @@ import ButtonGroup from "../customSubComponents/buttonGroup/buttonGroup";
 import CustomButton from "../customSubComponents/customButton/customButton";
 
 import "react-tooltip/dist/react-tooltip.css";
-import { Tooltip } from "react-tooltip";
 
 export default function ConfigPage() {
     const [globalConfig, setGlobalConfig] = useContext(GlobalConfigContext);
@@ -86,15 +85,7 @@ export default function ConfigPage() {
                         </CustomButton>
                     </ButtonGroup>
                 </ContainerComponent>
-                <a
-                    data-tooltip-id="my-tooltip"
-                    data-tooltip-content="Hello world!"
-                    href="javascript:void(0);"
-                >
-                    ◕‿‿◕
-                </a>
             </ZoomComponent>
-            <Tooltip id="my-tooltip" />
         </React.Fragment>
     );
 }

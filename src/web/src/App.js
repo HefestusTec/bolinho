@@ -9,8 +9,6 @@ import "react-toastify/dist/ReactToastify.css";
 
 import SubPage from "./components/subPage/subPage";
 
-import "./exposedFunctionsJS";
-
 // Fake database for static pages
 import { fakeEel } from "./staticDB";
 
@@ -27,6 +25,8 @@ try {
     eel = new fakeEel(); // Loading a fake db
     toast.info("Iniciando base de dados de testes");
 }
+
+import("./exposedFunctionsJS");
 
 const getMaterialList = async () => {
     try {
