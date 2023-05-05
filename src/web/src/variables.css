@@ -59,6 +59,9 @@ html {
     --num_columns: 13;
     --num_rows: 13;
 
+    --num_columns_sub_page: 12;
+    --num_rows_sub_page: 14;
+
     --zoom_scale: 1.4;
 }
 

@@ -19,6 +19,25 @@
 @import url("../../variables.css");
 
 .theme_selector {
-    grid-column: 1 / 7;
-    grid-row: 1 / 7;
+    grid-column: span 6;
+    grid-row: span 7;
+    order: 0;
+}
+
+.animation_selector {
+    grid-column: span 6;
+    grid-row: span 7;
+    order: 1;
+}
+
+.animation_selector2 {
+    grid-column: span 6;
+    grid-row: span 7;
+    order: 2;
+}
+
+.animation_selector3 {
+    grid-column: span 6;
+    grid-row: span 7;
+    order: 3;
 }

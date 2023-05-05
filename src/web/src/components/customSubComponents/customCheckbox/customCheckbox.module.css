@@ -1,0 +1,36 @@
+/**
+ * Copyright (c) 2023 Rafael F. Meneses
+ * 
+ * This software is released under the MIT License.
+ * https://opensource.org/licenses/MIT
+ */
+@import url("../../../variables.css");
+
+.customCheckbox {
+    color: var(--font_color);
+    font-size: var(--font_m);
+    font-weight: bold;
+    align-items: center;
+    display: inline;
+    white-space: nowrap;
+    overflow: hidden;
+    padding-left: 1%;
+    padding-right: 1%;
+    border-radius: 2px;
+    transition-duration: var(--animation_fast);
+    border-width: 0px 0px 5px 0px;
+    border-radius: 0px 15px 15px 0px;
+}
+
+.customCheckbox:hover {
+    background-color: var(--background_color);
+    width: 80%;
+    cursor: pointer;
+
+    border-radius: 0px 15px 15px 0px;
+    box-shadow: 0px 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+.customCheckbox:active {
+    width: 80%;
+    box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
+}

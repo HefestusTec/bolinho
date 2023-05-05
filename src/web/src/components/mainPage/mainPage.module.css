@@ -39,23 +39,6 @@
     grid-template-rows: repeat(var(--num_rows), 1fr);
 }
 
-.ensaio_button {
-    grid-column: 11 / 14;
-    grid-row: 10 / 13;
-    background: var(--positive_button_color);
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    border-radius: 10px 10px 10px 10px;
-    color: var(--font_color_inverted);
-    font-family: "Roboto";
-    font-style: normal;
-    font-weight: 700;
-    font-size: var(--font_l);
-    transition-duration: var(--animation_fast);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
 .ensaio_button:hover {
     opacity: 80%;
     transform: translateY(-1vh);
@@ -92,4 +75,30 @@
     grid-column: span 3;
     grid-row: span 5;
     order: 3;
+}
+
+.ensaio_button_div {
+    grid-column: span 3;
+    grid-row: span 5;
+    order: 4;
+    display: flex;
+    align-items: center;
+}
+
+.ensaio_button {
+    height: 50%;
+    width: 100%;
+
+    background: var(--positive_button_color);
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 10px 10px 10px 10px;
+    color: var(--font_color_inverted);
+    font-family: "Roboto";
+    font-style: normal;
+    font-weight: 700;
+    font-size: var(--font_l);
+    transition-duration: var(--animation_fast);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
