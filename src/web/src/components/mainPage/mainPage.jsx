@@ -62,7 +62,11 @@ export default function MainPage({ materialList }) {
                 >
                     <ExtraOptions />
                 </ZoomComponent>
-                <button className={styleModule.ensaio_button}>ENSAIO</button>
+                <div className={styleModule.ensaio_button_div}>
+                    <button className={styleModule.ensaio_button}>
+                        ENSAIO
+                    </button>
+                </div>
             </div>
         </SelectedObjectsContext.Provider>
     );

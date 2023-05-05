@@ -15,77 +15,31 @@
 // You should have received a copy of the GNU General Public License
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
 
-import React, { useContext, useState } from "react";
+import React from "react";
 import styleModule from "./configPage.module.css";
 
-import ZoomComponent from "../zoomComponent/zoomComponent";
-import ContainerComponent from "../containerComponent/containerComponent";
-import GlobalConfigContext from "../../contexts/globalConfigContext";
-import ButtonGroup from "../customSubComponents/buttonGroup/buttonGroup";
-import CustomButton from "../customSubComponents/customButton/customButton";
-
-import "react-tooltip/dist/react-tooltip.css";
+import ThemeSelector from "./themeSelector/themeSelector";
+import AnimationSelector from "./animationSelector/animationSelector";
 
 export default function ConfigPage() {
-    const [globalConfig, setGlobalConfig] = useContext(GlobalConfigContext);
-    const [currentActive, setCurrentActive] = useState(globalConfig.theme);
-
-    const clickCallBack = (key) => {
-        setCurrentActive(key);
-        setGlobalConfig({ ...globalConfig, theme: key });
-    };
-
     return (
         <React.Fragment>
-            <ZoomComponent
+            <ThemeSelector
                 className={styleModule.theme_selector}
                 scaleOrigin="top left"
-            >
-                <ContainerComponent headerText="Temas">
-                    <ButtonGroup
-                        currentActive={currentActive}
-                        clickCallBack={clickCallBack}
-                    >
-                        <CustomButton
-                            key={"Claro"}
-                            buttonKey={"Claro"}
-                            color={"white"}
-                            iconSize="var(--font_s)"
-                            className=""
-                        >
-                            Claro
-                        </CustomButton>
-                        <CustomButton
-                            key={"Escuro"}
-                            buttonKey={"Escuro"}
-                            color={"white"}
-                            iconSize="var(--font_s)"
-                            className=""
-                        >
-                            Escuro
-                        </CustomButton>
-                        <CustomButton
-                            key={"PlaceHolder"}
-                            buttonKey={"PlaceHolder"}
-                            color={"white"}
-                            iconSize="var(--font_s)"
-                            className=""
-                        >
-                            PlaceHolder
-                        </CustomButton>
-
-                        <CustomButton
-                            key={"PlaceHolder2"}
-                            buttonKey={"PlaceHolder2"}
-                            color={"white"}
-                            iconSize="var(--font_s)"
-                            className=""
-                        >
-                            PlaceHolder2
-                        </CustomButton>
-                    </ButtonGroup>
-                </ContainerComponent>
-            </ZoomComponent>
+            />
+            <AnimationSelector
+                className={styleModule.animation_selector}
+                scaleOrigin="top right"
+            />
+            <AnimationSelector
+                className={styleModule.animation_selector2}
+                scaleOrigin="bottom left"
+            />
+            <AnimationSelector
+                className={styleModule.animation_selector3}
+                scaleOrigin="bottom right"
+            />
         </React.Fragment>
     );
 }
