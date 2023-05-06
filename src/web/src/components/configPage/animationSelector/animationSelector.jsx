@@ -28,8 +28,8 @@ import CustomCheckbox from "../../customSubComponents/customCheckbox/customCheck
 export default function AnimationSelector({ className, scaleOrigin }) {
     //const [globalConfig, setGlobalConfig] = useContext(GlobalConfigContext);
 
-    const clickCallBack = (key) => {
-        console.log(key);
+    const clickCallBackUseAnimation = () => {
+        console.log(123);
         //setCurrentActive(key);
         //setGlobalConfig({ ...globalConfig, theme: key });
     };
@@ -37,33 +37,13 @@ export default function AnimationSelector({ className, scaleOrigin }) {
     return (
         <ZoomComponent className={className} scaleOrigin={scaleOrigin}>
             <ContainerComponent headerText="Animações">
-                <CustomCheckbox
-                    key={"Usar animações"}
-                    buttonKey={"Usar animações"}
-                    color={"white"}
-                    iconSize="var(--font_s)"
-                    className=""
-                >
+                <CustomCheckbox clickCallBack={clickCallBackUseAnimation}>
                     Usar animações
                 </CustomCheckbox>
-                <CustomButton
-                    key={"Animar gráfico"}
-                    buttonKey={"Animar gráfico"}
-                    color={"white"}
-                    iconSize="var(--font_s)"
-                    className=""
-                >
-                    Animar gráfico
-                </CustomButton>
-                <CustomButton
-                    key={"Velocidade"}
-                    buttonKey={"Velocidade"}
-                    color={"white"}
-                    iconSize="var(--font_s)"
-                    className=""
-                >
-                    Velocidade
-                </CustomButton>
+                <CustomCheckbox>Animar gráfico</CustomCheckbox>
+                <CustomCheckbox>Velocidade</CustomCheckbox>
+                <CustomCheckbox>Velocidade</CustomCheckbox>
+                <CustomCheckbox>Velocidade</CustomCheckbox>
             </ContainerComponent>
         </ZoomComponent>
     );

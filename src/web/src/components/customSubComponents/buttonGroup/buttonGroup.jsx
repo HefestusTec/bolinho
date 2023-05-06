@@ -38,8 +38,8 @@ function ButtonGroup({
         if (element.key === currentActive)
             return [
                 element.props.className,
-                styleModule.button,
                 styleModule.button_active,
+                styleModule.button,
             ].join(" ");
         return [element.props.className, styleModule.button].join(" ");
     };

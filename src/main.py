@@ -63,6 +63,9 @@ def start_eel():
 
 
 def wait_for_connection():
+    """
+    Will stay in a infinite loop until connected to the front end
+    """
     while True:
         try:
             if core_api.ping():
@@ -76,9 +79,9 @@ if __name__ == "__main__":
     # system("taskkill /im chrome.exe /f") # Podemos colocar isso para fechar o chrome antes de rodar o eel
     eel.spawn(start_eel)  # Inicializando eel em outro thread
 
-    # Will stay in a infinite loop until connected to the front end
     # You can only use front end functions after the connection
     wait_for_connection()
 
+    # infinite loop so it doesn't close the socket
     while True:
         eel.sleep(1)

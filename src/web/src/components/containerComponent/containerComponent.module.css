@@ -41,11 +41,10 @@
 .container_content {
     height: stretch;
     background-color: var(--background_color);
-    padding-right: 1%;
+    padding-right: 10%;
     border-radius: 15px 15px 0 0;
-    overflow: hidden;
+    flex-direction: column;
     overflow-y: scroll;
     box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
-    align-items: center;
-    padding-top: 1vh;
+    padding-top: 2vh;
 }
