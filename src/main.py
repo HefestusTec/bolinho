@@ -18,11 +18,10 @@
 # from os import system
 
 import eel
-import expose_db  # não remover
 from argparse import ArgumentParser
+import expose_db  # não remover
 
-import ui_api
-import bolinho_api
+from bolinho_api import core_api, ui_api
 
 parser = ArgumentParser()
 parser.add_argument(
@@ -66,7 +65,7 @@ def start_eel():
 def wait_for_connection():
     while True:
         try:
-            if bolinho_api.ping():
+            if core_api.ping():
                 break
             pass
         except:
