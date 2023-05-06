@@ -16,10 +16,17 @@
  You should have received a copy of the GNU General Public License
  along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
 -->
+# Front end API
 
-# UIapi
+This page gathers all the API calls that can be used by the backend.
 
-This page is a collection of all functions/API calls available to the backend for UI in general. You can find them in the `UIapi.py` file.
+> Backend -> Front end
+
+## Bolinho API
+
+Collection of all functions/API calls available to the backend. You can find them in the `bolinho_api.py` file.
+
+The JavaScript file can be found in the api folder.
 
 !!! warning
     The functions can only be called if they are available on the `web/build` directory, therefore if you make a change using `npm run serve` won't show it, you will need to rebuild the front end with `npm run buildWeb` or by using `npm run start`.
@@ -27,41 +34,67 @@ This page is a collection of all functions/API calls available to the backend fo
 !!! note
     These functions can only be called after eel is initiated with `eel.init()`.
 
-## `#!python def success_alert(text)`:
+### `#!python def ping()`:
+!!! quote ""
+
+    Tries to ping the bolinho front-end, returns 1 if it worked
+
+    ``` python title="Python usage example"
+    import bolinho_api
+
+    while True:
+        try:
+            if bolinho_api.ping():
+                print("got a ping!")
+                break
+            pass
+        except:
+            eel.sleep(1)
+    ```
+
+
+## UI API
+
+Collection of all functions/API calls available to the backend for UI in general. You can find them in the `ui_api.py` file.
+
+The JavaScript file can be found in the api folder.
+
+
+!!! warning
+    The functions can only be called if they are available on the `web/build` directory, therefore if you make a change using `npm run serve` won't show it, you will need to rebuild the front end with `npm run buildWeb` or by using `npm run start`.
+
+!!! note
+    These functions can only be called after eel is initiated with `eel.init()`.
+
+### `#!python def success_alert(text)`:
 !!! quote ""
 
     Uses [React-Toastify](https://github.com/fkhadra/react-toastify) to create an success alert.
 
-    ### Usage example
-
-    ``` python
+    ``` python title="Python usage example"
     import UIapi
 
     UIapi.success_alert("Success!")
     ```
 
-## `#!python def error_alert(text)`:
+### `#!python def error_alert(text)`:
 !!! quote ""
 
     Uses [React-Toastify](https://github.com/fkhadra/react-toastify) to create an error alert.
 
-    ### Usage example
-
-    ``` python
+    ``` python title="Python usage example"
     import UIapi
 
     UIapi.error_alert("Error!")
     ```
 
-## `#!python def prompt_user(description, options, callback_func)`:
+### `#!python def prompt_user(description, options, callback_func)`:
 !!! quote ""
     Prompts the user with a 'description', and shows the 'options' to the user.
 
     The result is passed to the callback_function
 
-    ### Usage example
-
-    ``` python
+    ``` python title="Python usage example"
     import UIapi
 
     def get_result(result):

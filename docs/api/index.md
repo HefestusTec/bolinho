@@ -24,3 +24,22 @@ In this section you will be able to finde every **API call** available.
 These `calls` are exposed to the **front-end** via the `eel` object, giving it access to the **data base**, **systems** and **hardware**. This solutions makes use of the [eel](https://github.com/python-eel/Eel) library to realize the communication between the front-end and back-end;
 
 This API reference will show the methods being called by the front-end in JavaScript, and every call should be made **asynchronously**.
+
+## How to create and expose functions to the backend
+
+``` jsx
+function myJsFunction(message){
+    console.log(`Got this from the back end ${message}`)
+}
+
+// This line exposes the function to the back end, note the second argument, it is the name that the back end needs to call
+window.eel.expose(myJsFunction, "myJsFunction");
+```
+
+``` python
+try:
+    eel.myJsFunction("IT'S WORKING")
+except:
+    pass
+```
+

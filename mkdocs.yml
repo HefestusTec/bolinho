@@ -126,10 +126,8 @@ nav:
           - Styling: frontEnd/styling.md
     - API:
           - API: api/index.md
+          - Front end API: api/front_end_api.md
+          - Backend API: api/backend_api.md
           - Data Types: api/dataTypes.md
-          - Load and Save Data: api/loadAndSaveData.md
-          - Commands: api/commands.md
-          - Front-end exposed functions: api/frontEndExposedFunctions.md
-          - UIapi: api/UIapi.md
     - About:
           - About: about/index.md

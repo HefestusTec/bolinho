@@ -34,7 +34,6 @@ def prompt_user(
 
 def success_alert(text: str):
     """Show a success alert to the user with some 'text'"""
-
     eel.toastSuccessJS(text)
 
 
