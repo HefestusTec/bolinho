@@ -19,35 +19,14 @@ import React from "react";
 import styleModule from "./customCheckbox.module.css";
 
 function CustomCheckbox({
-    preIcon,
-    postIcon,
-    color,
-    iconSize,
     children,
     className,
     buttonKey,
     clickCallBack,
+    checked,
 }) {
-    const buttonStyle = { "--font_color": color };
-    const iconStyle = {
-        color: color ? color : "#000000",
-        width: iconSize ? iconSize : "1em",
-        height: iconSize ? iconSize : "1em",
-        verticalAlign: "middle",
-    };
-
-    const createPreIcon = () => {
-        if (preIcon) return <preIcon.type style={iconStyle} />;
-        return;
-    };
-
-    const createPostIcon = () => {
-        if (postIcon) return <postIcon.type style={iconStyle} />;
-        return;
-    };
-
     const getClassName = () => {
-        return [className, styleModule.custom_button].join(" ");
+        return [className, styleModule.custom_checkbox_div].join(" ");
     };
 
     const clicked = () => {
@@ -57,13 +36,12 @@ function CustomCheckbox({
     };
 
     return (
-        <button
-            className={getClassName()}
-            style={buttonStyle}
-            onClick={clicked}
-        >
-            {createPreIcon()} {children} {createPostIcon()}
-        </button>
+        <div className={getClassName()}>
+            <button className={styleModule.custom_button} onClick={clicked}>
+                {children}
+            </button>
+            <input type="checkbox" checked={checked} onChange={clicked} />
+        </div>
     );
 }
 

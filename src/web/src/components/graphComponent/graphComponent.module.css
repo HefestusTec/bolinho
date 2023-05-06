@@ -19,97 +19,97 @@
 @import url(../../variables.css);
 
 .graph_component {
-	height: stretch;
-	background: var(--background_color);
-	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-	border-radius: clamp(2px, 3vh, 20px);
-	right: 0px;
-	display: flex;
-	overflow: hidden;
+    height: stretch;
+    background: var(--background_color);
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: clamp(2px, 3vh, 20px);
+    right: 0px;
+    display: flex;
+    overflow: hidden;
 }
 
 .graph_area {
-	height: 100%;
-	width: 100%;
-	position: relative;
+    height: 100%;
+    width: 100%;
+    position: relative;
 
-	transition-duration: var(--graph_animation);
+    transition-duration: var(--animation_slow);
 }
 
 .graph_area_mini {
-	width: 80%;
+    width: 80%;
 }
 
 .chart_component_div {
-	padding-left: 1vw;
-	padding-right: 1vw;
-	height: 90%;
-	width: stretch;
+    padding-left: 1vw;
+    padding-right: 1vw;
+    height: 90%;
+    width: stretch;
 }
 .side_bar_button_div {
-	height: 2vw;
-	width: 2vw;
-	position: absolute;
-	right: clamp(10px, 0.1vw, 20px);
-	top: clamp(5px, 0.1vh, 20px);
+    height: 2vw;
+    width: 2vw;
+    position: absolute;
+    right: clamp(10px, 0.1vw, 20px);
+    top: clamp(5px, 0.1vh, 20px);
 }
 .open_side_bar_button {
-	padding: 0;
-	height: clamp(20px, 2vw, 50px);
-	width: clamp(20px, 2vw, 50px);
-	background: none;
-	background-repeat: no-repeat;
-	background-position: center;
-	background-size: 80%;
-	transition-duration: var(--animation_fast);
+    padding: 0;
+    height: clamp(20px, 2vw, 50px);
+    width: clamp(20px, 2vw, 50px);
+    background: none;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 80%;
+    transition-duration: var(--animation_fast);
 }
 
 .open_side_bar_button:hover {
-	background-size: 90%;
+    background-size: 90%;
 }
 .open_side_bar_button:active {
-	background-size: 80%;
-	transform: translateY(0vh);
+    background-size: 80%;
+    transform: translateY(0vh);
 }
 .open_side_bar_button_active {
-	transition-duration: var(--animation_fast);
+    transition-duration: var(--animation_fast);
 
-	background-image: url(./resources/retractMenu.svg);
-	filter: invert(var(--invert_icon));
+    background-image: url(./resources/retractMenu.svg);
+    filter: invert(var(--invert_icon));
 }
 
 .open_side_bar_button_inactive {
-	transition-duration: var(--animation_fast);
-	background-image: url(./resources/expandMenu.svg);
-	filter: invert(var(--invert_icon));
+    transition-duration: var(--animation_fast);
+    background-image: url(./resources/expandMenu.svg);
+    filter: invert(var(--invert_icon));
 }
 
 .bottom_part {
-	display: flex;
-	justify-content: center;
-	padding-top: 1vh;
-	width: 100%;
+    display: flex;
+    justify-content: center;
+    padding-top: 1vh;
+    width: 100%;
 }
 
 .side_bar {
-	height: 100%;
-	width: 20%;
-	background-color: black;
+    height: 100%;
+    width: 20%;
+    background-color: black;
 }
 
 .side_bar_hidden {
-	animation-name: slide;
-	animation-duration: var(--graph_animation);
-	animation-fill-mode: forwards;
+    animation-name: slide;
+    animation-duration: var(--animation_slow);
+    animation-fill-mode: forwards;
 }
 @keyframes slide {
-	from {
-		width: 20%;
-	}
-	to {
-		width: 0px;
-	}
-	100% {
-		display: none;
-	}
+    from {
+        width: 20%;
+    }
+    to {
+        width: 0px;
+    }
+    100% {
+        display: none;
+    }
 }

@@ -6,7 +6,14 @@
  */
 @import url("../../../variables.css");
 
-.customCheckbox {
+.custom_checkbox_div {
+    width: stretch;
+    display: flex;
+    height: 7vh;
+    margin-bottom: 2vh;
+}
+
+.custom_button {
     color: var(--font_color);
     font-size: var(--font_m);
     font-weight: bold;
@@ -14,23 +21,23 @@
     display: inline;
     white-space: nowrap;
     overflow: hidden;
-    padding-left: 1%;
-    padding-right: 1%;
+    margin-left: 5%;
     border-radius: 2px;
     transition-duration: var(--animation_fast);
     border-width: 0px 0px 5px 0px;
-    border-radius: 0px 15px 15px 0px;
+    border-radius: 5px;
+    height: 100%;
+    width: stretch;
+    background-color: var(--content_background_color);
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
 
-.customCheckbox:hover {
+.custom_button:hover {
     background-color: var(--background_color);
-    width: 80%;
     cursor: pointer;
 
-    border-radius: 0px 15px 15px 0px;
     box-shadow: 0px 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
-.customCheckbox:active {
-    width: 80%;
+.custom_button:active {
     box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
 }

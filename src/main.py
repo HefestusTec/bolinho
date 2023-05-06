@@ -18,11 +18,10 @@
 # from os import system
 
 import eel
-import expose_db  # não remover
 from argparse import ArgumentParser
+import expose_db  # não remover
 
-import ui_api
-import bolinho_api
+from bolinho_api import core_api, ui_api
 
 parser = ArgumentParser()
 parser.add_argument(
@@ -64,9 +63,12 @@ def start_eel():
 
 
 def wait_for_connection():
+    """
+    Will stay in a infinite loop until connected to the front end
+    """
     while True:
         try:
-            if bolinho_api.ping():
+            if core_api.ping():
                 break
             pass
         except:
@@ -77,9 +79,9 @@ if __name__ == "__main__":
     # system("taskkill /im chrome.exe /f") # Podemos colocar isso para fechar o chrome antes de rodar o eel
     eel.spawn(start_eel)  # Inicializando eel em outro thread
 
-    # Will stay in a infinite loop until connected to the front end
     # You can only use front end functions after the connection
     wait_for_connection()
 
+    # infinite loop so it doesn't close the socket
     while True:
         eel.sleep(1)

@@ -15,55 +15,48 @@
 // You should have received a copy of the GNU General Public License
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
 
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 //import styleModule from "./configPage.module.css";
 
 import ZoomComponent from "../../zoomComponent/zoomComponent";
 import ContainerComponent from "../../containerComponent/containerComponent";
-//import GlobalConfigContext from "../../../contexts/globalConfigContext";
-import ButtonGroup from "../../customSubComponents/buttonGroup/buttonGroup";
-import CustomButton from "../../customSubComponents/customButton/customButton";
+import GlobalConfigContext from "../../../contexts/globalConfigContext";
 import CustomCheckbox from "../../customSubComponents/customCheckbox/customCheckbox";
 
 export default function AnimationSelector({ className, scaleOrigin }) {
-    //const [globalConfig, setGlobalConfig] = useContext(GlobalConfigContext);
+    const [globalConfig, setGlobalConfig] = useContext(GlobalConfigContext);
+    const [animationSpeed, setAnimationSpeed] = useState(
+        globalConfig.animationSpeed
+    );
 
-    const clickCallBack = (key) => {
-        console.log(key);
-        //setCurrentActive(key);
-        //setGlobalConfig({ ...globalConfig, theme: key });
+    const [animationSelector, setAnimationSelector] = useState(
+        animationSpeed === "slow" ? true : false
+    );
+
+    useEffect(() => {
+        setAnimationSelector(animationSpeed === "slow" ? true : false);
+    }, [animationSpeed]);
+
+    const clickCallBackUseAnimation = () => {
+        if (animationSpeed === "slow") {
+            setAnimationSpeed("off");
+            setGlobalConfig({ ...globalConfig, animationSpeed: "off" });
+            return;
+        }
+
+        setAnimationSpeed("slow");
+        setGlobalConfig({ ...globalConfig, animationSpeed: "slow" });
     };
 
     return (
         <ZoomComponent className={className} scaleOrigin={scaleOrigin}>
             <ContainerComponent headerText="Animações">
                 <CustomCheckbox
-                    key={"Usar animações"}
-                    buttonKey={"Usar animações"}
-                    color={"white"}
-                    iconSize="var(--font_s)"
-                    className=""
-                >
-                    Usar animações
-                </CustomCheckbox>
-                <CustomButton
-                    key={"Animar gráfico"}
-                    buttonKey={"Animar gráfico"}
-                    color={"white"}
-                    iconSize="var(--font_s)"
-                    className=""
-                >
-                    Animar gráfico
-                </CustomButton>
-                <CustomButton
-                    key={"Velocidade"}
-                    buttonKey={"Velocidade"}
-                    color={"white"}
-                    iconSize="var(--font_s)"
-                    className=""
+                    clickCallBack={clickCallBackUseAnimation}
+                    checked={animationSelector}
                 >
                     Velocidade
-                </CustomButton>
+                </CustomCheckbox>
             </ContainerComponent>
         </ZoomComponent>
     );

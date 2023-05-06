@@ -16,5 +16,5 @@
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
 
 // This file imports every api script
-import "./exp-bolinho-api";
+import "./exp-core-api";
 import "./exp-ui-api";
