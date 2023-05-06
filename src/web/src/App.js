@@ -26,7 +26,7 @@ try {
     toast.info("Iniciando base de dados de testes");
 }
 
-import("./exposedFunctionsJS");
+import("./api/linker");
 
 const getMaterialList = async () => {
     try {

@@ -37,35 +37,33 @@ export default function AnimationSelector({ className, scaleOrigin }) {
     return (
         <ZoomComponent className={className} scaleOrigin={scaleOrigin}>
             <ContainerComponent headerText="Animações">
-                <ButtonGroup clickCallBack={clickCallBack}>
-                    <CustomCheckbox
-                        key={"Usar animações"}
-                        buttonKey={"Usar animações"}
-                        color={"white"}
-                        iconSize="var(--font_s)"
-                        className=""
-                    >
-                        Usar animações
-                    </CustomCheckbox>
-                    <CustomButton
-                        key={"Animar gráfico"}
-                        buttonKey={"Animar gráfico"}
-                        color={"white"}
-                        iconSize="var(--font_s)"
-                        className=""
-                    >
-                        Animar gráfico
-                    </CustomButton>
-                    <CustomButton
-                        key={"Velocidade"}
-                        buttonKey={"Velocidade"}
-                        color={"white"}
-                        iconSize="var(--font_s)"
-                        className=""
-                    >
-                        Velocidade
-                    </CustomButton>
-                </ButtonGroup>
+                <CustomCheckbox
+                    key={"Usar animações"}
+                    buttonKey={"Usar animações"}
+                    color={"white"}
+                    iconSize="var(--font_s)"
+                    className=""
+                >
+                    Usar animações
+                </CustomCheckbox>
+                <CustomButton
+                    key={"Animar gráfico"}
+                    buttonKey={"Animar gráfico"}
+                    color={"white"}
+                    iconSize="var(--font_s)"
+                    className=""
+                >
+                    Animar gráfico
+                </CustomButton>
+                <CustomButton
+                    key={"Velocidade"}
+                    buttonKey={"Velocidade"}
+                    color={"white"}
+                    iconSize="var(--font_s)"
+                    className=""
+                >
+                    Velocidade
+                </CustomButton>
             </ContainerComponent>
         </ZoomComponent>
     );
