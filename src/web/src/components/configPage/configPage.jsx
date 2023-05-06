@@ -32,14 +32,6 @@ export default function ConfigPage() {
                 className={styleModule.animation_selector}
                 scaleOrigin="top right"
             />
-            <AnimationSelector
-                className={styleModule.animation_selector2}
-                scaleOrigin="bottom left"
-            />
-            <AnimationSelector
-                className={styleModule.animation_selector3}
-                scaleOrigin="bottom right"
-            />
         </React.Fragment>
     );
 }
