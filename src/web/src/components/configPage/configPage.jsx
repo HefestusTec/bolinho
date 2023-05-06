@@ -19,7 +19,7 @@ import React from "react";
 import styleModule from "./configPage.module.css";
 
 import ThemeSelector from "./themeSelector/themeSelector";
-import AnimationSelector from "./animationSelector/animationSelector";
+import VfxContainer from "./vfxContainer/vfxContainer";
 
 export default function ConfigPage() {
     return (
@@ -28,7 +28,7 @@ export default function ConfigPage() {
                 className={styleModule.theme_selector}
                 scaleOrigin="top left"
             />
-            <AnimationSelector
+            <VfxContainer
                 className={styleModule.animation_selector}
                 scaleOrigin="top right"
             />
