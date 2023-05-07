@@ -17,6 +17,7 @@
 import { createContext } from "react";
 
 export const globalConfigDefault = {
+    configVersion: 1, // Version number of the config file
     theme: "Claro", // Claro | Escuro
     animationSpeed: "slow", // fast | slow | off
     enableZoom: true, // Should zooming be enable?

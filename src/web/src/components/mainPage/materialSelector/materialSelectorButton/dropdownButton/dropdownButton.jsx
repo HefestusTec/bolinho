@@ -15,32 +15,14 @@
 // You should have received a copy of the GNU General Public License
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
 import React, { useState, useEffect, useContext } from "react";
-import { eel } from "../../../../../App";
 import styleModule from "./dropdownButton.module.css";
 import SelectedObjectsContext from "../../../contexts/selectedObjectsContext";
-import { getFormattedDate, getRandomColor } from "../../../../../helpers";
+import { getFormattedDate } from "../../../../../helpers";
 import { toast } from "react-toastify";
-const getExperimentDate = async (index) => {
-    try {
-        return JSON.parse(await eel.get_experiment_at(index)());
-    } catch (error) {
-        toast.error("Não foi possível acessar o backend");
-        return 0;
-    }
-};
-
-const getExperimentObjectList = async (id) => {
-    try {
-        const experimentObject = JSON.parse(
-            await eel.get_experiment_dict(id)()
-        );
-
-        return Object.assign(experimentObject, { color: getRandomColor() });
-    } catch (error) {
-        toast.error("Não foi possível acessar o backend");
-        return {};
-    }
-};
+import {
+    getExperimentDate,
+    getExperimentObjectList,
+} from "../../../../../api/backend-api";
 
 export default function DropdownButton({ experimentIndex }) {
     const [objectList, setObjectList] = useContext(SelectedObjectsContext);

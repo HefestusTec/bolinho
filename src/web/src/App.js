@@ -4,52 +4,61 @@ import { useState, useEffect } from "react";
 import SideBar from "./components/sideBar/sideBar";
 import MainPage from "./components/mainPage/mainPage";
 //import FpsMeter from "./components/fpsMeter/fpsMeter";
-import { ToastContainer, toast, Zoom } from "react-toastify";
+import { ToastContainer, Zoom } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import SubPage from "./components/subPage/subPage";
 
-// Fake database for static pages
-import { fakeEel } from "./staticDB";
+import {
+    getMaterialList,
+    saveConfigParams,
+    loadConfigParams,
+} from "./api/backend-api";
 
 import GlobalConfigContext, {
     globalConfigDefault,
 } from "./contexts/globalConfigContext";
 
-export let eel = window.eel;
-try {
-    eel.set_host("ws://localhost:8080");
-    toast.success("Conexão estabelecida");
-} catch {
-    toast.error("Não foi possível conectar com o backend");
-    eel = new fakeEel(); // Loading a fake db
-    toast.info("Iniciando base de dados de testes");
-}
-
 import("./api/linker");
-
-const getMaterialList = async () => {
-    try {
-        const materialList = JSON.parse(await eel.get_material_list()());
-        return materialList;
-    } catch (error) {
-        return [];
-    }
-};
 
 function App() {
     const [globalConfig, setGlobalConfig] = useState(globalConfigDefault);
     const [materialList, setMaterialList] = useState([]);
+    const [initialized, setInitialized] = useState(false);
+
+    try {
+        function getConfigJS() {
+            return globalConfig;
+        }
+        window.eel.expose(getConfigJS, "getConfigJS");
+    } catch (error) {}
 
     const pageList = ["Início", "Calibrar", "Controlar", "Configurar", "Sobre"];
     // options "Início", "Calibrar", "Controlar", "Config.", "Sobre"
     const [currentPage, setCurrentPage] = useState("Início");
 
-    useEffect(() => {
+    // Runs only once
+    if (!initialized) {
         getMaterialList().then((response) => {
             setMaterialList(response);
         });
-    }, []);
+
+        // Loading the config params from the file
+        loadConfigParams().then((response) => {
+            if (response === 0) return;
+            if (response.configVersion >= globalConfig.configVersion) {
+                setGlobalConfig(response);
+                return;
+            }
+            saveConfigParams(globalConfig);
+        });
+        setInitialized(true);
+    }
+
+    // Updating the save file every time global config is changed
+    useEffect(() => {
+        saveConfigParams(globalConfig);
+    }, [globalConfig]);
 
     const createSubPages = () => {
         return pageList.map((item) => {

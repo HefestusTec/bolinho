@@ -14,15 +14,30 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
-
 import eel
+import json
+import os
+
+_CONFIG_PARAMS_PATH = "persist/configParams.json"
 
 
-def ping():
-    """Tries to ping the bolinho front-end, returns 1 if it worked"""
-    return eel.pingJS()()
+@eel.expose
+def load_config_params():
+    if not os.path.exists(_CONFIG_PARAMS_PATH):
+        return 0
+    with open(_CONFIG_PARAMS_PATH, "r") as open_file:
+        # Reading from json file
+        json_object = json.load(open_file)
+
+    return json_object
 
 
-def get_config_params():
-    """Returns a JSON with all the params of the config"""
-    return eel.getConfigJS()()
+@eel.expose
+def save_config_params(new_params):
+    os.makedirs(os.path.dirname(_CONFIG_PARAMS_PATH), exist_ok=True)
+    # Serializing json
+    json_object = json.dumps(new_params, indent=4)
+    # Writing to sample.json
+    with open(_CONFIG_PARAMS_PATH, "w") as outfile:
+        outfile.write(json_object)
+    print("saved")

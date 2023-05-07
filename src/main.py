@@ -19,7 +19,7 @@
 
 import eel
 from argparse import ArgumentParser
-import expose_db  # não remover
+import expose_db, exposed_core  # não remover
 
 from bolinho_api import core_api, ui_api
 
