@@ -63,13 +63,13 @@ export default function VfxContainer({ className, scaleOrigin }) {
                     clickCallBack={clickCallBackUseAnimation}
                     checked={animationSelector}
                 >
-                    Velocidade
+                    Animação
                 </CustomCheckbox>
                 <CustomCheckbox
                     clickCallBack={toggleBackgroundBlur}
                     checked={backgroundBlur}
                 >
-                    Desfoque de fundo
+                    Desfocar fundo
                 </CustomCheckbox>
             </ContainerComponent>
         </ZoomComponent>

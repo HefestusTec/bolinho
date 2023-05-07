@@ -20,6 +20,9 @@
     transition-duration: var(--animation_fast);
     border-width: 0px 0px 5px 0px;
     border-radius: 0px 15px 15px 0px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .custom_button:hover {
