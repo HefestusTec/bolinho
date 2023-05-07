@@ -22,206 +22,61 @@ This page gathers all the API calls that can be used by the front end.
 
 > Front end -> Backend
 
-## Manual Control
-
-### manual_control_head( dist )
-
-!!! quote ""
-    Sends a **solicitation** to move the experiment head, this movement can be positive or negative.
-
-    > If the solicitation is sent during a **automatic experiment** it will halt the experiment and wait for the restart command.
-    este irá ser interrompido, e aguardará o comando para reiniciar
-
-## Calibration
-
-### start_z_axis_calibration()
-
-!!! quote ""
-    Starts the calibration of the Z axis.
-
-### start_load_cell_calibration()
-
-!!! quote ""
-    Starts the calibration of the load cell.
-___
-
-## Experiment commands
-
-### start_auto_experiment()
-
-!!! quote ""
-    Starts an automatic experiment.
-
-### pause_experiment()
-
-!!! quote ""
-    Pauses the current experiment and awaits the user commands.
-
-
-### resume_experiment()
-
-!!! quote ""
-    Resumes the current experiment.
-
-### end_experiment()
-
-!!! quote ""
-    Finishes the current experiment.
-
-
-## Pre-experiment params
-
-### get_auto_stop_params()
-
-!!! quote ""
-    Returns the [`autoStopParams`](./dataTypes.md#autostopparams) from the machine.
-
-    ``` js
-    let myStopParams = eel.get_auto_stop_params();
-    ```
-
-### set_auto_stop_params()
-
-!!! quote ""
-    Sets the equipments [`autoStopParams`](./dataTypes.md#autostopparams).
-
-    ``` js
-    const autoStopParams = {
-        forceLossLimit: 20, // If theres a loss of force greater than 20% the experiment will be halted
-        maxForce: 10000,    // Maximum force limit in Newtons
-        maxTravel: 100,     // Maximum travel in mm
-        maxTime: 600        // Maximum experiment time in seconds
-    };
-
-    eel.set_auto_stop_params(autoStopParams);
-    ```
-
-### set_experiment_settings( settings )
-
-!!! quote ""
-    Sets the [`experimentSettings`](./dataTypes.md#experimentparams).
-
-    ``` js
-    const experimentSettings = {
-        compress: true, // (Should the experiment head move up or down?) true = compressing | false = expanding
-        zAxisSpeed: 5,  // Z axis speed during the experiment in mm/s 
-    };
-
-    eel.set_experiment_settings(experimentSettings);
-    ```
-
-### set_experiment_body_params( experiment_body_params )
-
-!!! quote ""
-    Sets the [`ExperimentBodyParams`](./dataTypes.md#bodyparams);
-    
-    ``` js
-    const experimentBodyParams = new ExperimentBodyParams();
-
-    eel.set_experiment_body_params(experimentBodyParams);
-    ```
-___
-
-## Experiment Data
-
-### get_experiment_data( experiment_index )
-
-!!! quote ""
-    Returns an `array` of [`DataPoint`](./dataTypes.md#datapoint) from an experiment.
-
-    ``` js
-    experimentData = await eel.get_experiment_data(2);
-    ```
-    
-### get_new_experiment_data( experiment_index, data_index )
-
-!!! quote ""
-    Returns an `array` of [`DataPoint`](./dataTypes.md#datapoint) from an experiment from an `data_index` onwards.
-
-    This method is used to fetch new data points, without needing to update the already received data.
-
-    ``` js
-    newData = await eel.get_new_experiment_data(2, 354);
-    ```
-
-___
-
-## Equipment Params
-
-### get_calibration_params()
-
-!!! quote ""
-    Get the calibration params.
-    ``` js
-    calibrationParams = await eel.get_calibration_params();
-    ```
-
-### get_equipment_params()
-
-!!! quote ""
-    Get the equipment params.
-    ``` js
-    calibrationParams = await eel.get_calibration_params();
-    ```
-
-### set_equipment_params()
-
-!!! quote ""
-    Set the equipment params.
-    ``` js
-    eel.set_equipment_params( myEquipmentParams );
-    ```
-___
-
-## Manipulating the data base
-
-### get_material_data( material_index )
-
-!!! quote ""
-    Gets the [`MaterialData`](./dataTypes.md#material) of a material, returns `NULL` if the index doesn't exists.
-    
-    ``` js
-    materialDataAtIndex = await eel.get_material_data(2);
-    ```
-
-### set_material_data( material, material_index )
-
-!!! quote ""
-    Sets the [`MaterialData`](./dataTypes.md#material) of a material is a specific index.
-
-    ``` js
-    materialData = new MaterialData()
-
-    eel.set_material_data(materialData);
-    ```
-
-### get_material_list( filter )
-
-!!! quote ""
-    Finds and returns a `list` of [`MaterialData`](./dataTypes.md#material) that can be filtered.
-
-    You can pass a `filter` to make a filtered search.
-
-    Returns `NULL` if theres no material that matches the filter.
-
-    ``` js
-    materialsList = await eel.get_material_list(name="Madeira");
-    ```
-
 ## Global configuration
 
-### save_global_config( JSON )
-
+### `#!javaScript saveConfigParams(configParams)`:
 !!! quote ""
-    Use this method to pass a JSON to the back-end, so it can be saved on the machine.
-    ``` js
-    eel.save_global_config(myGlobalConfigJSON);
+
+    Saves the config parameters to the persistent file
+
+    ``` javaScript title="React usage example"
+    import { saveConfigParams } from "./api/backend-api";
+    
+    saveConfigParams(globalConfig);
     ```
 
-### load_global_config()
-
+### `#!javaScript loadConfigParams()`:
 !!! quote ""
-    Use this method to load the global config from the machine
-    ``` js
-    globalConfigurations = await eel.load_global_config();
+
+    Loads the config parameters from the persistent file
+
+    ``` javaScript title="React usage example"
+    import { loadConfigParams } from "./api/backend-api";
+    
+    globalConfig = loadConfigParams();
+    ```
+
+## Data base
+
+### `#!javaScript getMaterialList()`:
+!!! quote ""
+
+    **TODO**
+    
+    ``` javaScript title="React usage example"
+    import { getMaterialList } from "./api/backend-api";
+    
+    globalConfig = getMaterialList();
+    ```
+
+### `#!javaScript getExperimentDate()`:
+!!! quote ""
+
+    **TODO**
+    
+    ``` javaScript title="React usage example"
+    import { getExperimentDate } from "./api/backend-api";
+    
+    globalConfig = getExperimentDate();
+    ```
+
+### `#!javaScript getExperimentObjectList()`:
+!!! quote ""
+
+    **TODO**
+    
+    ``` javaScript title="React usage example"
+    import { getExperimentObjectList } from "./api/backend-api";
+    
+    globalConfig = getExperimentObjectList();
     ```

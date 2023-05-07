@@ -3,5 +3,5 @@ site/
 .prettierignore
 *.spec
 node_modules/
-
+src/persist
 src/build

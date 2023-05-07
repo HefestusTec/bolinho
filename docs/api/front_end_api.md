@@ -22,17 +22,18 @@ This page gathers all the API calls that can be used by the backend.
 
 > Backend -> Front end
 
-## Core API
-
-Collection of all functions/API calls available to the backend. You can find them in the `core_api.py` folder.
-
-The JavaScript file can be found in the api folder.
-
 !!! warning
     The functions can only be called if they are available on the `web/build` directory, therefore if you make a change using `npm run serve` won't show it, you will need to rebuild the front end with `npm run buildWeb` or by using `npm run start`.
 
 !!! note
     These functions can only be called after eel is initiated with `eel.init()`.
+
+
+## Core API
+
+Collection of all functions/API calls available to the backend. You can find them in the `core_api.py` folder.
+
+The JavaScript file can be found in the api folder.
 
 ### `#!python def ping()`:
 !!! quote ""
@@ -40,11 +41,11 @@ The JavaScript file can be found in the api folder.
     Tries to ping the bolinho front-end, returns 1 if it worked
 
     ``` python title="Python usage example"
-    import bolinho_api
+    from bolinho_api import core_api
 
     while True:
         try:
-            if bolinho_api.ping():
+            if core_api.ping():
                 print("got a ping!")
                 break
             pass
@@ -52,6 +53,18 @@ The JavaScript file can be found in the api folder.
             eel.sleep(1)
     ```
 
+### `#!python def get_config_params()`:
+!!! quote ""
+
+    Tries to ping the bolinho front-end, returns 1 if it worked
+
+    ``` python title="Python usage example"
+    from bolinho_api import core_api
+    
+    config = core_api.get_config_params()
+    current_save_version = config["configVersion"]
+    print(current_save_version)
+    ```
 
 ## UI API
 
@@ -59,22 +72,15 @@ Collection of all functions/API calls available to the backend for UI in general
 
 The JavaScript file can be found in the api folder.
 
-
-!!! warning
-    The functions can only be called if they are available on the `web/build` directory, therefore if you make a change using `npm run serve` won't show it, you will need to rebuild the front end with `npm run buildWeb` or by using `npm run start`.
-
-!!! note
-    These functions can only be called after eel is initiated with `eel.init()`.
-
 ### `#!python def success_alert(text)`:
 !!! quote ""
 
     Uses [React-Toastify](https://github.com/fkhadra/react-toastify) to create an success alert.
 
     ``` python title="Python usage example"
-    import UIapi
+    from bolinho_api import ui_api
 
-    UIapi.success_alert("Success!")
+    ui_api.success_alert("Success!")
     ```
 
 ### `#!python def error_alert(text)`:
@@ -83,7 +89,7 @@ The JavaScript file can be found in the api folder.
     Uses [React-Toastify](https://github.com/fkhadra/react-toastify) to create an error alert.
 
     ``` python title="Python usage example"
-    import UIapi
+    from bolinho_api import ui_api
 
     UIapi.error_alert("Error!")
     ```
@@ -95,7 +101,7 @@ The JavaScript file can be found in the api folder.
     The result is passed to the callback_function
 
     ``` python title="Python usage example"
-    import UIapi
+    from bolinho_api import ui_api
 
     def get_result(result):
         if result == "yes":
