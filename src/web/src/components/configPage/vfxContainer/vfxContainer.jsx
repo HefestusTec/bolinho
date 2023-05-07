@@ -22,6 +22,7 @@ import ZoomComponent from "../../zoomComponent/zoomComponent";
 import ContainerComponent from "../../containerComponent/containerComponent";
 import GlobalConfigContext from "../../../contexts/globalConfigContext";
 import CustomCheckbox from "../../customSubComponents/customCheckbox/customCheckbox";
+import CustomListSelector from "../../customSubComponents/customListSelector/customListSelector";
 
 export default function VfxContainer({ className, scaleOrigin }) {
     const [globalConfig, setGlobalConfig] = useContext(GlobalConfigContext);
@@ -56,6 +57,10 @@ export default function VfxContainer({ className, scaleOrigin }) {
         setGlobalConfig({ ...globalConfig, animationSpeed: "slow" });
     };
 
+    const animationListCallback = (key) => {
+        alert(key);
+    };
+
     return (
         <ZoomComponent className={className} scaleOrigin={scaleOrigin}>
             <ContainerComponent headerText="Efeitos visuais">
@@ -71,6 +76,12 @@ export default function VfxContainer({ className, scaleOrigin }) {
                 >
                     Desfocar fundo
                 </CustomCheckbox>
+                <CustomListSelector
+                    keys={["Desligado", "Lento", "Rápido"]}
+                    clickCallBack={animationListCallback}
+                >
+                    Animação
+                </CustomListSelector>
             </ContainerComponent>
         </ZoomComponent>
     );
