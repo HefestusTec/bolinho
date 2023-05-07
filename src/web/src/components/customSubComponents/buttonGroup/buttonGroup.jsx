@@ -17,10 +17,11 @@
 
 import React from "react";
 import styleModule from "./buttonGroup.module.css";
+import ButtonSingle from "./buttonSingle/buttonSingle";
 
 function ButtonGroup({
-    children,
-    currentActive = "",
+    currentActive = "1",
+    options = ["1", "2"],
     setCurrentActive,
     activeColor = "",
     inactiveColor = "",
@@ -34,14 +35,10 @@ function ButtonGroup({
         "--divider_color": dividerColor,
     };
 
-    const getClassName = (element) => {
-        if (element.key === currentActive)
-            return [
-                element.props.className,
-                styleModule.button_active,
-                styleModule.button,
-            ].join(" ");
-        return [element.props.className, styleModule.button].join(" ");
+    const getClassName = (key) => {
+        if (key === currentActive)
+            return [styleModule.button_active, styleModule.button].join(" ");
+        return styleModule.button;
     };
 
     const iWasClicked = (key) => {
@@ -53,25 +50,16 @@ function ButtonGroup({
     };
 
     const makeButtons = () => {
-        if (children === undefined) return;
-        if (!Array.isArray(children)) {
+        const buttonsArr = options.map((optionName) => {
             return (
-                <children.type
-                    {...children.props}
-                    className={getClassName(children)}
-                />
-            );
-        }
-
-        const buttonsArr = children.map((child, index) => {
-            return (
-                <child.type
-                    buttonKey={child.key}
-                    {...child.props}
+                <ButtonSingle
+                    buttonKey={optionName}
                     color={" "} // Do not remove this LOC
-                    className={getClassName(child)}
+                    className={getClassName(optionName)}
                     clickCallBack={iWasClicked}
-                />
+                >
+                    {optionName}
+                </ButtonSingle>
             );
         });
         return buttonsArr;

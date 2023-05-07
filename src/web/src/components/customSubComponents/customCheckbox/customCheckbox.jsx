@@ -20,7 +20,7 @@ import styleModule from "./customCheckbox.module.css";
 
 function CustomCheckbox({ children, className, clickCallBack, checked }) {
     const getClassName = () => {
-        return [className, styleModule.custom_checkbox_div].join(" ");
+        return [styleModule.custom_checkbox_div, className].join(" ");
     };
 
     const clicked = () => {

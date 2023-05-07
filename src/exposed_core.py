@@ -41,7 +41,6 @@ def save_config_params(new_params):
     # Writing to sample.json
     with open(_CONFIG_PARAMS_PATH, "w") as outfile:
         outfile.write(json_object)
-    print("saved")
 
 
 @eel.expose
