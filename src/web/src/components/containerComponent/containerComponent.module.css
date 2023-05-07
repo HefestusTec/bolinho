@@ -41,7 +41,7 @@
 .container_content {
     height: stretch;
     background-color: var(--background_color);
-    padding-right: 10%;
+    padding-right: 4%;
     border-radius: 15px 15px 0 0;
     flex-direction: column;
     overflow-y: scroll;

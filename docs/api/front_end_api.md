@@ -22,9 +22,9 @@ This page gathers all the API calls that can be used by the backend.
 
 > Backend -> Front end
 
-## Bolinho API
+## Core API
 
-Collection of all functions/API calls available to the backend. You can find them in the `bolinho_api.py` folder.
+Collection of all functions/API calls available to the backend. You can find them in the `core_api.py` folder.
 
 The JavaScript file can be found in the api folder.
 

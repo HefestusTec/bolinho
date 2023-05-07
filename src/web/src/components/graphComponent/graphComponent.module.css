@@ -66,6 +66,7 @@
 
 .open_side_bar_button:hover {
     background-size: 90%;
+    cursor: pointer;
 }
 .open_side_bar_button:active {
     background-size: 80%;

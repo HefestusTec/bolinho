@@ -18,20 +18,14 @@
 import React from "react";
 import styleModule from "./customCheckbox.module.css";
 
-function CustomCheckbox({
-    children,
-    className,
-    buttonKey,
-    clickCallBack,
-    checked,
-}) {
+function CustomCheckbox({ children, className, clickCallBack, checked }) {
     const getClassName = () => {
         return [className, styleModule.custom_checkbox_div].join(" ");
     };
 
     const clicked = () => {
         if (clickCallBack !== undefined) {
-            clickCallBack(buttonKey);
+            clickCallBack();
         }
     };
 
@@ -40,6 +34,7 @@ function CustomCheckbox({
             <button className={styleModule.custom_button} onClick={clicked}>
                 {children}
             </button>
+
             <input type="checkbox" checked={checked} onChange={clicked} />
         </div>
     );

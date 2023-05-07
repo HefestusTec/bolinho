@@ -23,15 +23,23 @@ import ContainerComponent from "../../containerComponent/containerComponent";
 import GlobalConfigContext from "../../../contexts/globalConfigContext";
 import CustomCheckbox from "../../customSubComponents/customCheckbox/customCheckbox";
 
-export default function AnimationSelector({ className, scaleOrigin }) {
+export default function VfxContainer({ className, scaleOrigin }) {
     const [globalConfig, setGlobalConfig] = useContext(GlobalConfigContext);
     const [animationSpeed, setAnimationSpeed] = useState(
         globalConfig.animationSpeed
+    );
+    const [backgroundBlur, setBackgroundBlur] = useState(
+        globalConfig.backgroundBlur
     );
 
     const [animationSelector, setAnimationSelector] = useState(
         animationSpeed === "slow" ? true : false
     );
+
+    const toggleBackgroundBlur = () => {
+        setBackgroundBlur(!backgroundBlur);
+        setGlobalConfig({ ...globalConfig, backgroundBlur: !backgroundBlur });
+    };
 
     useEffect(() => {
         setAnimationSelector(animationSpeed === "slow" ? true : false);
@@ -50,12 +58,18 @@ export default function AnimationSelector({ className, scaleOrigin }) {
 
     return (
         <ZoomComponent className={className} scaleOrigin={scaleOrigin}>
-            <ContainerComponent headerText="Animações">
+            <ContainerComponent headerText="Efeitos visuais">
                 <CustomCheckbox
                     clickCallBack={clickCallBackUseAnimation}
                     checked={animationSelector}
                 >
-                    Velocidade
+                    Animação
+                </CustomCheckbox>
+                <CustomCheckbox
+                    clickCallBack={toggleBackgroundBlur}
+                    checked={backgroundBlur}
+                >
+                    Desfocar fundo
                 </CustomCheckbox>
             </ContainerComponent>
         </ZoomComponent>
