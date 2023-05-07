@@ -16,9 +16,9 @@
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
 
 import React from "react";
-import styleModule from "./customButton.module.css";
+import styleModule from "./buttonSingle.module.css";
 
-function CustomButton({
+function ButtonSingle({
     preIcon,
     postIcon,
     color,
@@ -67,4 +67,4 @@ function CustomButton({
     );
 }
 
-export default CustomButton;
+export default ButtonSingle;

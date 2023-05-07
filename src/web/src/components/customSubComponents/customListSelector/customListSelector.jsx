@@ -17,7 +17,6 @@
 
 import React, { useState } from "react";
 import styleModule from "./customListSelector.module.css";
-import CustomButton from "../customButton/customButton";
 
 function CustomListSelector({
     children,

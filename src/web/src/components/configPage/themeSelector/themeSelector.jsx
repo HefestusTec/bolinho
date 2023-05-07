@@ -22,11 +22,12 @@ import ZoomComponent from "../../zoomComponent/zoomComponent";
 import ContainerComponent from "../../containerComponent/containerComponent";
 import GlobalConfigContext from "../../../contexts/globalConfigContext";
 import ButtonGroup from "../../customSubComponents/buttonGroup/buttonGroup";
-import CustomButton from "../../customSubComponents/customButton/customButton";
 
 export default function ThemeSelector({ className, scaleOrigin }) {
     const [globalConfig, setGlobalConfig] = useContext(GlobalConfigContext);
     const [currentActive, setCurrentActive] = useState(globalConfig.theme);
+
+    const themes = ["Claro", "Escuro", "PlaceHolder"];
 
     const clickCallBack = (key) => {
         setCurrentActive(key);
@@ -39,45 +40,8 @@ export default function ThemeSelector({ className, scaleOrigin }) {
                 <ButtonGroup
                     currentActive={currentActive}
                     clickCallBack={clickCallBack}
-                >
-                    <CustomButton
-                        key={"Claro"}
-                        buttonKey={"Claro"}
-                        color={"white"}
-                        iconSize="var(--font_s)"
-                        className=""
-                    >
-                        Claro
-                    </CustomButton>
-                    <CustomButton
-                        key={"Escuro"}
-                        buttonKey={"Escuro"}
-                        color={"white"}
-                        iconSize="var(--font_s)"
-                        className=""
-                    >
-                        Escuro
-                    </CustomButton>
-                    <CustomButton
-                        key={"PlaceHolder"}
-                        buttonKey={"PlaceHolder"}
-                        color={"white"}
-                        iconSize="var(--font_s)"
-                        className=""
-                    >
-                        PlaceHolder
-                    </CustomButton>
-
-                    <CustomButton
-                        key={"PlaceHolder2"}
-                        buttonKey={"PlaceHolder2"}
-                        color={"white"}
-                        iconSize="var(--font_s)"
-                        className=""
-                    >
-                        PlaceHolder2
-                    </CustomButton>
-                </ButtonGroup>
+                    options={themes}
+                ></ButtonGroup>
             </ContainerComponent>
         </ZoomComponent>
     );
