@@ -79,3 +79,12 @@ export const getExperimentObjectList = async (id) => {
         return {};
     }
 };
+
+export const startExperimentRoutineJS = async () => {
+    try {
+        return await eel.start_experiment_routine()();
+    } catch (error) {
+        toast.error("Não foi possível acessar o backend");
+        return 0;
+    }
+};

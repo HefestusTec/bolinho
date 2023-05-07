@@ -17,6 +17,7 @@
 import eel
 import json
 import os
+from bolinho_api import core_api
 
 _CONFIG_PARAMS_PATH = "persist/configParams.json"
 
@@ -41,3 +42,16 @@ def save_config_params(new_params):
     with open(_CONFIG_PARAMS_PATH, "w") as outfile:
         outfile.write(json_object)
     print("saved")
+
+
+@eel.expose
+def start_experiment_routine():
+    """
+    The front end will call this function when the user click to start experiment.
+
+    The back end **MUST** send a command to change to the experiment page.
+
+    Returns 1 if succeeded.
+    """
+    core_api.go_to_experiment_page()
+    return 1
