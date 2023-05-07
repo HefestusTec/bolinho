@@ -17,12 +17,14 @@
 
 import React, { useState } from "react";
 import styleModule from "./customListSelector.module.css";
+import CustomButton from "../customButton/customButton";
 
 function CustomListSelector({
     children,
     className,
     clickCallBack,
     keys = ["default 1", "default 2"],
+    selected = "",
 }) {
     const [dropdownIsOpen, setDropdownIsOpen] = useState(false);
 
@@ -34,17 +36,17 @@ function CustomListSelector({
         setDropdownIsOpen(!dropdownIsOpen);
     };
     const dropDownButtonClicked = (key) => {
-        console.log(key);
+        clickCallBack(key);
+        setDropdownIsOpen(false);
     };
     const makeDropdownButtons = () => {
         const buttons = keys.map((name) => (
-            <button
-                key={name}
+            <CustomButton
+                clickCallBack={dropDownButtonClicked}
                 className={styleModule.dropdown_button}
-                onClick={dropDownButtonClicked}
             >
                 {name}
-            </button>
+            </CustomButton>
         ));
         return buttons;
     };
@@ -60,6 +62,16 @@ function CustomListSelector({
         return;
     };
 
+    const getExpandMenuIndicatorClassName = () => {
+        if (dropdownIsOpen) {
+            return [
+                styleModule.expand_menu_indicator_open,
+                styleModule.expand_menu_indicator,
+            ].join(" ");
+        }
+        return [styleModule.expand_menu_indicator].join(" ");
+    };
+
     return (
         <div className={getClassName()}>
             <button
@@ -67,7 +79,10 @@ function CustomListSelector({
                 onClick={clicked}
             >
                 <div className={styleModule.button_name}>{children}</div>
-                <div className={styleModule.selected_div}>Lento</div>
+                <div className={styleModule.selected_div}>
+                    {selected}&nbsp;
+                    <div className={getExpandMenuIndicatorClassName()} />
+                </div>
             </button>
             {makeDropdown()}
         </div>

@@ -14,18 +14,24 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
-import { createContext } from "react";
 
-export const globalConfigDefault = {
-    configVersion: 1, // Version number of the config file
-    theme: "Claro", // Claro | Escuro
-    animationSpeed: "Lento", // Rápido | Lento | Desligado
-    enableZoom: true, // Should zooming be enable?
-    zoomDelay: 500, // How long [ms] should I press to zoom
-    backgroundBlur: true, // Should it blur when zooming?
-    absoluteMaximumForce: 10000,
-};
+import React from "react";
+import styleModule from "./customButton.module.css";
 
-const GlobalConfigContext = createContext([globalConfigDefault, () => {}]);
+function CustomButton({ children, clickCallBack, className }) {
+    const getClassName = () => {
+        return [className, styleModule.custom_button].join(" ");
+    };
 
-export default GlobalConfigContext;
+    const clicked = () => {
+        clickCallBack(children);
+    };
+
+    return (
+        <button className={getClassName()} onClick={clicked}>
+            {children}
+        </button>
+    );
+}
+
+export default CustomButton;

@@ -96,15 +96,15 @@ html {
     --logo_schumacher: url(./components/sideBar/resources/LogoSchumacherDark.png);
 }
 
-[animation_speed="slow"] {
+[animation_speed="Lento"] {
     --animation_fast: 150ms;
     --animation_slow: 350ms;
 }
-[animation_speed="fast"] {
+[animation_speed="Rápido"] {
     --animation_fast: 50ms;
     --animation_slow: 150ms;
 }
-[animation_speed="off"] {
+[animation_speed="Desligado"] {
     --animation_fast: 0;
     --animation_slow: 0;
 }
