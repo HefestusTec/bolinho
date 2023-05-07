@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkweb=self.webpackChunkweb||[]).push([[532],{532:function(e,o,n){n.r(o),window.eel.expose((function(){return 1}),"pingJS"),window.eel.expose((function(){alert("Go to experiment")}),"goToExperimentPageJS");var t=n(85);window.eel.expose((function(e){t.Am.error(e)}),"toastErrorJS"),window.eel.expose((function(e){t.Am.success(e)}),"toastSuccessJS"),window.eel.expose((function(e,o){return console.log(e,o),prompt(e)}),"promptUserJS")}}]);
+//# sourceMappingURL=532.3309c4fd.chunk.js.map

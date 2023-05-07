@@ -26,3 +26,12 @@ def ping():
 def get_config_params():
     """Returns a JSON with all the params of the config"""
     return eel.getConfigJS()()
+
+
+def go_to_experiment_page():
+    """
+    Asks the front end to go to the experiment page.
+
+    Returns 1 if succeeded.
+    """
+    return eel.goToExperimentPageJS()()

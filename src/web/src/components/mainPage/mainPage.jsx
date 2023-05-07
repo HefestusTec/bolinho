@@ -18,11 +18,12 @@
 import React, { useState } from "react";
 import GraphComponent from "../graphComponent/graphComponent";
 import MaterialSelector from "./materialSelector/materialSelector";
-//import { eel } from "../../App";
 import styleModule from "./mainPage.module.css";
 import ExperimentsInspector from "./experimentsInspector/experimentsInspector";
 import ExtraOptions from "./extraOptions/extraOptions";
 import ZoomComponent from "../zoomComponent/zoomComponent";
+
+import { startExperimentRoutineJS } from "../../api/backend-api";
 
 //import GlobalConfigContext from "../../contexts/globalConfigContext";
 import SelectedObjectsContext from "./contexts/selectedObjectsContext";
@@ -63,7 +64,10 @@ export default function MainPage({ materialList }) {
                     <ExtraOptions />
                 </ZoomComponent>
                 <div className={styleModule.ensaio_button_div}>
-                    <button className={styleModule.ensaio_button}>
+                    <button
+                        className={styleModule.ensaio_button}
+                        onClick={startExperimentRoutineJS}
+                    >
                         ENSAIO
                     </button>
                 </div>

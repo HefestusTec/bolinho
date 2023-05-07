@@ -16,7 +16,13 @@
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
 
 export function pingJS() {
-    // Ping function, returns 1 if the connection was successfull
+    // Ping function, returns 1 if the connection was successful
     return 1;
 }
 window.eel.expose(pingJS, "pingJS");
+
+export function goToExperimentPageJS() {
+    // Routs to the experiment page, returns 1 if it was successful
+    alert("Go to experiment");
+}
+window.eel.expose(goToExperimentPageJS, "goToExperimentPageJS");

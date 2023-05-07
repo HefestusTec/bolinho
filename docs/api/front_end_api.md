@@ -55,7 +55,8 @@ The JavaScript file can be found in the api folder.
 
 ### `#!python def get_config_params()`:
 !!! quote ""
-
+    
+    
     Tries to ping the bolinho front-end, returns 1 if it worked
 
     ``` python title="Python usage example"
@@ -65,6 +66,24 @@ The JavaScript file can be found in the api folder.
     current_save_version = config["configVersion"]
     print(current_save_version)
     ```
+    > This function is located at `src/web/src/App.js`
+
+
+### `#!python def go_to_experiment_page()`:
+!!! quote ""
+
+    Asks the front end to go to the experiment page.
+
+    Returns 1 if succeeded.
+
+    ``` python title="Python usage example"
+    from bolinho_api import core_api
+
+    change_pages = True
+    if change_pages:
+        core_api.go_to_experiment_page()
+    ```
+
 
 ## UI API
 

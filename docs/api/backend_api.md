@@ -80,3 +80,20 @@ This page gathers all the API calls that can be used by the front end.
     
     globalConfig = getExperimentObjectList();
     ```
+
+
+
+## Core
+
+### `#!javaScript startExperimentRoutineJS()`:
+!!! quote ""
+
+    **TODO**
+    
+    ``` javaScript title="React usage example"
+    import { getMaterialList } from "./api/backend-api";
+    
+    onClick(()=>{
+        startExperimentRoutineJS();
+    };)
+    ```
