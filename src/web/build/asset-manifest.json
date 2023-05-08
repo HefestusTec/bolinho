@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "./static/css/main.d6339f78.css",
-    "main.js": "./static/js/main.07699656.js",
+    "main.css": "./static/css/main.dfe2ccb1.css",
+    "main.js": "./static/js/main.b11fb96a.js",
     "static/js/532.3309c4fd.chunk.js": "./static/js/532.3309c4fd.chunk.js",
     "static/js/787.d1d4a2c2.chunk.js": "./static/js/787.d1d4a2c2.chunk.js",
     "static/media/LogoBolinho512.png": "./static/media/LogoBolinho512.9671d4415561a3fce323.png",
@@ -29,13 +29,13 @@
     "static/media/expandMenu.svg": "./static/media/expandMenu.3cd61fa06c3d429eb648.svg",
     "static/media/openMenu.svg": "./static/media/openMenu.94f32a20eba8255a5d65.svg",
     "static/media/retractMenu.svg": "./static/media/retractMenu.27d97b28abb46171133c.svg",
-    "main.d6339f78.css.map": "./static/css/main.d6339f78.css.map",
-    "main.07699656.js.map": "./static/js/main.07699656.js.map",
+    "main.dfe2ccb1.css.map": "./static/css/main.dfe2ccb1.css.map",
+    "main.b11fb96a.js.map": "./static/js/main.b11fb96a.js.map",
     "532.3309c4fd.chunk.js.map": "./static/js/532.3309c4fd.chunk.js.map",
     "787.d1d4a2c2.chunk.js.map": "./static/js/787.d1d4a2c2.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.d6339f78.css",
-    "static/js/main.07699656.js"
+    "static/css/main.dfe2ccb1.css",
+    "static/js/main.b11fb96a.js"
   ]
 }
