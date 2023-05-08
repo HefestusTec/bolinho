@@ -95,6 +95,22 @@ html {
     --active_color: #1797f85c;
     --logo_schumacher: url(./components/sideBar/resources/LogoSchumacherDark.png);
 }
+[data_theme="Meia Noite"] {
+    --background_color: #050505;
+    --primary_color: #0e0e0e;
+    --primary_color_shader: #000000;
+    --secondary_color: #161616;
+    --button_active_color: #181818;
+    --button_inactive_color: #0a0a0a;
+    --background2_color: #000000;
+    --content_background_color: #0a0a0a;
+    --font_color: #ffffff;
+    --font_color_inverted: #ffffff;
+    --invert_icon: 100%;
+    --positive_button_color: #101dc9;
+    --active_color: #1797f85c;
+    --logo_schumacher: url(./components/sideBar/resources/LogoSchumacherDark.png);
+}
 
 [animation_speed="Lento"] {
     --animation_fast: 150ms;

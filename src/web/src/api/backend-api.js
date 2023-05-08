@@ -35,7 +35,7 @@ export const saveConfigParams = (configParams) => {
     try {
         eel.save_config_params(configParams)();
     } catch (error) {
-        toast.error("Não foi possível acessar o backend");
+        toast.error("Não foi possível salvar as mudanças");
         return 0;
     }
 };
@@ -44,7 +44,7 @@ export const loadConfigParams = async () => {
     try {
         return await eel.load_config_params()();
     } catch (error) {
-        toast.error("Não foi possível acessar o backend");
+        toast.error("Não foi possível carregar o arquivo de configuração");
         return 0;
     }
 };
@@ -62,7 +62,10 @@ export const getExperimentDate = async (index) => {
     try {
         return JSON.parse(await eel.get_experiment_at(index)());
     } catch (error) {
-        toast.error("Não foi possível acessar o backend");
+        toast.error(
+            "Não foi possível encontrar a data do experimento de índice ",
+            index
+        );
         return 0;
     }
 };
@@ -75,7 +78,10 @@ export const getExperimentObjectList = async (id) => {
 
         return Object.assign(experimentObject, { color: getRandomColor() });
     } catch (error) {
-        toast.error("Não foi possível acessar o backend");
+        toast.error(
+            "Não foi possível encontrar a lista de experimentos de índice ",
+            id
+        );
         return {};
     }
 };
@@ -84,7 +90,7 @@ export const startExperimentRoutineJS = async () => {
     try {
         return await eel.start_experiment_routine()();
     } catch (error) {
-        toast.error("Não foi possível acessar o backend");
+        toast.error("Não foi possível iniciar a rotina de ensaio");
         return 0;
     }
 };

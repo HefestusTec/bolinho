@@ -47,7 +47,7 @@
 .header_name {
     font-style: normal;
     font-weight: 700;
-    font-size: 3vw;
+    font-size: var(--font_xl);
     width: 100%;
     text-align: center;
     white-space: nowrap;

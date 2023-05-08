@@ -27,7 +27,7 @@ export default function ThemeSelector({ className, scaleOrigin }) {
     const [globalConfig, setGlobalConfig] = useContext(GlobalConfigContext);
     const [currentActive, setCurrentActive] = useState(globalConfig.theme);
 
-    const themes = ["Claro", "Escuro", "PlaceHolder"];
+    const themes = ["Claro", "Escuro", "Meia Noite"];
 
     const clickCallBack = (key) => {
         setCurrentActive(key);
