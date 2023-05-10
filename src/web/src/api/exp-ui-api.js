@@ -19,9 +19,13 @@ import { toast } from "react-toastify";
 export function toastErrorJS(msg) {
     toast.error(msg);
 }
-window.eel.expose(toastErrorJS, "toastErrorJS");
+try {
+    window.eel.expose(toastErrorJS, "toastErrorJS");
+} catch (error) {}
 
 export function toastSuccessJS(msg) {
     toast.success(msg);
 }
-window.eel.expose(toastSuccessJS, "toastSuccessJS");
+try {
+    window.eel.expose(toastSuccessJS, "toastSuccessJS");
+} catch (error) {}
