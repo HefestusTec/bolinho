@@ -98,9 +98,7 @@ function App() {
     } catch (error) {}
 
     const callPrompter = () => {
-        try {
-            promptUserJS("Descrição", ["sim", "não"]);
-        } catch (error) {}
+        promptUserJS("Descrição", ["sim", "não"]);
     };
 
     return (
