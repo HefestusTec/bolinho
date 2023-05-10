@@ -14,7 +14,7 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState, useEffect, Suspense } from "react";
 import ExperimentButton from "./experimentButton/experimentButton";
 import SelectedObjectsContext from "../contexts/selectedObjectsContext";
 import { ReactComponent as ColorIcon } from "./resources/colorSelectorIcon.svg";
@@ -228,9 +228,11 @@ export default function ExperimentsInspector() {
                             {makeButtons()}
                         </ul>
                     </div>
-                    <ExperimentDescription
-                        activeTriplet={activeTriplet}
-                    ></ExperimentDescription>
+                    <Suspense fallback={<div>Carregando...</div>}>
+                        <ExperimentDescription
+                            activeTriplet={activeTriplet}
+                        ></ExperimentDescription>
+                    </Suspense>
                 </div>
             </div>
 

@@ -20,99 +20,98 @@
 @import url(../../../../variables.css);
 
 .experiment_button {
-	width: 90%;
-	display: flex;
-	align-items: center;
+    width: 90%;
+    display: flex;
+    align-items: center;
 
-	border-radius: 0px clamp(5px, 1.4vw, 10px) clamp(5px, 1.4vw, 10px) 0px;
-	border: solid;
-	--experiment_color: white;
+    border-radius: 0px clamp(5px, 1.4vw, 10px) clamp(5px, 1.4vw, 10px) 0px;
+    border: solid;
+    --experiment_color: white;
 
-	border-color: var(--experiment_color);
-	border-width: 0 0 0.9vh 0;
-	border-bottom-style: solid;
+    border-color: var(--experiment_color);
+    border-width: 0 0 0.9vh 0;
+    border-bottom-style: solid;
 
-	box-shadow: inset 0px 2px 2px rgba(0, 0, 0, 0.25);
-	padding-left: 0;
-	margin-bottom: 1vh;
+    box-shadow: inset 0px 2px 2px rgba(0, 0, 0, 0.25);
+    padding-left: 0;
+    margin-bottom: 1vh;
 
-	transition-duration: var(--animation_fast);
-	background: var(--button_inactive_color);
-	color: var(--font_color);
+    transition-duration: var(--animation_fast);
+    background: var(--button_inactive_color);
+    color: var(--font_color);
 
-	animation: slide-in;
-	animation-duration: var(--animation_slow);
-	animation-timing-function: cubic-bezier(0.47, 1.64, 0.41, 0.7);
-	cursor: pointer;
+    animation: slide-in;
+    animation-duration: var(--animation_slow);
+    animation-timing-function: cubic-bezier(0.47, 1.64, 0.41, 0.7);
+    cursor: pointer;
 }
 .experiment_button:hover {
-	box-shadow: none;
-	box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
-	background-color: var(--content_background_color);
-	width: 100%;
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
+    background-color: var(--content_background_color);
+    width: 100%;
 }
 .experiment_button:active {
-	box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
-	background-color: var(--active_color);
+    box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
+    background-color: var(--active_color);
 }
 
 @keyframes slide-in {
-	from {
-		transform: translateX(-100%);
-	}
-	to {
-		transform: translateX(0);
-	}
+    from {
+        transform: translateX(-100%);
+    }
+    to {
+        transform: translateX(0);
+    }
 }
 
 .experiment_button_active {
-	width: 100%;
-	background: var(--button_active_color);
-	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-	cursor: auto;
+    width: 100%;
+    background: var(--button_active_color);
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    cursor: auto;
 }
 .experiment_button_active:hover {
-	width: 100%;
-	background: var(--button_active_color);
-	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-	cursor: auto;
+    width: 100%;
+    background: var(--button_active_color);
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    cursor: auto;
 }
 .experiment_button:active {
-	width: 100%;
-	background: var(--button_active_color);
-	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-	cursor: auto;
+    width: 100%;
+    background: var(--button_active_color);
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    cursor: auto;
 }
 
 /* UNUSED */
 .experiment_button .experiment_color {
-	width: 15%;
-	position: relative;
-	top: 0;
-	background: rebeccapurple;
-	height: calc(var(--font_xxs) + var(--font_xs));
-	border-radius: 0 clamp(5px, 1.4vw, 10px) clamp(5px, 1.4vw, 10px) 0;
+    width: 15%;
+    position: relative;
+    top: 0;
+    background: rebeccapurple;
+    height: calc(var(--font_xxs) + var(--font_xs));
+    border-radius: 0 clamp(5px, 1.4vw, 10px) clamp(5px, 1.4vw, 10px) 0;
 }
 .experiment_text {
-	width: stretch;
-	padding-bottom: 0.5vh;
-	padding-top: 0.5vh;
+    width: stretch;
+    padding-bottom: 0.5vh;
+    padding-top: 0.5vh;
 
-	display: flex;
-	flex-direction: column;
+    display: flex;
+    flex-direction: column;
 }
 .experiment_material_text {
-	font-size: var(--font_xs);
-	height: var(--font_xs);
-	font-weight: 700;
-	white-space: nowrap;
-	overflow: hidden;
-	text-overflow: ellipsis;
+    font-size: var(--font_xs);
+    height: var(--font_xs);
+    font-weight: 700;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 .experiment_experiment_text {
-	font-size: var(--font_xxs);
-	height: fit-content;
-	white-space: nowrap;
-	overflow: hidden;
-	text-overflow: ellipsis;
+    font-size: var(--font_xxs);
+    height: fit-content;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
