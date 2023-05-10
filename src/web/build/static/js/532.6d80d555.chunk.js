@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkweb=self.webpackChunkweb||[]).push([[532],{532:function(e,o,n){n.r(o),window.eel.expose((function(){return 1}),"pingJS"),window.eel.expose((function(){alert("Go to experiment")}),"goToExperimentPageJS");var t=n(85);try{window.eel.expose((function(e){t.Am.error(e)}),"toastErrorJS")}catch(c){}try{window.eel.expose((function(e){t.Am.success(e)}),"toastSuccessJS")}catch(c){}}}]);
+//# sourceMappingURL=532.6d80d555.chunk.js.map
