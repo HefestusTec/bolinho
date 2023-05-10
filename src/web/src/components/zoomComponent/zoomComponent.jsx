@@ -75,7 +75,7 @@ export default function ZoomComponent({
         return {
             transformOrigin: scaleOrigin,
             transitionDuration: "var(--animation_slow)",
-            "z-index": zIndexVal,
+            zIndex: zIndexVal,
         };
     }, [isActive, scaleOrigin, zIndexVal]);
 

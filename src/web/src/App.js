@@ -18,6 +18,7 @@ import {
 import GlobalConfigContext, {
     globalConfigDefault,
 } from "./contexts/globalConfigContext";
+import Prompter from "./components/prompter/prompter";
 
 import("./api/linker");
 
@@ -25,6 +26,7 @@ function App() {
     const [globalConfig, setGlobalConfig] = useState(globalConfigDefault);
     const [materialList, setMaterialList] = useState([]);
     const [initialized, setInitialized] = useState(false);
+    const [prompter, setPrompter] = useState();
 
     try {
         function getConfigJS() {
@@ -65,7 +67,7 @@ function App() {
             if (currentPage !== "Início") {
                 return (
                     <SubPage
-                        key={item}
+                        key={"page" + item.toString()}
                         myPage={item}
                         currentPage={currentPage}
                         setCurrentPage={setCurrentPage}
@@ -80,6 +82,22 @@ function App() {
         if (globalConfig.shadows) return "App";
         return ["App", "disable_shadows"].join(" ");
     };
+    function promptUserJS(description, options) {
+        // TODO
+        setPrompter(
+            <Prompter
+                description={description}
+                options={options}
+                myStateSetter={setPrompter}
+            />
+        );
+        return 1;
+    }
+    window.eel.expose(promptUserJS, "promptUserJS");
+
+    const callPrompter = () => {
+        promptUserJS("Descrição", ["sim", "não"]);
+    };
 
     return (
         <GlobalConfigContext.Provider value={[globalConfig, setGlobalConfig]}>
@@ -89,6 +107,7 @@ function App() {
                 animation_speed={globalConfig.animationSpeed}
                 animate_graph={globalConfig.animateGraph}
             >
+                {prompter}
                 {/* <FpsMeter /> */}
                 <SideBar
                     currentPage={currentPage}
@@ -99,6 +118,15 @@ function App() {
                     <MainPage materialList={materialList} />
                     {createSubPages()}
                 </div>
+                <button
+                    style={{
+                        position: "absolute",
+                        zIndex: 300,
+                    }}
+                    onClick={callPrompter}
+                >
+                    Propmt
+                </button>
             </div>
             <ToastContainer className="toast_notify" transition={Zoom} />
         </GlobalConfigContext.Provider>

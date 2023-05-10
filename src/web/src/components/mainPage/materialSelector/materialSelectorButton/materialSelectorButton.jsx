@@ -20,67 +20,70 @@ import styleModule from "./materialSelectorButton.module.css";
 import DropdownButton from "./dropdownButton/dropdownButton";
 
 export default function MaterialSelectorButton({ material }) {
-	const [dropdown, setDropdown] = useState(false);
+    const [dropdown, setDropdown] = useState(false);
 
-	const getButtonClassName = () => {
-		if (dropdown) {
-			return [
-				styleModule.material_selector_button,
-				styleModule.material_selector_button_active,
-			].join(" ");
-		}
-		return [styleModule.material_selector_button].join(" ");
-	};
+    const getButtonClassName = () => {
+        if (dropdown) {
+            return [
+                styleModule.material_selector_button,
+                styleModule.material_selector_button_active,
+            ].join(" ");
+        }
+        return [styleModule.material_selector_button].join(" ");
+    };
 
-	const getDropdownClassName = () => {
-		if (dropdown) {
-			return [styleModule.dropdown_ul].join(" ");
-		}
-		return [styleModule.dropdown_ul, styleModule.dropdown_hidden].join(" ");
-	};
+    const getDropdownClassName = () => {
+        if (dropdown) {
+            return [styleModule.dropdown_ul].join(" ");
+        }
+        return [styleModule.dropdown_ul, styleModule.dropdown_hidden].join(" ");
+    };
 
-	const getAddSign = () => {
-		if (dropdown) return "-";
+    const getAddSign = () => {
+        if (dropdown) return "-";
 
-		return "+";
-	};
+        return "+";
+    };
 
-	const toggleDropDown = () => {
-		setDropdown(!dropdown);
-	};
+    const toggleDropDown = () => {
+        setDropdown(!dropdown);
+    };
 
-	const createButton = (experimentIdx) => {
-		return (
-			<DropdownButton experimentIndex={experimentIdx}></DropdownButton>
-		);
-	};
+    const createButton = (experimentIdx) => {
+        return (
+            <DropdownButton
+                experimentIndex={experimentIdx}
+                key={"EX" + experimentIdx.toString()}
+            ></DropdownButton>
+        );
+    };
 
-	const makeExperimentButtons = () => {
-		let buttonArray = [];
-		const experiment_array = material.experiment_array;
-		experiment_array.forEach((element) => {
-			buttonArray.push(createButton(element));
-		});
-		return buttonArray;
-	};
+    const makeExperimentButtons = () => {
+        let buttonArray = [];
+        const experiment_array = material.experiment_array;
+        experiment_array.forEach((element) => {
+            buttonArray.push(createButton(element));
+        });
+        return buttonArray;
+    };
 
-	return (
-		<li key={material.index} className={styleModule.material_selector_li}>
-			<button
-				className={getButtonClassName()}
-				aria-label="Material Selector"
-				onClick={toggleDropDown}
-			>
-				<div className={styleModule.material_selector_side}>
-					<div className={styleModule.add_sign}>{getAddSign()}</div>
-				</div>
-				<div className={styleModule.material_selector_text}>
-					[{material.batch}] {material.name}
-				</div>
-			</button>
-			<ul className={getDropdownClassName()}>
-				{makeExperimentButtons()}
-			</ul>
-		</li>
-	);
+    return (
+        <li key={material.index} className={styleModule.material_selector_li}>
+            <button
+                className={getButtonClassName()}
+                aria-label="Material Selector"
+                onClick={toggleDropDown}
+            >
+                <div className={styleModule.material_selector_side}>
+                    <div className={styleModule.add_sign}>{getAddSign()}</div>
+                </div>
+                <div className={styleModule.material_selector_text}>
+                    [{material.batch}] {material.name}
+                </div>
+            </button>
+            <ul className={getDropdownClassName()}>
+                {makeExperimentButtons()}
+            </ul>
+        </li>
+    );
 }

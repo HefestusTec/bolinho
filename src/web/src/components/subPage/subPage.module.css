@@ -21,9 +21,9 @@
 .sub_page_div {
     z-index: 1;
     position: absolute;
-    height: 85%;
     width: 50%;
-    top: 10%;
+    top: 2%;
+    bottom: 2%;
     border-radius: 0px 20px 20px 0px;
     overflow: hidden;
 
@@ -44,7 +44,7 @@
 }
 
 .sub_page_header {
-    height: 12%;
+    height: 7%;
     background-color: var(--primary_color);
     color: var(--font_color_inverted);
     font-size: var(--font_l);
@@ -64,7 +64,7 @@
 .sub_page_content {
     position: absolute;
     bottom: 0px;
-    top: 12%;
+    top: 7%;
     left: 0px;
     right: 0px;
     margin: 3%;

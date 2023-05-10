@@ -24,6 +24,7 @@ function MaterialSelector({ materialList }) {
     const createButton = (material) => {
         return (
             <MaterialSelectorButton
+                key={material.name.toString()}
                 material={material}
             ></MaterialSelectorButton>
         );

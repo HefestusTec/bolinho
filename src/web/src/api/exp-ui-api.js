@@ -25,10 +25,3 @@ export function toastSuccessJS(msg) {
     toast.success(msg);
 }
 window.eel.expose(toastSuccessJS, "toastSuccessJS");
-
-export function promptUserJS(description, options) {
-    // TODO
-    console.log(description, options);
-    return prompt(description);
-}
-window.eel.expose(promptUserJS, "promptUserJS");
