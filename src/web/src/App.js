@@ -93,10 +93,14 @@ function App() {
         );
         return 1;
     }
-    window.eel.expose(promptUserJS, "promptUserJS");
+    try {
+        window.eel.expose(promptUserJS, "promptUserJS");
+    } catch (error) {}
 
     const callPrompter = () => {
-        promptUserJS("Descrição", ["sim", "não"]);
+        try {
+            promptUserJS("Descrição", ["sim", "não"]);
+        } catch (error) {}
     };
 
     return (
