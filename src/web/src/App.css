@@ -59,3 +59,7 @@ button {
     height: 30vh !important;
     width: 30vh !important;
 }
+
+.disable_shadows * {
+    box-shadow: none !important;
+}

@@ -23,6 +23,7 @@ export const globalConfigDefault = {
     enableZoom: true, // Should zooming be enable?
     zoomDelay: 500, // How long [ms] should I press to zoom
     backgroundBlur: true, // Should it blur when zooming?
+    shadows: true, // Should it render shadows
     absoluteMaximumForce: 10000,
 };
 

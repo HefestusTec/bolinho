@@ -14,93 +14,95 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
-import React from "react";
+import React, { Suspense } from "react";
 
 import { getFormattedBodyParams, getFormattedDate } from "../../../../helpers";
 
 import styleModule from "./experimentDescription.module.css";
 
 export default function ExperimentDescription({ activeTriplet }) {
-	const makeMaterialText = () => {
-		try {
-			const formattedBodyParams = getFormattedBodyParams(
-				activeTriplet.experiment.experiment_params.body_params
-			);
-			return (
-				<>
-					<h1>Material</h1>
-					<b>Lote: </b>
-					{activeTriplet.material.batch}
-					<br />
-					<b>Fornecedor: </b>
-					{activeTriplet.material.supplier.name}
-					<br />
-					<b>• E-mail: </b>
-					{activeTriplet.material.supplier.email}
-					<br />
-					<b>Id: </b>
-					{activeTriplet.material.id}
-					<br />
-					<b>Info extra: </b>
-					<p>{activeTriplet.material.extra_info}</p>
-					<hr></hr>
-					<h1>Experimento</h1>
-					<b>Data: </b>
-					{getFormattedDate(activeTriplet.experiment.date)}
-					<br />
-					<b>Parâmetros: </b>
-					<br />
-					<b>• AutoStop: </b>
-					<br />
-					<>- • Queda de força: </>
-					{
-						activeTriplet.experiment.experiment_params.stop_params
-							.force_loss
-					}
-					<br />
-					<>- • Força máxima: </>
-					{
-						activeTriplet.experiment.experiment_params.stop_params
-							.max_force
-					}
-					<br />
-					<>- • Distância máxima: </>
-					{
-						activeTriplet.experiment.experiment_params.stop_params
-							.max_travel
-					}
-					<br />
-					<>- • Tempo máximo: </>
-					{
-						activeTriplet.experiment.experiment_params.stop_params
-							.max_time
-					}
-					<br />
-					<b>• Corpo de prova: </b>
-					<br />
-					<>- • {formattedBodyParams.type}</>
-					<br />
-					<>- • {formattedBodyParams.paramA}</>
-					<br />
-					<>- • {formattedBodyParams.paramB}</>
-					<br />
-					<>- • {formattedBodyParams.height}</>
-					<br />
-					<b>Id: </b>
-					{activeTriplet.experiment.id}
-					<br />
-					<b>Info extra: </b>
-					<p>{activeTriplet.experiment.extra_info}</p>
-				</>
-			);
-		} catch (error) {
-			return;
-		}
-	};
+    const makeMaterialText = () => {
+        try {
+            const formattedBodyParams = getFormattedBodyParams(
+                activeTriplet.experiment.experiment_params.body_params
+            );
+            return (
+                <>
+                    <h1>Material</h1>
+                    <b>Lote: </b>
+                    {activeTriplet.material.batch}
+                    <br />
+                    <b>Fornecedor: </b>
+                    {activeTriplet.material.supplier.name}
+                    <br />
+                    <b>• E-mail: </b>
+                    {activeTriplet.material.supplier.email}
+                    <br />
+                    <b>Id: </b>
+                    {activeTriplet.material.id}
+                    <br />
+                    <b>Info extra: </b>
+                    <p>{activeTriplet.material.extra_info}</p>
+                    <hr></hr>
+                    <h1>Experimento</h1>
+                    <b>Data: </b>
+                    {getFormattedDate(activeTriplet.experiment.date)}
+                    <br />
+                    <b>Parâmetros: </b>
+                    <br />
+                    <b>• AutoStop: </b>
+                    <br />
+                    <>- • Queda de força: </>
+                    {
+                        activeTriplet.experiment.experiment_params.stop_params
+                            .force_loss
+                    }
+                    <br />
+                    <>- • Força máxima: </>
+                    {
+                        activeTriplet.experiment.experiment_params.stop_params
+                            .max_force
+                    }
+                    <br />
+                    <>- • Distância máxima: </>
+                    {
+                        activeTriplet.experiment.experiment_params.stop_params
+                            .max_travel
+                    }
+                    <br />
+                    <>- • Tempo máximo: </>
+                    {
+                        activeTriplet.experiment.experiment_params.stop_params
+                            .max_time
+                    }
+                    <br />
+                    <b>• Corpo de prova: </b>
+                    <br />
+                    <>- • {formattedBodyParams.type}</>
+                    <br />
+                    <>- • {formattedBodyParams.paramA}</>
+                    <br />
+                    <>- • {formattedBodyParams.paramB}</>
+                    <br />
+                    <>- • {formattedBodyParams.height}</>
+                    <br />
+                    <b>Id: </b>
+                    {activeTriplet.experiment.id}
+                    <br />
+                    <b>Info extra: </b>
+                    <p>{activeTriplet.experiment.extra_info}</p>
+                </>
+            );
+        } catch (error) {
+            return;
+        }
+    };
 
-	return (
-		<div className={styleModule.experiment_description}>
-			{makeMaterialText()}
-		</div>
-	);
+    return (
+        <Suspense fallback={<div>Carregando...</div>}>
+            <div className={styleModule.experiment_description}>
+                {makeMaterialText()}
+            </div>
+        </Suspense>
+    );
 }
