@@ -18,42 +18,42 @@ import Slider from "rc-slider";
 import styleModule from "./sliderComponent.module.css";
 
 function SliderComponent({ setChartMinMax, dataRightMax = 100 }) {
-	function handleChange(event) {
-		setChartMinMax(event[0], event[1]);
-	}
-	return (
-		<Slider
-			className={styleModule.slider}
-			ariaLabelForHandle={"zoom-in-out"}
-			range
-			draggableTrack
-			pushable={3}
-			max={dataRightMax}
-			defaultValue={[0, 100]}
-			onChange={handleChange}
-			trackStyle={{
-				backgroundColor: "#6d6d6d",
-				cursor: "e-resize",
-				height: "1.5vh",
-				opacity: "40%",
-			}}
-			railStyle={{
-				height: "1.5vh",
-				backgroundColor: "#bdbdbd",
-				opacity: "20%",
-			}}
-			handleStyle={{
-				border: "none",
-				backgroundColor: "#FFFFFF",
-				opacity: 1,
-				height: "3vh",
-				width: "2.5vw",
-				boxShadow: "0px 0px 2px 2px rgba(0, 0, 0, 0.25)",
-				marginTop: "-0.9vh",
-				borderRadius: 5,
-			}}
-		></Slider>
-	);
+    function handleChange(event) {
+        setChartMinMax(event[0], event[1]);
+    }
+    return (
+        <Slider
+            className={styleModule.slider}
+            ariaLabelForHandle={"zoom-in-out"}
+            range
+            draggableTrack
+            pushable={3}
+            max={dataRightMax}
+            defaultValue={[0, 100]}
+            onChange={handleChange}
+            trackStyle={{
+                backgroundColor: "#6d6d6d",
+                cursor: "e-resize",
+                height: "1.5vh",
+                opacity: "40%",
+            }}
+            railStyle={{
+                height: "1.5vh",
+                backgroundColor: "#bdbdbd",
+                opacity: "20%",
+            }}
+            handleStyle={{
+                border: "1px solid black",
+                backgroundColor: "#FFFFFF",
+                opacity: 1,
+                height: "3vh",
+                width: "2.5vw",
+                boxShadow: "0px 0px 2px 2px rgba(0, 0, 0, 0.25)",
+                marginTop: "-0.9vh",
+                borderRadius: 5,
+            }}
+        ></Slider>
+    );
 }
 
 export default SliderComponent;
