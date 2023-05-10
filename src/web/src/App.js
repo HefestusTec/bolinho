@@ -76,14 +76,20 @@ function App() {
         });
     };
 
+    const getAppClassName = () => {
+        if (globalConfig.shadows) return "App";
+        return ["App", "disable_shadows"].join(" ");
+    };
+
     return (
         <GlobalConfigContext.Provider value={[globalConfig, setGlobalConfig]}>
             <div
-                className="App"
+                className={getAppClassName()}
                 data_theme={globalConfig.theme}
                 animation_speed={globalConfig.animationSpeed}
                 animate_graph={globalConfig.animateGraph}
             >
+                {/* <FpsMeter /> */}
                 <SideBar
                     currentPage={currentPage}
                     setCurrentPage={setCurrentPage}

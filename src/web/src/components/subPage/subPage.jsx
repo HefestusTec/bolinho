@@ -14,53 +14,56 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
-import React from "react";
+import React, { useMemo, lazy, Suspense } from "react";
 import styleModule from "./subPage.module.css";
 
 import BackgroundFader from "../backgroundFader/backgroundFader";
-import ConfigPage from "../configPage/configPage";
+
+const ConfigPage = lazy(() => import("../configPage/configPage"));
 
 export default function SubPage({ myPage, currentPage, setCurrentPage }) {
-	const getPage = () => {
-		switch (myPage) {
-			case "Início":
-				return;
-			case "Calibrar":
-				break;
-			case "Controlar":
-				break;
-			case "Configurar":
-				return <ConfigPage key={myPage}></ConfigPage>;
-			case "Sobre":
-				break;
-			default:
-				return;
-		}
-	};
+    const getPage = useMemo(() => {
+        switch (myPage) {
+            case "Início":
+                return;
+            case "Calibrar":
+                break;
+            case "Controlar":
+                break;
+            case "Configurar":
+                return <ConfigPage key={myPage}></ConfigPage>;
+            case "Sobre":
+                break;
+            default:
+                return;
+        }
+    }, [myPage]);
 
-	const createSubPage = () => {
-		if (currentPage === myPage) {
-			return (
-				<React.Fragment>
-					<BackgroundFader
-						callbackFunc={() => setCurrentPage("Início")}
-						fullscreen={false}
-						faderIndex={1}
-					/>
-					<div className={styleModule.sub_page_div}>
-						<header className={styleModule.sub_page_header}>
-							<div className={styleModule.sub_page_header_text}>
-								{myPage}
-							</div>
-						</header>
-						<div className={styleModule.sub_page_content}>
-							{getPage()}
-						</div>
-					</div>
-				</React.Fragment>
-			);
-		}
-	};
+    const createSubPage = useMemo(() => {
+        if (currentPage === myPage) {
+            return (
+                <React.Fragment>
+                    <BackgroundFader
+                        callbackFunc={() => setCurrentPage("Início")}
+                        fullscreen={false}
+                        faderIndex={1}
+                    />
+                    <div className={styleModule.sub_page_div}>
+                        <header className={styleModule.sub_page_header}>
+                            <div className={styleModule.sub_page_header_text}>
+                                {myPage}
+                            </div>
+                        </header>
+                        <div className={styleModule.sub_page_content}>
+                            <Suspense fallback={<div>Carregando...</div>}>
+                                {getPage}
+                            </Suspense>
+                        </div>
+                    </div>
+                </React.Fragment>
+            );
+        }
+    }, [currentPage, myPage, getPage, setCurrentPage]);
 
-	return createSubPage();
+    return createSubPage;
 }

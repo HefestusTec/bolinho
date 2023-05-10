@@ -30,7 +30,7 @@ export default function VfxContainer({ className, scaleOrigin }) {
     const [backgroundBlur, setBackgroundBlur] = useState(
         globalConfig.backgroundBlur
     );
-
+    const [shadows, setShadows] = useState(globalConfig.shadows);
     const toggleBackgroundBlur = () => {
         setBackgroundBlur(!backgroundBlur);
         setGlobalConfig({ ...globalConfig, backgroundBlur: !backgroundBlur });
@@ -38,6 +38,11 @@ export default function VfxContainer({ className, scaleOrigin }) {
 
     const animationListCallback = (key) => {
         setGlobalConfig({ ...globalConfig, animationSpeed: key });
+    };
+
+    const toggleShadows = () => {
+        setShadows(!shadows);
+        setGlobalConfig({ ...globalConfig, shadows: !shadows });
     };
 
     return (
@@ -48,6 +53,9 @@ export default function VfxContainer({ className, scaleOrigin }) {
                     checked={backgroundBlur}
                 >
                     Desfocar fundo
+                </CustomCheckbox>
+                <CustomCheckbox clickCallBack={toggleShadows} checked={shadows}>
+                    Sombras
                 </CustomCheckbox>
                 <CustomListSelector
                     keys={["Rápido", "Lento", "Desligado"]}
