@@ -21,7 +21,8 @@ import eel
 from argparse import ArgumentParser
 import expose_db, exposed_core  # não remover
 
-from bolinho_api import core_api, ui_api
+from bolinho_api.ui import ui_api
+from bolinho_api.core import core_api
 
 parser = ArgumentParser()
 parser.add_argument(

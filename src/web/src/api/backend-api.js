@@ -86,6 +86,14 @@ export const getExperimentObjectList = async (id) => {
     }
 };
 
+export const returnPromptResult = (result) => {
+    try {
+        eel.prompt_return(result)();
+    } catch (error) {
+        toast.error("Não foi possível retornar ", result);
+    }
+};
+
 export const startExperimentRoutineJS = async () => {
     try {
         return await eel.start_experiment_routine()();

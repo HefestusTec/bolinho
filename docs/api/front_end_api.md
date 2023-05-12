@@ -31,7 +31,7 @@ This page gathers all the API calls that can be used by the backend.
 
 ## Core API
 
-Collection of all functions/API calls available to the backend. You can find them in the `core_api.py` folder.
+Collection of all functions/API calls available to the backend. You can find them in the `bolinho_api/core.py` file.
 
 The JavaScript file can be found in the api folder.
 
@@ -41,7 +41,7 @@ The JavaScript file can be found in the api folder.
     Tries to ping the bolinho front-end, returns 1 if it worked
 
     ``` python title="Python usage example"
-    from bolinho_api import core_api
+    from bolinho_api.core import core_api
 
     while True:
         try:
@@ -60,7 +60,7 @@ The JavaScript file can be found in the api folder.
     Tries to ping the bolinho front-end, returns 1 if it worked
 
     ``` python title="Python usage example"
-    from bolinho_api import core_api
+    from bolinho_api.core import core_api
     
     config = core_api.get_config_params()
     current_save_version = config["configVersion"]
@@ -77,7 +77,7 @@ The JavaScript file can be found in the api folder.
     Returns 1 if succeeded.
 
     ``` python title="Python usage example"
-    from bolinho_api import core_api
+    from bolinho_api.core import core_api
 
     change_pages = True
     if change_pages:
@@ -87,7 +87,7 @@ The JavaScript file can be found in the api folder.
 
 ## UI API
 
-Collection of all functions/API calls available to the backend for UI in general. You can find them in the `ui_api.py` file.
+Collection of all functions/API calls available to the backend for UI in general. You can find them in the `bolinho_api/ui.py` file.
 
 The JavaScript file can be found in the api folder.
 
@@ -97,7 +97,7 @@ The JavaScript file can be found in the api folder.
     Uses [React-Toastify](https://github.com/fkhadra/react-toastify) to create an success alert.
 
     ``` python title="Python usage example"
-    from bolinho_api import ui_api
+    from bolinho_api.ui import ui_api
 
     ui_api.success_alert("Success!")
     ```
@@ -108,7 +108,7 @@ The JavaScript file can be found in the api folder.
     Uses [React-Toastify](https://github.com/fkhadra/react-toastify) to create an error alert.
 
     ``` python title="Python usage example"
-    from bolinho_api import ui_api
+    from bolinho_api.ui import ui_api
 
     UIapi.error_alert("Error!")
     ```
@@ -120,7 +120,7 @@ The JavaScript file can be found in the api folder.
     The result is passed to the callback_function
 
     ``` python title="Python usage example"
-    from bolinho_api import ui_api
+    from bolinho_api.ui import ui_api
 
     def get_result(result):
         if result == "yes":
