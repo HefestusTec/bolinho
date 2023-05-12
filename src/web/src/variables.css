@@ -131,3 +131,57 @@ html {
 [animate_graph="off"] {
     --graph_animation: 0;
 }
+
+[font_size="50%"] {
+    --font_xxs: 6px;
+    --font_xs: 7px;
+    --font_s: 9px;
+    --font_m: 10px;
+    --font_l: 12px;
+    --font_xl: 22.5px;
+}
+
+[font_size="75%"] {
+    --font_xxs: 9px;
+    --font_xs: 10.5px;
+    --font_s: 13.5px;
+    --font_m: 15px;
+    --font_l: 18px;
+    --font_xl: 33.75px;
+}
+
+[font_size="100%"] {
+    --font_xxs: 12px;
+    --font_xs: 14px;
+    --font_s: 18px;
+    --font_m: 20px;
+    --font_l: 24px;
+    --font_xl: 45px;
+}
+
+[font_size="125%"] {
+    --font_xxs: 15px;
+    --font_xs: 17.5px;
+    --font_s: 22.5px;
+    --font_m: 25px;
+    --font_l: 30px;
+    --font_xl: 56.25px;
+}
+
+[font_size="150%"] {
+    --font_xxs: 18px;
+    --font_xs: 21px;
+    --font_s: 27px;
+    --font_m: 30px;
+    --font_l: 36px;
+    --font_xl: 67.5px;
+}
+
+[font_size="200%"] {
+    --font_xxs: 24px;
+    --font_xs: 28px;
+    --font_s: 36px;
+    --font_m: 40px;
+    --font_l: 48px;
+    --font_xl: 90px;
+}

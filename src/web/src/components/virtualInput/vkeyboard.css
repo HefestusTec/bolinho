@@ -18,25 +18,22 @@
  */
 @import url("../../variables.css");
 
-.theme_selector {
-    grid-column: span 6;
-    grid-row: span 7;
-    order: 0;
+.hg-theme-default {
+    font-size: var(--font_l);
 }
 
-.animation_selector {
-    grid-column: span 6;
-    grid-row: span 7;
-    order: 1;
+.hg-row {
+    height: 10vh;
+    align-items: center;
 }
-
-.global_limits {
-    grid-column: span 6;
-    grid-row: span 7;
-    order: 2;
+.hg-button-space {
+    width: 40% !important;
 }
-.other_selector {
-    grid-column: span 6;
-    grid-row: span 7;
-    order: 3;
+.hg-button {
+    height: stretch !important;
+    background-color: var(--background_color) !important    ;
+    color: var(--font_color);
+}
+.simple-keyboard {
+    background-color: var(--content_background_color);
 }

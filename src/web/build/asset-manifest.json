@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.css": "./static/css/main.139d77d5.css",
-    "main.js": "./static/js/main.f0825f90.js",
+    "main.css": "./static/css/main.80be599c.css",
+    "main.js": "./static/js/main.bccbbb7a.js",
     "static/js/532.6d80d555.chunk.js": "./static/js/532.6d80d555.chunk.js",
-    "static/css/296.26084970.chunk.css": "./static/css/296.26084970.chunk.css",
-    "static/js/296.719b5ec7.chunk.js": "./static/js/296.719b5ec7.chunk.js",
+    "static/css/647.6c830a6d.chunk.css": "./static/css/647.6c830a6d.chunk.css",
+    "static/js/647.174e5879.chunk.js": "./static/js/647.174e5879.chunk.js",
     "static/js/787.d1d4a2c2.chunk.js": "./static/js/787.d1d4a2c2.chunk.js",
     "static/media/LogoBolinho512.png": "./static/media/LogoBolinho512.9671d4415561a3fce323.png",
     "static/media/roboto-all-400-normal.woff": "./static/media/roboto-all-400-normal.c5d001fa922fa66a147f.woff",
@@ -31,15 +31,15 @@
     "static/media/expandMenu.svg": "./static/media/expandMenu.3cd61fa06c3d429eb648.svg",
     "static/media/openMenu.svg": "./static/media/openMenu.94f32a20eba8255a5d65.svg",
     "static/media/retractMenu.svg": "./static/media/retractMenu.27d97b28abb46171133c.svg",
-    "main.139d77d5.css.map": "./static/css/main.139d77d5.css.map",
-    "main.f0825f90.js.map": "./static/js/main.f0825f90.js.map",
+    "main.80be599c.css.map": "./static/css/main.80be599c.css.map",
+    "main.bccbbb7a.js.map": "./static/js/main.bccbbb7a.js.map",
     "532.6d80d555.chunk.js.map": "./static/js/532.6d80d555.chunk.js.map",
-    "296.26084970.chunk.css.map": "./static/css/296.26084970.chunk.css.map",
-    "296.719b5ec7.chunk.js.map": "./static/js/296.719b5ec7.chunk.js.map",
+    "647.6c830a6d.chunk.css.map": "./static/css/647.6c830a6d.chunk.css.map",
+    "647.174e5879.chunk.js.map": "./static/js/647.174e5879.chunk.js.map",
     "787.d1d4a2c2.chunk.js.map": "./static/js/787.d1d4a2c2.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.139d77d5.css",
-    "static/js/main.f0825f90.js"
+    "static/css/main.80be599c.css",
+    "static/js/main.bccbbb7a.js"
   ]
 }
