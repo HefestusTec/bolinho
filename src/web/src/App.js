@@ -19,6 +19,7 @@ import GlobalConfigContext, {
     globalConfigDefault,
 } from "./contexts/globalConfigContext";
 import Prompter from "./components/prompter/prompter";
+import VirtualInput from "./components/virtualInput/virtualInput";
 
 import("./api/linker");
 
@@ -108,7 +109,9 @@ function App() {
                 data_theme={globalConfig.theme}
                 animation_speed={globalConfig.animationSpeed}
                 animate_graph={globalConfig.animateGraph}
+                font_size={globalConfig.fontSize}
             >
+                <VirtualInput />
                 {prompter}
                 {/* <FpsMeter /> */}
                 <SideBar

@@ -20,6 +20,8 @@ import styleModule from "./configPage.module.css";
 
 import ThemeSelector from "./themeSelector/themeSelector";
 import VfxContainer from "./vfxContainer/vfxContainer";
+import GlobalLimits from "./globalLimits/globalLimits";
+import OtherSelector from "./otherSelector/otherSelector";
 
 export default function ConfigPage() {
     return (
@@ -31,6 +33,14 @@ export default function ConfigPage() {
             <VfxContainer
                 className={styleModule.animation_selector}
                 scaleOrigin="top right"
+            />
+            <GlobalLimits
+                className={styleModule.global_limits}
+                scaleOrigin="bottom left"
+            />
+            <OtherSelector
+                className={styleModule.other_selector}
+                scaleOrigin="bottom right"
             />
         </React.Fragment>
     );

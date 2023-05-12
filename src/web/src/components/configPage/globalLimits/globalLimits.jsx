@@ -14,21 +14,17 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
-import { createContext } from "react";
 
-export const globalConfigDefault = {
-    configVersion: 1, // Version number of the config file
-    theme: "Claro", // Claro | Escuro | Meia Noite
-    animationSpeed: "Lento", // Rápido | Lento | Desligado
-    fontSize: "100%",
-    enableZoom: true, // Should zooming be enable?
-    zoomDelay: 500, // How long [ms] should I press to zoom
-    backgroundBlur: true, // Should it blur when zooming?
-    shadows: true, // Should it render shadows
-    forceVirtualKeyboard: false,
-    absoluteMaximumForce: 10000,
-};
+import React from "react";
+//import styleModule from "./configPage.module.css";
 
-const GlobalConfigContext = createContext([globalConfigDefault, () => {}]);
+import ZoomComponent from "../../zoomComponent/zoomComponent";
+import ContainerComponent from "../../containerComponent/containerComponent";
 
-export default GlobalConfigContext;
+export default function GlobalLimits({ className, scaleOrigin }) {
+    return (
+        <ZoomComponent className={className} scaleOrigin={scaleOrigin}>
+            <ContainerComponent headerText="Limites globais"></ContainerComponent>
+        </ZoomComponent>
+    );
+}

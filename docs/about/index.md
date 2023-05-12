@@ -58,6 +58,7 @@ This software is licensed and distributed under the **[GNU General Public Licens
 
 * Use Long Press - [see license](https://github.com/minwork/use-long-press/blob/master/LICENSE) 
 
+* React Simple Keyboard - [see license](https://github.com/hodgef/react-simple-keyboard/blob/master/LICENSE) 
 
 ___
 

@@ -18,25 +18,15 @@
  */
 @import url("../../variables.css");
 
-.theme_selector {
-    grid-column: span 6;
-    grid-row: span 7;
-    order: 0;
+.virtual_input_div {
+    position: fixed;
+    z-index: 40;
+    width: 100%;
+    height: 50%;
 }
 
-.animation_selector {
-    grid-column: span 6;
-    grid-row: span 7;
-    order: 1;
-}
-
-.global_limits {
-    grid-column: span 6;
-    grid-row: span 7;
-    order: 2;
-}
-.other_selector {
-    grid-column: span 6;
-    grid-row: span 7;
-    order: 3;
+.virtual_keyboard {
+    height: 100%;
+    width: 100%;
+    bottom: 0;
 }
