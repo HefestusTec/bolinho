@@ -18,18 +18,34 @@ import React from "react";
 import styleModule from "./prompter.module.css";
 import BackgroundFader from "../backgroundFader/backgroundFader";
 import { toast } from "react-toastify";
+import CustomButton from "../customSubComponents/customButton/customButton";
+import { returnPromptResult } from "../../api/backend-api";
 
 export default function Prompter({
-    description = "asd",
+    description = "Nada aqui...",
     options,
     myStateSetter,
 }) {
-    const buttonClicked = () => {
+    const backgroundCallback = () => {
+        toast.error("É preciso selecionar uma opção.");
+    };
+    const optionsButtonClicked = (key) => {
+        // Calls a function in python that returns the choice
+        returnPromptResult(key);
+
         myStateSetter();
     };
 
-    const backgroundCallback = () => {
-        toast.error("É preciso selecionar uma opção.");
+    const makeOptionsButtons = () => {
+        const buttons = options.map((option) => (
+            <CustomButton
+                clickCallBack={optionsButtonClicked}
+                className={styleModule.option_button}
+            >
+                {option}
+            </CustomButton>
+        ));
+        return buttons;
     };
 
     return (
@@ -39,8 +55,10 @@ export default function Prompter({
                 callbackFunc={backgroundCallback}
             ></BackgroundFader>
             <div className={styleModule.prompter_div}>
-                <div>{description}</div>
-                <button onClick={buttonClicked}>end</button>
+                <div className={styleModule.description_div}>{description}</div>
+                <div className={styleModule.options_div}>
+                    {makeOptionsButtons()}
+                </div>
             </div>
         </React.Fragment>
     );

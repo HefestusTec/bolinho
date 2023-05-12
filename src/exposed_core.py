@@ -17,7 +17,8 @@
 import eel
 import json
 import os
-from bolinho_api import core_api
+from bolinho_api.ui import ui_api
+from bolinho_api.core import core_api
 
 _CONFIG_PARAMS_PATH = "persist/configParams.json"
 
@@ -54,3 +55,13 @@ def start_experiment_routine():
     """
     core_api.go_to_experiment_page()
     return 1
+
+
+@eel.expose
+def prompt_return(
+    return_value,
+):
+    """
+    Passes the "return_value" to the stored prompt function
+    """
+    ui_api.return_prompt_function(return_value)

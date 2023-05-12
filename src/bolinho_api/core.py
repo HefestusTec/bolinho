@@ -16,27 +16,24 @@
 # along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
 
 import eel
-from typing import List, Callable
 
 
-def prompt_user(
-    description: str = "",
-    options: List[str] = ["yes", "no"],
-    callback_func: Callable = (),
-):
-    """
-    Prompts the user with a 'description', and shows the 'options' to the user.
+class CoreAPI:
+    def ping(self):
+        """Tries to ping the bolinho front-end, returns 1 if it worked"""
+        return eel.pingJS()()
 
-    The result is passed to the callback_function
-    """
-    eel.promptUserJS(description, options)(callback_func)
+    def get_config_params(self):
+        """Returns a JSON with all the params of the config"""
+        return eel.getConfigJS()()
+
+    def go_to_experiment_page(self):
+        """
+        Asks the front end to go to the experiment page.
+
+        Returns 1 if succeeded.
+        """
+        return eel.goToExperimentPageJS()()
 
 
-def success_alert(text: str):
-    """Show a success alert to the user with some 'text'"""
-    eel.toastSuccessJS(text)
-
-
-def error_alert(text: str):
-    """Show an error alert to the user with some 'text'"""
-    eel.toastErrorJS(text)
+core_api = CoreAPI()

@@ -83,7 +83,7 @@ function App() {
         return ["App", "disable_shadows"].join(" ");
     };
     function promptUserJS(description, options) {
-        // TODO
+        // Creates a prompt
         setPrompter(
             <Prompter
                 description={description}
@@ -98,7 +98,7 @@ function App() {
     } catch (error) {}
 
     const callPrompter = () => {
-        promptUserJS("Descrição", ["sim", "não"]);
+        promptUserJS("Descrição", ["sim", "não", "talvez", "não", "talvez"]);
     };
 
     return (
