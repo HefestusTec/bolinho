@@ -39,6 +39,7 @@ function App() {
     const pageList = ["Início", "Calibrar", "Controlar", "Configurar", "Sobre"];
     // options "Início", "Calibrar", "Controlar", "Config.", "Sobre"
     const [currentPage, setCurrentPage] = useState("Início");
+    const [vKeyboard, setVKeyboard] = useState(false);
 
     // Runs only once
     if (!initialized) {
@@ -101,7 +102,13 @@ function App() {
     const callPrompter = () => {
         promptUserJS("Descrição", ["sim", "não", "talvez", "não", "talvez"]);
     };
-
+    const toggleKeyboard = () => {
+        setVKeyboard(!vKeyboard);
+    };
+    const getVirtualKeyboard = () => {
+        if (vKeyboard) return <VirtualInput />;
+        return;
+    };
     return (
         <GlobalConfigContext.Provider value={[globalConfig, setGlobalConfig]}>
             <div
@@ -111,9 +118,8 @@ function App() {
                 animate_graph={globalConfig.animateGraph}
                 font_size={globalConfig.fontSize}
             >
-                <VirtualInput />
+                {getVirtualKeyboard()}
                 {prompter}
-                {/* <FpsMeter /> */}
                 <SideBar
                     currentPage={currentPage}
                     setCurrentPage={setCurrentPage}
@@ -123,15 +129,16 @@ function App() {
                     <MainPage materialList={materialList} />
                     {createSubPages()}
                 </div>
-                <button
+                <div
                     style={{
                         position: "absolute",
                         zIndex: 300,
                     }}
-                    onClick={callPrompter}
                 >
-                    Propmt
-                </button>
+                    {/* <FpsMeter /> */}
+                    <button onClick={callPrompter}>Propmt</button>{" "}
+                    <button onClick={toggleKeyboard}>Toggle keyboard</button>{" "}
+                </div>
             </div>
             <ToastContainer className="toast_notify" transition={Zoom} />
         </GlobalConfigContext.Provider>

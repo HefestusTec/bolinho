@@ -20,12 +20,12 @@ export const globalConfigDefault = {
     configVersion: 1, // Version number of the config file
     theme: "Claro", // Claro | Escuro | Meia Noite
     animationSpeed: "Lento", // Rápido | Lento | Desligado
-    fontSize: "100%",
+    fontSize: "100%", // 50% | 75% | 100% | 125% | 150% | 200%
     enableZoom: true, // Should zooming be enable?
     zoomDelay: 500, // How long [ms] should I press to zoom
     backgroundBlur: true, // Should it blur when zooming?
     shadows: true, // Should it render shadows
-    forceVirtualKeyboard: false,
+    forceVirtualKeyboard: false, // Should it use the virtual keyboard as input
     absoluteMaximumForce: 10000,
 };
 

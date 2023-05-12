@@ -21,30 +21,55 @@ import styleModule from "./virtualInput.module.css";
 import Keyboard from "react-simple-keyboard";
 import "react-simple-keyboard/build/css/index.css";
 
-const lbr = {
+import "./vkeyboard.css";
+const layoutBR = {
     default: [
-        "' 1 2 3 4 5 6 7 8 9 0 - = {bksp}",
-        "{tab} q w e r t y u i o p [ ] \\",
-        "{lock} a s d f g h j k l ç {enter}",
-        "ãéí... z x c v b n m , . / {shift}",
-        ".com @ {space}",
+        "1 2 3 4 5 6 7 8 9 0",
+        "q w e r t y u i o p",
+        "a s d f g h j k l ç",
+        "{shift} z x c v b n m {backspace}",
+        "{accents} , {space} . {ent}",
     ],
     shift: [
-        '" ! @ # $ % ^ &amp; * ( ) _ + {bksp}',
-        "{tab} Q W E R T Y U I O P { } |",
-        "{lock} A S D F G H J K L Ç {enter}",
-        "ÃÉÍ... Z X C V B N M &lt; &gt; ? {shift}",
-        ".com @ {space}",
+        "1 2 3 4 5 6 7 8 9 0",
+        "Q W E R T Y U I O P",
+        "A S D F G H J K L Ç",
+        "{shift} Z X C V B N M {backspace}",
+        "{accents} , {space} . {ent}",
     ],
-    modified: [
-        "' 1 2 3 4 5 6 7 8 9 0 - = {bksp}",
-        "{tab} a ã á à â e é è ê [ ] \\",
-        "{lock} i í ì î o õ ó ò ô {enter}",
-        "ãéí... u ú ù û  / {shift}",
-        ".com @ {space}",
+    accents: [
+        "{at} # $ _ & - + ( ) /",
+        "* \" ' : ; [ ] ™ ® ©",
+        "á é í ó ú â ê î ô û",
+        "{shift} à ã õ ! < > ? {backspace}",
+        "{abc} , {space} . {ent}",
+    ],
+    accentsShift: [
+        "{at} # $ _ & - + ( ) /",
+        "* \" ' : ; [ ] ™ ® ©",
+        "Á É Í Ó Ú Â Ê Î Ô Û",
+        "{shift} À Ã Õ ! < > ? {backspace}",
+        "{abc} , {space} . {ent}",
     ],
 };
-
+const displayBR = {
+    "{accents}": "?ãé",
+    "{ent}": "return",
+    "{escape}": "esc ⎋",
+    "{tab}": "tab ⇥",
+    "{backspace}": "⌫",
+    "{capslock}": "caps lock ⇪",
+    "{shift}": "⇧",
+    "{controlleft}": "ctrl ⌃",
+    "{controlright}": "ctrl ⌃",
+    "{altleft}": "alt ⌥",
+    "{altright}": "alt ⌥",
+    "{metaleft}": "cmd ⌘",
+    "{metaright}": "cmd ⌘",
+    "{abc}": "ABC",
+    "{space}": " ",
+    "{at}": "@",
+};
 export default function VirtualInput() {
     const [layout, setLayout] = useState("default");
     const keyboard = useRef();
@@ -55,25 +80,68 @@ export default function VirtualInput() {
     };
 
     const handleShift = () => {
-        const newLayoutName = layout === "default" ? "shift" : "default";
+        let newLayoutName = null;
+        switch (layout) {
+            case "default":
+                newLayoutName = "shift";
+                break;
+            case "shift":
+                newLayoutName = "default";
+                break;
+            case "accents":
+                newLayoutName = "accentsShift";
+                break;
+            case "accentsShift":
+                newLayoutName = "accents";
+                break;
+            default:
+                newLayoutName = "default";
+                break;
+        }
         setLayout(newLayoutName);
     };
-
-    const onKeyPress = (button) => {
+    function handleAccents() {
+        let newLayoutName = null;
+        switch (layout) {
+            case "accents":
+                newLayoutName = "default";
+                break;
+            case "default":
+                newLayoutName = "accents";
+                break;
+            case "accentsShift":
+                newLayoutName = "shift";
+                break;
+            case "shift":
+                newLayoutName = "accentsShift";
+                break;
+            default:
+                newLayoutName = "default";
+                break;
+        }
+        setLayout(newLayoutName);
+    }
+    function onKeyPress(button) {
         console.log("Button pressed", button);
 
-        if (button === "{shift}" || button === "{lock}") handleShift();
-    };
+        if (button === "{shift}") handleShift();
+        if (button === "{accents}" || button === "{abc}") handleAccents();
+    }
 
     return (
         <div className={styleModule.virtual_input_div}>
+            <div className={styleModule.input_field}>asd</div>
             <Keyboard
                 keyboardRef={(r) => (keyboard.current = r)}
                 layoutName={layout}
                 onChange={onChange}
                 onKeyPress={onKeyPress}
-                className={styleModule.virtual_keyboard}
-                layout={lbr}
+                layout={layoutBR}
+                display={displayBR}
+                theme={[
+                    styleModule.virtual_keyboard,
+                    "hg-theme-default hg-layout-default",
+                ].join(" ")}
             />
         </div>
     );
