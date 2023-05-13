@@ -112,7 +112,7 @@ html {
     --logo_schumacher: url(./components/sideBar/resources/LogoSchumacherDark.png);
 }
 
-[animation_speed="Lento"] {
+[animation_speed="Normal"] {
     --animation_fast: 150ms;
     --animation_slow: 350ms;
 }

@@ -58,7 +58,7 @@ export default function VfxContainer({ className, scaleOrigin }) {
                     Sombras
                 </CustomCheckbox>
                 <CustomListSelector
-                    keys={["Rápido", "Lento", "Desligado"]}
+                    keys={["Rápido", "Normal", "Desligado"]}
                     clickCallBack={animationListCallback}
                     selected={globalConfig.animationSpeed}
                 >
