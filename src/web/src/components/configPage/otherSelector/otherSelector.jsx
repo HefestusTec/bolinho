@@ -16,7 +16,6 @@
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
 
 import React, { useContext, useState } from "react";
-//import styleModule from "./configPage.module.css";
 
 import ZoomComponent from "../../zoomComponent/zoomComponent";
 import ContainerComponent from "../../containerComponent/containerComponent";
@@ -54,7 +53,7 @@ export default function OtherSelector({ className, scaleOrigin }) {
                     clickCallBack={toggleVirtualKeyboard}
                     checked={virtualKeyboard}
                 >
-                    Forçar teclado virtual
+                    Teclado virtual
                 </CustomCheckbox>
             </ContainerComponent>
         </ZoomComponent>

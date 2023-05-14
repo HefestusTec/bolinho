@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.css": "./static/css/main.80be599c.css",
-    "main.js": "./static/js/main.bccbbb7a.js",
+    "main.css": "./static/css/main.b6fe6ce6.css",
+    "main.js": "./static/js/main.d13835cf.js",
     "static/js/532.6d80d555.chunk.js": "./static/js/532.6d80d555.chunk.js",
-    "static/css/647.6c830a6d.chunk.css": "./static/css/647.6c830a6d.chunk.css",
-    "static/js/647.174e5879.chunk.js": "./static/js/647.174e5879.chunk.js",
+    "static/css/647.923ab1e4.chunk.css": "./static/css/647.923ab1e4.chunk.css",
+    "static/js/647.ed53b2de.chunk.js": "./static/js/647.ed53b2de.chunk.js",
     "static/js/787.d1d4a2c2.chunk.js": "./static/js/787.d1d4a2c2.chunk.js",
     "static/media/LogoBolinho512.png": "./static/media/LogoBolinho512.9671d4415561a3fce323.png",
     "static/media/roboto-all-400-normal.woff": "./static/media/roboto-all-400-normal.c5d001fa922fa66a147f.woff",
@@ -31,15 +31,15 @@
     "static/media/expandMenu.svg": "./static/media/expandMenu.3cd61fa06c3d429eb648.svg",
     "static/media/openMenu.svg": "./static/media/openMenu.94f32a20eba8255a5d65.svg",
     "static/media/retractMenu.svg": "./static/media/retractMenu.27d97b28abb46171133c.svg",
-    "main.80be599c.css.map": "./static/css/main.80be599c.css.map",
-    "main.bccbbb7a.js.map": "./static/js/main.bccbbb7a.js.map",
+    "main.b6fe6ce6.css.map": "./static/css/main.b6fe6ce6.css.map",
+    "main.d13835cf.js.map": "./static/js/main.d13835cf.js.map",
     "532.6d80d555.chunk.js.map": "./static/js/532.6d80d555.chunk.js.map",
-    "647.6c830a6d.chunk.css.map": "./static/css/647.6c830a6d.chunk.css.map",
-    "647.174e5879.chunk.js.map": "./static/js/647.174e5879.chunk.js.map",
+    "647.923ab1e4.chunk.css.map": "./static/css/647.923ab1e4.chunk.css.map",
+    "647.ed53b2de.chunk.js.map": "./static/js/647.ed53b2de.chunk.js.map",
     "787.d1d4a2c2.chunk.js.map": "./static/js/787.d1d4a2c2.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.80be599c.css",
-    "static/js/main.bccbbb7a.js"
+    "static/css/main.b6fe6ce6.css",
+    "static/js/main.d13835cf.js"
   ]
 }

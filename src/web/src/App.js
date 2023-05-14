@@ -40,6 +40,7 @@ function App() {
     // options "Início", "Calibrar", "Controlar", "Config.", "Sobre"
     const [currentPage, setCurrentPage] = useState("Início");
     const [vKeyboard, setVKeyboard] = useState(false);
+    const [enableHover, setEnableHover] = useState(globalConfig.enableHover);
 
     // Runs only once
     if (!initialized) {
@@ -61,6 +62,7 @@ function App() {
 
     // Updating the save file every time global config is changed
     useEffect(() => {
+        setEnableHover(globalConfig.enableHover);
         saveConfigParams(globalConfig);
     }, [globalConfig]);
 
@@ -117,6 +119,7 @@ function App() {
                 animation_speed={globalConfig.animationSpeed}
                 animate_graph={globalConfig.animateGraph}
                 font_size={globalConfig.fontSize}
+                enable_hover={enableHover}
             >
                 {getVirtualKeyboard()}
                 {prompter}
