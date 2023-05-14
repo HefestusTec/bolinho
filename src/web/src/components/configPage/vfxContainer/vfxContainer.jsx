@@ -16,7 +16,6 @@
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
 
 import React, { useContext, useState } from "react";
-//import styleModule from "./configPage.module.css";
 
 import ZoomComponent from "../../zoomComponent/zoomComponent";
 import ContainerComponent from "../../containerComponent/containerComponent";
@@ -31,6 +30,7 @@ export default function VfxContainer({ className, scaleOrigin }) {
         globalConfig.backgroundBlur
     );
     const [shadows, setShadows] = useState(globalConfig.shadows);
+    const [enableHover, setEnableHover] = useState(globalConfig.enableHover);
     const toggleBackgroundBlur = () => {
         setBackgroundBlur(!backgroundBlur);
         setGlobalConfig({ ...globalConfig, backgroundBlur: !backgroundBlur });
@@ -44,7 +44,15 @@ export default function VfxContainer({ className, scaleOrigin }) {
         setShadows(!shadows);
         setGlobalConfig({ ...globalConfig, shadows: !shadows });
     };
-
+    const toggleHover = () => {
+        const newHover = enableHover === "enable" ? "disable" : "enable";
+        setEnableHover(newHover);
+        setGlobalConfig({ ...globalConfig, enableHover: newHover });
+    };
+    const getHoverCheck = () => {
+        if (enableHover === "enable") return true;
+        return false;
+    };
     return (
         <ZoomComponent className={className} scaleOrigin={scaleOrigin}>
             <ContainerComponent headerText="Efeitos visuais">
@@ -64,6 +72,12 @@ export default function VfxContainer({ className, scaleOrigin }) {
                 >
                     Animações
                 </CustomListSelector>
+                <CustomCheckbox
+                    clickCallBack={toggleHover}
+                    checked={getHoverCheck()}
+                >
+                    Indicador de seleção
+                </CustomCheckbox>
             </ContainerComponent>
         </ZoomComponent>
     );

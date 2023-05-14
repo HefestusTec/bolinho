@@ -27,76 +27,76 @@ import ConfigIcon from "./resources/ConfigIcon.svg";
 import SobreIcon from "./resources/SobreIcon.svg";
 
 export default function SideBar({ currentPage, setCurrentPage, pageList }) {
-	const changePage = (event) => {
-		const buttonId = event.currentTarget.id;
-		if (buttonId === currentPage) return;
-		setCurrentPage(buttonId);
-	};
-	const getButtonAttrib = (buttonName) => {
-		const buttonStyle =
-			currentPage === buttonName
-				? [
-						styleModule.side_bar_button,
-						styleModule.side_bar_button_active,
-				  ]
-				: [
-						styleModule.side_bar_button,
-						styleModule.side_bar_button_inactive,
-				  ];
+    const changePage = (event) => {
+        const buttonId = event.currentTarget.id;
+        if (buttonId === currentPage) return;
+        setCurrentPage(buttonId);
+    };
+    const getButtonAttrib = (buttonName) => {
+        const buttonStyle =
+            currentPage === buttonName
+                ? [
+                      styleModule.side_bar_button,
+                      styleModule.side_bar_button_active,
+                  ]
+                : [
+                      styleModule.side_bar_button,
+                      styleModule.side_bar_button_inactive,
+                  ];
 
-		return buttonStyle.join(" ");
-	};
-	const createButton = (buttonName) => {
-		let imgPath;
-		switch (buttonName) {
-			case "Início":
-				imgPath = InicioIcon;
-				break;
-			case "Calibrar":
-				imgPath = CalibrarIcon;
-				break;
-			case "Controlar":
-				imgPath = ControlarIcon;
-				break;
-			case "Configurar":
-				imgPath = ConfigIcon;
-				break;
-			case "Sobre":
-				imgPath = SobreIcon;
-				break;
-			default:
-				imgPath = InicioIcon;
-		}
+        return buttonStyle.join(" ");
+    };
+    const createButton = (buttonName) => {
+        let imgPath;
+        switch (buttonName) {
+            case "Início":
+                imgPath = InicioIcon;
+                break;
+            case "Calibrar":
+                imgPath = CalibrarIcon;
+                break;
+            case "Controlar":
+                imgPath = ControlarIcon;
+                break;
+            case "Configurar":
+                imgPath = ConfigIcon;
+                break;
+            case "Sobre":
+                imgPath = SobreIcon;
+                break;
+            default:
+                imgPath = InicioIcon;
+        }
 
-		return (
-			<button
-				className={getButtonAttrib(buttonName)}
-				id={buttonName}
-				onClick={changePage}
-			>
-				<img
-					className={styleModule.side_bar_button_icon}
-					src={imgPath}
-					alt={buttonName}
-				/>
-				<div className={styleModule.side_bar_button_text}>
-					{buttonName}
-				</div>
-			</button>
-		);
-	};
+        return (
+            <button
+                className={getButtonAttrib(buttonName)}
+                id={buttonName}
+                onClick={changePage}
+            >
+                <img
+                    className={styleModule.side_bar_button_icon}
+                    src={imgPath}
+                    alt={buttonName}
+                />
+                <div className={styleModule.side_bar_button_text}>
+                    {buttonName}
+                </div>
+            </button>
+        );
+    };
 
-	return (
-		<div className={styleModule.side_bar}>
-			<Header />
-			<ul className={styleModule.side_bar_button_ul}>
-				{pageList.map((bName) => (
-					<li key={bName} className={styleModule.side_bar_button_li}>
-						{createButton(bName)}
-					</li>
-				))}
-			</ul>
-			<div className={styleModule.side_bar_footer}></div>
-		</div>
-	);
+    return (
+        <div className={styleModule.side_bar}>
+            <Header />
+            <ul className={styleModule.side_bar_button_ul}>
+                {pageList.map((bName) => (
+                    <li key={bName} className={styleModule.side_bar_button_li}>
+                        {createButton(bName)}
+                    </li>
+                ))}
+            </ul>
+            <div className={styleModule.side_bar_footer}></div>
+        </div>
+    );
 }

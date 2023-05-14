@@ -54,9 +54,10 @@
     background-repeat: no-repeat;
     transition-duration: var(--animation_fast);
 }
-
-.delete_material_button:hover {
-    transform: translateY(-0.5vh);
+[enable_hover="enable"] {
+    .delete_material_button:hover {
+        transform: translateY(-0.5vh);
+    }
 }
 .delete_material_button:active {
     transform: translateY(0vh);
@@ -97,9 +98,10 @@
     transition-duration: var(--animation_fast);
     cursor: pointer;
 }
-
-.material_inspector_header_color:hover {
-    width: 85px;
+[enable_hover="enable"] {
+    .material_inspector_header_color:hover {
+        width: 85px;
+    }
 }
 .material_inspector_header_color:active {
     box-shadow: inset 0px 0px 5px 3px rgba(0, 0, 0, 0.5);

@@ -38,12 +38,12 @@
     grid-template-columns: repeat(var(--num_columns), 1fr);
     grid-template-rows: repeat(var(--num_rows), 1fr);
 }
-
-.ensaio_button:hover {
-    opacity: 80%;
-    transform: translateY(-1vh);
+[enable_hover="enable"] {
+    .ensaio_button:hover {
+        opacity: 80%;
+        transform: translateY(-1vh);
+    }
 }
-
 .ensaio_button:active {
     background: var(--active_color);
     opacity: 1;

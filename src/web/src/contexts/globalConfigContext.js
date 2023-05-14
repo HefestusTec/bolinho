@@ -26,6 +26,7 @@ export const globalConfigDefault = {
     backgroundBlur: true, // Should it blur when zooming?
     shadows: true, // Should it render shadows
     forceVirtualKeyboard: false, // Should it use the virtual keyboard as input
+    enableHover: "enable", // enable | disable
     absoluteMaximumForce: 10000,
 };
 
