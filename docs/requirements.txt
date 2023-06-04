@@ -1,5 +1,6 @@
-mkdocs
-mkdocs-material
-mkdocs-with-pdf
-mkdocs-pdf-export-plugin
-jsx-lexer
+mkdocs==1.4.2
+mkdocs-material==9.0.8
+mkdocs-with-pdf==0.9.3
+mkdocs-pdf-export-plugin==0.5.10
+jsx-lexer==2.0.0
+weasyprint==52.5
