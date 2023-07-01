@@ -1,7 +1,7 @@
-bottle
-bottle-websocket
-future
-whichcraft
-pyinstaller
-eel
+bottle==0.12.23
+bottle-websocket==0.2.9
+future==0.18.3
+whichcraft==0.6.1
+pyinstaller==5.7.0
+eel==0.15.1
 orm-sqlite

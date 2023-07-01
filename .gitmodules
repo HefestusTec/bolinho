@@ -1,0 +1,3 @@
+[submodule "granulado"]
+	path = granulado
+	url = https://github.com/HefestusTec/granulado
