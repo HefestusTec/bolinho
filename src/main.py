@@ -24,6 +24,9 @@ import expose_db, exposed_core  # não remover
 from bolinho_api.ui import ui_api
 from bolinho_api.core import core_api
 
+from granulado.core import Granulado
+from granulado import Messages
+
 parser = ArgumentParser()
 parser.add_argument(
     "-d",
@@ -76,7 +79,16 @@ def wait_for_connection():
             eel.sleep(1)
 
 
-if __name__ == "__main__":
+def main():
+    gran = Granulado()
+    while not gran.connect("COM4", 115200):
+        print("waiting for connection")
+        eel.sleep(1)
+    while True:
+        gran.process()
+        # gran.sendSerialMessage(message=Messages.PING)
+
+    return
     # system("taskkill /im chrome.exe /f") # Podemos colocar isso para fechar o chrome antes de rodar o eel
     eel.spawn(start_eel)  # Inicializando eel em outro thread
 
@@ -86,3 +98,7 @@ if __name__ == "__main__":
     # infinite loop so it doesn't close the socket
     while True:
         eel.sleep(1)
+
+
+if __name__ == "__main__":
+    main()
