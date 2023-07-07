@@ -86,14 +86,17 @@ def main():
     # You can only use front end functions after the connection
     wait_for_connection()
 
-    # infinite loop so it doesn't close the socket
     gran = Granulado()
     while not gran.connect("COM4", 115200):
         print("waiting for connection")
         eel.sleep(1)
+    doOnce = True
     while True:
         gran.process()
-        # gran.sendSerialMessage(message=Messages.PING)
+        if doOnce:
+            doOnce = False
+            gran.sendSerialMessage(message=Messages.PING)
+            gran.sendSerialMessage(message=Messages.GET_BUFFER)
 
 
 if __name__ == "__main__":

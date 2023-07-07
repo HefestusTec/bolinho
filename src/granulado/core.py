@@ -59,6 +59,7 @@ class Granulado:
     def process(self):
         if self.isConnected():
             received = self.hardware.readline()
+            decodedMessage = received.decode()
             if received:
                 print(received, flush=True)
 

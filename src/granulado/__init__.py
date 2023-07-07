@@ -19,9 +19,5 @@ from enum import StrEnum
 
 
 class Messages(StrEnum):
-    """
-    All the messages MUST be under 8bits
-    """
-
     PING = "a\n"
     GET_BUFFER = "b\n"
