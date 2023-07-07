@@ -80,15 +80,6 @@ def wait_for_connection():
 
 
 def main():
-    gran = Granulado()
-    while not gran.connect("COM4", 115200):
-        print("waiting for connection")
-        eel.sleep(1)
-    while True:
-        gran.process()
-        # gran.sendSerialMessage(message=Messages.PING)
-
-    return
     # system("taskkill /im chrome.exe /f") # Podemos colocar isso para fechar o chrome antes de rodar o eel
     eel.spawn(start_eel)  # Inicializando eel em outro thread
 
@@ -96,8 +87,13 @@ def main():
     wait_for_connection()
 
     # infinite loop so it doesn't close the socket
-    while True:
+    gran = Granulado()
+    while not gran.connect("COM4", 115200):
+        print("waiting for connection")
         eel.sleep(1)
+    while True:
+        gran.process()
+        # gran.sendSerialMessage(message=Messages.PING)
 
 
 if __name__ == "__main__":
