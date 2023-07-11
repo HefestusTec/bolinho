@@ -20,9 +20,14 @@ jobs:
           key: ${{ github.ref }}
           path: .cache
       - name: Installing dep
-        run: pip install -r docs/requirements.txt
-      - name: Building
+        run: | 
+            npm run installDep
+            pip install -r docs/requirements.txt
+
+      - name: Building Documentation
         run: mkdocs gh-deploy --force
+      - name: Building Webapp
+        run: npm run buildWeb
       - name: Add files
         run: |
             git config --global user.name 'GitHub Action'
@@ -42,8 +47,6 @@ jobs:
           python-version: 3.x
       - name: Installing dep
         run: npm run installDep
-      - name: Build binaries
-        run: npm run buildBin
       - name: Create Release
         run: |
           cp -r ./src ./Bolinho/
@@ -64,5 +67,4 @@ jobs:
           prerelease: false
           title: "Development Build"
           files: |
-            src/dist/
             ./Bolinho.zip
