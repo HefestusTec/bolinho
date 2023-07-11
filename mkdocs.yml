@@ -124,6 +124,8 @@ nav:
           - Contexts: frontEnd/contexts.md
           - Alerts: frontEnd/alerts.md
           - Styling: frontEnd/styling.md
+    - Embedded:
+          - Embedded: embedded/index.md
     - API:
           - API: api/index.md
           - Front end API: api/front_end_api.md
