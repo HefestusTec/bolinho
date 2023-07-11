@@ -85,7 +85,7 @@ def main():
 
     # You can only use front end functions after the connection
     wait_for_connection()
-
+    # infinite loop so it doesn't close the socket
     gran = Granulado()
     while not gran.connect("COM4", 115200):
         print("waiting for connection")
