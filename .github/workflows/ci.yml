@@ -20,7 +20,9 @@ jobs:
           key: ${{ github.ref }}
           path: .cache
       - name: Installing dep
-        run: pip install -r docs/requirements.txt
+        run: | 
+            npm run installDep
+            pip install -r docs/requirements.txt
       - name: Building Documentation
         run: mkdocs gh-deploy --force
       - name: Building Webapp
@@ -35,18 +37,6 @@ jobs:
             git add -A
             git diff-index --quiet HEAD ||  git commit -am "deploy files"
             git push origin gh-pages
-  release:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-python@v4
-        with:
-          python-version: 3.x
-      - name: Installing dep
-        run: | 
-            npm run installDep
-      - name: Building Webapp
-        run: npm run buildWeb
       - name: Create Release
         run: |
           cp -r ./src ./Bolinho/
@@ -68,3 +58,4 @@ jobs:
           title: "Development Build"
           files: |
             ./Bolinho.zip
+
