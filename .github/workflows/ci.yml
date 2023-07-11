@@ -49,7 +49,7 @@ jobs:
           mkdir Bolinho/src/web
           cp -r ./src/web/build ./Bolinho/src/web/build
           cp requirements.txt ./Bolinho/          
-          zip -r Bolinho(${{ github.run_number }}).zip ./Bolinho/*
+          zip -r Bolinho_${{ github.run_number }}.zip ./Bolinho/*
       - uses: "marvinpinto/action-automatic-releases@latest"
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
@@ -57,5 +57,5 @@ jobs:
           prerelease: false
           title: "Development Build ${{ github.run_number }}"
           files: |
-            ./Bolinho(${{ github.run_number }}).zip
+            ./Bolinho_${{ github.run_number }}.zip
 
