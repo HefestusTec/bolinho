@@ -4,7 +4,7 @@ Documentation of the FullStack solution **bolinho**.
 
 This documentation automatically generates a {==PDF file==} from it's content. You can download it [here](https://github.com/HefestusTec/bolinho/raw/gh-pages/pdf/document.pdf).
 
-## You can see the React [Front-end HERE!](src/web/build/index)
+## You can see the React [Front-end HERE!](https://hefestustec.github.io/bolinho/build/)
 > This is a static version of the app, without access to the server, therefore most features won't work.
 
 > !!! info
