@@ -15,10 +15,21 @@
 // You should have received a copy of the GNU General Public License
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
 
-import React from "react";
+import React, { FunctionComponent } from "react";
 import styleModule from "./buttonSingle.module.css";
 
-function ButtonSingle({
+interface ButtonSingleProps {
+    preIcon?: any;
+    postIcon?: any;
+    color?: string;
+    iconSize?: string;
+    children?: any;
+    className?: string;
+    buttonKey: string;
+    clickCallBack?: (key: string) => void;
+}
+
+const ButtonSingle: FunctionComponent<ButtonSingleProps> = ({
     preIcon,
     postIcon,
     color,
@@ -27,8 +38,8 @@ function ButtonSingle({
     className,
     buttonKey,
     clickCallBack,
-}) {
-    const buttonStyle = { "--font_color": color };
+}) => {
+    const buttonStyle = { "--font_color": color } as React.CSSProperties;
     const iconStyle = {
         color: color ? color : "#000000",
         width: iconSize ? iconSize : "1em",
@@ -65,6 +76,6 @@ function ButtonSingle({
             {createPreIcon()} {children} {createPostIcon()}
         </button>
     );
-}
+};
 
 export default ButtonSingle;

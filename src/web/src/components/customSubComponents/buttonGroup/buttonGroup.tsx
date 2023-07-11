@@ -15,11 +15,22 @@
 // You should have received a copy of the GNU General Public License
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
 
-import React from "react";
+import React, { FunctionComponent } from "react";
 import styleModule from "./buttonGroup.module.css";
 import ButtonSingle from "./buttonSingle/buttonSingle";
 
-function ButtonGroup({
+interface ButtonGroupProps {
+    currentActive: string;
+    options: string[];
+    setCurrentActive: (key: string) => void;
+    activeColor: string;
+    inactiveColor: string;
+    dividerColor: string;
+    className: string;
+    clickCallBack: (key: string) => void;
+}
+
+const ButtonGroup: FunctionComponent<ButtonGroupProps> = ({
     currentActive = "1",
     options = ["1", "2"],
     setCurrentActive,
@@ -28,20 +39,20 @@ function ButtonGroup({
     dividerColor = "",
     className = "",
     clickCallBack,
-}) {
+}) => {
     const buttonGroupStyle = {
         "--active_color": activeColor,
         "--inactive_color": inactiveColor,
         "--divider_color": dividerColor,
-    };
+    }  as React.CSSProperties;
 
-    const getClassName = (key) => {
+    const getClassName = (key: string) => {
         if (key === currentActive)
             return [styleModule.button_active, styleModule.button].join(" ");
         return styleModule.button;
     };
 
-    const iWasClicked = (key) => {
+    const iWasClicked = (key: string) => {
         if (clickCallBack !== undefined) {
             clickCallBack(key);
         } else if (setCurrentActive !== undefined) {
@@ -74,6 +85,6 @@ function ButtonGroup({
             {makeButtons()}
         </div>
     );
-}
+};
 
 export default ButtonGroup;
