@@ -42,7 +42,6 @@ jobs:
         run: |
           cp -r ./src ./Bolinho/
           rm -fr ./Bolinho/src/web
-          rm -fr ./Bolinho/src/build
           rm -fr ./Bolinho/src/dist
           rm -fr ./Bolinho/src/__pycache__
           rm -f ./Bolinho/src/.gitignore
