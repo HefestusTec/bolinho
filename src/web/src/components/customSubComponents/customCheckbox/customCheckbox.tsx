@@ -15,10 +15,22 @@
 // You should have received a copy of the GNU General Public License
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
 
-import React from "react";
+import React, { FunctionComponent } from "react";
 import styleModule from "./customCheckbox.module.css";
 
-function CustomCheckbox({ children, className, clickCallBack, checked }) {
+interface CustomCheckboxProps {
+    children: any;
+    clickCallBack: () => void;
+    className: string;
+    checked: boolean;
+}
+
+const CustomCheckbox: FunctionComponent<CustomCheckboxProps> = ({
+    children,
+    className,
+    clickCallBack,
+    checked,
+}) => {
     const getClassName = () => {
         return [styleModule.custom_checkbox_div, className].join(" ");
     };
@@ -38,6 +50,6 @@ function CustomCheckbox({ children, className, clickCallBack, checked }) {
             <input type="checkbox" checked={checked} onChange={clicked} />
         </div>
     );
-}
+};
 
 export default CustomCheckbox;

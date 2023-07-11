@@ -15,10 +15,20 @@
 // You should have received a copy of the GNU General Public License
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
 
-import React from "react";
+import React, { FunctionComponent } from "react";
 import styleModule from "./customButton.module.css";
 
-function CustomButton({ children, clickCallBack, className }) {
+interface CustomButtonProps {
+    children: any;
+    clickCallBack: (param: any) => void;
+    className: string;
+}
+
+const CustomButton: FunctionComponent<CustomButtonProps> = ({
+    children,
+    clickCallBack,
+    className,
+}) => {
     const getClassName = () => {
         return [className, styleModule.custom_button].join(" ");
     };
@@ -32,6 +42,6 @@ function CustomButton({ children, clickCallBack, className }) {
             {children}
         </button>
     );
-}
+};
 
 export default CustomButton;
