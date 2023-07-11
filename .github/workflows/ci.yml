@@ -23,20 +23,21 @@ jobs:
         run: | 
             npm run installDep
             pip install -r docs/requirements.txt
-      - name: Building Documentation
-        run: mkdocs gh-deploy --force
       - name: Building Webapp
         run: npm run buildWeb
-      - name: Add files
+      - name: Building Documentation
         run: |
-            git config --global user.name 'GitHub Action'
-            git config --global user.email 'action@github.com'
-            git fetch
-            git checkout gh-pages
-            git checkout ${GITHUB_REF##*/} -- src/web/build/.
-            git add -A
-            git diff-index --quiet HEAD ||  git commit -am "deploy files"
-            git push origin gh-pages
+            mkdocs build
+            mv -v ./src/web/build ./site/
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        # If you're changing the branch from main,
+        # also change the `main` in `refs/heads/main`
+        # below accordingly.
+        if: ${{ github.ref == 'refs/heads/main' }}
+        with:
+            github_token: ${{ secrets.GITHUB_TOKEN }}
+            publish_dir: ./site
       - name: Create Release
         run: |
           cp -r ./src ./Bolinho/
