@@ -19,6 +19,7 @@
 import { fakeEel } from "../staticDB";
 import { toast } from "react-toastify";
 import { getRandomColor } from "../helpers";
+import { GlobalConfigContextProps } from "./apiTypes";
 
 // Setting up eel and fakeEel
 export let eel = window.eel;
@@ -31,7 +32,7 @@ try {
     toast.info("Iniciando base de dados de testes");
 }
 
-export const saveConfigParams = (configParams) => {
+export const saveConfigParams = (configParams: GlobalConfigContextProps) => {
     try {
         eel.save_config_params(configParams)();
     } catch (error) {
@@ -58,19 +59,19 @@ export const getMaterialList = async () => {
     }
 };
 
-export const getExperimentDate = async (index) => {
+export const getExperimentDate = async (index: number) => {
     try {
         return JSON.parse(await eel.get_experiment_at(index)());
     } catch (error) {
         toast.error(
-            "Não foi possível encontrar a data do experimento de índice ",
-            index
+            "Não foi possível encontrar a data do experimento de índice " +
+                index
         );
         return 0;
     }
 };
 
-export const getExperimentObjectList = async (id) => {
+export const getExperimentObjectList = async (id: number) => {
     try {
         const experimentObject = JSON.parse(
             await eel.get_experiment_dict(id)()
@@ -79,18 +80,17 @@ export const getExperimentObjectList = async (id) => {
         return Object.assign(experimentObject, { color: getRandomColor() });
     } catch (error) {
         toast.error(
-            "Não foi possível encontrar a lista de experimentos de índice ",
-            id
+            "Não foi possível encontrar a lista de experimentos de índice " + id
         );
         return {};
     }
 };
 
-export const returnPromptResult = (result) => {
+export const returnPromptResult = (result: string) => {
     try {
         eel.prompt_return(result)();
     } catch (error) {
-        toast.error("Não foi possível retornar ", result);
+        toast.error("Não foi possível retornar " + result);
     }
 };
 

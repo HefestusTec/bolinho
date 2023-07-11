@@ -14,18 +14,23 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
-import { toast } from "react-toastify";
 
-export function toastErrorJS(msg) {
-    toast.error(msg);
+export function pingJS() {
+    // Ping function, returns 1 if the connection was successful
+    return 1;
 }
-try {
-    window.eel.expose(toastErrorJS, "toastErrorJS");
-} catch (error) {}
+window.eel.expose(pingJS, "pingJS");
 
-export function toastSuccessJS(msg) {
-    toast.success(msg);
+// TODO implement the function
+export function goToExperimentPageJS() {
+    // Routs to the experiment page, returns 1 if it was successful
+    alert("Go to experiment");
 }
-try {
-    window.eel.expose(toastSuccessJS, "toastSuccessJS");
-} catch (error) {}
+window.eel.expose(goToExperimentPageJS, "goToExperimentPageJS");
+
+// TODO implement the function
+export function showConnectPromptJS() {
+    // Shows the connect prompt, returns 1 if it was successful
+    alert("Show connect prompt");
+}
+window.eel.expose(showConnectPromptJS, "showConnectPromptJS");

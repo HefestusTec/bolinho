@@ -35,5 +35,15 @@ class CoreAPI:
         """
         return eel.goToExperimentPageJS()()
 
+    def show_connect_prompt(self):
+        """
+        Asks the front end to show the connection prompt.
+
+        The connection prompt is used to select the serial port.
+
+        Returns 1 if succeeded.
+        """
+        return eel.showConnectPromptJS()()
+
 
 core_api = CoreAPI()
