@@ -28,7 +28,7 @@ jobs:
       - name: Building Documentation
         run: |
             mkdocs build
-            mv -v ./src/web/build ./site/
+            cp -r ./src/web/build ./site/
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         # If you're changing the branch from main,
@@ -47,8 +47,7 @@ jobs:
           rm -f ./Bolinho/src/.gitignore
           rm -f ./Bolinho/src/*.spec
           mkdir Bolinho/src/web
-          git checkout gh-pages -- build
-          cp -r ./build/ ./Bolinho/src/web/build
+          cp -r ./src/web/build ./Bolinho/src/web/build
           cp requirements.txt ./Bolinho/          
           zip -r Bolinho.zip ./Bolinho/*
       - uses: "marvinpinto/action-automatic-releases@latest"
