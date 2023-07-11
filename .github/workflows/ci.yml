@@ -20,10 +20,7 @@ jobs:
           key: ${{ github.ref }}
           path: .cache
       - name: Installing dep
-        run: | 
-            npm run installDep
-            pip install -r docs/requirements.txt
-
+        run: pip install -r docs/requirements.txt
       - name: Building Documentation
         run: mkdocs gh-deploy --force
       - name: Building Webapp
@@ -46,7 +43,10 @@ jobs:
         with:
           python-version: 3.x
       - name: Installing dep
-        run: npm run installDep
+        run: | 
+            npm run installDep
+      - name: Building Webapp
+        run: npm run buildWeb
       - name: Create Release
         run: |
           cp -r ./src ./Bolinho/
