@@ -14,14 +14,26 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
-import React, { useMemo, lazy, Suspense } from "react";
+import React, { useMemo, lazy, Suspense, FunctionComponent } from "react";
 import styleModule from "./subPage.module.css";
 
 import BackgroundFader from "../backgroundFader/backgroundFader";
 
+type PagesEnum = "Início" | "Calibrar" | "Controlar" | "Configurar" | "Sobre";
+
 const ConfigPage = lazy(() => import("../configPage/configPage"));
 
-export default function SubPage({ myPage, currentPage, setCurrentPage }) {
+interface SubPageProps {
+    myPage: PagesEnum;
+    currentPage: PagesEnum;
+    setCurrentPage: (page: PagesEnum) => void;
+}
+
+const SubPage: FunctionComponent<SubPageProps> = ({
+    myPage,
+    currentPage,
+    setCurrentPage,
+}) => {
     const getPage = useMemo(() => {
         switch (myPage) {
             case "Início":
@@ -66,4 +78,6 @@ export default function SubPage({ myPage, currentPage, setCurrentPage }) {
     }, [currentPage, myPage, getPage, setCurrentPage]);
 
     return createSubPage;
-}
+};
+
+export default SubPage;

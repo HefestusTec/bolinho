@@ -14,9 +14,23 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
-import { createContext } from "react";
+import { Dispatch, SetStateAction, createContext } from "react";
 
-export const globalConfigDefault = {
+interface GlobalConfigContextProps {
+    configVersion: number; // Version number of the config file
+    theme: "Claro" | "Escuro" | "Meia Noite"; // Claro | Escuro | Meia Noite
+    animationSpeed: "Rápido" | "Normal" | "Desligado"; // Rápido | Normal | Desligado
+    fontSize: "50%" | "75% " | "100%" | "125%" | "150%" | "200%"; // 50% | 75% | 100% | 125% | 150% | 200%
+    enableZoom: boolean; // Should zooming be enable?
+    zoomDelay: number; // How long [ms] should I press to zoom
+    backgroundBlur: boolean; // Should it blur when zooming?
+    shadows: boolean; // Should it render shadows
+    forceVirtualKeyboard: boolean; // Should it use the virtual keyboard as input
+    enableHover: "enable" | "disable";
+    absoluteMaximumForce: number;
+}
+
+export const globalConfigDefault: GlobalConfigContextProps = {
     configVersion: 1, // Version number of the config file
     theme: "Claro", // Claro | Escuro | Meia Noite
     animationSpeed: "Normal", // Rápido | Normal | Desligado
@@ -30,6 +44,11 @@ export const globalConfigDefault = {
     absoluteMaximumForce: 10000,
 };
 
-const GlobalConfigContext = createContext([globalConfigDefault, () => {}]);
+const GlobalConfigContext = createContext<
+    [
+        GlobalConfigContextProps,
+        Dispatch<SetStateAction<GlobalConfigContextProps>>
+    ]
+>([globalConfigDefault, () => {}]);
 
 export default GlobalConfigContext;

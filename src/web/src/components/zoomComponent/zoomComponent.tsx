@@ -14,16 +14,22 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
-import React, { useState, useContext, useMemo } from "react";
+import React, { useState, useContext, useMemo, FunctionComponent } from "react";
 import { useLongPress } from "use-long-press";
 import GlobalConfigContext from "../../contexts/globalConfigContext";
 import BackgroundFader from "../backgroundFader/backgroundFader";
 
-export default function ZoomComponent({
+interface ZoomComponentProps {
+    scaleOrigin: string;
+    className: string;
+    children: any;
+}
+
+const ZoomComponent: FunctionComponent<ZoomComponentProps> = ({
     scaleOrigin = "top",
     className = "",
     children,
-}) {
+}) => {
     const [globalConfig] = useContext(GlobalConfigContext);
     const [isActive, setIsActive] = useState(false);
     const [canZoom, setCanZoom] = useState(true);
@@ -49,13 +55,15 @@ export default function ZoomComponent({
         setIsActive(false);
     };
 
-    const scrolled = (event) => {
+    const scrolled = (event: any) => {
         if (event) {
             setCanZoom(false);
         }
     };
 
-    const transitioned = (property) => {
+    const transitioned = (property: React.TransitionEvent<HTMLDivElement>) => {
+        console.log(property.propertyName);
+        // property.propertyName
         if (property.propertyName === "transform") {
             if (!isActive) setZIndexVal("inherit");
             else setZIndexVal("10");
@@ -100,4 +108,6 @@ export default function ZoomComponent({
             {createFallBack}
         </>
     );
-}
+};
+
+export default ZoomComponent;
