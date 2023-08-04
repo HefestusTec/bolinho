@@ -21,12 +21,12 @@ import MaterialSelectorButton from "./materialSelectorButton/materialSelectorBut
 
 function MaterialSelector({ materialList }) {
     //const [graphData, setGraphData] = useState(makeConstData());
-    const createButton = (material) => {
+    const createButton = (material, idx) => {
         return (
             <MaterialSelectorButton
-                key={material.name.toString()}
+                key={"m_" + material.name.toString() + idx}
                 material={material}
-            ></MaterialSelectorButton>
+            />
         );
     };
 
@@ -34,8 +34,8 @@ function MaterialSelector({ materialList }) {
         let buttonArray = [];
 
         try {
-            materialList.forEach((element) => {
-                buttonArray.push(createButton(element));
+            materialList.forEach((element, idx) => {
+                buttonArray.push(createButton(element, idx));
             });
         } catch (error) {}
         return buttonArray;

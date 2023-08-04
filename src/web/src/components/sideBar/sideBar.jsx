@@ -91,7 +91,10 @@ export default function SideBar({ currentPage, setCurrentPage, pageList }) {
             <Header />
             <ul className={styleModule.side_bar_button_ul}>
                 {pageList.map((bName) => (
-                    <li key={bName} className={styleModule.side_bar_button_li}>
+                    <li
+                        key={"side_b_" + bName}
+                        className={styleModule.side_bar_button_li}
+                    >
                         {createButton(bName)}
                     </li>
                 ))}

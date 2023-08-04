@@ -19,18 +19,24 @@ export function pingJS() {
     // Ping function, returns 1 if the connection was successful
     return 1;
 }
-window.eel.expose(pingJS, "pingJS");
+try {
+    window.eel.expose(pingJS, "pingJS");
+} catch (error) {}
 
 // TODO implement the function
 export function goToExperimentPageJS() {
     // Routs to the experiment page, returns 1 if it was successful
     alert("Go to experiment");
 }
-window.eel.expose(goToExperimentPageJS, "goToExperimentPageJS");
+try {
+    window.eel.expose(goToExperimentPageJS, "goToExperimentPageJS");
+} catch (error) {}
 
 // TODO implement the function
 export function showConnectPromptJS() {
     // Shows the connect prompt, returns 1 if it was successful
     alert("Show connect prompt");
 }
-window.eel.expose(showConnectPromptJS, "showConnectPromptJS");
+try {
+    window.eel.expose(showConnectPromptJS, "showConnectPromptJS");
+} catch (error) {}

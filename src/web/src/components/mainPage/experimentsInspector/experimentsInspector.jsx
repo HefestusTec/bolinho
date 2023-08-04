@@ -30,13 +30,14 @@ export default function ExperimentsInspector() {
     const [activeTriplet, setActiveTriplet] = useState(null);
     const [colorPickerIsActive, setColorPickerIsActive] = useState(false);
 
-    const createButton = (object) => {
+    const createButton = (object, idx) => {
         return (
             <ExperimentButton
                 object={object}
                 materialName={object.material.name}
                 activeTriplet={activeTriplet}
                 setActiveTriplet={setActiveTriplet}
+                key={object.material.name.toString() + idx}
             ></ExperimentButton>
         );
     };
@@ -44,8 +45,8 @@ export default function ExperimentsInspector() {
     const makeButtons = () => {
         let buttonArray = [];
         try {
-            objectList.forEach((element) => {
-                buttonArray.push(createButton(element));
+            objectList.forEach((element, idx) => {
+                buttonArray.push(createButton(element, idx));
             });
         } catch (error) {}
         return buttonArray;
