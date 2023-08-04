@@ -69,7 +69,10 @@ function App() {
     } catch (error) {}
 
     const callPrompter = () => {
-        promptUserJS("Descrição", ["sim", "não", "talvez", "não", "talvez"]);
+        promptUserJS(
+            "Descriçãoa sdasssssssssssssssss asdasssssssssssssssssssasd asd as das das da sd Descriçãoa sdasssssssssssssssss asdasssssssssssssssssssasd asd as das das da sdDescriçãoa sdasssssssssssssssss asdasssssssssssssssssssasd asd as das das da sdDescriçãoa sdasssssssssssssssss asdasssssssssssssssssssasd asd as das das da sdDescriçãoa sdasssssssssssssssss asdasssssssssssssssssssasd asd as das das da sdDescriçãoa sdasssssssssssssssss asdasssssssssssssssssssasd asd as das das da sd",
+            ["SIM", "NÃO", "TALVEZ", "NÃO", "TALVEZ"]
+        );
     };
     const toggleKeyboard = () => {
         setVKeyboard(!vKeyboard);

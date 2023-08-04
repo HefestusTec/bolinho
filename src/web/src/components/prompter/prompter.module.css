@@ -20,32 +20,72 @@
 
 .prompter_div {
     position: absolute;
+    display: flex;
     background-color: var(--primary_color);
     bottom: 5%;
     top: 5%;
     left: 5%;
     right: 5%;
     z-index: 80;
+    border: 15px solid var(--primary_color);
+    border-radius: 20px;
     overflow: hidden;
+    align-items: center;
+}
+.prompter_content {
+    background-color: var(--content_background_color);
+    border-radius: 20px;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.prompter_title {
+    width: 100%;
+    height: 10%;
+    display: flex;
+    justify-content: center;
+}
+.prompter_title_h1 {
+    height: fit-content;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 10px;
+    border-radius: 0px 0px 20px 20px;
+    font-weight: 700;
+
+    color: var(--font_color_inverted);
+    font-size: var(--font_l);
+    background-color: var(--primary_color);
 }
 .description_div {
-    width: 100%;
-    height: 80%;
+    width: 97%;
+    height: 65%;
     display: flex;
     justify-content: center;
     align-items: center;
+    border-radius: 20px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
+
+    background-color: var(--background_color);
+}
+.description_p {
+    padding: 2%;
+    color: var(--font_color);
+    font-size: var(--font_xxs);
 }
 .options_div {
     width: 100%;
-    position: absolute;
-    height: stretch;
+    height: 25%;
     display: grid;
     grid-template-columns: repeat(5, 1fr);
-    gap: 5%;
     align-items: center;
 }
 
 .option_button {
-    padding: 5%;
-    margin: 10px;
+    background: var(--positive_button_color) !important;
+    color: var(--font_color_inverted) !important;
+    height: 60%;
 }

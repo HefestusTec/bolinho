@@ -60,9 +60,20 @@ const Prompter: FunctionComponent<PrompterProps> = ({
                 callbackFunc={backgroundCallback}
             ></BackgroundFader>
             <div className={styleModule.prompter_div}>
-                <div className={styleModule.description_div}>{description}</div>
-                <div className={styleModule.options_div}>
-                    {makeOptionsButtons()}
+                <div className={styleModule.prompter_content}>
+                    <div className={styleModule.prompter_title}>
+                        <div className={styleModule.prompter_title_h1}>
+                            Mensagem obrigatória
+                        </div>
+                    </div>
+                    <div className={styleModule.description_div}>
+                        <p className={styleModule.description_p}>
+                            {description}
+                        </p>
+                    </div>
+                    <div className={styleModule.options_div}>
+                        {makeOptionsButtons()}
+                    </div>
                 </div>
             </div>
         </React.Fragment>
