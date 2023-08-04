@@ -40,7 +40,7 @@ export default function ThemeSelector({ className, scaleOrigin }) {
                     currentActive={currentActive}
                     clickCallBack={clickCallBack}
                     options={themes}
-                ></ButtonGroup>
+                />
             </ContainerComponent>
         </ZoomComponent>
     );

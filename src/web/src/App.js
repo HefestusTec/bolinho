@@ -19,7 +19,7 @@ import("./api/linker");
 function App() {
     const [globalConfig, setGlobalConfig] = useState(globalConfigDefault);
     const [prompter, setPrompter] = useState();
-    const [doOnce, setDoOnce] = useState(true);
+    const [initialized, setInitialized] = useState(false);
 
     try {
         function getConfigJS() {
@@ -31,26 +31,21 @@ function App() {
     const [vKeyboard, setVKeyboard] = useState(false);
     const [enableHover, setEnableHover] = useState(globalConfig.enableHover);
 
-    useEffect(() => {
-        if (doOnce) {
-            // Loading the config params from the file
-            loadConfigParams().then((response) => {
-                if (response === 0) return;
-                if (response.configVersion >= globalConfig.configVersion) {
-                    setGlobalConfig(response);
-                    return;
-                }
-                saveConfigParams(globalConfig);
-            });
-            setDoOnce(false);
-        }
-    }, [globalConfig, doOnce]);
-
     // Updating the save file every time global config is changed
     useEffect(() => {
-        setEnableHover(globalConfig.enableHover);
-        saveConfigParams(globalConfig);
-    }, [globalConfig]);
+        if (initialized) {
+            setEnableHover(globalConfig.enableHover);
+            saveConfigParams(globalConfig);
+        } else {
+            // Loading the config params from the file
+            loadConfigParams().then((response) => {
+                if (response) {
+                    setGlobalConfig(response);
+                }
+            });
+            setInitialized(true);
+        }
+    }, [globalConfig, initialized]);
 
     const getAppClassName = () => {
         if (globalConfig.shadows) return "App";

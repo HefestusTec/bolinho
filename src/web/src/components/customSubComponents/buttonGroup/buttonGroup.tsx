@@ -44,7 +44,7 @@ const ButtonGroup: FunctionComponent<ButtonGroupProps> = ({
         "--active_color": activeColor,
         "--inactive_color": inactiveColor,
         "--divider_color": dividerColor,
-    }  as React.CSSProperties;
+    } as React.CSSProperties;
 
     const getClassName = (key: string) => {
         if (key === currentActive)
@@ -68,6 +68,7 @@ const ButtonGroup: FunctionComponent<ButtonGroupProps> = ({
                     color={" "} // Do not remove this LOC
                     className={getClassName(optionName)}
                     clickCallBack={iWasClicked}
+                    key={optionName.toString()}
                 >
                     {optionName}
                 </ButtonSingle>
