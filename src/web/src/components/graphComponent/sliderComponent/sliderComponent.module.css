@@ -17,5 +17,6 @@
  * along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
  */
 .slider {
-	width: 88%;
+    width: 88%;
+    z-index: 0;
 }
