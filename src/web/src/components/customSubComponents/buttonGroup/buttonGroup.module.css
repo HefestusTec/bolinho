@@ -26,7 +26,7 @@
 .button:active {
     background-color: var(--active_color);
 }
-[enable_hover="enable"] {
+[enable-hover="enable"] {
     .button:hover {
         width: 85%;
         border: 1px solid var(--font_color);

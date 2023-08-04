@@ -28,4 +28,5 @@ export interface GlobalConfigContextProps {
     enableHover: "enable" | "disable";
     absoluteMaximumForce: number;
     port: string;
+    animateGraph: boolean;
 }

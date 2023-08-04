@@ -30,6 +30,7 @@ export const globalConfigDefault: GlobalConfigContextProps = {
     enableHover: "enable", // enable | disable
     absoluteMaximumForce: 10000,
     port: "",
+    animateGraph: true,
 };
 
 const GlobalConfigContext = createContext<

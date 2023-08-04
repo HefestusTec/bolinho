@@ -63,7 +63,7 @@
     background-size: 80%;
     transition-duration: var(--animation_fast);
 }
-[enable_hover="enable"] {
+[enable-hover="enable"] {
     .open_side_bar_button:hover {
         background-size: 90%;
         cursor: pointer;

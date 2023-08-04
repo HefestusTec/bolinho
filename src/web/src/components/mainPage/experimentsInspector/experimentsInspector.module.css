@@ -54,7 +54,7 @@
     background-repeat: no-repeat;
     transition-duration: var(--animation_fast);
 }
-[enable_hover="enable"] {
+[enable-hover="enable"] {
     .delete_material_button:hover {
         transform: translateY(-0.5vh);
     }
@@ -98,7 +98,7 @@
     transition-duration: var(--animation_fast);
     cursor: pointer;
 }
-[enable_hover="enable"] {
+[enable-hover="enable"] {
     .material_inspector_header_color:hover {
         width: 85px;
     }

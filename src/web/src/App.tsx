@@ -18,13 +18,15 @@ import("./api/linker");
 
 function App() {
     const [globalConfig, setGlobalConfig] = useState(globalConfigDefault);
-    const [prompter, setPrompter] = useState();
+    const [prompter, setPrompter] = useState<JSX.Element | undefined>(
+        undefined
+    );
     const [initialized, setInitialized] = useState(false);
 
     try {
-        function getConfigJS() {
+        const getConfigJS = () => {
             return globalConfig;
-        }
+        };
         window.eel.expose(getConfigJS, "getConfigJS");
     } catch (error) {}
 
@@ -51,7 +53,7 @@ function App() {
         if (globalConfig.shadows) return "App";
         return ["App", "disable_shadows"].join(" ");
     };
-    function promptUserJS(description, options) {
+    function promptUserJS(description: string, options: string[]) {
         // Creates a prompt
         setPrompter(
             <Prompter
@@ -80,11 +82,11 @@ function App() {
         <GlobalConfigContext.Provider value={[globalConfig, setGlobalConfig]}>
             <div
                 className={getAppClassName()}
-                data_theme={globalConfig.theme}
-                animation_speed={globalConfig.animationSpeed}
-                animate_graph={globalConfig.animateGraph}
-                font_size={globalConfig.fontSize}
-                enable_hover={enableHover}
+                data-theme={globalConfig.theme}
+                animation-speed={globalConfig.animationSpeed}
+                animate-graph={globalConfig.animateGraph}
+                font-size={globalConfig.fontSize}
+                enable-hover={enableHover}
             >
                 {getVirtualKeyboard()}
                 {prompter}
