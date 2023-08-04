@@ -18,8 +18,7 @@ import React, { useMemo, lazy, Suspense, FunctionComponent } from "react";
 import styleModule from "./subPage.module.css";
 
 import BackgroundFader from "../backgroundFader/backgroundFader";
-
-type PagesEnum = "Início" | "Calibrar" | "Controlar" | "Configurar" | "Sobre";
+import { PagesEnum } from "types/PagesEnum";
 
 const ConfigPage = lazy(() => import("../configPage/configPage"));
 

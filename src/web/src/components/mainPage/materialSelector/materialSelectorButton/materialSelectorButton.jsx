@@ -68,7 +68,10 @@ export default function MaterialSelectorButton({ material }) {
     };
 
     return (
-        <li key={material.index} className={styleModule.material_selector_li}>
+        <li
+            key={"mat_idx_" + material.index}
+            className={styleModule.material_selector_li}
+        >
             <button
                 className={getButtonClassName()}
                 aria-label="Material Selector"

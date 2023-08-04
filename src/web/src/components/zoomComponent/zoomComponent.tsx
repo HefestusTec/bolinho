@@ -62,8 +62,6 @@ const ZoomComponent: FunctionComponent<ZoomComponentProps> = ({
     };
 
     const transitioned = (property: React.TransitionEvent<HTMLDivElement>) => {
-        console.log(property.propertyName);
-        // property.propertyName
         if (property.propertyName === "transform") {
             if (!isActive) setZIndexVal("inherit");
             else setZIndexVal("10");
