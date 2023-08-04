@@ -24,7 +24,7 @@
     overflow: hidden;
     text-overflow: ellipsis;
 }
-[enable_hover="enable"] {
+[enable-hover="enable"] {
     .custom_button:hover {
         background-color: var(--background_color);
         cursor: pointer;

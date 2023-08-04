@@ -35,7 +35,7 @@
     display: flex;
     cursor: pointer;
 }
-[enable_hover="enable"] {
+[enable-hover="enable"] {
     .custom_list_selector:hover {
         background-color: var(--background_color);
         cursor: pointer;

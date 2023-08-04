@@ -38,7 +38,7 @@
     grid-template-columns: repeat(var(--num_columns), 1fr);
     grid-template-rows: repeat(var(--num_rows), 1fr);
 }
-[enable_hover="enable"] {
+[enable-hover="enable"] {
     .ensaio_button:hover {
         opacity: 80%;
         transform: translateY(-1vh);

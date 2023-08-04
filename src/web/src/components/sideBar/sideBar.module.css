@@ -91,7 +91,7 @@
     cursor: pointer;
 }
 
-[enable_hover="enable"] {
+[enable-hover="enable"] {
     .side_bar_button_inactive:hover {
         background-color: var(--background_color);
         width: 90%;

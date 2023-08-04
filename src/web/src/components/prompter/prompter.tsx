@@ -14,26 +14,31 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
-import React from "react";
+import React, { Dispatch, FunctionComponent, SetStateAction } from "react";
 import styleModule from "./prompter.module.css";
 import BackgroundFader from "../backgroundFader/backgroundFader";
 import { toast } from "react-toastify";
 import CustomButton from "../customSubComponents/customButton/customButton";
 import { returnPromptResult } from "../../api/backend-api";
 
-export default function Prompter({
+interface PrompterProps {
+    description: string;
+    options: string[];
+    myStateSetter: Dispatch<SetStateAction<JSX.Element | undefined>>;
+}
+
+const Prompter: FunctionComponent<PrompterProps> = ({
     description = "Nada aqui...",
     options,
     myStateSetter,
-}) {
+}) => {
     const backgroundCallback = () => {
         toast.error("É preciso selecionar uma opção.");
     };
-    const optionsButtonClicked = (key) => {
-        // Calls a function in python that returns the choice
+    const optionsButtonClicked = (key: string) => {
         returnPromptResult(key);
 
-        myStateSetter();
+        myStateSetter(undefined);
     };
 
     const makeOptionsButtons = () => {
@@ -55,11 +60,24 @@ export default function Prompter({
                 callbackFunc={backgroundCallback}
             ></BackgroundFader>
             <div className={styleModule.prompter_div}>
-                <div className={styleModule.description_div}>{description}</div>
-                <div className={styleModule.options_div}>
-                    {makeOptionsButtons()}
+                <div className={styleModule.prompter_content}>
+                    <div className={styleModule.prompter_title}>
+                        <div className={styleModule.prompter_title_h1}>
+                            Mensagem obrigatória
+                        </div>
+                    </div>
+                    <div className={styleModule.description_div}>
+                        <p className={styleModule.description_p}>
+                            {description}
+                        </p>
+                    </div>
+                    <div className={styleModule.options_div}>
+                        {makeOptionsButtons()}
+                    </div>
                 </div>
             </div>
         </React.Fragment>
     );
-}
+};
+
+export default Prompter;
