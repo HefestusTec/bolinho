@@ -27,6 +27,7 @@ import { startExperimentRoutineJS } from "../../api/backend-api";
 
 //import GlobalConfigContext from "../../contexts/globalConfigContext";
 import SelectedObjectsContext from "./contexts/selectedObjectsContext";
+import BigButton from "components/customSubComponents/BigButton/BigButton";
 
 export default function MainPage({ materialList }) {
     //const [graphData, setGraphData] = useState(makeConstData());
@@ -64,12 +65,12 @@ export default function MainPage({ materialList }) {
                     <ExtraOptions />
                 </ZoomComponent>
                 <div className={styleModule.ensaio_button_div}>
-                    <button
-                        className={styleModule.ensaio_button}
-                        onClick={startExperimentRoutineJS}
-                    >
-                        ENSAIO
-                    </button>
+                    <BigButton
+                        clickCallBack={startExperimentRoutineJS}
+                        buttonText="ENSAIO"
+                        bgColor="var(--positive_button_color)"
+                        height="50%"
+                    />
                 </div>
             </div>
         </SelectedObjectsContext.Provider>

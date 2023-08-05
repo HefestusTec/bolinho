@@ -15,10 +15,13 @@
 // You should have received a copy of the GNU General Public License
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
 
-import { endExperimentRoutineJS } from "api/backend-api";
 import { FunctionComponent } from "react";
 import ExperimentSideBar from "./ExperimentSideBar/ExperimentSideBar";
 import styleModule from "./Experiment.module.css";
+import ZoomComponent from "components/zoomComponent/zoomComponent";
+import GraphComponent from "components/graphComponent/graphComponent";
+import ContainerComponent from "components/containerComponent/containerComponent";
+import MainMonitor from "./MainMonitor/MainMonitor";
 
 interface ExperimentProps {}
 
@@ -26,8 +29,26 @@ const Experiment: FunctionComponent<ExperimentProps> = () => {
     return (
         <div className={styleModule.experiment_div}>
             <ExperimentSideBar />
-            <h1>EXPERIMENT</h1>
-            <button onClick={endExperimentRoutineJS}>ENCERRAR</button>
+            <div className={styleModule.experiment_content}>
+                <MainMonitor
+                    className={styleModule.main_monitor}
+                    scaleOrigin="top left"
+                />
+                <ZoomComponent
+                    className={styleModule.graph_component}
+                    scaleOrigin="top right"
+                >
+                    <GraphComponent experimentList={[]} />
+                </ZoomComponent>
+                <ZoomComponent
+                    className={styleModule.experiment_parameters}
+                    scaleOrigin="bottom left"
+                >
+                    <ContainerComponent headerText="Parâmetros do ensaio">
+                        asdasdasdasdasd
+                    </ContainerComponent>
+                </ZoomComponent>
+            </div>
         </div>
     );
 };

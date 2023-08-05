@@ -16,35 +16,30 @@
  * You should have received a copy of the GNU General Public License
  * along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
  */
-@import url(../../variables.css);
 
-.container_div {
-    height: stretch;
-    border-radius: 15px;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    background-color: var(--primary_color);
-    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
-}
-.container_header {
-    background-color: var(--primary_color);
-    height: 7vh;
-    color: var(--font_color_inverted);
-    font-size: var(--font_m);
-    font-weight: bold;
-    display: flex;
-    align-items: center;
-    padding-left: 10%;
-}
+@import url(../../../variables.css);
 
-.container_content {
-    height: stretch;
+.main_monitor_div {
     background-color: var(--background_color);
-    padding-right: 4%;
-    border-radius: 15px 15px 0 0;
+    padding-top: 4vh;
+    padding-bottom: 4vh;
+    padding-left: 3vw;
+    padding-right: 3vw;
+    justify-content: space-around;
+    border-radius: 20px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
+    display: flex;
     flex-direction: column;
-    overflow-y: scroll;
-    box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
-    padding-top: 2vh;
+    gap: 9%;
+}
+
+.force_monitor_div {
+    height: 100%;
+    border-radius: 15px;
+    background-color: var(--background2_color);
+    box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.25) inset;
+}
+
+.end_experiment_button {
+    background-color: var(--negative_button_color);
 }

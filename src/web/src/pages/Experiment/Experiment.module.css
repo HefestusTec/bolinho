@@ -20,4 +20,32 @@
 
 .experiment_div {
     display: flex;
+    width: 100%;
+}
+
+.experiment_content {
+    margin: 1%;
+    display: grid;
+    width: stretch;
+    gap: 1.5%;
+    grid-template-columns: repeat(var(--num_columns), 1fr);
+    grid-template-rows: repeat(var(--num_rows), 1fr);
+}
+
+.main_monitor {
+    grid-column: span 4;
+    grid-row: span 8;
+    order: 0;
+}
+
+.graph_component {
+    grid-column: span 9;
+    grid-row: span 8;
+    order: 1;
+}
+
+.experiment_parameters {
+    grid-column: span 4;
+    grid-row: span 5;
+    order: 2;
 }
