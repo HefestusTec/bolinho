@@ -17,12 +17,15 @@
 
 import { endExperimentRoutineJS } from "api/backend-api";
 import { FunctionComponent } from "react";
+import ExperimentSideBar from "./ExperimentSideBar/ExperimentSideBar";
+import styleModule from "./Experiment.module.css";
 
 interface ExperimentProps {}
 
 const Experiment: FunctionComponent<ExperimentProps> = () => {
     return (
-        <div>
+        <div className={styleModule.experiment_div}>
+            <ExperimentSideBar />
             <h1>EXPERIMENT</h1>
             <button onClick={endExperimentRoutineJS}>ENCERRAR</button>
         </div>

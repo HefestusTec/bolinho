@@ -16,7 +16,7 @@ import Home from "pages/Home";
 import CurrentPageProvider from "contexts/currentPageContext";
 import { PageType } from "types/PageType";
 import { setCurrentPageCallBack } from "api/exp-core-api";
-import Experiment from "pages/Experiment";
+import Experiment from "pages/Experiment/Experiment";
 
 import("./api/linker");
 
