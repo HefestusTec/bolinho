@@ -44,6 +44,16 @@ try {
 } catch (error) {}
 
 // TODO implement the function
+export function goToHomePageJS() {
+    // Routs to the experiment page, returns 1 if it was successful
+    if (setCurrentPage == null) return;
+    setCurrentPage("home");
+}
+try {
+    window.eel.expose(goToHomePageJS, "goToHomePageJS");
+} catch (error) {}
+
+// TODO implement the function
 export function showConnectPromptJS() {
     // Shows the connect prompt, returns 1 if it was successful
     alert("Show connect prompt");

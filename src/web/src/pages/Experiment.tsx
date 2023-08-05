@@ -15,12 +15,18 @@
 // You should have received a copy of the GNU General Public License
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
 
+import { endExperimentRoutineJS } from "api/backend-api";
 import { FunctionComponent } from "react";
 
 interface ExperimentProps {}
 
 const Experiment: FunctionComponent<ExperimentProps> = () => {
-    return <h1>EXPERIMENT</h1>;
+    return (
+        <div>
+            <h1>EXPERIMENT</h1>
+            <button onClick={endExperimentRoutineJS}>ENCERRAR</button>
+        </div>
+    );
 };
 
 export default Experiment;

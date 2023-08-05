@@ -60,6 +60,21 @@ def start_experiment_routine():
 
 
 @eel.expose
+def end_experiment_routine():
+    """
+    The front end will call this function when the user click to end experiment.
+
+    The backend **MUST** send a command to change to the home page.
+
+    Returns 1 if succeeded.
+    """
+
+    # TODO Add implementation
+    core_api.go_to_home_page()
+    return 1
+
+
+@eel.expose
 def prompt_return(
     return_value,
 ):
