@@ -13,6 +13,9 @@
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
+
+import { goToExperimentPageJS, goToHomePageJS } from "api/exp-core-api";
+
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
 var _pj;
 
@@ -318,6 +321,12 @@ export class fakeEel {
 
             return JSON.stringify(pair);
         };
+    }
+    start_experiment_routine() {
+        goToExperimentPageJS();
+    }
+    end_experiment_routine() {
+        goToHomePageJS();
     }
 }
 
