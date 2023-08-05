@@ -15,6 +15,16 @@
 // You should have received a copy of the GNU General Public License
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
 
+import { Dispatch, SetStateAction } from "react";
+import { PageType } from "types/PageType";
+
+let setCurrentPage: Dispatch<SetStateAction<PageType>> | null = null;
+
+export function setCurrentPageCallBack(
+    callback: Dispatch<SetStateAction<PageType>>
+) {
+    setCurrentPage = callback;
+}
 export function pingJS() {
     // Ping function, returns 1 if the connection was successful
     return 1;
@@ -26,7 +36,8 @@ try {
 // TODO implement the function
 export function goToExperimentPageJS() {
     // Routs to the experiment page, returns 1 if it was successful
-    alert("Go to experiment");
+    if (setCurrentPage == null) return;
+    setCurrentPage("experiment");
 }
 try {
     window.eel.expose(goToExperimentPageJS, "goToExperimentPageJS");

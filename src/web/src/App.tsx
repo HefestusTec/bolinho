@@ -13,6 +13,10 @@ import GlobalConfigContext, {
 import Prompter from "./components/prompter/prompter";
 import VirtualInput from "./components/virtualInput/virtualInput";
 import Home from "pages/Home";
+import CurrentPageProvider from "contexts/currentPageContext";
+import { PageType } from "types/PageType";
+import { setCurrentPageCallBack } from "api/exp-core-api";
+import Experiment from "pages/Experiment";
 
 import("./api/linker");
 
@@ -32,6 +36,16 @@ function App() {
 
     const [vKeyboard, setVKeyboard] = useState(false);
     const [enableHover, setEnableHover] = useState(globalConfig.enableHover);
+
+    const [currentPage, setCurrentPage] = useState<PageType>("home");
+
+    useEffect(() => {
+        setCurrentPageCallBack(setCurrentPage);
+    }, []);
+
+    useEffect(() => {
+        console.log(currentPage);
+    }, [currentPage]);
 
     // Updating the save file every time global config is changed
     useEffect(() => {
@@ -83,28 +97,32 @@ function App() {
     };
     return (
         <GlobalConfigContext.Provider value={[globalConfig, setGlobalConfig]}>
-            <div
-                className={getAppClassName()}
-                data-theme={globalConfig.theme}
-                animation-speed={globalConfig.animationSpeed}
-                animate-graph={globalConfig.animateGraph}
-                font-size={globalConfig.fontSize}
-                enable-hover={enableHover}
-            >
-                {getVirtualKeyboard()}
-                {prompter}
-                <Home />
+            <CurrentPageProvider>
                 <div
-                    style={{
-                        position: "absolute",
-                        zIndex: 300,
-                    }}
+                    className={getAppClassName()}
+                    data-theme={globalConfig.theme}
+                    animation-speed={globalConfig.animationSpeed}
+                    animate-graph={globalConfig.animateGraph}
+                    font-size={globalConfig.fontSize}
+                    enable-hover={enableHover}
                 >
-                    <button onClick={callPrompter}>Propmt</button>{" "}
-                    <button onClick={toggleKeyboard}>Toggle keyboard</button>{" "}
+                    {getVirtualKeyboard()}
+                    {prompter}
+                    {currentPage === "home" ? <Home /> : <Experiment />}
+                    <div
+                        style={{
+                            position: "absolute",
+                            zIndex: 300,
+                        }}
+                    >
+                        <button onClick={callPrompter}>Propmt</button>{" "}
+                        <button onClick={toggleKeyboard}>
+                            Toggle keyboard
+                        </button>
+                    </div>
                 </div>
-            </div>
-            <ToastContainer className="toast_notify" transition={Zoom} />
+                <ToastContainer className="toast_notify" transition={Zoom} />
+            </CurrentPageProvider>
         </GlobalConfigContext.Provider>
     );
 }

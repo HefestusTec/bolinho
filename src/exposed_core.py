@@ -49,10 +49,12 @@ def start_experiment_routine():
     """
     The front end will call this function when the user click to start experiment.
 
-    The back end **MUST** send a command to change to the experiment page.
+    The backend **MUST** send a command to change to the experiment page.
 
     Returns 1 if succeeded.
     """
+
+    # TODO Add implementation
     core_api.go_to_experiment_page()
     return 1
 
