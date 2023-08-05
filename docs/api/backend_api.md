@@ -88,12 +88,30 @@ This page gathers all the API calls that can be used by the front end.
 ### `#!javaScript startExperimentRoutineJS()`:
 !!! quote ""
 
-    **TODO**
+    This function calls the `start_experiment_routine()` on the backend.
+
+    Usually it should be used to handle when the user press a "start experiment" button or something similar.
     
     ``` javaScript title="React usage example"
     import { getMaterialList } from "./api/backend-api";
     
     onClick(()=>{
         startExperimentRoutineJS();
+    };)
+    ```
+
+
+### `#!javaScript endExperimentRoutineJS()`:
+!!! quote ""
+
+    This function calls the `end_experiment_routine()` on the backend.
+
+    Usually it should be used to handle when the user press a "end experiment" button or something similar.
+    
+    ``` javaScript title="React usage example"
+    import { getMaterialList } from "./api/backend-api";
+    
+    onClick(()=>{
+        endExperimentRoutineJS();
     };)
     ```

@@ -84,6 +84,21 @@ The JavaScript file can be found in the api folder.
         core_api.go_to_experiment_page()
     ```
 
+### `#!python def go_to_home_page()`:
+!!! quote ""
+
+    Asks the front end to go to the home page.
+
+    Returns 1 if succeeded.
+
+    ``` python title="Python usage example"
+    from bolinho_api.core import core_api
+
+    change_pages = True
+    if change_pages:
+        core_api.go_to_home_page()
+    ```
+
 ### `#!python def show_connect_prompt()`:
 !!! quote ""
 

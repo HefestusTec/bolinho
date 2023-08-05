@@ -29,11 +29,19 @@ class CoreAPI:
 
     def go_to_experiment_page(self):
         """
-        Asks the front end to go to the experiment page.
+        Asks the frontend to go to the experiment page.
 
         Returns 1 if succeeded.
         """
         return eel.goToExperimentPageJS()()
+
+    def go_to_home_page(self):
+        """
+        Asks the frontend to go to the home page.
+
+        Returns 1 if succeeded.
+        """
+        return eel.goToHomePageJS()()
 
     def show_connect_prompt(self):
         """

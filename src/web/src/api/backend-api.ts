@@ -102,3 +102,12 @@ export const startExperimentRoutineJS = async () => {
         return 0;
     }
 };
+
+export const endExperimentRoutineJS = async () => {
+    try {
+        return await eel.end_experiment_routine()();
+    } catch (error) {
+        toast.error("Não foi possível encerrar a rotina de ensaio");
+        return 0;
+    }
+};

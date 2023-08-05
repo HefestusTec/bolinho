@@ -27,7 +27,9 @@ As for running the program we have a few options:
 * Serve the full application `npm run serve`
     
     > This command will start the eel as headless and start the web serve, it doesn't need to build the front end before executing. **Less performant**.
-
+    
+    !!! warning ""
+        To update the backend ability to call front end functions you should first build the front.
 
 * Run the full application `npm run start`
     
