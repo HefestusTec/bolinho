@@ -18,33 +18,50 @@
  */
 @import url(../../variables.css);
 
-.container_div {
-    height: stretch;
-    border-radius: 15px;
-    overflow: hidden;
+.experiment_div {
     display: flex;
-    flex-direction: column;
-    background-color: var(--primary_color);
-    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
-}
-.container_header {
-    background-color: var(--primary_color);
-    height: 7vh;
-    color: var(--font_color_inverted);
-    font-size: var(--font_m);
-    font-weight: bold;
-    display: flex;
-    align-items: center;
-    padding-left: 10%;
+    width: 100%;
 }
 
-.container_content {
-    height: stretch;
-    background-color: var(--background_color);
-    padding-right: 4%;
-    border-radius: 15px 15px 0 0;
-    flex-direction: column;
-    overflow-y: scroll;
-    box-shadow: inset 0px 2px 2px rgba(0, 0, 0, 0.25);
-    padding-top: 2vh;
+.experiment_content {
+    margin: 1%;
+    display: grid;
+    width: stretch;
+    gap: 1.5%;
+    grid-template-columns: repeat(var(--num_columns), 1fr);
+    grid-template-rows: repeat(var(--num_rows), 1fr);
+}
+
+.main_monitor {
+    grid-column: span 4;
+    grid-row: span 8;
+    order: 0;
+}
+
+.graph_component {
+    grid-column: span 9;
+    grid-row: span 8;
+    order: 1;
+}
+
+.parameters_component {
+    grid-column: span 4;
+    grid-row: span 5;
+    order: 2;
+}
+
+.readings_component {
+    grid-column: span 3;
+    grid-row: span 5;
+    order: 3;
+}
+.experiment_component {
+    grid-column: span 3;
+    grid-row: span 5;
+    order: 4;
+}
+.material_component {
+    grid-column: span 3;
+    grid-row: span 5;
+    order: 5;
 }

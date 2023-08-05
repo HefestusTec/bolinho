@@ -16,35 +16,34 @@
  * You should have received a copy of the GNU General Public License
  * along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
  */
-@import url(../../variables.css);
 
-.container_div {
-    height: stretch;
-    border-radius: 15px;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    background-color: var(--primary_color);
+@import url("../../../variables.css");
+
+.big_button {
     box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
-}
-.container_header {
-    background-color: var(--primary_color);
-    height: 7vh;
-    color: var(--font_color_inverted);
-    font-size: var(--font_m);
-    font-weight: bold;
-    display: flex;
-    align-items: center;
-    padding-left: 10%;
+    border-radius: 10px 10px 10px 10px;
+    font-family: "Roboto";
+    font-style: normal;
+    transition-duration: var(--animation_fast);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    cursor: pointer;
 }
 
-.container_content {
-    height: stretch;
-    background-color: var(--background_color);
-    padding-right: 4%;
-    border-radius: 15px 15px 0 0;
-    flex-direction: column;
-    overflow-y: scroll;
-    box-shadow: inset 0px 2px 2px rgba(0, 0, 0, 0.25);
-    padding-top: 2vh;
+.big_button:active {
+    background: var(--active_color);
+    opacity: 1;
+
+    transform: translateY(0vh);
+
+    box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+[enable-hover="enable"] {
+    .big_button:hover {
+        opacity: 80%;
+        transform: translateY(-1vh);
+        border: 1px solid var(--font_color);
+    }
 }

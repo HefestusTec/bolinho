@@ -22,7 +22,7 @@ import BackgroundFader from "../backgroundFader/backgroundFader";
 interface ZoomComponentProps {
     scaleOrigin: string;
     className: string;
-    children: any;
+    children?: any;
 }
 
 const ZoomComponent: FunctionComponent<ZoomComponentProps> = ({

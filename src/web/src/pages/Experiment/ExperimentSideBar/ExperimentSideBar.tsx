@@ -15,18 +15,17 @@
 // You should have received a copy of the GNU General Public License
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
 
-import { endExperimentRoutineJS } from "api/backend-api";
 import { FunctionComponent } from "react";
+import styleModule from "./ExperimentSideBar.module.css";
 
-interface ExperimentProps {}
+interface ExperimentSideBarProps {}
 
-const Experiment: FunctionComponent<ExperimentProps> = () => {
+const ExperimentSideBar: FunctionComponent<ExperimentSideBarProps> = () => {
     return (
-        <div>
-            <h1>EXPERIMENT</h1>
-            <button onClick={endExperimentRoutineJS}>ENCERRAR</button>
+        <div className={styleModule.experiment_side_bar_div}>
+            <h1>BOLINHO</h1>
         </div>
     );
 };
 
-export default Experiment;
+export default ExperimentSideBar;
