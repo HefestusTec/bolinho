@@ -41,10 +41,34 @@ const Experiment: FunctionComponent<ExperimentProps> = () => {
                     <GraphComponent experimentList={[]} />
                 </ZoomComponent>
                 <ZoomComponent
-                    className={styleModule.experiment_parameters}
+                    className={styleModule.parameters_component}
                     scaleOrigin="bottom left"
                 >
                     <ContainerComponent headerText="Parâmetros do ensaio">
+                        asdasdasdasdasd
+                    </ContainerComponent>
+                </ZoomComponent>
+                <ZoomComponent
+                    className={styleModule.readings_component}
+                    scaleOrigin="bottom left"
+                >
+                    <ContainerComponent headerText="Leituras">
+                        asdasdasdasdasd
+                    </ContainerComponent>
+                </ZoomComponent>
+                <ZoomComponent
+                    className={styleModule.experiment_component}
+                    scaleOrigin="bottom right"
+                >
+                    <ContainerComponent headerText="Experimento">
+                        asdasdasdasdasd
+                    </ContainerComponent>
+                </ZoomComponent>
+                <ZoomComponent
+                    className={styleModule.material_component}
+                    scaleOrigin="bottom right"
+                >
+                    <ContainerComponent headerText="Material">
                         asdasdasdasdasd
                     </ContainerComponent>
                 </ZoomComponent>

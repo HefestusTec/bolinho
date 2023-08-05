@@ -41,7 +41,7 @@ const MainMonitor: FunctionComponent<MainMonitorProps> = ({
                 buttonText="ENCERRAR"
                 bgColor="var(--negative_button_color)"
                 fontSize="var(--font_l)"
-                height="100%"
+                height="90%"
             />
         </ZoomComponent>
     );

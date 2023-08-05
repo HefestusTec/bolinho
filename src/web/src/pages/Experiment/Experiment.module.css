@@ -44,8 +44,24 @@
     order: 1;
 }
 
-.experiment_parameters {
+.parameters_component {
     grid-column: span 4;
     grid-row: span 5;
     order: 2;
+}
+
+.readings_component {
+    grid-column: span 3;
+    grid-row: span 5;
+    order: 3;
+}
+.experiment_component {
+    grid-column: span 3;
+    grid-row: span 5;
+    order: 4;
+}
+.material_component {
+    grid-column: span 3;
+    grid-row: span 5;
+    order: 5;
 }
