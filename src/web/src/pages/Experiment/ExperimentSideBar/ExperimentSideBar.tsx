@@ -17,13 +17,21 @@
 
 import { FunctionComponent } from "react";
 import styleModule from "./ExperimentSideBar.module.css";
+import ProgressWidget from "./ProgressWidget/ProgressWidget";
 
 interface ExperimentSideBarProps {}
 
 const ExperimentSideBar: FunctionComponent<ExperimentSideBarProps> = () => {
     return (
         <div className={styleModule.experiment_side_bar_div}>
-            <h1>BOLINHO</h1>
+            <div className={styleModule.bolinho_logo} />
+            <span className={styleModule.widgets_span}>
+                <ProgressWidget value={66} title="Carga" />
+                <ProgressWidget value={44} title="Tempo" />
+                <ProgressWidget value={12} title="Distância" />
+                <ProgressWidget value={99} title="Δ Carga" />
+            </span>
+            <footer className={styleModule.side_bar_footer} />
         </div>
     );
 };

@@ -20,11 +20,11 @@ import styleModule from "./sideBar.module.css";
 
 import Header from "./header/header";
 
-import InicioIcon from "./resources/InicioIcon.svg";
-import CalibrarIcon from "./resources/CalibrarIcon.svg";
-import ControlarIcon from "./resources/ControlarIcon.svg";
-import ConfigIcon from "./resources/ConfigIcon.svg";
-import SobreIcon from "./resources/SobreIcon.svg";
+import InicioIcon from "../../resources/InicioIcon.svg";
+import CalibrarIcon from "../../resources/CalibrarIcon.svg";
+import ControlarIcon from "../../resources/ControlarIcon.svg";
+import ConfigIcon from "../../resources/ConfigIcon.svg";
+import SobreIcon from "../../resources/SobreIcon.svg";
 
 export default function SideBar({ currentPage, setCurrentPage, pageList }) {
     const changePage = (event) => {

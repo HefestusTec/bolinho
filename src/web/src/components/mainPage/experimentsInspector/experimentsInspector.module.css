@@ -49,7 +49,7 @@
     margin-left: 2%;
     background: none;
     background-size: 40%;
-    background-image: url("./resources/deleteIcon.svg");
+    background-image: url("../../../resources/deleteIcon.svg");
     background-position: center;
     background-repeat: no-repeat;
     transition-duration: var(--animation_fast);

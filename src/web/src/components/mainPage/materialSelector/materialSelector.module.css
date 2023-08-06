@@ -81,7 +81,7 @@
     margin-top: 1px;
     border-radius: 0px 10px 10px 0px;
     background-color: var(--secondary_color);
-    background-image: url(./resources/searchIcon.svg);
+    background-image: url(../../../resources/searchIcon.svg);
 
     /*filter: invert(var(--invert_icon));*/
 
@@ -112,7 +112,7 @@
 .selector_header_filter_button {
     width: clamp(25px, 5vh, 60px);
     background: none;
-    background-image: url(./resources/filterIcon.svg);
+    background-image: url(../../../resources/filterIcon.svg);
     /*filter: invert(var(--invert_icon));*/
     cursor: pointer;
 

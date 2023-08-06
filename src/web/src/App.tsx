@@ -84,7 +84,7 @@ function App() {
 
     const callPrompter = () => {
         promptUserJS(
-            "Descriçãoa sdasssssssssssssssss asdasssssssssssssssssssasd asd as das das da sd Descriçãoa sdasssssssssssssssss asdasssssssssssssssssssasd asd as das das da sdDescriçãoa sdasssssssssssssssss asdasssssssssssssssssssasd asd as das das da sdDescriçãoa sdasssssssssssssssss asdasssssssssssssssssssasd asd as das das da sdDescriçãoa sdasssssssssssssssss asdasssssssssssssssssssasd asd as das das da sdDescriçãoa sdasssssssssssssssss asdasssssssssssssssssssasd asd as das das da sd",
+            "Essa é uma mensagem que pode ser acionada pelo backend, o usuário PRECISA responder com uma das opções (também fornecidas pelo backend). Ao selecionar uma resposta a callback function ligada à esse prompt é chamada e a resposta é passada como argumento.",
             ["SIM", "NÃO", "TALVEZ", "NÃO", "TALVEZ"]
         );
     };

@@ -17,16 +17,16 @@
 import styleModule from "./header.module.css";
 
 function Header() {
-	return (
-		<div className={styleModule.header}>
-			<div className={styleModule.header_logo}></div>
-			<div className={styleModule.header_text}>
-				<div className={styleModule.header_name}>Bolinho</div>
-				<div className={styleModule.header_copyright}>
-					Copyright © 2023 Hefestus &nbsp;&nbsp;
-				</div>
-			</div>
-		</div>
-	);
+    return (
+        <div className={styleModule.header}>
+            <div className={styleModule.header_logo} />
+            <div className={styleModule.header_text}>
+                <div className={styleModule.header_name}>Bolinho</div>
+                <div className={styleModule.header_copyright}>
+                    Copyright © 2023 Hefestus &nbsp;&nbsp;
+                </div>
+            </div>
+        </div>
+    );
 }
 export default Header;

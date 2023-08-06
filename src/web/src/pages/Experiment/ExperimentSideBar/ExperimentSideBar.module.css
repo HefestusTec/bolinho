@@ -23,4 +23,33 @@
     height: 100%;
     background-color: var(--primary_color);
     width: 150px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.bolinho_logo {
+    background-image: url(../../../resources/LogoBolinho512.png);
+    height: 90px;
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: 60%; /* Resize the background image to cover the entire container */
+    margin-top: 10px;
+}
+.widgets_span {
+    margin: 15px;
+    display: flex;
+    flex-direction: column;
+    height: stretch;
+    justify-content: space-between;
+}
+
+.side_bar_footer {
+    height: 70px;
+
+    justify-content: center;
+    background-image: url(../../../resources/LogoSchumacherDark.png);
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: 80%; /* Resize the background image to cover the entire container */
 }

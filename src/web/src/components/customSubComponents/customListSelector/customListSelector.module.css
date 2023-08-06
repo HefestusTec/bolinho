@@ -62,7 +62,7 @@
     display: flex;
 }
 .expand_menu_indicator {
-    background-image: url(./resources/openMenu.svg);
+    background-image: url(../../../resources/openMenu.svg);
     background-repeat: no-repeat;
     background-position: center;
     width: 20px;
