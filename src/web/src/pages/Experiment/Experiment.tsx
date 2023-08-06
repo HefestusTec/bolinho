@@ -48,21 +48,7 @@ const Experiment: FunctionComponent<ExperimentProps> = () => {
                     scaleOrigin="bottom left"
                 >
                     <ContainerComponent headerText="Parâmetros do ensaio">
-                        <p>
-                            Velocidade alvo: 10 mm/s
-                            <br />
-                            <br />
-                            Tempo atual: 12 s
-                            <br />
-                            <br />
-                            Gatilhos de parada automática:
-                            <ul>
-                                <li>Carga máxima: 1000 N</li>
-                                <li>Tempo máximo: 300 s </li>
-                                <li>Queda de carga máxima: 20%</li>
-                                <li>Deslocamento máximo: 100 mm</li>
-                            </ul>
-                        </p>
+                        <p>{experimentPageContext.experimentParameters} </p>
                     </ContainerComponent>
                 </ZoomComponent>
                 <ZoomComponent
@@ -89,10 +75,7 @@ const Experiment: FunctionComponent<ExperimentProps> = () => {
                     scaleOrigin="bottom right"
                 >
                     <ContainerComponent headerText="Descrição">
-                        <p>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing
-                            elit. Nullam malesuada.
-                        </p>
+                        <p>{experimentPageContext.description} </p>
                     </ContainerComponent>
                 </ZoomComponent>
                 <ZoomComponent
