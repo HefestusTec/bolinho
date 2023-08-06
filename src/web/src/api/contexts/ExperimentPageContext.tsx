@@ -76,17 +76,115 @@ export const ExperimentPageProvider: FunctionComponent<
     function getLoadPercentageJS() {
         return experimentPageContext.loadPercentage;
     }
-    try {
-        window.eel.expose(getLoadPercentageJS, "getLoadPercentageJS");
-    } catch (error) {}
     function setLoadPercentageJS(newValue: number) {
         setExperimentPageContext((old) => ({
             ...old,
             loadPercentage: newValue,
         }));
     }
+
+    function getTimePercentageJS() {
+        return experimentPageContext.timePercentage;
+    }
+    function setTimePercentageJS(newValue: number) {
+        setExperimentPageContext((old) => ({
+            ...old,
+            timePercentage: newValue,
+        }));
+    }
+
+    function getDistancePercentageJS() {
+        return experimentPageContext.distancePercentage;
+    }
+    function setDistancePercentageJS(newValue: number) {
+        setExperimentPageContext((old) => ({
+            ...old,
+            distancePercentage: newValue,
+        }));
+    }
+
+    function getDeltaLoadPercentageJS() {
+        return experimentPageContext.deltaLoadPercentage;
+    }
+    function setDeltaLoadPercentageJS(newValue: number) {
+        setExperimentPageContext((old) => ({
+            ...old,
+            deltaLoadPercentage: newValue,
+        }));
+    }
+    function getExperimentParametersJS() {
+        return experimentPageContext.experimentParameters;
+    }
+    function setExperimentParametersJS(newValue: string) {
+        setExperimentPageContext((old) => ({
+            ...old,
+            experimentParameters: newValue,
+        }));
+    }
+
+    function getReadingsJS() {
+        return experimentPageContext.readings;
+    }
+    function setReadingsJS(newValue: string) {
+        const parsedReading: ReadingsType = JSON.parse(newValue);
+        setExperimentPageContext((old) => ({
+            ...old,
+            readings: parsedReading,
+        }));
+    }
+
+    function getDescriptionJS() {
+        return experimentPageContext.description;
+    }
+    function setDescriptionJS(newValue: string) {
+        setExperimentPageContext((old) => ({
+            ...old,
+            description: newValue,
+        }));
+    }
+
+    function getMaterialJS() {
+        return experimentPageContext.material;
+    }
+    function setMaterialJS(newValue: string) {
+        const parsedMaterial: MaterialType = JSON.parse(newValue);
+
+        setExperimentPageContext((old) => ({
+            ...old,
+            material: parsedMaterial,
+        }));
+    }
+
     try {
+        window.eel.expose(getLoadPercentageJS, "getLoadPercentageJS");
         window.eel.expose(setLoadPercentageJS, "setLoadPercentageJS");
+
+        window.eel.expose(getTimePercentageJS, "getTimePercentageJS");
+        window.eel.expose(setTimePercentageJS, "setTimePercentageJS");
+
+        window.eel.expose(getDistancePercentageJS, "getDistancePercentageJS");
+        window.eel.expose(setDistancePercentageJS, "setDistancePercentageJS");
+
+        window.eel.expose(getDeltaLoadPercentageJS, "getDeltaLoadPercentageJS");
+        window.eel.expose(setDeltaLoadPercentageJS, "setDeltaLoadPercentageJS");
+
+        window.eel.expose(
+            getExperimentParametersJS,
+            "getExperimentParametersJS"
+        );
+        window.eel.expose(
+            setExperimentParametersJS,
+            "setExperimentParametersJS"
+        );
+
+        window.eel.expose(getReadingsJS, "getReadingsJS");
+        window.eel.expose(setReadingsJS, "setReadingsJS");
+
+        window.eel.expose(getDescriptionJS, "getDescriptionJS");
+        window.eel.expose(setDescriptionJS, "setDescriptionJS");
+
+        window.eel.expose(getMaterialJS, "getMaterialJS");
+        window.eel.expose(setMaterialJS, "setMaterialJS");
     } catch (error) {}
 
     return (

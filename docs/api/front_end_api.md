@@ -177,11 +177,9 @@ The JavaScript file can be found at `web/src/api/contexts/ExperimentPageContext.
 !!! quote ""
     Asks the front for the current load percentage.
 
-    LoadPercentage is shown to the user in a progress bar.
+    This variable is shown to the user in a progress bar. And is usually between 0-100.
 
-    This value is usually between 0-100
-
-    Returns returns the LoadPercentage
+    Returns the load percentage value
 
     ``` python title="Python usage example"
     from bolinho_api.experiment import experiment_api
@@ -193,9 +191,7 @@ The JavaScript file can be found at `web/src/api/contexts/ExperimentPageContext.
 !!! quote ""
     Sets the current load percentage.
 
-    LoadPercentage is shown to the user in a progress bar.
-
-    This value is usually between 0-100
+    This variable is shown to the user in a progress bar. And is usually between 0-100.
 
     ``` python title="Python usage example"
     from bolinho_api.experiment import experiment_api
@@ -203,5 +199,111 @@ The JavaScript file can be found at `web/src/api/contexts/ExperimentPageContext.
     for number in range(100):
         experiment_api.set_load_percentage(number)
         eel.sleep(0.1)
+
+    ```
+
+### `#!python def get_time_percentage()`:
+!!! quote ""
+    Asks the front for the current time percentage.
+
+    This variable is shown to the user in a progress bar. And is usually between 0-100.
+
+    Returns the load percentage value
+
+    ``` python title="Python usage example"
+    from bolinho_api.experiment import experiment_api
+
+    print(experiment_api.get_time_percentage())
+    ```
+
+### `#!python def set_time_percentage(newValue)`:
+!!! quote ""
+    Sets the current time percentage.
+
+    This variable is shown to the user in a progress bar. And is usually between 0-100.
+
+    ``` python title="Python usage example"
+    from bolinho_api.experiment import experiment_api
+
+    experiment_api.set_time_percentage(22)
+
+    ```
+
+### `#!python def get_distance_percentage()`:
+!!! quote ""
+    Asks the front for the current distance percentage.
+
+    This variable is shown to the user in a progress bar. And is usually between 0-100.
+
+    Returns the load percentage value
+
+    ``` python title="Python usage example"
+    from bolinho_api.experiment import experiment_api
+
+    print(experiment_api.get_distance_percentage())
+    ```
+
+### `#!python def set_distance_percentage(newValue)`:
+!!! quote ""
+    Sets the current distance percentage.
+
+    This variable is shown to the user in a progress bar. And is usually between 0-100.
+
+    ``` python title="Python usage example"
+    from bolinho_api.experiment import experiment_api
+
+    experiment_api.set_distance_percentage(22)
+
+    ```
+
+### `#!python def get_delta_load_percentage()`:
+!!! quote ""
+    Asks the front for the current delta load percentage.
+
+    This variable is shown to the user in a progress bar. And is usually between 0-100.
+
+    Returns the load percentage value
+
+    ``` python title="Python usage example"
+    from bolinho_api.experiment import experiment_api
+
+    print(experiment_api.get_delta_load_percentage())
+    ```
+
+### `#!python def set_delta_load_percentage(newValue)`:
+!!! quote ""
+    Sets the current delta load percentage.
+
+    This variable is shown to the user in a progress bar. And is usually between 0-100.
+
+    ``` python title="Python usage example"
+    from bolinho_api.experiment import experiment_api
+
+    experiment_api.set_delta_load_percentage(22)
+
+    ```
+
+### `#!python def get_experiment_parameters()`:
+!!! quote ""
+    Asks the front for the current experiment parameters.
+
+    Returns a formatted string
+
+    ``` python title="Python usage example"
+    from bolinho_api.experiment import experiment_api
+
+    print(experiment_api.get_experiment_parameters())
+    ```
+
+### `#!python def set_experiment_parameters(newValue)`:
+!!! quote ""
+    Sets the current experiment parameters.
+
+    Receives a formatted string.
+
+    ``` python title="Python usage example"
+    from bolinho_api.experiment import experiment_api
+
+    experiment_api.set_experiment_parameters("Experiment 202 <br/> Load cell: lxi92")
 
     ```
