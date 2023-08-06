@@ -22,6 +22,7 @@ import ZoomComponent from "components/zoomComponent/zoomComponent";
 import GraphComponent from "components/graphComponent/graphComponent";
 import ContainerComponent from "components/containerComponent/containerComponent";
 import MainMonitor from "./MainMonitor/MainMonitor";
+import CustomText from "components/customSubComponents/CustomText/CustomText";
 
 interface ExperimentProps {}
 
@@ -45,7 +46,21 @@ const Experiment: FunctionComponent<ExperimentProps> = () => {
                     scaleOrigin="bottom left"
                 >
                     <ContainerComponent headerText="Parâmetros do ensaio">
-                        asdasdasdasdasd
+                        <p>
+                            Velocidade alvo: 10 mm/s
+                            <br />
+                            <br />
+                            Tempo atual: 12 s
+                            <br />
+                            <br />
+                            Gatilhos de parada automática:
+                            <ul>
+                                <li>Carga máxima: 1000 N</li>
+                                <li>Tempo máximo: 300 s </li>
+                                <li>Queda de carga máxima: 20%</li>
+                                <li>Deslocamento máximo: 100 mm</li>
+                            </ul>
+                        </p>
                     </ContainerComponent>
                 </ZoomComponent>
                 <ZoomComponent
@@ -53,7 +68,9 @@ const Experiment: FunctionComponent<ExperimentProps> = () => {
                     scaleOrigin="bottom left"
                 >
                     <ContainerComponent headerText="Leituras">
-                        asdasdasdasdasd
+                        <CustomText title="Eixo Z" value="100 mm" />
+                        <CustomText title="Célula de carga" value="0 N" />
+                        <CustomText title="Status" value="OK" />
                     </ContainerComponent>
                 </ZoomComponent>
                 <ZoomComponent
@@ -61,7 +78,10 @@ const Experiment: FunctionComponent<ExperimentProps> = () => {
                     scaleOrigin="bottom right"
                 >
                     <ContainerComponent headerText="Experimento">
-                        asdasdasdasdasd
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetur adipiscing
+                            elit. Nullam malesuada.
+                        </p>
                     </ContainerComponent>
                 </ZoomComponent>
                 <ZoomComponent
@@ -69,7 +89,10 @@ const Experiment: FunctionComponent<ExperimentProps> = () => {
                     scaleOrigin="bottom right"
                 >
                     <ContainerComponent headerText="Material">
-                        asdasdasdasdasd
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetur adipiscing
+                            elit. Nullam malesuada.
+                        </p>
                     </ContainerComponent>
                 </ZoomComponent>
             </div>

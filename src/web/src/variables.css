@@ -23,6 +23,7 @@ html {
     --background_color: #ffffff; /* Background color of the components */
     --primary_color: #444444; /* Primary color, for example this is the color of the headers */
     --primary_color_shader: #525252; /* Search bar color */
+    --widget_color: #525252; /* Widget color */
     --secondary_color: #888888; /* Search button color */
     --button_active_color: #ffffff;
     --button_inactive_color: #cecece;
@@ -34,7 +35,7 @@ html {
     --positive_button_color: #0075ff; /* Color of positive buttons, such as go, start etc. */
     --negative_button_color: #fd4545; /* Color of negative buttons, such as end, cancel etc. */
     --active_color: #1797f85c; /* Color when you press a button */
-    --logo_schumacher: url(./components/sideBar/resources/LogoSchumacher.png);
+    --logo_schumacher: url(./resources/LogoSchumacher.png);
 
     --animation_fast: 150ms;
     --animation_slow: 350ms;
@@ -68,6 +69,7 @@ html {
     --background_color: #ffffff; /* Background color of the components */
     --primary_color: #444444; /* Primary color, for example this is the color of the headers */
     --primary_color_shader: #525252; /* Search bar color */
+    --widget_color: #525252; /* Widget color */
     --secondary_color: #888888; /* Search button color */
     --button_active_color: #ffffff;
     --button_inactive_color: #cecece;
@@ -79,12 +81,13 @@ html {
     --positive_button_color: #0075ff; /* Color of positive buttons, such as go, start etc. */
     --negative_button_color: #fd4545; /* Color of negative buttons, such as end, cancel etc. */
     --active_color: #1797f85c;
-    --logo_schumacher: url(./components/sideBar/resources/LogoSchumacher.png);
+    --logo_schumacher: url(./resources/LogoSchumacher.png);
 }
 [data-theme="Escuro"] {
     --background_color: #272727;
     --primary_color: #242424;
     --primary_color_shader: #525252;
+    --widget_color: #2e2e2e;
     --secondary_color: #888888;
     --button_active_color: #383838;
     --button_inactive_color: #1d1d1d;
@@ -96,24 +99,25 @@ html {
     --positive_button_color: #101dc9;
     --negative_button_color: #fd4545;
     --active_color: #1797f85c;
-    --logo_schumacher: url(./components/sideBar/resources/LogoSchumacherDark.png);
+    --logo_schumacher: url(./resources/LogoSchumacherDark.png);
 }
 [data-theme="Meia Noite"] {
     --background_color: #050505;
     --primary_color: #0e0e0e;
     --primary_color_shader: #000000;
+    --widget_color: #000000;
     --secondary_color: #161616;
     --button_active_color: #181818;
     --button_inactive_color: #0a0a0a;
     --background2_color: #000000;
-    --content_background_color: #0a0a0a;
-    --font_color: #ffffff;
-    --font_color_inverted: #ffffff;
+    --content_background_color: #161616;
+    --font_color: #f2f2f2;
+    --font_color_inverted: #f2f2f2;
     --invert_icon: 100%;
     --positive_button_color: #101dc9;
     --negative_button_color: #fd4545;
     --active_color: #1797f85c;
-    --logo_schumacher: url(./components/sideBar/resources/LogoSchumacherDark.png);
+    --logo_schumacher: url(./resources/LogoSchumacherDark.png);
 }
 
 [animation-speed="Normal"] {

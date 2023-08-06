@@ -35,7 +35,9 @@ const MainMonitor: FunctionComponent<MainMonitorProps> = ({
             className={[className, styleModule.main_monitor_div].join(" ")}
             scaleOrigin={scaleOrigin}
         >
-            <div className={styleModule.force_monitor_div}>20 KN</div>
+            <div className={styleModule.force_monitor_div}>
+                <h1 className={styleModule.force_monitor_text}>0 KN</h1>
+            </div>
             <BigButton
                 clickCallBack={endExperimentRoutineJS}
                 buttonText="ENCERRAR"

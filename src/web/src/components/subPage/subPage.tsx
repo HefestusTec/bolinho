@@ -20,7 +20,8 @@ import styleModule from "./subPage.module.css";
 import BackgroundFader from "../backgroundFader/backgroundFader";
 import { PagesEnum } from "types/PagesEnum";
 
-const ConfigPage = lazy(() => import("../configPage/configPage"));
+const ConfigPage = lazy(() => import("../../pages/ConfigPage/ConfigPage"));
+const AboutPage = lazy(() => import("../../pages/AboutPage/AboutPage"));
 
 interface SubPageProps {
     myPage: PagesEnum;
@@ -44,7 +45,7 @@ const SubPage: FunctionComponent<SubPageProps> = ({
             case "Configurar":
                 return <ConfigPage key={myPage}></ConfigPage>;
             case "Sobre":
-                break;
+                return <AboutPage key={myPage}></AboutPage>;
             default:
                 return;
         }

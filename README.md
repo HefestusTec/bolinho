@@ -1,4 +1,4 @@
-#  <img src="docs/resources/LogoBolinho512.png" width="45" height="45" alt="Logo"/> Bolinho
+#  <img src="docs/./LogoBolinho512.png" width="45" height="45" alt="Logo"/> Bolinho
 
 Full stack solution for data gathering, processing and interaction.
 

@@ -76,13 +76,13 @@
 .open_side_bar_button_active {
     transition-duration: var(--animation_fast);
 
-    background-image: url(./resources/retractMenu.svg);
+    background-image: url(../../resources/retractMenu.svg);
     filter: invert(var(--invert_icon));
 }
 
 .open_side_bar_button_inactive {
     transition-duration: var(--animation_fast);
-    background-image: url(./resources/expandMenu.svg);
+    background-image: url(../../resources/expandMenu.svg);
     filter: invert(var(--invert_icon));
 }
 

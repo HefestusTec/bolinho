@@ -6,6 +6,7 @@ import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
 import reportWebVitals from "./reportWebVitals";
 
 import "@fontsource/roboto";
+import "react-circular-progressbar/dist/styles.css";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(

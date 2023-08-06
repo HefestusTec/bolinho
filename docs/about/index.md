@@ -60,6 +60,8 @@ This software is licensed and distributed under the **[GNU General Public Licens
 
 * React Simple Keyboard - [see license](https://github.com/hodgef/react-simple-keyboard/blob/master/LICENSE) 
 
+* React Circular Progressbar - [see license](https://github.com/kevinsqi/react-circular-progressbar/blob/master/LICENSE) 
+
 ___
 
 Agradecemos do fundo do coração todos os autores dos diferentes projetos utilizados, **software livre** é liberdade, muito obrigado a todos.
