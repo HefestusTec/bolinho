@@ -47,3 +47,15 @@ body:
       description: A suggestion written in `markdown` for the update
     validations:
         required: false
+  - type: dropdown
+    attributes:
+      label: "Priority"
+      description: What is this issue priority?
+      multiple: true
+      options:
+        - Low
+        - Medium
+        - High
+        - URGENT!
+    validations:
+      required: true
