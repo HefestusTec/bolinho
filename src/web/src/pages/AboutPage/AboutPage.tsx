@@ -43,7 +43,11 @@ const AboutPage: FunctionComponent<AboutPageProps> = () => {
                 <br />
                 You should have received a copy of the GNU General Public
                 License along with Bolinho. If not, see &nbsp;
-                <a href="http://www.gnu.org/licenses/" target="_blank">
+                <a
+                    href="http://www.gnu.org/licenses/"
+                    target="_blank"
+                    rel="noreferrer"
+                >
                     http://www.gnu.org/licenses/
                 </a>
                 .

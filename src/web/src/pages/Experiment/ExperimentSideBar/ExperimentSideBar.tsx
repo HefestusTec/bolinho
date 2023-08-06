@@ -24,14 +24,14 @@ interface ExperimentSideBarProps {}
 const ExperimentSideBar: FunctionComponent<ExperimentSideBarProps> = () => {
     return (
         <div className={styleModule.experiment_side_bar_div}>
-            <div className={styleModule.bolinho_logo} />
             <span className={styleModule.widgets_span}>
+                <div className={styleModule.bolinho_logo} />
                 <ProgressWidget value={66} title="Carga" />
                 <ProgressWidget value={44} title="Tempo" />
                 <ProgressWidget value={12} title="Distância" />
                 <ProgressWidget value={99} title="Δ Carga" />
+                <footer className={styleModule.side_bar_footer} />
             </span>
-            <footer className={styleModule.side_bar_footer} />
         </div>
     );
 };
