@@ -23,6 +23,7 @@ import expose_db, exposed_core  # não remover
 
 from bolinho_api.ui import ui_api
 from bolinho_api.core import core_api
+from bolinho_api.experiment import experiment_api
 
 from granulado.core import Granulado
 from granulado import Messages
@@ -89,7 +90,6 @@ def main():
     gran = Granulado()
     while not gran.connect("COM4", 115200):
         print("waiting for connection")
-        eel.bigAlertJS()
         eel.sleep(1)
     doOnce = True
     while True:

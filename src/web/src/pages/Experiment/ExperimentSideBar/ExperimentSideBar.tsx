@@ -15,18 +15,24 @@
 // You should have received a copy of the GNU General Public License
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
 
-import { FunctionComponent } from "react";
+import { FunctionComponent, useContext } from "react";
 import styleModule from "./ExperimentSideBar.module.css";
 import ProgressWidget from "./ProgressWidget/ProgressWidget";
+import { ExperimentPageContext } from "api/contexts/ExperimentPageContext";
 
 interface ExperimentSideBarProps {}
 
 const ExperimentSideBar: FunctionComponent<ExperimentSideBarProps> = () => {
+    const [experimentPageContext] = useContext(ExperimentPageContext);
+
     return (
         <div className={styleModule.experiment_side_bar_div}>
             <span className={styleModule.widgets_span}>
                 <div className={styleModule.bolinho_logo} />
-                <ProgressWidget value={66} title="Carga" />
+                <ProgressWidget
+                    value={experimentPageContext.loadPercentage}
+                    title="Carga"
+                />
                 <ProgressWidget value={44} title="Tempo" />
                 <ProgressWidget value={12} title="Distância" />
                 <ProgressWidget value={99} title="Δ Carga" />

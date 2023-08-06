@@ -169,3 +169,39 @@ The JavaScript file can be found in the api folder.
     ```
 
 ## Experiment page API
+Collection of all functions/API calls available to the backend for the **experiment** routine. You can find them in the `bolinho_api/experiment.py` file.
+
+The JavaScript file can be found at `web/src/api/contexts/ExperimentPageContext.tsx`.
+
+### `#!python def get_load_percentage()`:
+!!! quote ""
+    Asks the front for the current load percentage.
+
+    LoadPercentage is shown to the user in a progress bar.
+
+    This value is usually between 0-100
+
+    Returns returns the LoadPercentage
+
+    ``` python title="Python usage example"
+    from bolinho_api.experiment import experiment_api
+
+    print(experiment_api.get_load_percentage())
+    ```
+
+### `#!python def set_load_percentage(newValue)`:
+!!! quote ""
+    Sets the current load percentage.
+
+    LoadPercentage is shown to the user in a progress bar.
+
+    This value is usually between 0-100
+
+    ``` python title="Python usage example"
+    from bolinho_api.experiment import experiment_api
+
+    for number in range(100):
+        experiment_api.set_load_percentage(number)
+        eel.sleep(0.1)
+
+    ```
