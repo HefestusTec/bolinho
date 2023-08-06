@@ -35,8 +35,10 @@ Collection of all functions/API calls available to the backend. You can find the
 
 The JavaScript file can be found in the api folder.
 
-### `#!python def ping()`:
-!!! quote ""
+___
+
+### ping()
+!!! quote "ping()"
 
     Tries to ping the bolinho front-end, returns 1 if it worked
 
@@ -53,10 +55,10 @@ The JavaScript file can be found in the api folder.
             eel.sleep(1)
     ```
 
-### `#!python def get_config_params()`:
-!!! quote ""
-    
-    
+___
+
+### get_config_params()
+!!! quote "get_config_params()"
     Tries to ping the bolinho front-end, returns 1 if it worked
 
     ``` python title="Python usage example"
@@ -68,10 +70,10 @@ The JavaScript file can be found in the api folder.
     ```
     > This function is located at `src/web/src/App.js`
 
+___
 
-### `#!python def go_to_experiment_page()`:
-!!! quote ""
-
+### go_to_experiment_page()
+!!! quote "go_to_experiment_page()"
     Asks the front end to go to the experiment page.
 
     Returns 1 if succeeded.
@@ -84,8 +86,10 @@ The JavaScript file can be found in the api folder.
         core_api.go_to_experiment_page()
     ```
 
-### `#!python def go_to_home_page()`:
-!!! quote ""
+___
+
+### go_to_home_page()
+!!! quote "go_to_home_page()"
 
     Asks the front end to go to the home page.
 
@@ -99,8 +103,10 @@ The JavaScript file can be found in the api folder.
         core_api.go_to_home_page()
     ```
 
-### `#!python def show_connect_prompt()`:
-!!! quote ""
+___
+
+### show_connect_prompt()
+!!! quote "show_connect_prompt()"
 
     Asks the front end to show the connection prompt.
 
@@ -119,14 +125,18 @@ The JavaScript file can be found in the api folder.
         device_port = config["port"]
     ```
 
+___
+
 ## UI API
 
 Collection of all functions/API calls available to the backend for UI in general. You can find them in the `bolinho_api/ui.py` file.
 
 The JavaScript file can be found in the api folder.
 
-### `#!python def success_alert(text)`:
-!!! quote ""
+___
+
+### success_alert(text)
+!!! quote "success_alert(text)"
 
     Uses [React-Toastify](https://github.com/fkhadra/react-toastify) to create an success alert.
 
@@ -136,8 +146,10 @@ The JavaScript file can be found in the api folder.
     ui_api.success_alert("Success!")
     ```
 
-### `#!python def error_alert(text)`:
-!!! quote ""
+___
+
+### error_alert(text)
+!!! quote "error_alert(text)"
 
     Uses [React-Toastify](https://github.com/fkhadra/react-toastify) to create an error alert.
 
@@ -147,8 +159,10 @@ The JavaScript file can be found in the api folder.
     UIapi.error_alert("Error!")
     ```
 
-### `#!python def prompt_user(description, options, callback_func)`:
-!!! quote ""
+___
+
+### prompt_user(description, options, callback_func)
+!!! quote "prompt_user(description, options, callback_func)"
     Prompts the user with a 'description', and shows the 'options' to the user.
 
     The result is passed to the callback_function
@@ -168,13 +182,17 @@ The JavaScript file can be found in the api folder.
         )
     ```
 
+___
+
 ## Experiment page API
 Collection of all functions/API calls available to the backend for the **experiment** routine. You can find them in the `bolinho_api/experiment.py` file.
 
 The JavaScript file can be found at `web/src/api/contexts/ExperimentPageContext.tsx`.
 
-### `#!python def get_load_percentage()`:
-!!! quote ""
+___
+
+### get_load_percentage()
+!!! quote "get_load_percentage()"
     Asks the front for the current load percentage.
 
     This variable is shown to the user in a progress bar. And is usually between 0-100.
@@ -187,8 +205,10 @@ The JavaScript file can be found at `web/src/api/contexts/ExperimentPageContext.
     print(experiment_api.get_load_percentage())
     ```
 
-### `#!python def set_load_percentage(newValue)`:
-!!! quote ""
+___
+
+### set_load_percentage(newValue)
+!!! quote "set_load_percentage(newValue)"
     Sets the current load percentage.
 
     This variable is shown to the user in a progress bar. And is usually between 0-100.
@@ -202,8 +222,10 @@ The JavaScript file can be found at `web/src/api/contexts/ExperimentPageContext.
 
     ```
 
-### `#!python def get_time_percentage()`:
-!!! quote ""
+___
+
+### get_time_percentage()
+!!! quote "get_time_percentage()"
     Asks the front for the current time percentage.
 
     This variable is shown to the user in a progress bar. And is usually between 0-100.
@@ -216,8 +238,10 @@ The JavaScript file can be found at `web/src/api/contexts/ExperimentPageContext.
     print(experiment_api.get_time_percentage())
     ```
 
-### `#!python def set_time_percentage(newValue)`:
-!!! quote ""
+___
+
+### set_time_percentage(newValue)
+!!! quote "set_time_percentage(newValue)"
     Sets the current time percentage.
 
     This variable is shown to the user in a progress bar. And is usually between 0-100.
@@ -229,8 +253,10 @@ The JavaScript file can be found at `web/src/api/contexts/ExperimentPageContext.
 
     ```
 
-### `#!python def get_distance_percentage()`:
-!!! quote ""
+___
+
+### get_distance_percentage()
+!!! quote "get_distance_percentage()"
     Asks the front for the current distance percentage.
 
     This variable is shown to the user in a progress bar. And is usually between 0-100.
@@ -243,8 +269,10 @@ The JavaScript file can be found at `web/src/api/contexts/ExperimentPageContext.
     print(experiment_api.get_distance_percentage())
     ```
 
-### `#!python def set_distance_percentage(newValue)`:
-!!! quote ""
+___
+
+### set_distance_percentage(newValue)
+!!! quote "set_distance_percentage(newValue)"
     Sets the current distance percentage.
 
     This variable is shown to the user in a progress bar. And is usually between 0-100.
@@ -256,8 +284,10 @@ The JavaScript file can be found at `web/src/api/contexts/ExperimentPageContext.
 
     ```
 
-### `#!python def get_delta_load_percentage()`:
-!!! quote ""
+___
+
+### get_delta_load_percentage()
+!!! quote "get_delta_load_percentage()"
     Asks the front for the current delta load percentage.
 
     This variable is shown to the user in a progress bar. And is usually between 0-100.
@@ -270,8 +300,10 @@ The JavaScript file can be found at `web/src/api/contexts/ExperimentPageContext.
     print(experiment_api.get_delta_load_percentage())
     ```
 
-### `#!python def set_delta_load_percentage(newValue)`:
-!!! quote ""
+___
+
+### set_delta_load_percentage(newValue)
+!!! quote "set_delta_load_percentage(newValue)"
     Sets the current delta load percentage.
 
     This variable is shown to the user in a progress bar. And is usually between 0-100.
@@ -283,8 +315,10 @@ The JavaScript file can be found at `web/src/api/contexts/ExperimentPageContext.
 
     ```
 
-### `#!python def get_experiment_parameters()`:
-!!! quote ""
+___
+
+### get_experiment_parameters()
+!!! quote "get_experiment_parameters()"
     Asks the front for the current experiment parameters.
 
     Returns a formatted string
@@ -295,8 +329,10 @@ The JavaScript file can be found at `web/src/api/contexts/ExperimentPageContext.
     print(experiment_api.get_experiment_parameters())
     ```
 
-### `#!python def set_experiment_parameters(newValue)`:
-!!! quote ""
+___
+
+### set_experiment_parameters(newValue)
+!!! quote "set_experiment_parameters(newValue)"
     Sets the current experiment parameters.
 
     Receives a formatted string.
@@ -308,8 +344,10 @@ The JavaScript file can be found at `web/src/api/contexts/ExperimentPageContext.
 
     ```
 
-### `#!python def get_readings()`:
-!!! quote ""
+___
+
+### get_readings()
+!!! quote "get_readings()"
     Asks the front for the current Readings.
 
     Returns an object of type Readings, this object gathers all the current readings of the machine.
@@ -323,8 +361,10 @@ The JavaScript file can be found at `web/src/api/contexts/ExperimentPageContext.
     print(reading_obj.status)
     ```
 
-### `#!python def set_readings(newValue)`:
-!!! quote ""
+___
+
+### set_readings(newValue)
+!!! quote "set_readings(newValue)"
     Sets the current Readings.
 
     Receives an object of type Readings, this object gathers all the current readings of the machine.
@@ -341,8 +381,10 @@ The JavaScript file can be found at `web/src/api/contexts/ExperimentPageContext.
     experiment_api.set_readings(new_machine_readings)
     ```
 
-### `#!python def get_description()`:
-!!! quote ""
+___
+
+### get_description()
+!!! quote "get_description()"
     Asks the front for the current description.
 
     Returns a formatted string
@@ -353,8 +395,10 @@ The JavaScript file can be found at `web/src/api/contexts/ExperimentPageContext.
     print(experiment_api.get_description())
     ```
 
-### `#!python def set_description(newValue)`:
-!!! quote ""
+___
+
+### set_description(newValue)
+!!! quote "set_description(newValue)"
     Sets the current description.
 
     Receives a formatted string.
@@ -365,8 +409,10 @@ The JavaScript file can be found at `web/src/api/contexts/ExperimentPageContext.
     experiment_api.set_description("New Experiment description")
     ```
 
-### `#!python def get_material()`:
-!!! quote ""
+___
+
+### get_material()
+!!! quote "get_material()"
     Asks the front for the current Material.
 
     Returns an object of type Material.
@@ -379,8 +425,10 @@ The JavaScript file can be found at `web/src/api/contexts/ExperimentPageContext.
     print(material_obj.name)
     ```
 
-### `#!python def set_material(newValue)`:
-!!! quote ""
+___
+
+### set_material(newValue)
+!!! quote "set_material(newValue)"
     Sets the current Material.
 
     Receives an object of type Material
