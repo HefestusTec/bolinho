@@ -51,7 +51,7 @@ body:
     attributes:
       label: "Priority"
       description: What is this issue priority?
-      multiple: true
+      multiple: false
       options:
         - Low
         - Medium
