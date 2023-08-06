@@ -2,7 +2,7 @@ bottle==0.12.23
 bottle-websocket==0.2.9
 future==0.18.3
 whichcraft==0.6.1
-pyinstaller==5.7.0
+pyinstaller==5.12
 eel==0.15.1
 pyserial==3.5
 orm-sqlite
