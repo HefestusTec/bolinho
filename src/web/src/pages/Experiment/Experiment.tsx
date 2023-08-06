@@ -22,6 +22,7 @@ import ZoomComponent from "components/zoomComponent/zoomComponent";
 import GraphComponent from "components/graphComponent/graphComponent";
 import ContainerComponent from "components/containerComponent/containerComponent";
 import MainMonitor from "./MainMonitor/MainMonitor";
+import CustomText from "components/customSubComponents/CustomText/CustomText";
 
 interface ExperimentProps {}
 
@@ -67,7 +68,9 @@ const Experiment: FunctionComponent<ExperimentProps> = () => {
                     scaleOrigin="bottom left"
                 >
                     <ContainerComponent headerText="Leituras">
-                        <p>asdasdasdasdasd</p>
+                        <CustomText title="Eixo Z" value="100 mm" />
+                        <CustomText title="Célula de carga" value="0 N" />
+                        <CustomText title="Status" value="OK" />
                     </ContainerComponent>
                 </ZoomComponent>
                 <ZoomComponent

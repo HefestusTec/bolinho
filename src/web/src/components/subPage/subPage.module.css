@@ -64,6 +64,8 @@
 
 .sub_page_content {
     position: absolute;
+    color: var(--font_color);
+
     bottom: 0px;
     top: 7%;
     left: 0px;

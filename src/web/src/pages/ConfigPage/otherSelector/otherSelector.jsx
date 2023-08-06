@@ -17,11 +17,11 @@
 
 import React, { useContext, useState } from "react";
 
-import ZoomComponent from "../../zoomComponent/zoomComponent";
-import ContainerComponent from "../../containerComponent/containerComponent";
+import ZoomComponent from "../../../components/zoomComponent/zoomComponent";
+import ContainerComponent from "../../../components/containerComponent/containerComponent";
 import GlobalConfigContext from "../../../contexts/globalConfigContext";
-import CustomCheckbox from "../../customSubComponents/customCheckbox/customCheckbox";
-import CustomListSelector from "../../customSubComponents/customListSelector/customListSelector";
+import CustomCheckbox from "../../../components/customSubComponents/customCheckbox/customCheckbox";
+import CustomListSelector from "../../../components/customSubComponents/customListSelector/customListSelector";
 
 export default function OtherSelector({ className, scaleOrigin }) {
     const [globalConfig, setGlobalConfig] = useContext(GlobalConfigContext);
@@ -41,7 +41,7 @@ export default function OtherSelector({ className, scaleOrigin }) {
     };
     return (
         <ZoomComponent className={className} scaleOrigin={scaleOrigin}>
-            <ContainerComponent headerText="Efeitos visuais">
+            <ContainerComponent headerText="Outros">
                 <CustomListSelector
                     keys={["50%", "75%", "100%", "125%", "150%", "200%"]}
                     clickCallBack={fontSizeCallback}

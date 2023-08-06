@@ -17,10 +17,10 @@
 
 import React, { useContext, useState } from "react";
 
-import ZoomComponent from "../../zoomComponent/zoomComponent";
-import ContainerComponent from "../../containerComponent/containerComponent";
+import ZoomComponent from "../../../components/zoomComponent/zoomComponent";
+import ContainerComponent from "../../../components/containerComponent/containerComponent";
 import GlobalConfigContext from "../../../contexts/globalConfigContext";
-import ButtonGroup from "../../customSubComponents/buttonGroup/buttonGroup";
+import ButtonGroup from "../../../components/customSubComponents/buttonGroup/buttonGroup";
 
 export default function ThemeSelector({ className, scaleOrigin }) {
     const [globalConfig, setGlobalConfig] = useContext(GlobalConfigContext);

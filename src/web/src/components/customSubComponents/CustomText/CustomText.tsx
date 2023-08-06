@@ -15,15 +15,21 @@
 // You should have received a copy of the GNU General Public License
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
 
-import React from "react";
+import { FunctionComponent } from "react";
+import styleModule from "./CustomText.module.css";
 
-import ZoomComponent from "../../zoomComponent/zoomComponent";
-import ContainerComponent from "../../containerComponent/containerComponent";
-
-export default function GlobalLimits({ className, scaleOrigin }) {
-    return (
-        <ZoomComponent className={className} scaleOrigin={scaleOrigin}>
-            <ContainerComponent headerText="Limites globais"></ContainerComponent>
-        </ZoomComponent>
-    );
+interface CustomTextProps {
+    title?: string;
+    value?: string;
 }
+
+const CustomText: FunctionComponent<CustomTextProps> = ({ title, value }) => {
+    return (
+        <div className={styleModule.custom_text_div}>
+            <div className={styleModule.custom_text_title}>{title}</div>
+            <div className={styleModule.custom_text_value}>{value}</div>
+        </div>
+    );
+};
+
+export default CustomText;

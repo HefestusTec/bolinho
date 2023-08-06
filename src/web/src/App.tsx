@@ -43,10 +43,6 @@ function App() {
         setCurrentPageCallBack(setCurrentPage);
     }, []);
 
-    useEffect(() => {
-        console.log(currentPage);
-    }, [currentPage]);
-
     // Updating the save file every time global config is changed
     useEffect(() => {
         if (initialized) {
