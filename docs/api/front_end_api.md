@@ -167,3 +167,238 @@ The JavaScript file can be found in the api folder.
         callback_func= get_result,
         )
     ```
+
+## Experiment page API
+Collection of all functions/API calls available to the backend for the **experiment** routine. You can find them in the `bolinho_api/experiment.py` file.
+
+The JavaScript file can be found at `web/src/api/contexts/ExperimentPageContext.tsx`.
+
+### `#!python def get_load_percentage()`:
+!!! quote ""
+    Asks the front for the current load percentage.
+
+    This variable is shown to the user in a progress bar. And is usually between 0-100.
+
+    Returns the load percentage value
+
+    ``` python title="Python usage example"
+    from bolinho_api.experiment import experiment_api
+
+    print(experiment_api.get_load_percentage())
+    ```
+
+### `#!python def set_load_percentage(newValue)`:
+!!! quote ""
+    Sets the current load percentage.
+
+    This variable is shown to the user in a progress bar. And is usually between 0-100.
+
+    ``` python title="Python usage example"
+    from bolinho_api.experiment import experiment_api
+
+    for number in range(100):
+        experiment_api.set_load_percentage(number)
+        eel.sleep(0.1)
+
+    ```
+
+### `#!python def get_time_percentage()`:
+!!! quote ""
+    Asks the front for the current time percentage.
+
+    This variable is shown to the user in a progress bar. And is usually between 0-100.
+
+    Returns the load percentage value
+
+    ``` python title="Python usage example"
+    from bolinho_api.experiment import experiment_api
+
+    print(experiment_api.get_time_percentage())
+    ```
+
+### `#!python def set_time_percentage(newValue)`:
+!!! quote ""
+    Sets the current time percentage.
+
+    This variable is shown to the user in a progress bar. And is usually between 0-100.
+
+    ``` python title="Python usage example"
+    from bolinho_api.experiment import experiment_api
+
+    experiment_api.set_time_percentage(22)
+
+    ```
+
+### `#!python def get_distance_percentage()`:
+!!! quote ""
+    Asks the front for the current distance percentage.
+
+    This variable is shown to the user in a progress bar. And is usually between 0-100.
+
+    Returns the load percentage value
+
+    ``` python title="Python usage example"
+    from bolinho_api.experiment import experiment_api
+
+    print(experiment_api.get_distance_percentage())
+    ```
+
+### `#!python def set_distance_percentage(newValue)`:
+!!! quote ""
+    Sets the current distance percentage.
+
+    This variable is shown to the user in a progress bar. And is usually between 0-100.
+
+    ``` python title="Python usage example"
+    from bolinho_api.experiment import experiment_api
+
+    experiment_api.set_distance_percentage(22)
+
+    ```
+
+### `#!python def get_delta_load_percentage()`:
+!!! quote ""
+    Asks the front for the current delta load percentage.
+
+    This variable is shown to the user in a progress bar. And is usually between 0-100.
+
+    Returns the load percentage value
+
+    ``` python title="Python usage example"
+    from bolinho_api.experiment import experiment_api
+
+    print(experiment_api.get_delta_load_percentage())
+    ```
+
+### `#!python def set_delta_load_percentage(newValue)`:
+!!! quote ""
+    Sets the current delta load percentage.
+
+    This variable is shown to the user in a progress bar. And is usually between 0-100.
+
+    ``` python title="Python usage example"
+    from bolinho_api.experiment import experiment_api
+
+    experiment_api.set_delta_load_percentage(22)
+
+    ```
+
+### `#!python def get_experiment_parameters()`:
+!!! quote ""
+    Asks the front for the current experiment parameters.
+
+    Returns a formatted string
+
+    ``` python title="Python usage example"
+    from bolinho_api.experiment import experiment_api
+
+    print(experiment_api.get_experiment_parameters())
+    ```
+
+### `#!python def set_experiment_parameters(newValue)`:
+!!! quote ""
+    Sets the current experiment parameters.
+
+    Receives a formatted string.
+
+    ``` python title="Python usage example"
+    from bolinho_api.experiment import experiment_api
+
+    experiment_api.set_experiment_parameters("Experiment 202 <br/> Load cell: lxi92")
+
+    ```
+
+### `#!python def get_readings()`:
+!!! quote ""
+    Asks the front for the current Readings.
+
+    Returns an object of type Readings, this object gathers all the current readings of the machine.
+    Such as Current z axis position, current load, and status
+
+    ``` python title="Python usage example"
+    from bolinho_api.experiment import experiment_api
+    
+    reading_obj = experiment_api.get_readings()
+
+    print(reading_obj.status)
+    ```
+
+### `#!python def set_readings(newValue)`:
+!!! quote ""
+    Sets the current Readings.
+
+    Receives an object of type Readings, this object gathers all the current readings of the machine.
+    Such as Current z axis position, current load, and status.
+
+    This function dumps the object to a JSON and sends it to the front end
+
+    ``` python title="Python usage example"
+    from bolinho_api.experiment import experiment_api
+    from bolinho_api.jsClasses import Readings
+
+    new_machine_readings = Readings(299, 87, "not good")
+
+    experiment_api.set_readings(new_machine_readings)
+    ```
+
+### `#!python def get_description()`:
+!!! quote ""
+    Asks the front for the current description.
+
+    Returns a formatted string
+
+    ``` python title="Python usage example"
+    from bolinho_api.experiment import experiment_api
+
+    print(experiment_api.get_description())
+    ```
+
+### `#!python def set_description(newValue)`:
+!!! quote ""
+    Sets the current description.
+
+    Receives a formatted string.
+
+    ``` python title="Python usage example"
+    from bolinho_api.experiment import experiment_api
+
+    experiment_api.set_description("New Experiment description")
+    ```
+
+### `#!python def get_material()`:
+!!! quote ""
+    Asks the front for the current Material.
+
+    Returns an object of type Material.
+
+    ``` python title="Python usage example"
+    from bolinho_api.experiment import experiment_api
+    
+    material_obj = experiment_api.get_material()
+
+    print(material_obj.name)
+    ```
+
+### `#!python def set_material(newValue)`:
+!!! quote ""
+    Sets the current Material.
+
+    Receives an object of type Material
+
+    This function dumps the object to a JSON and sends it to the front end
+
+    ``` python title="Python usage example"
+    from bolinho_api.experiment import experiment_api
+    from bolinho_api.jsClasses import Readings
+
+    current_material = Material(
+        id=23,
+        name="aço 22",
+        batch="1",
+        experimentArray=[1, 3, 2],
+        supplier="Metalúrgica JOSÉ",
+        extraInfo="Cilindro",
+    )
+
+    experiment_api.set_material(current_material)
+    ```

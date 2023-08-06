@@ -15,7 +15,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
 
-import { FunctionComponent } from "react";
+import { FunctionComponent, useContext } from "react";
 import ExperimentSideBar from "./ExperimentSideBar/ExperimentSideBar";
 import styleModule from "./Experiment.module.css";
 import ZoomComponent from "components/zoomComponent/zoomComponent";
@@ -23,10 +23,12 @@ import GraphComponent from "components/graphComponent/graphComponent";
 import ContainerComponent from "components/containerComponent/containerComponent";
 import MainMonitor from "./MainMonitor/MainMonitor";
 import CustomText from "components/customSubComponents/CustomText/CustomText";
+import { ExperimentPageContext } from "api/contexts/ExperimentPageContext";
 
 interface ExperimentProps {}
 
 const Experiment: FunctionComponent<ExperimentProps> = () => {
+    const [experimentPageContext] = useContext(ExperimentPageContext);
     return (
         <div className={styleModule.experiment_div}>
             <ExperimentSideBar />
@@ -68,16 +70,25 @@ const Experiment: FunctionComponent<ExperimentProps> = () => {
                     scaleOrigin="bottom left"
                 >
                     <ContainerComponent headerText="Leituras">
-                        <CustomText title="Eixo Z" value="100 mm" />
-                        <CustomText title="Célula de carga" value="0 N" />
-                        <CustomText title="Status" value="OK" />
+                        <CustomText
+                            title="Eixo Z"
+                            value={`${experimentPageContext.readings.zAxisPos} mm`}
+                        />
+                        <CustomText
+                            title="Célula de carga"
+                            value={`${experimentPageContext.readings.loadReading} N`}
+                        />
+                        <CustomText
+                            title="Status"
+                            value={`${experimentPageContext.readings.status}`}
+                        />
                     </ContainerComponent>
                 </ZoomComponent>
                 <ZoomComponent
                     className={styleModule.experiment_component}
                     scaleOrigin="bottom right"
                 >
-                    <ContainerComponent headerText="Experimento">
+                    <ContainerComponent headerText="Descrição">
                         <p>
                             Lorem ipsum dolor sit amet, consectetur adipiscing
                             elit. Nullam malesuada.

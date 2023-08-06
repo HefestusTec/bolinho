@@ -17,6 +17,7 @@ import CurrentPageProvider from "contexts/currentPageContext";
 import { PageType } from "types/PageType";
 import { setCurrentPageCallBack } from "api/exp-core-api";
 import Experiment from "pages/Experiment/Experiment";
+import { ExperimentPageProvider } from "api/contexts/ExperimentPageContext";
 
 import("./api/linker");
 
@@ -93,32 +94,37 @@ function App() {
     };
     return (
         <GlobalConfigContext.Provider value={[globalConfig, setGlobalConfig]}>
-            <CurrentPageProvider>
-                <div
-                    className={getAppClassName()}
-                    data-theme={globalConfig.theme}
-                    animation-speed={globalConfig.animationSpeed}
-                    animate-graph={globalConfig.animateGraph}
-                    font-size={globalConfig.fontSize}
-                    enable-hover={enableHover}
-                >
-                    {getVirtualKeyboard()}
-                    {prompter}
-                    {currentPage === "home" ? <Home /> : <Experiment />}
+            <ExperimentPageProvider>
+                <CurrentPageProvider>
                     <div
-                        style={{
-                            position: "absolute",
-                            zIndex: 300,
-                        }}
+                        className={getAppClassName()}
+                        data-theme={globalConfig.theme}
+                        animation-speed={globalConfig.animationSpeed}
+                        animate-graph={globalConfig.animateGraph}
+                        font-size={globalConfig.fontSize}
+                        enable-hover={enableHover}
                     >
-                        <button onClick={callPrompter}>Propmt</button>{" "}
-                        <button onClick={toggleKeyboard}>
-                            Toggle keyboard
-                        </button>
+                        {getVirtualKeyboard()}
+                        {prompter}
+                        {currentPage === "home" ? <Home /> : <Experiment />}
+                        <div
+                            style={{
+                                position: "absolute",
+                                zIndex: 300,
+                            }}
+                        >
+                            <button onClick={callPrompter}>Propmt</button>{" "}
+                            <button onClick={toggleKeyboard}>
+                                Toggle keyboard
+                            </button>
+                        </div>
                     </div>
-                </div>
-                <ToastContainer className="toast_notify" transition={Zoom} />
-            </CurrentPageProvider>
+                    <ToastContainer
+                        className="toast_notify"
+                        transition={Zoom}
+                    />
+                </CurrentPageProvider>
+            </ExperimentPageProvider>
         </GlobalConfigContext.Provider>
     );
 }

@@ -23,6 +23,7 @@ import expose_db, exposed_core  # não remover
 
 from bolinho_api.ui import ui_api
 from bolinho_api.core import core_api
+from bolinho_api.experiment import experiment_api
 
 from granulado.core import Granulado
 from granulado import Messages
