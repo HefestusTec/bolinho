@@ -28,8 +28,9 @@ const ProgressWidget: FunctionComponent<ProgressWidgetProps> = ({
     title,
 }) => {
     const divStyle: React.CSSProperties = {
-        backgroundColor: "var(--primary_color_shader)",
+        backgroundColor: "var(--widget_color)",
         padding: "10px",
+        width: "80px",
         borderRadius: "10px",
         boxShadow: "0px 2px 2px 0px rgba(0, 0, 0, 0.25)",
     };

@@ -23,6 +23,7 @@ html {
     --background_color: #ffffff; /* Background color of the components */
     --primary_color: #444444; /* Primary color, for example this is the color of the headers */
     --primary_color_shader: #525252; /* Search bar color */
+    --widget_color: #525252; /* Widget color */
     --secondary_color: #888888; /* Search button color */
     --button_active_color: #ffffff;
     --button_inactive_color: #cecece;
@@ -68,6 +69,7 @@ html {
     --background_color: #ffffff; /* Background color of the components */
     --primary_color: #444444; /* Primary color, for example this is the color of the headers */
     --primary_color_shader: #525252; /* Search bar color */
+    --widget_color: #525252; /* Widget color */
     --secondary_color: #888888; /* Search button color */
     --button_active_color: #ffffff;
     --button_inactive_color: #cecece;
@@ -85,6 +87,7 @@ html {
     --background_color: #272727;
     --primary_color: #242424;
     --primary_color_shader: #525252;
+    --widget_color: #2e2e2e;
     --secondary_color: #888888;
     --button_active_color: #383838;
     --button_inactive_color: #1d1d1d;
@@ -102,11 +105,12 @@ html {
     --background_color: #050505;
     --primary_color: #0e0e0e;
     --primary_color_shader: #000000;
+    --widget_color: #000000;
     --secondary_color: #161616;
     --button_active_color: #181818;
     --button_inactive_color: #0a0a0a;
     --background2_color: #000000;
-    --content_background_color: #0a0a0a;
+    --content_background_color: #161616;
     --font_color: #f2f2f2;
     --font_color_inverted: #f2f2f2;
     --invert_icon: 100%;
