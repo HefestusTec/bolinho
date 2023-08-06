@@ -89,6 +89,7 @@ def main():
     gran = Granulado()
     while not gran.connect("COM4", 115200):
         print("waiting for connection")
+        eel.bigAlertJS()
         eel.sleep(1)
     doOnce = True
     while True:

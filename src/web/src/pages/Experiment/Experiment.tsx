@@ -77,7 +77,7 @@ const Experiment: FunctionComponent<ExperimentProps> = () => {
                     className={styleModule.experiment_component}
                     scaleOrigin="bottom right"
                 >
-                    <ContainerComponent headerText="Experimento">
+                    <ContainerComponent headerText="Descrição">
                         <p>
                             Lorem ipsum dolor sit amet, consectetur adipiscing
                             elit. Nullam malesuada.
