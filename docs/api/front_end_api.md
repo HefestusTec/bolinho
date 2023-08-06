@@ -307,3 +307,98 @@ The JavaScript file can be found at `web/src/api/contexts/ExperimentPageContext.
     experiment_api.set_experiment_parameters("Experiment 202 <br/> Load cell: lxi92")
 
     ```
+
+### `#!python def get_readings()`:
+!!! quote ""
+    Asks the front for the current Readings.
+
+    Returns an object of type Readings, this object gathers all the current readings of the machine.
+    Such as Current z axis position, current load, and status
+
+    ``` python title="Python usage example"
+    from bolinho_api.experiment import experiment_api
+    
+    reading_obj = experiment_api.get_readings()
+
+    print(reading_obj.status)
+    ```
+
+### `#!python def set_readings(newValue)`:
+!!! quote ""
+    Sets the current Readings.
+
+    Receives an object of type Readings, this object gathers all the current readings of the machine.
+    Such as Current z axis position, current load, and status.
+
+    This function dumps the object to a JSON and sends it to the front end
+
+    ``` python title="Python usage example"
+    from bolinho_api.experiment import experiment_api
+    from bolinho_api.jsClasses import Readings
+
+    new_machine_readings = Readings(299, 87, "not good")
+
+    experiment_api.set_readings(new_machine_readings)
+    ```
+
+### `#!python def get_description()`:
+!!! quote ""
+    Asks the front for the current description.
+
+    Returns a formatted string
+
+    ``` python title="Python usage example"
+    from bolinho_api.experiment import experiment_api
+
+    print(experiment_api.get_description())
+    ```
+
+### `#!python def set_description(newValue)`:
+!!! quote ""
+    Sets the current description.
+
+    Receives a formatted string.
+
+    ``` python title="Python usage example"
+    from bolinho_api.experiment import experiment_api
+
+    experiment_api.set_description("New Experiment description")
+    ```
+
+### `#!python def get_material()`:
+!!! quote ""
+    Asks the front for the current Material.
+
+    Returns an object of type Material.
+
+    ``` python title="Python usage example"
+    from bolinho_api.experiment import experiment_api
+    
+    material_obj = experiment_api.get_material()
+
+    print(material_obj.name)
+    ```
+
+### `#!python def set_material(newValue)`:
+!!! quote ""
+    Sets the current Material.
+
+    Receives an object of type Material
+
+    This function dumps the object to a JSON and sends it to the front end
+
+    ``` python title="Python usage example"
+    from bolinho_api.experiment import experiment_api
+    from bolinho_api.jsClasses import Readings
+
+    current_material = Material(
+        id=23,
+        name="aço 22",
+        batch="1",
+        experimentArray=[1, 3, 2],
+        supplier="Metalúrgica JOSÉ",
+        extraInfo="Cilindro",
+    )
+
+    experiment_api.set_material(current_material)
+    ```

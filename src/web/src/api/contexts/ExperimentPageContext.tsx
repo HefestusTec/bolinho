@@ -127,6 +127,7 @@ export const ExperimentPageProvider: FunctionComponent<
     }
     function setReadingsJS(newValue: string) {
         const parsedReading: ReadingsType = JSON.parse(newValue);
+
         setExperimentPageContext((old) => ({
             ...old,
             readings: parsedReading,

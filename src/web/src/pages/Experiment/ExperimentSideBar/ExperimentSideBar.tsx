@@ -33,9 +33,18 @@ const ExperimentSideBar: FunctionComponent<ExperimentSideBarProps> = () => {
                     value={experimentPageContext.loadPercentage}
                     title="Carga"
                 />
-                <ProgressWidget value={44} title="Tempo" />
-                <ProgressWidget value={12} title="Distância" />
-                <ProgressWidget value={99} title="Δ Carga" />
+                <ProgressWidget
+                    value={experimentPageContext.timePercentage}
+                    title="Tempo"
+                />
+                <ProgressWidget
+                    value={experimentPageContext.distancePercentage}
+                    title="Distância"
+                />
+                <ProgressWidget
+                    value={experimentPageContext.deltaLoadPercentage}
+                    title="Δ Carga"
+                />
                 <footer className={styleModule.side_bar_footer} />
             </span>
         </div>

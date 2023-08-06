@@ -18,7 +18,10 @@
 import eel
 import json
 
-from jsClasses import Readings, Material
+from bolinho_api.jsClasses import Readings
+from bolinho_api.jsClasses import Material
+
+from bolinho_api.helper import DictToObject
 
 
 class ExperimentAPI:
@@ -117,7 +120,7 @@ class ExperimentAPI:
         Returns an object of type Readings, this object gathers all the current readings of the machine.
         Such as Current z axis position, current load, and status
         """
-        return eel.getReadingsJS()()
+        return DictToObject(eel.getReadingsJS()())
 
     def set_readings(self, newValue: Readings):
         """
@@ -148,14 +151,13 @@ class ExperimentAPI:
         """
         return eel.setDescriptionJS(newValue)
 
-    ##################################################
     def get_material(self) -> Material:
         """
         Asks the front for the current Material.
 
         Returns an object of type Material.
         """
-        return eel.getMaterialJS()()
+        return DictToObject(eel.getMaterialJS()())
 
     def set_material(self, newValue: Material):
         """
