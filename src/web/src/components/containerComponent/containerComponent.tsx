@@ -19,7 +19,7 @@ import React, { FunctionComponent, Suspense } from "react";
 import styleModule from "./containerComponent.module.css";
 
 interface ContainerComponentProps {
-    children: any;
+    children?: any;
     headerText: string;
 }
 

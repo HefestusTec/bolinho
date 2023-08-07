@@ -26,11 +26,11 @@
     border-radius: 5px;
     width: stretch;
     background-color: var(--content_background_color);
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
-    white-space: nowrap;
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
     overflow: hidden;
     text-overflow: ellipsis;
     height: 7vh;
+    min-height: calc(var(--font_m) * 2.7);
     padding-right: 3%;
     display: flex;
     cursor: pointer;
@@ -41,7 +41,7 @@
         cursor: pointer;
         border: 1px solid var(--font_color);
 
-        box-shadow: 0px 0px 4px 4px rgba(0, 0, 0, 0.25);
+        box-shadow: 0px 0px 2px 2px rgba(0, 0, 0, 0.25);
     }
 }
 .custom_list_selector:active {
@@ -56,9 +56,10 @@
     background-color: var(--background_color);
     box-shadow: inset 0px 0px 4px rgba(0, 0, 0, 0.25);
     border-radius: 5px;
-    padding: 3%;
+    padding: 5px;
     min-width: 30px;
-    min-height: 15px;
+    height: 60%;
+    align-items: center;
     display: flex;
 }
 .expand_menu_indicator {
@@ -66,6 +67,7 @@
     background-repeat: no-repeat;
     background-position: center;
     width: 20px;
+    height: stretch;
     filter: invert(var(--invert_icon));
     display: inline-block;
     transition-duration: var(--animation_fast);
