@@ -23,7 +23,6 @@ import {
     useState,
 } from "react";
 import { defaultMaterialType, MaterialType } from "types/MaterialType";
-import { defaultReadingsType, ReadingsType } from "types/ReadingsType";
 
 export type ExperimentPageType = {
     loadPercentage: number; // Number between 0 - 100

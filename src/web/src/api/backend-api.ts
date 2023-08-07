@@ -132,3 +132,26 @@ export const endExperimentRoutineJS = async (): Promise<number> => {
         return 0;
     }
 };
+
+export const setCustomMovementDistanceJS = async (
+    newDistance: number
+): Promise<number> => {
+    try {
+        return await eel.set_custom_movement_distance(newDistance)();
+    } catch (error) {
+        toast.error(
+            "Não foi possível setar a nova distância de movimento para" +
+                newDistance
+        );
+        return 0;
+    }
+};
+
+export const returnZAxisJS = async (): Promise<number> => {
+    try {
+        return await eel.return_z_axis()();
+    } catch (error) {
+        toast.error("Não foi possível retornar o eixo z à origem");
+        return 0;
+    }
+};

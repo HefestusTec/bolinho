@@ -22,7 +22,6 @@ import ZoomComponent from "components/zoomComponent/zoomComponent";
 import GraphComponent from "components/graphComponent/graphComponent";
 import ContainerComponent from "components/containerComponent/containerComponent";
 import MainMonitor from "./MainMonitor/MainMonitor";
-import CustomText from "components/customSubComponents/CustomText/CustomText";
 import { ExperimentPageContext } from "api/contexts/ExperimentPageContext";
 import { ReadingsContext } from "api/contexts/ReadingsContext";
 import ReadingsContainer from "components/ReadingsContainer/ReadingsContainer";
