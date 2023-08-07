@@ -20,7 +20,7 @@ import ContainerComponent from "components/containerComponent/containerComponent
 import CustomButtonArray from "components/customSubComponents/CustomButtonArray/CustomButtonArray";
 import CustomButton from "components/customSubComponents/customButton/customButton";
 import CustomListSelector from "components/customSubComponents/customListSelector/customListSelector";
-import { FunctionComponent, useState } from "react";
+import { FunctionComponent, useEffect, useState } from "react";
 
 type allowedDistances =
     | "1 mm"
@@ -42,6 +42,11 @@ const CommandsComponent: FunctionComponent<CommandsComponentProps> = () => {
         setCustomMovementDistanceJS(keyAsNumber);
         setDistanceAmount(key as allowedDistances);
     };
+
+    useEffect(() => {
+        setCustomMovementDistanceJS(1);
+    }, []);
+
     return (
         <ContainerComponent headerText="Comandos">
             <CustomListSelector

@@ -140,7 +140,7 @@ export const setCustomMovementDistanceJS = async (
         return await eel.set_custom_movement_distance(newDistance)();
     } catch (error) {
         toast.error(
-            "Não foi possível setar a nova distância de movimento para" +
+            "Não foi possível setar a nova distância de movimento para " +
                 newDistance
         );
         return 0;
