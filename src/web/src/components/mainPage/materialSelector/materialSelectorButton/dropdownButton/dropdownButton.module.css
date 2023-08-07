@@ -40,7 +40,7 @@
     .dropdown_button:hover {
         box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
         transform: translateX(0.5vw);
-        border: 1px solid var(--font_color);
+        outline: var(--font_color) solid 1px;
     }
 }
 

@@ -22,6 +22,7 @@
     width: stretch;
     display: flex;
     height: 7vh;
+    min-height: calc(var(--font_m) * 2.7);
     margin-bottom: 2vh;
     align-items: center;
     justify-content: space-between;
@@ -36,7 +37,6 @@
 }
 
 .custom_text_title {
-    white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 }

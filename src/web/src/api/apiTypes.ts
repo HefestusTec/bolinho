@@ -27,6 +27,8 @@ export interface GlobalConfigContextProps {
     forceVirtualKeyboard: boolean; // Should it use the virtual keyboard as input
     enableHover: "enable" | "disable";
     absoluteMaximumForce: number;
+    absoluteMaximumTime: number;
+    absoluteMaximumTravel: number;
     port: string;
     animateGraph: boolean;
 }

@@ -33,6 +33,7 @@ html {
     --font_color_inverted: #f2f2f2; /* Inverted font color */
     --invert_icon: 0%; /* Auto invert color of icons */
     --positive_button_color: #0075ff; /* Color of positive buttons, such as go, start etc. */
+    --warning_button_color: #ffb238; /* Color of positive buttons, such as go, start etc. */
     --negative_button_color: #fd4545; /* Color of negative buttons, such as end, cancel etc. */
     --active_color: #1797f85c; /* Color when you press a button */
     --logo_schumacher: url(./resources/LogoSchumacher.png);
@@ -79,6 +80,7 @@ html {
     --font_color_inverted: #f2f2f2; /* Inverted font color */
     --invert_icon: 0%; /* Auto invert color of icons */
     --positive_button_color: #0075ff; /* Color of positive buttons, such as go, start etc. */
+    --warning_button_color: #ffb238; /* Color of positive buttons, such as go, start etc. */
     --negative_button_color: #fd4545; /* Color of negative buttons, such as end, cancel etc. */
     --active_color: #1797f85c;
     --logo_schumacher: url(./resources/LogoSchumacher.png);
@@ -97,6 +99,7 @@ html {
     --font_color_inverted: #bbbbbb;
     --invert_icon: 100%;
     --positive_button_color: #101dc9;
+    --warning_button_color: #654b21;
     --negative_button_color: #fd4545;
     --active_color: #1797f85c;
     --logo_schumacher: url(./resources/LogoSchumacherDark.png);
@@ -115,6 +118,7 @@ html {
     --font_color_inverted: #f2f2f2;
     --invert_icon: 100%;
     --positive_button_color: #101dc9;
+    --warning_button_color: #624618;
     --negative_button_color: #fd4545;
     --active_color: #1797f85c;
     --logo_schumacher: url(./resources/LogoSchumacherDark.png);

@@ -21,7 +21,7 @@ import BackgroundFader from "../backgroundFader/backgroundFader";
 
 interface ZoomComponentProps {
     scaleOrigin: string;
-    className: string;
+    className?: string;
     children?: any;
 }
 

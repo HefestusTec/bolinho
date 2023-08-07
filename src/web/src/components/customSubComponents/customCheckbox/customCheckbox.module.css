@@ -10,6 +10,7 @@
     width: stretch;
     display: flex;
     height: 7vh;
+    min-height: calc(var(--font_m) * 2.7);
     margin-bottom: 2vh;
     align-items: center;
 }
@@ -20,7 +21,6 @@
     font-weight: bold;
     align-items: center;
     display: inline;
-    white-space: nowrap;
     margin-left: 5%;
     margin-right: 5%;
     border-radius: 2px;
@@ -30,8 +30,7 @@
     height: 100%;
     width: stretch;
     background-color: var(--content_background_color);
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
-    white-space: nowrap;
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
     overflow: hidden;
     text-overflow: ellipsis;
     cursor: pointer;
@@ -40,9 +39,9 @@
     .custom_button:hover {
         background-color: var(--background_color);
         cursor: pointer;
-        border: 1px solid var(--font_color);
+        outline: var(--font_color) solid 1px;
 
-        box-shadow: 0px 0px 4px 4px rgba(0, 0, 0, 0.25);
+        box-shadow: 0px 0px 2px 2px rgba(0, 0, 0, 0.25);
     }
 }
 .custom_button:active {

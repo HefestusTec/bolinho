@@ -21,6 +21,9 @@
 
 All different data types will be shown in this page
 
+!!! warning "ATTENTION"
+    To see a more up to date version of the different data types pleas see `src/bolinho_api/classes.py`!
+
 ## DataPoint
 !!! quote ""
     ``` python
