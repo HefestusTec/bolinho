@@ -14,14 +14,13 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
-import { createContext } from "react";
 
-// Object with {
-// "material": material_fragment,
-// "experiment": experiment_fragment,
-// "data_array":
-// "color": color associated to an experiment
-// }
-const SelectedObjectsContext = createContext([[], () => {}]);
+export type SupplierType = {
+    name: string;
+    email: string;
+};
 
-export default SelectedObjectsContext;
+export const defaultSupplierType = {
+    name: "",
+    email: "",
+};

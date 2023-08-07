@@ -14,12 +14,19 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
-import React, { useState } from "react";
+import { FunctionComponent, useState } from "react";
 
 import styleModule from "./materialSelectorButton.module.css";
 import DropdownButton from "./dropdownButton/dropdownButton";
+import { MaterialType } from "types/MaterialType";
 
-export default function MaterialSelectorButton({ material }) {
+interface MaterialSelectorButtonProps {
+    material: MaterialType;
+}
+
+const MaterialSelectorButton: FunctionComponent<
+    MaterialSelectorButtonProps
+> = ({ material }) => {
     const [dropdown, setDropdown] = useState(false);
 
     const getButtonClassName = () => {
@@ -39,37 +46,28 @@ export default function MaterialSelectorButton({ material }) {
         return [styleModule.dropdown_ul, styleModule.dropdown_hidden].join(" ");
     };
 
-    const getAddSign = () => {
-        if (dropdown) return "-";
-
-        return "+";
-    };
-
     const toggleDropDown = () => {
         setDropdown(!dropdown);
     };
 
-    const createButton = (experimentIdx) => {
+    const createButton = (experimentIdx: number) => {
         return (
             <DropdownButton
                 experimentIndex={experimentIdx}
                 key={"EX" + experimentIdx.toString()}
-            ></DropdownButton>
+            />
         );
     };
 
     const makeExperimentButtons = () => {
-        let buttonArray = [];
-        const experiment_array = material.experiment_array;
-        experiment_array.forEach((element) => {
-            buttonArray.push(createButton(element));
-        });
-        return buttonArray;
+        return material.experiment_array.map((element, idx) =>
+            createButton(element)
+        );
     };
 
     return (
         <li
-            key={"mat_idx_" + material.index}
+            key={"mat_idx_" + material.id}
             className={styleModule.material_selector_li}
         >
             <button
@@ -78,7 +76,9 @@ export default function MaterialSelectorButton({ material }) {
                 onClick={toggleDropDown}
             >
                 <div className={styleModule.material_selector_side}>
-                    <div className={styleModule.add_sign}>{getAddSign()}</div>
+                    <div className={styleModule.add_sign}>
+                        {dropdown ? "-" : "+"}
+                    </div>
                 </div>
                 <div className={styleModule.material_selector_text}>
                     [{material.batch}] {material.name}
@@ -89,4 +89,6 @@ export default function MaterialSelectorButton({ material }) {
             </ul>
         </li>
     );
-}
+};
+
+export default MaterialSelectorButton;

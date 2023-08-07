@@ -36,6 +36,7 @@ const Experiment: FunctionComponent<ExperimentProps> = () => {
                 <MainMonitor
                     className={styleModule.main_monitor}
                     scaleOrigin="top left"
+                    currentLoad={experimentPageContext.readings.current_load}
                 />
                 <ZoomComponent
                     className={styleModule.graph_component}
@@ -58,15 +59,15 @@ const Experiment: FunctionComponent<ExperimentProps> = () => {
                     <ContainerComponent headerText="Leituras">
                         <CustomText
                             title="Eixo Z"
-                            value={`${experimentPageContext.readings.zAxisPos} mm`}
+                            value={`${experimentPageContext.readings.z_axis_pos} mm`}
                         />
                         <CustomText
-                            title="Célula de carga"
-                            value={`${experimentPageContext.readings.loadReading} N`}
+                            title="Carga atual"
+                            value={`${experimentPageContext.readings.current_load} N`}
                         />
                         <CustomText
                             title="Carga máxima"
-                            value={`${experimentPageContext.readings.maxLoad} N`}
+                            value={`${experimentPageContext.readings.max_load} N`}
                         />
                         <CustomText
                             title="Status"

@@ -21,6 +21,7 @@ import SideBar from "components/sideBar/sideBar";
 import SubPage from "components/subPage/subPage";
 import React from "react";
 import { FunctionComponent, useEffect, useState } from "react";
+import { MaterialType } from "types/MaterialType";
 import { PagesEnum } from "types/PagesEnum";
 
 interface homeProps {}
@@ -35,7 +36,7 @@ const Home: FunctionComponent<homeProps> = () => {
     ];
     // options "Início", "Calibrar", "Controlar", "Config.", "Sobre"
     const [currentPage, setCurrentPage] = useState<PagesEnum>("Início");
-    const [materialList, setMaterialList] = useState([]);
+    const [materialList, setMaterialList] = useState<MaterialType[]>([]);
 
     const createSubPages = () => {
         return pageList.map((item) => {

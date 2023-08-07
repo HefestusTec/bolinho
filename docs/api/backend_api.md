@@ -22,10 +22,15 @@ This page gathers all the API calls that can be used by the front end.
 
 > Front end -> Backend
 
+___
+
 ## Global configuration
 
-### `#!javaScript saveConfigParams(configParams)`:
-!!! quote ""
+Collection of all functions/API calls available to the front end that handles the global variables. 
+___
+
+### saveConfigParams(configParams)
+!!! quote "saveConfigParams(configParams)"
 
     Saves the config parameters to the persistent file
 
@@ -35,8 +40,10 @@ This page gathers all the API calls that can be used by the front end.
     saveConfigParams(globalConfig);
     ```
 
-### `#!javaScript loadConfigParams()`:
-!!! quote ""
+___
+
+### loadConfigParams()
+!!! quote "loadConfigParams()"
 
     Loads the config parameters from the persistent file
 
@@ -46,10 +53,16 @@ This page gathers all the API calls that can be used by the front end.
     globalConfig = loadConfigParams();
     ```
 
+___
+
 ## Data base
 
-### `#!javaScript getMaterialList()`:
-!!! quote ""
+Collection of all functions/API calls available to the front end that handles the communication with the data base, such as fetching and storing data. 
+
+___
+
+### getMaterialList()
+!!! quote "getMaterialList()"
 
     **TODO**
     
@@ -59,34 +72,53 @@ This page gathers all the API calls that can be used by the front end.
     globalConfig = getMaterialList();
     ```
 
-### `#!javaScript getExperimentDate()`:
-!!! quote ""
+___
 
-    **TODO**
+### getMaterialAt(index)
+!!! quote "getMaterialAt(index)"
+
+    Returns the material at an `index` from the database.
     
     ``` javaScript title="React usage example"
-    import { getExperimentDate } from "./api/backend-api";
+    import { getMaterialAt } from "./api/backend-api";
     
-    globalConfig = getExperimentDate();
+    const elem21 = getMaterialAt(21);
     ```
 
-### `#!javaScript getExperimentObjectList()`:
-!!! quote ""
+___
 
-    **TODO**
+### getExperimentAt(index)
+!!! quote "getExperimentAt(index)"
+
+    Returns the experiment at an `index` from the database.
     
     ``` javaScript title="React usage example"
-    import { getExperimentObjectList } from "./api/backend-api";
+    import { getExperimentAt } from "./api/backend-api";
     
-    globalConfig = getExperimentObjectList();
+    const elem21 = getExperimentAt(21);
     ```
 
+___
+
+### getDataPointArrayAt(index)
+!!! quote "getDataPointArrayAt(index)"
+
+    Returns an array of `DataPoint` at an `index` from the database.
+    
+    ``` javaScript title="React usage example"
+    import { getDataPointArrayAt } from "./api/backend-api";
+    import { DataPointType } from "types/DataPointTypes";
+
+    const dataPointArrya: DataPointType[] = getDataPointArrayAt(21);
+    ```
+
+___
 
 
 ## Core
 
-### `#!javaScript startExperimentRoutineJS()`:
-!!! quote ""
+### startExperimentRoutineJS()
+!!! quote "startExperimentRoutineJS()"
 
     This function calls the `start_experiment_routine()` on the backend.
 
@@ -100,9 +132,10 @@ This page gathers all the API calls that can be used by the front end.
     };)
     ```
 
+___
 
-### `#!javaScript endExperimentRoutineJS()`:
-!!! quote ""
+### endExperimentRoutineJS()
+!!! quote "endExperimentRoutineJS()"
 
     This function calls the `end_experiment_routine()` on the backend.
 
