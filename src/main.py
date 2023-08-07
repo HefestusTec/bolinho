@@ -19,6 +19,7 @@
 
 import eel
 from argparse import ArgumentParser
+from bolinho_api.classes import Readings
 import expose_db, exposed_core  # não remover
 
 from bolinho_api.ui import ui_api
@@ -90,6 +91,13 @@ def main():
     gran = Granulado()
     while not gran.connect("COM4", 115200):
         print("waiting for connection")
+        new_machine_readings = Readings(299, 87, 300, "not good")
+
+        for number in range(100):
+            new_machine_readings.current_load = number
+            experiment_api.set_readings(new_machine_readings)
+            eel.sleep(0.1)
+
         eel.sleep(1)
     doOnce = True
     while True:

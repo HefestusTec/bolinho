@@ -32,7 +32,6 @@ export type ExperimentPageType = {
     deltaLoadPercentage: number; // Number between 0 - 100
 
     experimentParameters: string;
-    readings: ReadingsType;
     description: string;
     material: MaterialType;
 };
@@ -44,7 +43,6 @@ const experimentPageContextDefault: ExperimentPageType = {
     deltaLoadPercentage: 0,
 
     experimentParameters: "",
-    readings: defaultReadingsType,
     description: "",
     material: defaultMaterialType,
 };
@@ -113,18 +111,6 @@ export const ExperimentPageProvider: FunctionComponent<
         }));
     }
 
-    function getReadingsJS() {
-        return experimentPageContext.readings;
-    }
-    function setReadingsJS(newValue: string) {
-        const parsedReading: ReadingsType = JSON.parse(newValue);
-
-        setExperimentPageContext((old) => ({
-            ...old,
-            readings: parsedReading,
-        }));
-    }
-
     function getDescriptionJS() {
         return experimentPageContext.description;
     }
@@ -168,9 +154,6 @@ export const ExperimentPageProvider: FunctionComponent<
             setExperimentParametersJS,
             "setExperimentParametersJS"
         );
-
-        window.eel.expose(getReadingsJS, "getReadingsJS");
-        window.eel.expose(setReadingsJS, "setReadingsJS");
 
         window.eel.expose(getDescriptionJS, "getDescriptionJS");
         window.eel.expose(setDescriptionJS, "setDescriptionJS");

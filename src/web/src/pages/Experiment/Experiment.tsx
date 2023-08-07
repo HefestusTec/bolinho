@@ -24,11 +24,14 @@ import ContainerComponent from "components/containerComponent/containerComponent
 import MainMonitor from "./MainMonitor/MainMonitor";
 import CustomText from "components/customSubComponents/CustomText/CustomText";
 import { ExperimentPageContext } from "api/contexts/ExperimentPageContext";
+import { ReadingsContext } from "api/contexts/ReadingsContext";
+import ReadingsContainer from "components/ReadingsContainer/ReadingsContainer";
 
 interface ExperimentProps {}
 
 const Experiment: FunctionComponent<ExperimentProps> = () => {
     const [experimentPageContext] = useContext(ExperimentPageContext);
+    const [readingsContext] = useContext(ReadingsContext);
     return (
         <div className={styleModule.experiment_div}>
             <ExperimentSideBar />
@@ -36,7 +39,7 @@ const Experiment: FunctionComponent<ExperimentProps> = () => {
                 <MainMonitor
                     className={styleModule.main_monitor}
                     scaleOrigin="top left"
-                    currentLoad={experimentPageContext.readings.current_load}
+                    currentLoad={readingsContext.current_load}
                 />
                 <ZoomComponent
                     className={styleModule.graph_component}
@@ -52,29 +55,10 @@ const Experiment: FunctionComponent<ExperimentProps> = () => {
                         <p>{experimentPageContext.experimentParameters} </p>
                     </ContainerComponent>
                 </ZoomComponent>
-                <ZoomComponent
+                <ReadingsContainer
                     className={styleModule.readings_component}
                     scaleOrigin="bottom left"
-                >
-                    <ContainerComponent headerText="Leituras">
-                        <CustomText
-                            title="Eixo Z"
-                            value={`${experimentPageContext.readings.z_axis_pos} mm`}
-                        />
-                        <CustomText
-                            title="Carga atual"
-                            value={`${experimentPageContext.readings.current_load} N`}
-                        />
-                        <CustomText
-                            title="Carga máxima"
-                            value={`${experimentPageContext.readings.max_load} N`}
-                        />
-                        <CustomText
-                            title="Status"
-                            value={`${experimentPageContext.readings.status}`}
-                        />
-                    </ContainerComponent>
-                </ZoomComponent>
+                />
                 <ZoomComponent
                     className={styleModule.experiment_component}
                     scaleOrigin="bottom right"
