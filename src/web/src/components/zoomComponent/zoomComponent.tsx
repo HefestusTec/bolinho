@@ -14,7 +14,13 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
-import React, { useState, useContext, useMemo, FunctionComponent } from "react";
+import React, {
+    useState,
+    useContext,
+    useMemo,
+    FunctionComponent,
+    CSSProperties,
+} from "react";
 import { useLongPress } from "use-long-press";
 import GlobalConfigContext from "../../contexts/globalConfigContext";
 import BackgroundFader from "../backgroundFader/backgroundFader";
@@ -23,11 +29,13 @@ interface ZoomComponentProps {
     scaleOrigin: string;
     className?: string;
     children?: any;
+    style?: CSSProperties;
 }
 
 const ZoomComponent: FunctionComponent<ZoomComponentProps> = ({
     scaleOrigin = "top",
     className = "",
+    style,
     children,
 }) => {
     const [globalConfig] = useContext(GlobalConfigContext);
@@ -75,6 +83,7 @@ const ZoomComponent: FunctionComponent<ZoomComponentProps> = ({
                 transitionDuration: "var(--animation_slow)",
                 transform: "scale(var(--zoom_scale))",
                 zIndex: 10,
+                ...style,
             };
         }
 
@@ -82,8 +91,9 @@ const ZoomComponent: FunctionComponent<ZoomComponentProps> = ({
             transformOrigin: scaleOrigin,
             transitionDuration: "var(--animation_slow)",
             zIndex: zIndexVal,
+            ...style,
         };
-    }, [isActive, scaleOrigin, zIndexVal]);
+    }, [isActive, scaleOrigin, zIndexVal, style]);
 
     const createFallBack = useMemo(() => {
         if (isActive) {

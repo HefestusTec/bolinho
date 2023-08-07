@@ -148,3 +148,44 @@ ___
         endExperimentRoutineJS();
     };)
     ```
+
+___
+
+### setCustomMovementDistanceJS()
+!!! quote "setCustomMovementDistanceJS()"
+
+    This function calls the `set_custom_movement_distance(new_movement_distance)` on the backend.
+
+    Sets the movement distance that the z-axis moves when the user is controlling the machine manually.
+
+    This distance is set in MILLIMETERS
+
+    Returns 1 if succeeded.
+    
+    ``` javaScript title="React usage example"
+    import { setCustomMovementDistanceJS } from "./api/backend-api";
+    
+    onClick(()=>{
+        // Sets the movement distance to 50 mm
+        setCustomMovementDistanceJS(50);
+    };)
+    ```
+
+___
+
+### returnZAxisJS()
+!!! quote "returnZAxisJS()"
+
+    This function calls the `return_z_axis()` on the backend.
+
+    Returns the z-axis to the origin.
+
+    Returns 1 if succeeded (if the function was acknowledged).
+    
+    ``` javaScript title="React usage example"
+    import { returnZAxisJS } from "./api/backend-api";
+    
+    onClick(()=>{
+        returnZAxisJS();
+    };)
+    ```

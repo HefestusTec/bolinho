@@ -82,3 +82,31 @@ def prompt_return(
     Passes the "return_value" to the stored prompt function
     """
     ui_api.return_prompt_function(return_value)
+
+
+@eel.expose
+def set_custom_movement_distance(new_movement_distance):
+    """
+    Sets the movement distance that the z-axis moves when the user is controlling the machine manually.
+
+    This distance is set in MILLIMETERS
+
+    Returns 1 if succeeded.
+
+    TODO IMPLEMENT THIS FUNCTION
+    """
+    print("movement distance set to " + str(new_movement_distance))
+    return 1
+
+
+@eel.expose
+def return_z_axis():
+    """
+    Returns the z-axis to the origin.
+
+    Returns 1 if succeeded (if the function was acknowledged).
+
+    TODO IMPLEMENT THIS FUNCTION
+    """
+    print("Returns the z-axis to the origin")
+    return 1

@@ -20,8 +20,8 @@ import styleModule from "./customListSelector.module.css";
 import CustomButton from "../customButton/customButton";
 
 interface CustomListSelectorProps {
-    children: any;
-    className: string;
+    children?: any;
+    className?: string;
     clickCallBack: (key: string) => void;
     keys: string[];
     selected: string;
