@@ -21,6 +21,7 @@ import { toast } from "react-toastify";
 import { getRandomColor } from "../helpers";
 import { GlobalConfigContextProps } from "./apiTypes";
 import { MaterialType } from "types/MaterialType";
+import { ExperimentType } from "types/ExperimentType";
 
 // Setting up eel and fakeEel
 export let eel = window.eel;
@@ -42,16 +43,18 @@ export const saveConfigParams = (configParams: GlobalConfigContextProps) => {
     }
 };
 
-export const loadConfigParams = async () => {
+export const loadConfigParams = async (): Promise<
+    GlobalConfigContextProps | undefined
+> => {
     try {
         return await eel.load_config_params()();
     } catch (error) {
         toast.error("Não foi possível carregar o arquivo de configuração");
-        return 0;
+        return undefined;
     }
 };
 
-export const getMaterialList = async () => {
+export const getMaterialList = async (): Promise<MaterialType[]> => {
     try {
         const materialList: MaterialType[] = JSON.parse(
             await eel.get_material_list()()
@@ -62,21 +65,27 @@ export const getMaterialList = async () => {
     }
 };
 
-export const getExperimentDate = async (index: number) => {
+export const getExperimentDate = async (
+    index: number
+): Promise<ExperimentType | undefined> => {
     try {
-        return JSON.parse(await eel.get_experiment_at(index)());
+        return JSON.parse(
+            await eel.get_experiment_at(index)()
+        ) as ExperimentType;
     } catch (error) {
         toast.error(
             "Não foi possível encontrar a data do experimento de índice " +
                 index
         );
-        return 0;
+        return undefined;
     }
 };
 
-export const getExperimentObjectList = async (id: number) => {
+export const getExperimentObjectList = async (
+    id: number
+): Promise<ExperimentType[]> => {
     try {
-        const experimentObject = JSON.parse(
+        const experimentObject: ExperimentType[] = JSON.parse(
             await eel.get_experiment_dict(id)()
         );
 
@@ -85,7 +94,7 @@ export const getExperimentObjectList = async (id: number) => {
         toast.error(
             "Não foi possível encontrar a lista de experimentos de índice " + id
         );
-        return {};
+        return [];
     }
 };
 
@@ -97,7 +106,7 @@ export const returnPromptResult = (result: string) => {
     }
 };
 
-export const startExperimentRoutineJS = async () => {
+export const startExperimentRoutineJS = async (): Promise<number> => {
     try {
         return await eel.start_experiment_routine()();
     } catch (error) {
@@ -106,7 +115,7 @@ export const startExperimentRoutineJS = async () => {
     }
 };
 
-export const endExperimentRoutineJS = async () => {
+export const endExperimentRoutineJS = async (): Promise<number> => {
     try {
         return await eel.end_experiment_routine()();
     } catch (error) {

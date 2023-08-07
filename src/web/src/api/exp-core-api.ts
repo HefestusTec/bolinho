@@ -43,7 +43,6 @@ try {
     window.eel.expose(goToExperimentPageJS, "goToExperimentPageJS");
 } catch (error) {}
 
-// TODO implement the function
 export function goToHomePageJS() {
     // Routs to the experiment page, returns 1 if it was successful
     if (setCurrentPage == null) return;
