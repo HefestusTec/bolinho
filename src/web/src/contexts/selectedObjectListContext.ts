@@ -16,14 +16,14 @@
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
 
 import { Dispatch, SetStateAction, createContext } from "react";
-import { DataPointArrayType } from "types/DataPointTypes";
+import { DataPointArrayType, DataPointType } from "types/DataPointTypes";
 import { ExperimentType } from "types/ExperimentType";
 import { MaterialType } from "types/MaterialType";
 
 export type SelectedObjectType = {
     material: MaterialType;
     experiment: ExperimentType;
-    data_array: DataPointArrayType;
+    data_array: DataPointType[];
     color: string;
 };
 

@@ -15,30 +15,27 @@
 // You should have received a copy of the GNU General Public License
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
 
+import { DataPointType } from "types/DataPointTypes";
+
 type DataSet = {
     label: string;
-    data: DataPoint[];
+    data: DataPointType[];
     fill: boolean;
     borderColor: string;
 };
 
-export class DataPoint {
-    x: number;
-    y: number;
-    constructor(x = 0, y = 0) {
-        this.x = x;
-        this.y = y;
-    }
-}
-
 export class ExperimentPlotData {
     name: string;
-    dataArray: DataPoint[];
+    dataArray: DataPointType[];
     lineColor: string;
     dataset: DataSet;
-    maxDataValues: DataPoint;
+    maxDataValues: DataPointType;
 
-    constructor(name = "NONE", dataArray = [], lineColor = "#000000") {
+    constructor(
+        name: string = "NONE",
+        dataArray: DataPointType[] = [],
+        lineColor: string = "#000000"
+    ) {
         this.name = name;
         this.dataArray = dataArray;
         this.lineColor = lineColor;
@@ -53,7 +50,7 @@ export class ExperimentPlotData {
             borderColor: this.lineColor, // Color of the line
         };
     }
-    getMaxDataValues(): DataPoint {
+    getMaxDataValues(): DataPointType {
         if (this.dataArray.length <= 0) return { x: 0, y: 0 };
         const maxX = this.dataArray[this.dataArray.length - 1].x;
         const maxY = Math.max(...this.dataArray.map((object) => object.y));

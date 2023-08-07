@@ -24,12 +24,11 @@ import styleModule from "./dropdownButton.module.css";
 import SelectedObjectListContext, {
     SelectedObjectType,
 } from "contexts/selectedObjectListContext";
-import { getFormattedDate } from "../../../../../helpers";
+import { getFormattedDate, getRandomColor } from "../../../../../helpers";
 import { toast } from "react-toastify";
 import {
     getDataPointArrayAt,
     getExperimentAt,
-    getExperimentObjectList,
     getMaterialAt,
 } from "../../../../../api/backend-api";
 import { ExperimentType } from "types/ExperimentType";
@@ -59,25 +58,28 @@ const DropdownButton: FunctionComponent<DropdownButtonProps> = ({
             if (objectList[i].experiment.id === experiment.id) return;
         }
 
-        getMaterialAt(experiment.id)
+        getMaterialAt(experiment.material_id)
             .then((materialResponse) => {
                 if (materialResponse === undefined) return;
-                getDataPointArrayAt(experiment.data_array_id).then(
-                    (dataPointArrayResponse) => {
+                getDataPointArrayAt(experiment.data_array_id)
+                    .then((dataPointArrayResponse) => {
                         if (dataPointArrayResponse === undefined) return;
 
                         const newSelectedObj: SelectedObjectType = {
                             material: materialResponse,
                             experiment: experiment,
                             data_array: dataPointArrayResponse,
-                            color: "ffffff",
+                            color: getRandomColor(),
                         };
+                        console.log(materialResponse);
                         setObjectList((experimentList) => [
                             ...experimentList,
                             newSelectedObj,
                         ]);
-                    }
-                );
+                    })
+                    .catch((error) => {
+                        toast.error(error);
+                    });
             })
             .catch((error) => {
                 toast.error(error);

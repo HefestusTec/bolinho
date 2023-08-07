@@ -18,11 +18,10 @@
 
 import { fakeEel } from "../staticDB";
 import { toast } from "react-toastify";
-import { getRandomColor } from "../helpers";
 import { GlobalConfigContextProps } from "./apiTypes";
 import { MaterialType } from "types/MaterialType";
 import { ExperimentType } from "types/ExperimentType";
-import { DataPointArrayType } from "types/DataPointTypes";
+import { DataPointType } from "types/DataPointTypes";
 
 // Setting up eel and fakeEel
 export let eel = window.eel;
@@ -94,32 +93,15 @@ export const getExperimentAt = async (
 
 export const getDataPointArrayAt = async (
     index: number
-): Promise<DataPointArrayType | undefined> => {
+): Promise<DataPointType[]> => {
     try {
         return JSON.parse(
             await eel.get_data_point_array_at(index)()
-        ) as DataPointArrayType;
+        ) as DataPointType[];
     } catch (error) {
         toast.error(
             "Não foi possível encontrar a array de ponto de dados de índice " +
                 index
-        );
-        return undefined;
-    }
-};
-
-export const getExperimentObjectList = async (
-    id: number
-): Promise<ExperimentType[]> => {
-    try {
-        const experimentObject: ExperimentType[] = JSON.parse(
-            await eel.get_experiment_dict(id)()
-        );
-
-        return Object.assign(experimentObject, { color: getRandomColor() });
-    } catch (error) {
-        toast.error(
-            "Não foi possível encontrar a lista de experimentos de índice " + id
         );
         return [];
     }
