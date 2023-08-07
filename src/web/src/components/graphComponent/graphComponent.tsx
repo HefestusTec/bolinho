@@ -129,7 +129,7 @@ const GraphComponent: FunctionComponent<GraphComponentProps> = ({
                             max: rightHandlePos,
                         }}
                         experimentPlotDataArray={experimentArray.plotDataArray}
-                        allMaxDataValues={experimentArray.maxValues.x}
+                        allMaxDataValues={experimentArray.maxValues}
                     ></ChartComponent>
                 </div>
                 <div className={styleModule.side_bar_button_div}>
