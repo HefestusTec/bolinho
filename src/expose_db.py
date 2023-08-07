@@ -65,6 +65,4 @@ def get_material_with_experiment(experiment_id):
 def get_data_point_array_at(id):
     if len(data_point_array_data_base) - 1 < id:
         return []
-    return json.dumps(
-        data_point_array_data_base[id].data_array, default=lambda x: x.__dict__
-    )
+    return json.dumps(data_point_array_data_base[id], default=lambda x: x.__dict__)

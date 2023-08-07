@@ -23,14 +23,3 @@ export const defaultDataPointType = {
     x: 0,
     y: 0,
 };
-
-export type DataPointArrayType = {
-    id: number;
-    experiment_id: number;
-    data_array: DataPointType[];
-};
-export const defaultDataPointArrayType = {
-    id: 0,
-    experiment_id: 0,
-    data_array: [],
-};

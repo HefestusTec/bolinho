@@ -27,10 +27,10 @@ def get_random_data_points(dataSize):
 
 
 data_point_array_data_base = [
-    DataPointArray(id=0, experiment_id=0, data_array=get_random_data_points(23)),
-    DataPointArray(id=1, experiment_id=1, data_array=get_random_data_points(15)),
-    DataPointArray(id=2, experiment_id=2, data_array=get_random_data_points(46)),
-    DataPointArray(id=3, experiment_id=3, data_array=get_random_data_points(60)),
+    get_random_data_points(23),
+    get_random_data_points(15),
+    get_random_data_points(46),
+    get_random_data_points(60),
 ]
 
 experiment_data_base = [

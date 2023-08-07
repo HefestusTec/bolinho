@@ -13,10 +13,10 @@
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
+// along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
 
 import { goToExperimentPageJS, goToHomePageJS } from "api/exp-core-api";
 
-// along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
 var _pj;
 
 var data_point_array_data_base, experiment_data_base, material_data_base;
@@ -66,14 +66,6 @@ class DataPoint {
     constructor(x = 0, y = 0) {
         this.x = x;
         this.y = y;
-    }
-}
-
-class DataPointArray {
-    constructor(id = 0, experiment_id = 0, data_array = []) {
-        this.id = id;
-        this.experiment_id = experiment_id;
-        this.data_array = data_array;
     }
 }
 
@@ -166,10 +158,10 @@ class Material {
 }
 
 data_point_array_data_base = [
-    new DataPointArray(0, 0, get_random_data_points(23)),
-    new DataPointArray(1, 1, get_random_data_points(15)),
-    new DataPointArray(2, 2, get_random_data_points(46)),
-    new DataPointArray(3, 3, get_random_data_points(60)),
+    get_random_data_points(23),
+    get_random_data_points(15),
+    get_random_data_points(46),
+    get_random_data_points(60),
 ];
 experiment_data_base = [
     new Experiment(
@@ -279,6 +271,15 @@ export class fakeEel {
                 return null;
             }
             return JSON.stringify(material_data_base[id]);
+        };
+    }
+
+    get_data_point_array_at(id) {
+        return function get_data_point_array_at() {
+            if (data_point_array_data_base.length - 1 < id) {
+                return null;
+            }
+            return JSON.stringify(data_point_array_data_base[id]);
         };
     }
     get_material_with_experiment(experiment_id) {
