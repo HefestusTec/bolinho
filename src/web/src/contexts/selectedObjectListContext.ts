@@ -27,10 +27,10 @@ export type SelectedObjectType = {
     color: string;
 };
 
-export const selectedObjectsDefault: SelectedObjectType[] = [];
+export const selectedObjectListDefault: SelectedObjectType[] = [];
 
-const SelectedObjectsContext = createContext<
+const SelectedObjectListContext = createContext<
     [SelectedObjectType[], Dispatch<SetStateAction<SelectedObjectType[]>>]
->([selectedObjectsDefault, () => {}]);
+>([selectedObjectListDefault, () => {}]);
 
-export default SelectedObjectsContext;
+export default SelectedObjectListContext;

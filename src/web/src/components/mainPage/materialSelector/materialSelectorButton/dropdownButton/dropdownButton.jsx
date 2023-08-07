@@ -16,7 +16,7 @@
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
 import React, { useState, useEffect, useContext } from "react";
 import styleModule from "./dropdownButton.module.css";
-import SelectedObjectsContext from "contexts/selectedObjectsContext";
+import SelectedObjectListContext from "contexts/selectedObjectListContext";
 import { getFormattedDate } from "../../../../../helpers";
 import { toast } from "react-toastify";
 import {
@@ -25,7 +25,7 @@ import {
 } from "../../../../../api/backend-api";
 
 export default function DropdownButton({ experimentIndex }) {
-    const [objectList, setObjectList] = useContext(SelectedObjectsContext);
+    const [objectList, setObjectList] = useContext(SelectedObjectListContext);
     const [experiment, setExperiment] = useState(0);
 
     useEffect(() => {

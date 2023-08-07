@@ -16,7 +16,7 @@
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
 import React, { useContext, useState, useEffect, Suspense } from "react";
 import ExperimentButton from "./experimentButton/experimentButton";
-import SelectedObjectsContext from "contexts/selectedObjectsContext";
+import SelectedObjectListContext from "contexts/selectedObjectListContext";
 import { ReactComponent as ColorIcon } from "../../../resources/colorSelectorIcon.svg";
 import { ReactComponent as AcceptIcon } from "../../../resources/acceptIcon.svg";
 import ColorPicker from "./colorPicker/colorPicker";
@@ -26,7 +26,7 @@ import { toast } from "react-toastify";
 import styleModule from "./experimentsInspector.module.css";
 
 export default function ExperimentsInspector() {
-    const [objectList, setObjectList] = useContext(SelectedObjectsContext);
+    const [objectList, setObjectList] = useContext(SelectedObjectListContext);
     const [activeTriplet, setActiveTriplet] = useState(null);
     const [colorPickerIsActive, setColorPickerIsActive] = useState(false);
 

@@ -28,9 +28,9 @@ import { startExperimentRoutineJS } from "../../api/backend-api";
 //import GlobalConfigContext from "../../contexts/globalConfigContext";
 import BigButton from "components/customSubComponents/BigButton/BigButton";
 import { MaterialType } from "types/MaterialType";
-import SelectedObjectsContext, {
+import SelectedObjectListContext, {
     SelectedObjectType,
-} from "contexts/selectedObjectsContext";
+} from "contexts/selectedObjectListContext";
 
 interface MainPageProps {
     materialList: MaterialType[];
@@ -42,7 +42,7 @@ const MainPage: FunctionComponent<MainPageProps> = ({ materialList }) => {
     >([]);
 
     return (
-        <SelectedObjectsContext.Provider
+        <SelectedObjectListContext.Provider
             value={[selectedObjectList, setSelectedObjectList]}
         >
             <div className={styleModule.content}>
@@ -79,7 +79,7 @@ const MainPage: FunctionComponent<MainPageProps> = ({ materialList }) => {
                     />
                 </div>
             </div>
-        </SelectedObjectsContext.Provider>
+        </SelectedObjectListContext.Provider>
     );
 };
 
