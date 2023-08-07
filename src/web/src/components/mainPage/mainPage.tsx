@@ -15,7 +15,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
 
-import React, { useState } from "react";
+import React, { FunctionComponent, useState } from "react";
 import GraphComponent from "../graphComponent/graphComponent";
 import MaterialSelector from "./materialSelector/materialSelector";
 import styleModule from "./mainPage.module.css";
@@ -26,14 +26,20 @@ import ZoomComponent from "../zoomComponent/zoomComponent";
 import { startExperimentRoutineJS } from "../../api/backend-api";
 
 //import GlobalConfigContext from "../../contexts/globalConfigContext";
-import SelectedObjectsContext from "./contexts/selectedObjectsContext";
 import BigButton from "components/customSubComponents/BigButton/BigButton";
+import { MaterialType } from "types/MaterialType";
+import SelectedObjectsContext, {
+    SelectedObjectType,
+} from "contexts/selectedObjectsContext";
 
-export default function MainPage({ materialList }) {
-    //const [graphData, setGraphData] = useState(makeConstData());
-    //const [globalConfig, setGlobalConfig] = useContext(GlobalConfigContext);
+interface MainPageProps {
+    materialList: MaterialType[];
+}
 
-    const [selectedObjectList, setSelectedObjectList] = useState([]);
+const MainPage: FunctionComponent<MainPageProps> = ({ materialList }) => {
+    const [selectedObjectList, setSelectedObjectList] = useState<
+        SelectedObjectType[]
+    >([]);
 
     return (
         <SelectedObjectsContext.Provider
@@ -75,4 +81,6 @@ export default function MainPage({ materialList }) {
             </div>
         </SelectedObjectsContext.Provider>
     );
-}
+};
+
+export default MainPage;

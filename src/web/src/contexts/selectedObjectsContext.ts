@@ -14,14 +14,23 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
-import { createContext } from "react";
 
-// Object with {
-// "material": material_fragment,
-// "experiment": experiment_fragment,
-// "data_array":
-// "color": color associated to an experiment
-// }
-const SelectedObjectsContext = createContext([[], () => {}]);
+import { Dispatch, SetStateAction, createContext } from "react";
+import { DataPointArrayType } from "types/DataPointTypes";
+import { ExperimentType } from "types/ExperimentType";
+import { MaterialType } from "types/MaterialType";
+
+export type SelectedObjectType = {
+    material: MaterialType;
+    experiment: ExperimentType;
+    data_array: DataPointArrayType;
+    color: string;
+};
+
+export const selectedObjectsDefault: SelectedObjectType[] = [];
+
+const SelectedObjectsContext = createContext<
+    [SelectedObjectType[], Dispatch<SetStateAction<SelectedObjectType[]>>]
+>([selectedObjectsDefault, () => {}]);
 
 export default SelectedObjectsContext;

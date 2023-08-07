@@ -16,7 +16,7 @@
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
 import React, { useState, useEffect, useContext } from "react";
 import styleModule from "./dropdownButton.module.css";
-import SelectedObjectsContext from "../../../contexts/selectedObjectsContext";
+import SelectedObjectsContext from "contexts/selectedObjectsContext";
 import { getFormattedDate } from "../../../../../helpers";
 import { toast } from "react-toastify";
 import {

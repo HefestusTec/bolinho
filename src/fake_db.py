@@ -16,7 +16,7 @@
 # along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
 
 import random
-from bolinho_api.jsClasses import *
+from bolinho_api.classes import *
 
 
 def get_random_data_points(dataSize):

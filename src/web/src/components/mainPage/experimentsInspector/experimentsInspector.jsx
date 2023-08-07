@@ -16,7 +16,7 @@
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
 import React, { useContext, useState, useEffect, Suspense } from "react";
 import ExperimentButton from "./experimentButton/experimentButton";
-import SelectedObjectsContext from "../contexts/selectedObjectsContext";
+import SelectedObjectsContext from "contexts/selectedObjectsContext";
 import { ReactComponent as ColorIcon } from "../../../resources/colorSelectorIcon.svg";
 import { ReactComponent as AcceptIcon } from "../../../resources/acceptIcon.svg";
 import ColorPicker from "./colorPicker/colorPicker";

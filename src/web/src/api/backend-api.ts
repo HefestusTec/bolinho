@@ -20,6 +20,7 @@ import { fakeEel } from "../staticDB";
 import { toast } from "react-toastify";
 import { getRandomColor } from "../helpers";
 import { GlobalConfigContextProps } from "./apiTypes";
+import { MaterialType } from "types/MaterialType";
 
 // Setting up eel and fakeEel
 export let eel = window.eel;
@@ -52,7 +53,9 @@ export const loadConfigParams = async () => {
 
 export const getMaterialList = async () => {
     try {
-        const materialList = JSON.parse(await eel.get_material_list()());
+        const materialList: MaterialType[] = JSON.parse(
+            await eel.get_material_list()()
+        );
         return materialList;
     } catch (error) {
         return [];
