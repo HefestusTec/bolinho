@@ -22,6 +22,7 @@ import { getRandomColor } from "../helpers";
 import { GlobalConfigContextProps } from "./apiTypes";
 import { MaterialType } from "types/MaterialType";
 import { ExperimentType } from "types/ExperimentType";
+import { DataPointArrayType } from "types/DataPointTypes";
 
 // Setting up eel and fakeEel
 export let eel = window.eel;
@@ -65,7 +66,18 @@ export const getMaterialList = async (): Promise<MaterialType[]> => {
     }
 };
 
-export const getExperimentDate = async (
+export const getMaterialAt = async (
+    index: number
+): Promise<MaterialType | undefined> => {
+    try {
+        return JSON.parse(await eel.get_material_at(index)()) as MaterialType;
+    } catch (error) {
+        toast.error("Não foi possível encontrar o material de índice " + index);
+        return undefined;
+    }
+};
+
+export const getExperimentAt = async (
     index: number
 ): Promise<ExperimentType | undefined> => {
     try {
@@ -74,7 +86,22 @@ export const getExperimentDate = async (
         ) as ExperimentType;
     } catch (error) {
         toast.error(
-            "Não foi possível encontrar a data do experimento de índice " +
+            "Não foi possível encontrar o experimento de índice " + index
+        );
+        return undefined;
+    }
+};
+
+export const getDataPointArrayAt = async (
+    index: number
+): Promise<DataPointArrayType | undefined> => {
+    try {
+        return JSON.parse(
+            await eel.get_data_point_array_at(index)()
+        ) as DataPointArrayType;
+    } catch (error) {
+        toast.error(
+            "Não foi possível encontrar a array de ponto de dados de índice " +
                 index
         );
         return undefined;

@@ -14,14 +14,21 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
-import React from "react";
+import React, { FunctionComponent } from "react";
 
 import styleModule from "./materialSelector.module.css";
 import MaterialSelectorButton from "./materialSelectorButton/materialSelectorButton";
+import { MaterialType } from "types/MaterialType";
 
-function MaterialSelector({ materialList }) {
+interface MaterialSelectorProps {
+    materialList: MaterialType[];
+}
+
+const MaterialSelector: FunctionComponent<MaterialSelectorProps> = ({
+    materialList,
+}) => {
     //const [graphData, setGraphData] = useState(makeConstData());
-    const createButton = (material, idx) => {
+    const createButton = (material: MaterialType, idx: number) => {
         return (
             <MaterialSelectorButton
                 key={"m_" + material.name.toString() + idx}
@@ -31,14 +38,7 @@ function MaterialSelector({ materialList }) {
     };
 
     const makeButtons = () => {
-        let buttonArray = [];
-
-        try {
-            materialList.forEach((element, idx) => {
-                buttonArray.push(createButton(element, idx));
-            });
-        } catch (error) {}
-        return buttonArray;
+        return materialList.map((element, idx) => createButton(element, idx));
     };
 
     return (
@@ -70,5 +70,6 @@ function MaterialSelector({ materialList }) {
             <ul className={styleModule.selector_content_ul}>{makeButtons()}</ul>
         </div>
     );
-}
+};
+
 export default MaterialSelector;

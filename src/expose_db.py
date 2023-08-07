@@ -62,6 +62,14 @@ def get_material_with_experiment(experiment_id):
 
 
 @eel.expose
+def get_data_point_array_at(id):
+    if len(data_point_array_data_base) - 1 < id:
+        return None
+    return json.dumps(data_point_array_data_base[id], default=lambda x: x.__dict__)
+
+
+"""
+@eel.expose
 def get_experiment_dict(id):
     material_fragment = get_material_with_experiment(id)
     experiment_fragment = experiment_data_base[id]
@@ -75,3 +83,5 @@ def get_experiment_dict(id):
     }
 
     return json.dumps(pair, default=lambda x: x.__dict__)
+
+"""
