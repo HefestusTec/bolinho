@@ -33,7 +33,6 @@ try {
     window.eel.expose(pingJS, "pingJS");
 } catch (error) {}
 
-// TODO implement the function
 export function goToExperimentPageJS() {
     // Routs to the experiment page, returns 1 if it was successful
     if (setCurrentPage == null) return;
