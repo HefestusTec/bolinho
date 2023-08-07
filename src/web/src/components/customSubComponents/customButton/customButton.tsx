@@ -19,26 +19,34 @@ import React, { FunctionComponent } from "react";
 import styleModule from "./customButton.module.css";
 
 interface CustomButtonProps {
-    children: any;
-    clickCallBack: (param: any) => void;
-    className: string;
+    children?: any;
+    clickCallBack?: (param: any) => void;
+    className?: string;
+    bgColor?: string;
+    fontColor?: string;
 }
 
 const CustomButton: FunctionComponent<CustomButtonProps> = ({
     children,
     clickCallBack,
     className,
+    bgColor,
+    fontColor,
 }) => {
     const getClassName = () => {
         return [className, styleModule.custom_button].join(" ");
     };
 
     const clicked = () => {
-        clickCallBack(children);
+        if (clickCallBack) clickCallBack(children);
     };
 
     return (
-        <button className={getClassName()} onClick={clicked}>
+        <button
+            className={getClassName()}
+            onClick={clicked}
+            style={{ backgroundColor: bgColor, color: fontColor }}
+        >
             {children}
         </button>
     );

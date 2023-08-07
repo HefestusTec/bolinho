@@ -16,25 +16,27 @@
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
 
 import {
+    CSSProperties,
     ChangeEvent,
     Dispatch,
     FunctionComponent,
     HTMLInputTypeAttribute,
     SetStateAction,
+    useEffect,
+    useMemo,
     useRef,
     useState,
 } from "react";
 import styleModule from "./CustomTextInput.module.css";
-import { useDebouncedCallback } from "use-debounce";
 
 interface CustomTextInputProps {
     inputType?: HTMLInputTypeAttribute;
     title?: string;
     value: number | string;
-    setValue:
-        | Dispatch<SetStateAction<number>>
-        | Dispatch<SetStateAction<string>>;
+    setValue: Dispatch<SetStateAction<any>>;
     suffix?: string;
+    alert?: boolean;
+    alertColor?: string;
 }
 
 const CustomTextInput: FunctionComponent<CustomTextInputProps> = ({
@@ -43,22 +45,24 @@ const CustomTextInput: FunctionComponent<CustomTextInputProps> = ({
     value,
     setValue,
     suffix,
+    alert,
+    alertColor = "var(--warning_button_color)",
 }) => {
-    const [hasUpdated, setHasUpdated] = useState<boolean>(true);
-    const debounced = useDebouncedCallback(
-        (debouncedVal) => {
-            setHasUpdated(true);
-            setValue(debouncedVal);
-        },
-        // delay in ms
-        500
+    const buttonStyleTemplate: CSSProperties = useMemo(
+        () => ({
+            borderColor: alertColor,
+            borderWidth: alert ? "0px 0px 4px 0px" : "0",
+        }),
+        [alert, alertColor]
     );
+    const [buttonStyle, setButtonStyle] =
+        useState<CSSProperties>(buttonStyleTemplate);
 
     const inputRef = useRef<HTMLInputElement>(null);
 
-    const errorStyle: React.CSSProperties = {
-        borderWidth: "0px 0px 4px 0px",
-    };
+    useEffect(() => {
+        setButtonStyle(buttonStyleTemplate);
+    }, [buttonStyleTemplate]);
 
     const focusOnInput = () => {
         inputRef.current?.focus();
@@ -66,16 +70,17 @@ const CustomTextInput: FunctionComponent<CustomTextInputProps> = ({
 
     const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
         e.preventDefault();
-        setHasUpdated(false);
 
-        debounced(e.target.value);
+        const newVal = e.target.value;
+        if (inputType === "number") setValue(newVal);
+        else setValue(newVal);
     };
 
     return (
         <div className={styleModule.main_div}>
             <button
                 className={styleModule.main_button}
-                style={!hasUpdated ? errorStyle : undefined}
+                style={buttonStyle}
                 onClick={focusOnInput}
             >
                 <span className={styleModule.title_span}>{title}</span>
@@ -85,6 +90,7 @@ const CustomTextInput: FunctionComponent<CustomTextInputProps> = ({
                         className={styleModule.text_input}
                         ref={inputRef}
                         onChange={handleInputChange}
+                        value={value}
                     />
                     <p className={styleModule.suffix}>{suffix}</p>
                 </span>

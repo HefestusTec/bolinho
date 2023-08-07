@@ -26,8 +26,6 @@
     display: inline;
     white-space: nowrap;
     overflow: hidden;
-    margin-left: 5%;
-    margin-right: 5%;
     border-radius: 2px;
     transition-duration: var(--animation_fast);
     border-width: 0px 0px 5px 0px;
@@ -42,8 +40,9 @@
 [enable-hover="enable"] {
     .custom_button:hover {
         cursor: pointer;
-        border: 1px solid var(--font_color);
+        outline: var(--font_color) solid 1px;
         background-color: var(--button_inactive_color);
+        transform: scaleX(110%);
     }
 }
 .custom_button:active {

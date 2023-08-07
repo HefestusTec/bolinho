@@ -30,7 +30,7 @@
 [enable-hover="enable"] {
     .button:hover {
         width: 85%;
-        border: 1px solid var(--font_color);
+        outline: var(--font_color) solid 1px;
     }
 }
 

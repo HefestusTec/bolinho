@@ -28,7 +28,9 @@ export const globalConfigDefault: GlobalConfigContextProps = {
     shadows: true, // Should it render shadows
     forceVirtualKeyboard: false, // Should it use the virtual keyboard as input
     enableHover: "enable", // enable | disable
-    absoluteMaximumForce: 10000,
+    absoluteMaximumForce: 10000, // Global limit in Newtons
+    absoluteMaximumTime: 6000, // Global limit in seconds
+    absoluteMaximumTravel: 1000, // Global limit in mm
     port: "",
     animateGraph: true,
 };

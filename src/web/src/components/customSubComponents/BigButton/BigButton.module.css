@@ -44,6 +44,6 @@
     .big_button:hover {
         opacity: 80%;
         transform: translateY(-1vh);
-        border: 1px solid var(--font_color);
+        outline: var(--font_color) solid 1px;
     }
 }
