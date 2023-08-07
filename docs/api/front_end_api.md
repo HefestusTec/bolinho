@@ -374,7 +374,7 @@ ___
 
     ``` python title="Python usage example"
     from bolinho_api.experiment import experiment_api
-    from bolinho_api.jsClasses import Readings
+    from bolinho_api.classes import Readings
 
     new_machine_readings = Readings(299, 87, 300, "not good")
 
@@ -437,7 +437,7 @@ ___
 
     ``` python title="Python usage example"
     from bolinho_api.experiment import experiment_api
-    from bolinho_api.jsClasses import Readings
+    from bolinho_api.classes import Material
 
     current_material = Material(
         id=23,

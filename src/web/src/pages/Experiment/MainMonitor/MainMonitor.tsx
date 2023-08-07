@@ -24,11 +24,13 @@ import BigButton from "components/customSubComponents/BigButton/BigButton";
 interface MainMonitorProps {
     className: string;
     scaleOrigin: string;
+    currentLoad: number;
 }
 
 const MainMonitor: FunctionComponent<MainMonitorProps> = ({
     className,
     scaleOrigin,
+    currentLoad,
 }) => {
     return (
         <ZoomComponent
@@ -36,7 +38,9 @@ const MainMonitor: FunctionComponent<MainMonitorProps> = ({
             scaleOrigin={scaleOrigin}
         >
             <div className={styleModule.force_monitor_div}>
-                <h1 className={styleModule.force_monitor_text}>0 KN</h1>
+                <h1 className={styleModule.force_monitor_text}>
+                    {currentLoad} N
+                </h1>
             </div>
             <BigButton
                 clickCallBack={endExperimentRoutineJS}

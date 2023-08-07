@@ -18,8 +18,8 @@
 import eel
 import json
 
-from bolinho_api.jsClasses import Readings
-from bolinho_api.jsClasses import Material
+from bolinho_api.classes import Readings
+from bolinho_api.classes import Material
 
 from bolinho_api.helper import DictToObject
 

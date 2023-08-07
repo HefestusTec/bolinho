@@ -15,22 +15,12 @@
 // You should have received a copy of the GNU General Public License
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
 
-import { SupplierType, defaultSupplierType } from "./SupplierType";
-
-export type MaterialType = {
-    id: number;
+export type SupplierType = {
     name: string;
-    batch: number;
-    experiment_array: number[];
-    supplier: SupplierType;
-    extraInfo: string;
+    email: string;
 };
 
-export const defaultMaterialType = {
-    id: 0,
+export const defaultSupplierType = {
     name: "",
-    batch: 0,
-    experiment_array: [],
-    supplier: defaultSupplierType,
-    extraInfo: "",
+    email: "",
 };
