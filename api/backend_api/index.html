@@ -791,14 +791,14 @@
         
           <li class="md-nav__item">
   <a href="#saveconfigparamsconfigparams" class="md-nav__link">
-    saveConfigParams(configParams):
+    saveConfigParams(configParams)
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#loadconfigparams" class="md-nav__link">
-    loadConfigParams():
+    loadConfigParams()
   </a>
   
 </li>
@@ -818,21 +818,28 @@
         
           <li class="md-nav__item">
   <a href="#getmateriallist" class="md-nav__link">
-    getMaterialList():
+    getMaterialList()
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#getexperimentdate" class="md-nav__link">
-    getExperimentDate():
+  <a href="#getmaterialatindex" class="md-nav__link">
+    getMaterialAt(index)
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#getexperimentobjectlist" class="md-nav__link">
-    getExperimentObjectList():
+  <a href="#getexperimentatindex" class="md-nav__link">
+    getExperimentAt(index)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#getdatapointarrayatindex" class="md-nav__link">
+    getDataPointArrayAt(index)
   </a>
   
 </li>
@@ -852,14 +859,14 @@
         
           <li class="md-nav__item">
   <a href="#startexperimentroutinejs" class="md-nav__link">
-    startExperimentRoutineJS():
+    startExperimentRoutineJS()
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#endexperimentroutinejs" class="md-nav__link">
-    endExperimentRoutineJS():
+    endExperimentRoutineJS()
   </a>
   
 </li>
@@ -979,14 +986,14 @@
         
           <li class="md-nav__item">
   <a href="#saveconfigparamsconfigparams" class="md-nav__link">
-    saveConfigParams(configParams):
+    saveConfigParams(configParams)
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#loadconfigparams" class="md-nav__link">
-    loadConfigParams():
+    loadConfigParams()
   </a>
   
 </li>
@@ -1006,21 +1013,28 @@
         
           <li class="md-nav__item">
   <a href="#getmateriallist" class="md-nav__link">
-    getMaterialList():
+    getMaterialList()
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#getexperimentdate" class="md-nav__link">
-    getExperimentDate():
+  <a href="#getmaterialatindex" class="md-nav__link">
+    getMaterialAt(index)
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#getexperimentobjectlist" class="md-nav__link">
-    getExperimentObjectList():
+  <a href="#getexperimentatindex" class="md-nav__link">
+    getExperimentAt(index)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#getdatapointarrayatindex" class="md-nav__link">
+    getDataPointArrayAt(index)
   </a>
   
 </li>
@@ -1040,14 +1054,14 @@
         
           <li class="md-nav__item">
   <a href="#startexperimentroutinejs" class="md-nav__link">
-    startExperimentRoutineJS():
+    startExperimentRoutineJS()
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#endexperimentroutinejs" class="md-nav__link">
-    endExperimentRoutineJS():
+    endExperimentRoutineJS()
   </a>
   
 </li>
@@ -1099,69 +1113,98 @@
 <blockquote>
 <p>Front end -&gt; Backend</p>
 </blockquote>
+<hr />
 <h2 id="global-configuration">Global configuration<a class="headerlink" href="#global-configuration" title="Permanent link">&para;</a></h2>
-<h3 id="saveconfigparamsconfigparams"><code class="highlight"><span class="nx">saveConfigParams</span><span class="p">(</span><span class="nx">configParams</span><span class="p">)</span></code>:<a class="headerlink" href="#saveconfigparamsconfigparams" title="Permanent link">&para;</a></h3>
+<p>Collection of all functions/API calls available to the front end that handles the global variables. </p>
+<hr />
+<h3 id="saveconfigparamsconfigparams">saveConfigParams(configParams)<a class="headerlink" href="#saveconfigparamsconfigparams" title="Permanent link">&para;</a></h3>
 <div class="admonition quote">
+<p class="admonition-title">saveConfigParams(configParams)</p>
 <p>Saves the config parameters to the persistent file</p>
 <div class="highlight"><span class="filename">React usage example</span><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">saveConfigParams</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">&quot;./api/backend-api&quot;</span><span class="p">;</span>
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
 <a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="nx">saveConfigParams</span><span class="p">(</span><span class="nx">globalConfig</span><span class="p">);</span>
 </code></pre></div>
 </div>
-<h3 id="loadconfigparams"><code class="highlight"><span class="nx">loadConfigParams</span><span class="p">()</span></code>:<a class="headerlink" href="#loadconfigparams" title="Permanent link">&para;</a></h3>
+<hr />
+<h3 id="loadconfigparams">loadConfigParams()<a class="headerlink" href="#loadconfigparams" title="Permanent link">&para;</a></h3>
 <div class="admonition quote">
+<p class="admonition-title">loadConfigParams()</p>
 <p>Loads the config parameters from the persistent file</p>
 <div class="highlight"><span class="filename">React usage example</span><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">loadConfigParams</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">&quot;./api/backend-api&quot;</span><span class="p">;</span>
 <a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>
 <a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="nx">globalConfig</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">loadConfigParams</span><span class="p">();</span>
 </code></pre></div>
 </div>
+<hr />
 <h2 id="data-base">Data base<a class="headerlink" href="#data-base" title="Permanent link">&para;</a></h2>
-<h3 id="getmateriallist"><code class="highlight"><span class="nx">getMaterialList</span><span class="p">()</span></code>:<a class="headerlink" href="#getmateriallist" title="Permanent link">&para;</a></h3>
+<p>Collection of all functions/API calls available to the front end that handles the communication with the data base, such as fetching and storing data. </p>
+<hr />
+<h3 id="getmateriallist">getMaterialList()<a class="headerlink" href="#getmateriallist" title="Permanent link">&para;</a></h3>
 <div class="admonition quote">
+<p class="admonition-title">getMaterialList()</p>
 <p><strong>TODO</strong></p>
 <div class="highlight"><span class="filename">React usage example</span><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">getMaterialList</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">&quot;./api/backend-api&quot;</span><span class="p">;</span>
 <a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>
 <a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="nx">globalConfig</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">getMaterialList</span><span class="p">();</span>
 </code></pre></div>
 </div>
-<h3 id="getexperimentdate"><code class="highlight"><span class="nx">getExperimentDate</span><span class="p">()</span></code>:<a class="headerlink" href="#getexperimentdate" title="Permanent link">&para;</a></h3>
+<hr />
+<h3 id="getmaterialatindex">getMaterialAt(index)<a class="headerlink" href="#getmaterialatindex" title="Permanent link">&para;</a></h3>
 <div class="admonition quote">
-<p><strong>TODO</strong></p>
-<div class="highlight"><span class="filename">React usage example</span><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">getExperimentDate</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">&quot;./api/backend-api&quot;</span><span class="p">;</span>
+<p class="admonition-title">getMaterialAt(index)</p>
+<p>Returns the material at an <code>index</code> from the database.</p>
+<div class="highlight"><span class="filename">React usage example</span><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">getMaterialAt</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">&quot;./api/backend-api&quot;</span><span class="p">;</span>
 <a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>
-<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="nx">globalConfig</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">getExperimentDate</span><span class="p">();</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="kd">const</span><span class="w"> </span><span class="nx">elem21</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">getMaterialAt</span><span class="p">(</span><span class="mf">21</span><span class="p">);</span>
 </code></pre></div>
 </div>
-<h3 id="getexperimentobjectlist"><code class="highlight"><span class="nx">getExperimentObjectList</span><span class="p">()</span></code>:<a class="headerlink" href="#getexperimentobjectlist" title="Permanent link">&para;</a></h3>
+<hr />
+<h3 id="getexperimentatindex">getExperimentAt(index)<a class="headerlink" href="#getexperimentatindex" title="Permanent link">&para;</a></h3>
 <div class="admonition quote">
-<p><strong>TODO</strong></p>
-<div class="highlight"><span class="filename">React usage example</span><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">getExperimentObjectList</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">&quot;./api/backend-api&quot;</span><span class="p">;</span>
+<p class="admonition-title">getExperimentAt(index)</p>
+<p>Returns the experiment at an <code>index</code> from the database.</p>
+<div class="highlight"><span class="filename">React usage example</span><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">getExperimentAt</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">&quot;./api/backend-api&quot;</span><span class="p">;</span>
 <a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>
-<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="nx">globalConfig</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">getExperimentObjectList</span><span class="p">();</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="kd">const</span><span class="w"> </span><span class="nx">elem21</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">getExperimentAt</span><span class="p">(</span><span class="mf">21</span><span class="p">);</span>
 </code></pre></div>
 </div>
-<h2 id="core">Core<a class="headerlink" href="#core" title="Permanent link">&para;</a></h2>
-<h3 id="startexperimentroutinejs"><code class="highlight"><span class="nx">startExperimentRoutineJS</span><span class="p">()</span></code>:<a class="headerlink" href="#startexperimentroutinejs" title="Permanent link">&para;</a></h3>
+<hr />
+<h3 id="getdatapointarrayatindex">getDataPointArrayAt(index)<a class="headerlink" href="#getdatapointarrayatindex" title="Permanent link">&para;</a></h3>
 <div class="admonition quote">
+<p class="admonition-title">getDataPointArrayAt(index)</p>
+<p>Returns an array of <code>DataPoint</code> at an <code>index</code> from the database.</p>
+<div class="highlight"><span class="filename">React usage example</span><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">getDataPointArrayAt</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">&quot;./api/backend-api&quot;</span><span class="p">;</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">DataPointType</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">&quot;types/DataPointTypes&quot;</span><span class="p">;</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="kd">const</span><span class="w"> </span><span class="nx">dataPointArrya</span><span class="o">:</span><span class="w"> </span><span class="nx">DataPointType</span><span class="p">[]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">getDataPointArrayAt</span><span class="p">(</span><span class="mf">21</span><span class="p">);</span>
+</code></pre></div>
+</div>
+<hr />
+<h2 id="core">Core<a class="headerlink" href="#core" title="Permanent link">&para;</a></h2>
+<h3 id="startexperimentroutinejs">startExperimentRoutineJS()<a class="headerlink" href="#startexperimentroutinejs" title="Permanent link">&para;</a></h3>
+<div class="admonition quote">
+<p class="admonition-title">startExperimentRoutineJS()</p>
 <p>This function calls the <code>start_experiment_routine()</code> on the backend.</p>
 <p>Usually it should be used to handle when the user press a "start experiment" button or something similar.</p>
-<div class="highlight"><span class="filename">React usage example</span><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">getMaterialList</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">&quot;./api/backend-api&quot;</span><span class="p">;</span>
-<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>
-<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="nx">onClick</span><span class="p">(()=&gt;{</span>
-<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="w">    </span><span class="nx">startExperimentRoutineJS</span><span class="p">();</span>
-<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="p">};)</span>
-</code></pre></div>
-</div>
-<h3 id="endexperimentroutinejs"><code class="highlight"><span class="nx">endExperimentRoutineJS</span><span class="p">()</span></code>:<a class="headerlink" href="#endexperimentroutinejs" title="Permanent link">&para;</a></h3>
-<div class="admonition quote">
-<p>This function calls the <code>end_experiment_routine()</code> on the backend.</p>
-<p>Usually it should be used to handle when the user press a "end experiment" button or something similar.</p>
 <div class="highlight"><span class="filename">React usage example</span><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">getMaterialList</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">&quot;./api/backend-api&quot;</span><span class="p">;</span>
 <a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>
 <a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="nx">onClick</span><span class="p">(()=&gt;{</span>
-<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="w">    </span><span class="nx">endExperimentRoutineJS</span><span class="p">();</span>
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="w">    </span><span class="nx">startExperimentRoutineJS</span><span class="p">();</span>
 <a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="p">};)</span>
+</code></pre></div>
+</div>
+<hr />
+<h3 id="endexperimentroutinejs">endExperimentRoutineJS()<a class="headerlink" href="#endexperimentroutinejs" title="Permanent link">&para;</a></h3>
+<div class="admonition quote">
+<p class="admonition-title">endExperimentRoutineJS()</p>
+<p>This function calls the <code>end_experiment_routine()</code> on the backend.</p>
+<p>Usually it should be used to handle when the user press a "end experiment" button or something similar.</p>
+<div class="highlight"><span class="filename">React usage example</span><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">getMaterialList</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">&quot;./api/backend-api&quot;</span><span class="p">;</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="nx">onClick</span><span class="p">(()=&gt;{</span>
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="w">    </span><span class="nx">endExperimentRoutineJS</span><span class="p">();</span>
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="p">};)</span>
 </code></pre></div>
 </div>
 
