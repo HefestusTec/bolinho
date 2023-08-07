@@ -376,7 +376,7 @@ ___
     from bolinho_api.experiment import experiment_api
     from bolinho_api.jsClasses import Readings
 
-    new_machine_readings = Readings(299, 87, "not good")
+    new_machine_readings = Readings(299, 87, 300, "not good")
 
     experiment_api.set_readings(new_machine_readings)
     ```

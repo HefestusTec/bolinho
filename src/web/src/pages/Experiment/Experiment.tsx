@@ -65,6 +65,10 @@ const Experiment: FunctionComponent<ExperimentProps> = () => {
                             value={`${experimentPageContext.readings.loadReading} N`}
                         />
                         <CustomText
+                            title="Carga máxima"
+                            value={`${experimentPageContext.readings.maxLoad} N`}
+                        />
+                        <CustomText
                             title="Status"
                             value={`${experimentPageContext.readings.status}`}
                         />
