@@ -23,12 +23,7 @@ import {
     useState,
 } from "react";
 import { defaultMaterialType, MaterialType } from "types/MaterialType";
-
-export type ReadingsType = {
-    zAxisPos: number; // Position of the z-axis in mm
-    loadReading: number; // Load reading from the load cell in Newtons
-    status: string; // Arbitrary status string
-};
+import { defaultReadingsType, ReadingsType } from "types/ReadingsType";
 
 export type ExperimentPageType = {
     loadPercentage: number; // Number between 0 - 100
@@ -49,11 +44,7 @@ const experimentPageContextDefault: ExperimentPageType = {
     deltaLoadPercentage: 0,
 
     experimentParameters: "",
-    readings: {
-        loadReading: 0,
-        status: "",
-        zAxisPos: 0,
-    },
+    readings: defaultReadingsType,
     description: "",
     material: defaultMaterialType,
 };
