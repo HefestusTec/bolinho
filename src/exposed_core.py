@@ -110,3 +110,16 @@ def return_z_axis():
     """
     print("Returns the z-axis to the origin")
     return 1
+
+
+@eel.expose
+def stop_z_axis():
+    """
+    Stops the z-axis.
+
+    Returns 1 if succeeded (if the function was acknowledged).
+
+    TODO IMPLEMENT THIS FUNCTION
+    """
+    print("STOP THE Z-AXIS")
+    return 1

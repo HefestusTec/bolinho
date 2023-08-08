@@ -140,7 +140,7 @@ export const setCustomMovementDistanceJS = async (
         return await eel.set_custom_movement_distance(newDistance)();
     } catch (error) {
         toast.error(
-            "Não foi possível setar a nova distância de movimento para" +
+            "Não foi possível setar a nova distância de movimento para " +
                 newDistance
         );
         return 0;
@@ -151,7 +151,16 @@ export const returnZAxisJS = async (): Promise<number> => {
     try {
         return await eel.return_z_axis()();
     } catch (error) {
-        toast.error("Não foi possível retornar o eixo z à origem");
+        toast.error("Não foi possível retornar o eixo Z à origem");
+        return 0;
+    }
+};
+
+export const stopZAxisJS = async (): Promise<number> => {
+    try {
+        return await eel.stop_z_axis()();
+    } catch (error) {
+        toast.error("Não foi possível parar o eixo Z.");
         return 0;
     }
 };

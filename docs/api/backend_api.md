@@ -189,3 +189,21 @@ ___
         returnZAxisJS();
     };)
     ```
+___
+### stopZAxisJS()
+!!! quote "stopZAxisJS()"
+
+    This function calls the `stop_z_axis()` on the backend.
+    
+    Stops the z-axis.
+
+    Returns 1 if succeeded (if the function was acknowledged).
+
+    
+    ``` javaScript title="React usage example"
+    import { stopZAxisJS } from "./api/backend-api";
+    
+    onClick(()=>{
+        stopZAxisJS();
+    };)
+    ```
