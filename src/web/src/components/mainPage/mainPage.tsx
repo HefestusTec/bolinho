@@ -27,10 +27,10 @@ import { startExperimentRoutineJS } from "../../api/backend-api";
 
 //import GlobalConfigContext from "../../contexts/globalConfigContext";
 import BigButton from "components/customSubComponents/BigButton/BigButton";
-import { MaterialType } from "types/MaterialType";
 import SelectedObjectListContext, {
     SelectedObjectType,
 } from "contexts/selectedObjectListContext";
+import { MaterialType } from "types/DataBaseTypes";
 
 interface MainPageProps {
     materialList: MaterialType[];

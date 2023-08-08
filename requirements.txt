@@ -5,4 +5,5 @@ whichcraft==0.6.1
 pyinstaller==5.12
 eel==0.15.1
 pyserial==3.5
-orm-sqlite
+peewee==3.16.2
+black==23.7.0

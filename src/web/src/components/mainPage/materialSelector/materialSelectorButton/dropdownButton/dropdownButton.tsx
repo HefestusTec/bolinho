@@ -26,30 +26,19 @@ import SelectedObjectListContext, {
 } from "contexts/selectedObjectListContext";
 import { getFormattedDate, getRandomColor } from "../../../../../helpers";
 import { toast } from "react-toastify";
-import {
-    getDataPointArrayAt,
-    getExperimentAt,
-    getMaterialAt,
-} from "../../../../../api/backend-api";
-import { ExperimentType } from "types/ExperimentType";
+import { getLoadOverTimeByExperimentId } from "api/db-api";
+import { ExperimentType, MaterialType } from "types/DataBaseTypes";
 
 interface DropdownButtonProps {
-    experimentIndex: number;
+    experiment: ExperimentType;
+    material: MaterialType;
 }
 
 const DropdownButton: FunctionComponent<DropdownButtonProps> = ({
-    experimentIndex,
+    experiment,
+    material,
 }) => {
     const [objectList, setObjectList] = useContext(SelectedObjectListContext);
-    const [experiment, setExperiment] = useState<ExperimentType | undefined>(
-        undefined
-    );
-
-    useEffect(() => {
-        getExperimentAt(experimentIndex).then((response) => {
-            setExperiment(response);
-        });
-    }, [experimentIndex]);
 
     const buttonClicked = () => {
         if (experiment === undefined) return;
@@ -58,28 +47,20 @@ const DropdownButton: FunctionComponent<DropdownButtonProps> = ({
             if (objectList[i].experiment.id === experiment.id) return;
         }
 
-        getMaterialAt(experiment.material_id)
-            .then((materialResponse) => {
-                if (materialResponse === undefined) return;
-                getDataPointArrayAt(experiment.data_array_id)
-                    .then((dataPointArrayResponse) => {
-                        if (dataPointArrayResponse === undefined) return;
+        getLoadOverTimeByExperimentId(experiment.id)
+            .then((dataPointArrayResponse) => {
+                if (dataPointArrayResponse === undefined) return;
 
-                        const newSelectedObj: SelectedObjectType = {
-                            material: materialResponse,
-                            experiment: experiment,
-                            data_array: dataPointArrayResponse,
-                            color: getRandomColor(),
-                        };
-                        console.log(materialResponse);
-                        setObjectList((experimentList) => [
-                            ...experimentList,
-                            newSelectedObj,
-                        ]);
-                    })
-                    .catch((error) => {
-                        toast.error(error);
-                    });
+                const newSelectedObj: SelectedObjectType = {
+                    material: material,
+                    experiment: experiment,
+                    data_array: dataPointArrayResponse,
+                    color: getRandomColor(),
+                };
+                setObjectList((experimentList) => [
+                    ...experimentList,
+                    newSelectedObj,
+                ]);
             })
             .catch((error) => {
                 toast.error(error);
@@ -87,7 +68,7 @@ const DropdownButton: FunctionComponent<DropdownButtonProps> = ({
     };
 
     return (
-        <li key={experimentIndex}>
+        <li key={experiment.id}>
             <button
                 className={styleModule.dropdown_button}
                 aria-label="Material Selector"
@@ -97,8 +78,7 @@ const DropdownButton: FunctionComponent<DropdownButtonProps> = ({
                     <div className={styleModule.add_sign}></div>
                 </div>
                 <div className={styleModule.dropdown_button_text}>
-                    Experimento {experimentIndex} [
-                    {getFormattedDate(experiment?.date)}]
+                    Experimento {experiment.id} [{experiment.date_time}]
                 </div>
             </button>
         </li>

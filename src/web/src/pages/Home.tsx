@@ -15,13 +15,13 @@
 // You should have received a copy of the GNU General Public License
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
 
-import { getMaterialList } from "api/backend-api";
+import { getMaterialsDB } from "api/db-api";
 import MainPage from "components/mainPage/mainPage";
 import SideBar from "components/sideBar/sideBar";
 import SubPage from "components/subPage/subPage";
 import React from "react";
 import { FunctionComponent, useEffect, useState } from "react";
-import { MaterialType } from "types/MaterialType";
+import { MaterialType } from "types/DataBaseTypes";
 import { PagesEnum } from "types/PagesEnum";
 
 interface homeProps {}
@@ -54,7 +54,7 @@ const Home: FunctionComponent<homeProps> = () => {
         });
     };
     useEffect(() => {
-        getMaterialList().then((response) => {
+        getMaterialsDB().then((response) => {
             setMaterialList(response);
         });
     }, []);

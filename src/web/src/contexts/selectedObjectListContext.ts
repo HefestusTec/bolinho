@@ -16,9 +16,8 @@
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
 
 import { Dispatch, SetStateAction, createContext } from "react";
+import { ExperimentType, MaterialType } from "types/DataBaseTypes";
 import { DataPointType } from "types/DataPointTypes";
-import { ExperimentType } from "types/ExperimentType";
-import { MaterialType } from "types/MaterialType";
 
 export type SelectedObjectType = {
     material: MaterialType;

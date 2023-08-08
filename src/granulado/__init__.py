@@ -15,9 +15,10 @@
 # You should have received a copy of the GNU General Public License
 # along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
 
-from enum import StrEnum
+# string enum
+from enum import Enum
 
 
-class Messages(StrEnum):
+class Messages(Enum):
     PING = "a\n"
     GET_BUFFER = "b\n"
