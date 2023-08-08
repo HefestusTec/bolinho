@@ -14,23 +14,13 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
-import React, { Suspense } from "react";
 
-import styleModule from "./extraOptions.module.css";
+export type PortType = {
+    port: string;
+    desc: string;
+};
 
-function ExtraOptions() {
-    return (
-        <div className={styleModule.extra_options}>
-            <div className={styleModule.extra_options_header}>
-                <div className={styleModule.extra_options_header_text}>
-                    Extra
-                </div>
-            </div>
-            <div className={styleModule.extra_options_content}>
-                <Suspense fallback={<div>Carregando...</div>}>Content</Suspense>
-            </div>
-        </div>
-    );
-}
-
-export default ExtraOptions;
+export const defaultPortType = {
+    port: "N/A",
+    desc: "N/A",
+};

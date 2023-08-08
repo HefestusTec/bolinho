@@ -19,6 +19,7 @@
 import { fakeEel } from "../staticDB";
 import { toast } from "react-toastify";
 import { GlobalConfigContextProps } from "./apiTypes";
+import { PortType } from "types/PortType";
 
 // Setting up eel and fakeEel
 export let eel = window.eel;
@@ -105,6 +106,37 @@ export const stopZAxisJS = async (): Promise<number> => {
         return await eel.stop_z_axis()();
     } catch (error) {
         toast.error("Não foi possível parar o eixo Z.");
+        return 0;
+    }
+};
+
+export const moveZAxisMillimetersJS = async (
+    distance: number
+): Promise<number> => {
+    try {
+        return await eel.move_z_axis_millimeters(distance)();
+    } catch (error) {
+        toast.error("Não foi possível mover o eixo Z.");
+        return 0;
+    }
+};
+
+export const getAvailablePortsListJS = async (): Promise<
+    PortType[] | undefined
+> => {
+    try {
+        return await eel.get_available_ports_list()();
+    } catch (error) {
+        toast.error("Não foi possível mover o eixo Z.");
+        return undefined;
+    }
+};
+
+export const connectToPortJS = async (port: string): Promise<number> => {
+    try {
+        return await eel.connect_to_port(port)();
+    } catch (error) {
+        toast.error("Não foi possível mover o eixo Z.");
         return 0;
     }
 };

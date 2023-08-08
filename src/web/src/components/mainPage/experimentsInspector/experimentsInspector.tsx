@@ -14,9 +14,17 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
-import React, { useContext, useState, useEffect, Suspense } from "react";
+import React, {
+    useContext,
+    useState,
+    useEffect,
+    Suspense,
+    FunctionComponent,
+} from "react";
 import ExperimentButton from "./experimentButton/experimentButton";
-import SelectedObjectListContext from "contexts/selectedObjectListContext";
+import SelectedObjectListContext, {
+    SelectedObjectType,
+} from "contexts/selectedObjectListContext";
 import { ReactComponent as ColorIcon } from "../../../resources/colorSelectorIcon.svg";
 import { ReactComponent as AcceptIcon } from "../../../resources/acceptIcon.svg";
 import ColorPicker from "./colorPicker/colorPicker";
@@ -25,16 +33,21 @@ import { toast } from "react-toastify";
 
 import styleModule from "./experimentsInspector.module.css";
 
-export default function ExperimentsInspector() {
+interface ExperimentsInspectorProps {}
+
+const ExperimentsInspector: FunctionComponent<
+    ExperimentsInspectorProps
+> = () => {
     const [objectList, setObjectList] = useContext(SelectedObjectListContext);
-    const [activeTriplet, setActiveTriplet] = useState(null);
+    const [activeTriplet, setActiveTriplet] = useState<
+        SelectedObjectType | undefined
+    >(undefined);
     const [colorPickerIsActive, setColorPickerIsActive] = useState(false);
 
-    const createButton = (object, idx) => {
+    const createButton = (object: SelectedObjectType, idx: number) => {
         return (
             <ExperimentButton
                 object={object}
-                materialName={object.material.name}
                 activeTriplet={activeTriplet}
                 setActiveTriplet={setActiveTriplet}
                 key={object.material.name.toString() + idx}
@@ -43,16 +56,12 @@ export default function ExperimentsInspector() {
     };
 
     const makeButtons = () => {
-        let buttonArray = [];
-        try {
-            objectList.forEach((element, idx) => {
-                buttonArray.push(createButton(element, idx));
-            });
-        } catch (error) {}
-        return buttonArray;
+        return objectList.map((element, idx) => createButton(element, idx));
     };
 
     const makeHeaderText = () => {
+        if (activeTriplet === undefined) return;
+
         try {
             const name = activeTriplet.material.name;
             const batch = activeTriplet.material.batch;
@@ -74,18 +83,20 @@ export default function ExperimentsInspector() {
     };
 
     const removeActiveExperiment = () => {
+        if (activeTriplet === undefined) return;
         try {
             const newCartData = objectList.filter(
                 (d) => d.experiment.id !== activeTriplet.experiment.id
             );
 
-            setObjectList(newCartData, activateNextExperiment());
+            setObjectList(newCartData);
+            activateNextExperiment();
         } catch (error) {}
     };
 
     useEffect(() => {
         if (objectList.length === 0) {
-            setActiveTriplet({});
+            setActiveTriplet(undefined);
             return;
         } else if (objectList.length === 1) {
             setActiveTriplet(objectList[0]);
@@ -103,11 +114,9 @@ export default function ExperimentsInspector() {
     };
 
     const getStyleColor = () => {
-        try {
-            return activeTriplet.color;
-        } catch (error) {
-            return "var(--primary_color)";
-        }
+        if (activeTriplet) return activeTriplet.color;
+
+        return "var(--primary_color)";
     };
 
     const getColorPickerIcon = () => {
@@ -134,13 +143,15 @@ export default function ExperimentsInspector() {
     };
 
     const updateDataColor = () => {
+        if (objectList === undefined || activeTriplet === undefined) return;
         try {
             let objectListCopy = [...objectList];
             const idx = objectListCopy.findIndex(
                 (element) =>
                     element.experiment.id === activeTriplet.experiment.id
             );
-            objectListCopy.at(idx).color = activeTriplet.color;
+
+            objectListCopy[idx].color = activeTriplet.color;
             setObjectList(objectListCopy);
         } catch (error) {
             toast.error("Não foi possível alterar a cor da plotagem");
@@ -163,35 +174,29 @@ export default function ExperimentsInspector() {
     };
 
     const makeRemoveButton = () => {
-        try {
-            if (Object.keys(activeTriplet).length)
-                return (
-                    <button
-                        className={styleModule.delete_material_button}
-                        onClick={removeActiveExperiment}
-                    ></button>
-                );
-        } catch (error) {
-            return;
-        }
+        if (activeTriplet === undefined) return;
+        if (Object.keys(activeTriplet).length)
+            return (
+                <button
+                    className={styleModule.delete_material_button}
+                    onClick={removeActiveExperiment}
+                ></button>
+            );
     };
 
     const makeHeaderColor = () => {
-        try {
-            if (Object.keys(activeTriplet).length)
-                return (
-                    <div
-                        className={getHeaderColorClassName()}
-                        style={{ "--experiment_color": getStyleColor() }}
-                        onClick={toggleColorPickIsActive}
-                    >
-                        {getColorPickerText()}
-                        {getColorPickerIcon()}
-                    </div>
-                );
-        } catch (error) {
-            return;
-        }
+        if (activeTriplet === undefined) return;
+        if (Object.keys(activeTriplet).length)
+            return (
+                <div
+                    className={getHeaderColorClassName()}
+                    style={{ "--experiment_color": getStyleColor() } as any}
+                    onClick={toggleColorPickIsActive}
+                >
+                    {getColorPickerText()}
+                    {getColorPickerIcon()}
+                </div>
+            );
     };
 
     const makeColorPicker = () => {
@@ -230,9 +235,7 @@ export default function ExperimentsInspector() {
                         </ul>
                     </div>
                     <Suspense fallback={<div>Carregando...</div>}>
-                        <ExperimentDescription
-                            activeTriplet={activeTriplet}
-                        ></ExperimentDescription>
+                        <ExperimentDescription activeTriplet={activeTriplet} />
                     </Suspense>
                 </div>
             </div>
@@ -240,4 +243,6 @@ export default function ExperimentsInspector() {
             {makeColorPicker()}
         </div>
     );
-}
+};
+
+export default ExperimentsInspector;

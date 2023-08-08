@@ -18,36 +18,14 @@
  */
 @import url(../../../variables.css);
 
-.extra_options {
-    height: stretch;
-    background: var(--background_color);
-    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
-    border-radius: 10px;
-    overflow: hidden;
-}
-
-.extra_options_header {
-    background: var(--primary_color);
-    height: clamp(20px, 5.5vh, 75px);
-    width: 100%;
-    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
+.connect_button {
+    width: stretch;
     display: flex;
+    height: 7vh;
+    min-height: calc(var(--font_m) * 2.7);
+    margin-bottom: 2vh;
+    margin-left: 15%;
+    justify-content: center;
+    margin-right: 15%;
     align-items: center;
-}
-.extra_options_header_text {
-    width: 100%;
-    color: var(--font_color_inverted);
-    font-family: "Roboto";
-    font-style: normal;
-    font-weight: 700;
-    font-size: var(--font_m);
-    text-align: center;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-.extra_options_content {
-    padding: 3%;
-    color: var(--font_color);
-    font-size: var(--font_s);
 }

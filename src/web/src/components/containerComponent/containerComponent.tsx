@@ -15,22 +15,25 @@
 // You should have received a copy of the GNU General Public License
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
 
-import React, { FunctionComponent, Suspense } from "react";
+import React, { FunctionComponent, ReactNode, Suspense } from "react";
 import styleModule from "./containerComponent.module.css";
 
 interface ContainerComponentProps {
     children?: any;
     headerText: string;
+    headerButton?: ReactNode;
 }
 
 const ContainerComponent: FunctionComponent<ContainerComponentProps> = ({
     children,
     headerText = "",
+    headerButton,
 }) => {
     return (
         <div className={styleModule.container_div}>
             <header className={styleModule.container_header}>
                 {headerText}
+                {headerButton}
             </header>
             <div className={styleModule.container_content}>
                 <Suspense fallback={<div>Carregando...</div>}>

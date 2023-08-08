@@ -107,5 +107,7 @@
 
 .dropdown_button {
     height: 5vh;
-    width: 70%;
+    min-height: calc(var(--font_m) * 2.2);
+
+    width: 80%;
 }

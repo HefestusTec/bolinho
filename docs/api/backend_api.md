@@ -207,3 +207,55 @@ ___
         stopZAxisJS();
     };)
     ```
+___
+### moveZAxisMillimetersJS()
+!!! quote "moveZAxisMillimetersJS()"
+    This function calls the `move_z_axis_millimeters()` on the backend.
+    Moves the z-axis [distance]mm.
+    This distance is set in MILLIMETERS
+    Returns 1 if succeeded (if the function was acknowledged).
+
+    ``` javaScript title="React usage example"
+    import { moveZAxisMillimetersJS } from "./api/backend-api";
+    
+    onClick(()=>{
+        moveZAxisMillimetersJS(10);
+    };)
+    ```
+
+___
+### getAvailablePortsListJS()
+!!! quote "getAvailablePortsListJS()"
+    This function calls the `get_available_ports_list()` on the backend.
+    Returns a JSON object containing the available COM ports:
+    ``` JSON
+    {
+        "port": x,
+        "desc": y,
+    }
+    ```
+
+    ``` javaScript title="React usage example"
+    import { getAvailablePortsListJS } from "./api/backend-api";
+    
+    onClick(()=>{
+        getAvailablePortsListJS().then((availablePorts)=>{
+            if(availablePorts) console.log(availablePorts);
+        });
+    };)
+    ```
+
+### connectToPortJS()
+!!! quote "connectToPortJS()"
+    This function calls the `connect_to_port()` on the backend.
+    Connects to a port. The port argument is a string like `COM4`
+
+    Returns 1 connection was successful
+
+    ``` javaScript title="React usage example"
+    import { connectToPortJS } from "./api/backend-api";
+    
+    onClick(()=>{
+        connectToPortJS("COM3");
+    };)
+    ```
