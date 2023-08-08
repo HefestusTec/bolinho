@@ -14,11 +14,12 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
-import { FunctionComponent, useState } from "react";
+import { FunctionComponent, useEffect, useState } from "react";
 
 import styleModule from "./materialSelectorButton.module.css";
 import DropdownButton from "./dropdownButton/dropdownButton";
-import { MaterialType } from "types/MaterialType";
+import { ExperimentType, MaterialType } from "types/DataBaseTypes";
+import { getExperimentsByMaterialId } from "api/db-api";
 
 interface MaterialSelectorButtonProps {
     material: MaterialType;
@@ -28,6 +29,7 @@ const MaterialSelectorButton: FunctionComponent<
     MaterialSelectorButtonProps
 > = ({ material }) => {
     const [dropdown, setDropdown] = useState(false);
+    const [experiments, setExperiments] = useState<ExperimentType[]>([]);
 
     const getButtonClassName = () => {
         if (dropdown) {
@@ -45,6 +47,12 @@ const MaterialSelectorButton: FunctionComponent<
         }
         return [styleModule.dropdown_ul, styleModule.dropdown_hidden].join(" ");
     };
+
+    useEffect(() => {
+        getExperimentsByMaterialId(material.id).then((experimentsArray) => {
+            setExperiments(experimentsArray);
+        });
+    }, [dropdown]);
 
     const toggleDropDown = () => {
         setDropdown(!dropdown);
