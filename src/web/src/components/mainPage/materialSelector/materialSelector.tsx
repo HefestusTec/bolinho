@@ -18,7 +18,7 @@ import React, { FunctionComponent } from "react";
 
 import styleModule from "./materialSelector.module.css";
 import MaterialSelectorButton from "./materialSelectorButton/materialSelectorButton";
-import { MaterialType } from "types/MaterialType";
+import { MaterialType } from "types/DataBaseTypes";
 
 interface MaterialSelectorProps {
     materialList: MaterialType[];
@@ -31,7 +31,7 @@ const MaterialSelector: FunctionComponent<MaterialSelectorProps> = ({
     const createButton = (material: MaterialType, idx: number) => {
         return (
             <MaterialSelectorButton
-                key={"m_" + material.name.toString() + idx}
+                key={"m_" + material.name + idx}
                 material={material}
             />
         );

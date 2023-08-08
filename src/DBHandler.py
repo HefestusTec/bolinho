@@ -15,182 +15,273 @@
 # You should have received a copy of the GNU General Public License
 # along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
 
-import orm_sqlite
-from datetime import date, time
-from os.path import exists as file_exists
+from peewee import *
+import datetime
+from os.path import exists as path_exists
+from os import makedirs
 
 
-class Material(orm_sqlite.Model):
-    id = orm_sqlite.IntegerField(primary_key=True)
-    name = orm_sqlite.StringField()
-    batch = orm_sqlite.StringField()
+db_path = "persist/bolinho.db"
 
 
-class Body(orm_sqlite.Model):
-    id = orm_sqlite.IntegerField(primary_key=True)
-    body_type = orm_sqlite.StringField()
-    material = orm_sqlite.ForeignKeyField(Material)
-    param_a = orm_sqlite.FloatField()
-    param_b = orm_sqlite.FloatField()
-    height = orm_sqlite.FloatField()
+class BaseModel(Model):
+    class Meta:
+        database = SqliteDatabase(db_path)
 
 
-class Experiment(orm_sqlite.Model):
-    id = orm_sqlite.IntegerField(primary_key=True)
-    name = orm_sqlite.StringField()
-    material = orm_sqlite.ForeignKeyField(Material)
-    date = orm_sqlite.DateField()
-    time = orm_sqlite.TimeField()
-    load_loss_limit = orm_sqlite.FloatField()
-    maxLoad = orm_sqlite.FloatField()
-    maxTravel = orm_sqlite.FloatField()
-    maxTime = orm_sqlite.TimeField()
-    compress = orm_sqlite.BooleanField()
-    z_axis_speed = orm_sqlite.FloatField()
+class Material(BaseModel):
+    id = AutoField()
+    name = CharField()
+    batch = CharField()
+    supplier_name = CharField()
+    supplier_contact_info = CharField()
+    extra_info = CharField()
 
 
-class Reading(orm_sqlite.Model):
-    id = orm_sqlite.IntegerField(primary_key=True)
-    experiment = orm_sqlite.ForeignKeyField(Experiment)
-    load = orm_sqlite.FloatField()
-    z_pos = orm_sqlite.FloatField()
-    time = orm_sqlite.TimeField()
+class Body(BaseModel):
+    """
+    Body class
+    Attributes:
+        type: Body format (1 = Rectangle; 2 = Cylinder; 3 = Tube)
+        material_id: ID of the material used in the body
+        param_a: (Rectangle = length; Cylinder = External diameter; Tube = External diameter)
+        param_b: (Rectangle = depth; Cylinder = NULL; Tube = Internal diameter)
+        height: Height of the body
+    """
+
+    id = AutoField()
+    type = IntegerField()
+    material_id = ForeignKeyField(Material, backref="bodies")
+    param_a = FloatField()
+    param_b = FloatField()
+    height = FloatField()
+    extra_info = CharField()
+
+
+class Experiment(BaseModel):
+    """
+    Experiment class
+    Attributes:
+        name: Name of the experiment
+        body_id: ID of the body used in the experiment
+        datetime: Date and time of the experiment
+        load_loss_limit: Load loss limit (Newton/sec)
+        max_load: Maximum load (Newton)
+        max_travel: Maximum travel (millimeters)
+        max_time: Maximum time (seconds)
+        compress: True if the experiment is compressive, False if it is tensile
+        z_speed: Speed of the z axis (millimeters/second)
+        extra_info: Extra information about the experiment
+    """
+
+    id = AutoField()
+    name = CharField()
+    body_id = ForeignKeyField(Body, backref="experiments")
+    date_time = DateTimeField(default=datetime.datetime.now())
+    load_loss_limit = FloatField()
+    max_load = FloatField()
+    max_travel = FloatField()
+    max_time = FloatField()
+    compress = BooleanField()
+    z_axis_speed = FloatField()
+    extra_info = CharField()
+
+
+class Reading(BaseModel):
+    """
+    Readings class
+    Attributes:
+        experiment_id: ID of the experiment
+        x: X position of the reading
+        load: Load of the reading
+        z_pos: Z position of the reading
+    """
+
+    id = AutoField()
+    experiment_id = ForeignKeyField(Experiment, backref="readings")
+    x = IntegerField()
+    load = FloatField()
+    z_pos = FloatField()
 
 
 class DBHandler:
-    def __init__(self, db_path: str):
-        exists = file_exists(db_path)
+    def __init__(self):
+        if not path_exists(db_path):
+            makedirs("persist", exist_ok=True)
+            self.db = SqliteDatabase(db_path)
+            print(f"Connecting to database at {db_path}")
+            self.db.connect()
+            try:
+                self.db.create_tables([Material, Body, Experiment, Reading])
+                self.__populate()
+            except peewee.OperationalError as e:
+                raise e
+        else:
+            self.db = SqliteDatabase(db_path)
+            print(f"Connecting to database at {db_path}")
+            self.db.connect()
 
-        self.db = orm_sqlite.Database(db_path)
-        Material.object.backend = self.db
-        Experiment.object.backend = self.db
-        Reading.object.backend = self.db
+    def __del__(self):
+        print(f"Closing database connection at {db_path}")
+        self.db.close()
 
-        if not exists:
-            self.populate()
+    # --- Material --- #
 
     def add_material(self, data: dict):
-        material = Material(data)
-        material.save()
-
-    def add_body(self, data: dict):
-        body = Body(data)
-        body.save()
-
-    def add_experiment(self, data: dict):
-        experiment = Experiment(data)
-        experiment.save()
-
-    def add_reading(self, data: dict):
-        reading = Reading(data)
-        reading.save()
+        Material.create(**data)
 
     def get_materials(self):
-        return Material.objects.all()
+        return Material.select()
 
     def get_material_by_id(self, id: int):
-        return Material.objects.get(pk=id)
+        return Material.get(Material.id == id)
 
-    def get_bodies(self):
-        return Body.objects.all()
+    # --- Body --- #
 
-    def get_bodies_by_id(self, id: int):
-        return Body.objects.get(pk=id)
+    def add_body(self, data: dict):
+        Body.create(**data)
 
-    def get_bodies_by_material(self, material: Material):
-        return Body.objects.filter(material=material).all()
+    def get_body_by_id(self, id: int):
+        return Body.get(Body.id == id)
 
-    def get_bodies_by_type(self, body_type: str):
-        return Body.objects.filter(body_type=body_type).all()
+    # --- Experiment --- #
 
-    def get_bodies_by_material_and_type(self, material: Material, body_type: str):
-        return Body.objects.filter(material=material, body_type=body_type).all()
+    def add_experiment(self, data: dict):
+        Experiment.create(**data)
 
     def get_experiments(self):
-        return Experiment.objects.order_by(Experiment.date.desc()).all()
+        return Experiment.select()
 
     def get_experiment_by_id(self, id: int):
-        return Experiment.objects.get(pk=id)
+        return Experiment.get(Experiment.id == id)
 
-    def get_experiments_by_material(self, material: Material):
-        return (
-            Experiment.objects.filter(material=material)
-            .order_by(Experiment.date.desc())
-            .all()
+    def get_experiments_by_material_id(self, material_id: int):
+        return Experiment.select().join(Body).where(Body.material_id == material_id)
+
+    # --- Reading --- #
+
+    def add_reading(self, data: dict):
+        Reading.create(**data)
+
+    def get_load_over_time_by_experiment_id(self, experiment_id: int):
+        # return x and load
+        return Reading.select(Reading.x, Reading.load).where(
+            Reading.experiment_id == experiment_id
         )
 
-    def get_experiments_by_date(self, date: str):
-        return (
-            Experiment.objects.filter(date=date).order_by(Experiment.date.desc()).all()
+    def get_load_over_position_by_experiment_id(self, experiment_id: int):
+        # return z_pos and load
+        return Reading.select(Reading.z_pos, Reading.load).where(
+            Reading.experiment_id == experiment_id
         )
 
-    def get_experiments_by_date_and_material(self, date: str, material: Material):
-        return (
-            Experiment.objects.filter(date=date, material=material)
-            .order_by(Experiment.date.desc())
-            .all()
+    # --- Populate --- #
+
+    def __populate(self):
+        self.add_material(
+            {
+                "name": "Steel",
+                "batch": "S1",
+                "supplier_name": "Supplier 1",
+                "supplier_contact_info": "Contact info 1",
+                "extra_info": "Extra info 1",
+            }
+        )
+        self.add_material(
+            {
+                "name": "Iron",
+                "batch": "I1",
+                "supplier_name": "Supplier 2",
+                "supplier_contact_info": "Contact info 2",
+                "extra_info": "Extra info 2",
+            }
         )
 
-    def get_experiment_readings(self, experiment: Experiment):
-        return (
-            Reading.objects.filter(experiment=experiment)
-            .order_by(Reading.time.asc())
-            .all()
-        )
-
-    def delete_experiment_by_id(self, id: int):
-        Reading.objects.filter(experiment=id).delete()
-        Experiment.objects.get(pk=id).delete()
-
-    def delete_material_by_id(self, id: int):
-        Reading.objects.filter(experiment__material=id).delete()
-        Experiment.objects.filter(material=id).delete()
-        Material.objects.get(pk=id).delete()
-
-    def populate(self):
-        self.db.create_tables([Material, Experiment, Reading])
-
-        self.add_material({"name": "Steel", "batch": "S1"})
-        self.add_material({"name": "Iron", "batch": "I1"})
+        for i in range(10):
+            self.add_body(
+                {
+                    "type": i % 3 + 1,
+                    "material_id": i % 2 + 1,
+                    "param_a": 0.1 + i / 10,
+                    "param_b": 0.1 + 2 * i / 10,
+                    "height": 0.1 + 3 * i / 10,
+                    "extra_info": "Extra info " + str(i),
+                }
+            )
 
         for i in range(10):
             self.add_experiment(
                 {
-                    "name": "Test {}".format(i),
-                    "material": 1,
-                    "date": date.today(),
-                    "time": time(),
-                    "load_loss_limit": 0.1,
-                    "maxLoad": 100,
-                    "maxTravel": 100,
-                    "maxTime": time(),
-                    "compress": True,
-                    "z_axis_speed": 100,
+                    "name": "Exp " + str(i),
+                    "body_id": i % 10 + 1,
+                    "date_time": datetime.datetime.now(),
+                    "load_loss_limit": 0.1 + i / 10,
+                    "max_load": 0.1 + 2 * i / 10,
+                    "max_travel": 0.1 + 3 * i / 10,
+                    "max_time": 0.1 + 4 * i / 10,
+                    "compress": i % 2 == 0,
+                    "z_axis_speed": 0.1 + 4 * i / 10,
+                    "extra_info": "Extra info " + str(i),
                 }
             )
-            for j in range(10):
-                self.add_reading(
-                    {"experiment": i + 1, "load": j, "z_pos": j, "time": time()}
-                )
 
         for i in range(10):
-            self.add_experiment(
-                {
-                    "name": "Test {}".format(i),
-                    "material": 2,
-                    "date": date.today(),
-                    "time": time(),
-                    "load_loss_limit": 0.1,
-                    "maxLoad": 100,
-                    "maxTravel": 100,
-                    "maxTime": time(),
-                    "compress": True,
-                    "z_axis_speed": 100,
-                }
-            )
             for j in range(10):
                 self.add_reading(
-                    {"experiment": i + 11, "load": j, "z_pos": j, "time": time()}
+                    {
+                        "x": j,
+                        "experiment_id": i % 10 + 1,
+                        "load": 0.1 + j / 10,
+                        "z_pos": 0.1 + 2 * j / 10,
+                    }
                 )
 
-        self.db.commit()
+        # test all queries
+        print("Testing get_materials")
+        materials = self.get_materials()
+        for material in materials:
+            print(material.name)
+
+        print("Testing get_material_by_id")
+        material = self.get_material_by_id(1)
+        print(material.name)
+
+        print("Testing get_body_by_id")
+        body = self.get_body_by_id(1)
+        print(body.type)
+
+        print("Testing get_experiments")
+        experiments = self.get_experiments()
+        for experiment in experiments:
+            print(experiment.name)
+
+        print("Testing get_experiment_by_id")
+        experiment = self.get_experiment_by_id(1)
+        print(experiment.name)
+
+        print("Testing get_experiments_by_material_id")
+        experiments = self.get_experiments_by_material_id(1)
+        for experiment in experiments:
+            print(experiment.name)
+
+        print("Testing get_load_over_time_by_experiment_id")
+        readings = self.get_load_over_time_by_experiment_id(1)
+        for reading in readings:
+            print(reading.load, reading.x)
+
+        print("Testing get_load_over_position_by_experiment_id")
+        readings = self.get_load_over_position_by_experiment_id(1)
+        for reading in readings:
+            print(reading.load, reading.z_pos)
+
+        # self.__clear_data()
+
+    def __clear_data(self):
+        Reading.delete().execute()
+        Experiment.delete().execute()
+        Body.delete().execute()
+        Material.delete().execute()
+
+
+if __name__ == "__main__":
+    DBHandler()

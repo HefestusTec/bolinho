@@ -19,9 +19,26 @@ import eel
 import serial
 from granulado import Messages
 
-
 class Granulado:
     hardware: serial.Serial | None = None
+
+    def check_experiment_routine(self):
+        pass
+
+    def check_granulado_is_connected(self):
+        pass
+
+    def check_global_limits(self):
+        pass
+
+    def check_current_load(self):
+        pass
+
+    def reset_z_axis(self):
+        pass
+
+    def tare_load(self):
+        pass
 
     def isConnected(self):
         """Is the backend connected to the embedded hardware, returns a boolean"""
@@ -43,8 +60,6 @@ class Granulado:
             gr = Granulado()
             gr.connect(port='COM4', baudrate=115200, timeout=.1)
             ```
-
-
         """
         try:
             self.hardware = serial.Serial(port=port, baudrate=baudrate, timeout=timeout)
