@@ -14,17 +14,12 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
-import React, {
-    useState,
-    useEffect,
-    useContext,
-    FunctionComponent,
-} from "react";
+import React, { useContext, FunctionComponent } from "react";
 import styleModule from "./dropdownButton.module.css";
 import SelectedObjectListContext, {
     SelectedObjectType,
 } from "contexts/selectedObjectListContext";
-import { getFormattedDate, getRandomColor } from "../../../../../helpers";
+import { getRandomColor } from "../../../../../helpers";
 import { toast } from "react-toastify";
 import { getLoadOverTimeByExperimentId } from "api/db-api";
 import { ExperimentType, MaterialType } from "types/DataBaseTypes";

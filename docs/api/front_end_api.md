@@ -156,7 +156,7 @@ ___
     ``` python title="Python usage example"
     from bolinho_api.ui import ui_api
 
-    UIapi.error_alert("Error!")
+    ui_api.error_alert("Error!")
     ```
 
 ___
@@ -175,7 +175,7 @@ ___
             print("The user chose yes")
         print("The user chose no")
 
-    UIapi.prompt_user(
+    ui_api.prompt_user(
         description="Do you want to pay 1000?", 
         options=["yes", "no"], 
         callback_func= get_result,
@@ -183,6 +183,25 @@ ___
     ```
 
 ___
+
+### set_focus(focus_element: str)
+!!! quote "error_alert(focus_element: str)"
+
+    Focus in an specific element on the frontend.
+
+    WARNING Pay attention to the name of the element you are trying to focus
+
+    You can find them at [https://github.com/HefestusTec/bolinho/blob/main/src/web/src/api/apiTypes.ts](https://github.com/HefestusTec/bolinho/blob/main/src/web/src/api/apiTypes.ts)
+
+    ``` python title="Python usage example"
+    from bolinho_api.ui import ui_api
+
+    ui_api.set_focus("connection-component")
+
+    ```
+
+___
+
 
 ## Experiment page API
 Collection of all functions/API calls available to the backend for the **experiment** routine. You can find them in the `bolinho_api/experiment.py` file.

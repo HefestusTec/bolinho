@@ -32,3 +32,9 @@ export interface GlobalConfigContextProps {
     port: string;
     animateGraph: boolean;
 }
+
+export type FocusKeyType =
+    | "connection-component"
+    | "material-inspector"
+    | "config-page"
+    | "none";

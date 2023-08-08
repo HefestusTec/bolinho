@@ -20,16 +20,20 @@ import React, {
     useMemo,
     FunctionComponent,
     CSSProperties,
+    useEffect,
 } from "react";
 import { useLongPress } from "use-long-press";
 import GlobalConfigContext from "../../contexts/globalConfigContext";
 import BackgroundFader from "../backgroundFader/backgroundFader";
+import { FocusContext } from "api/contexts/FocusContex";
+import { FocusKeyType } from "api/apiTypes";
 
 interface ZoomComponentProps {
     scaleOrigin: string;
     className?: string;
     children?: any;
     style?: CSSProperties;
+    focusKey?: FocusKeyType;
 }
 
 const ZoomComponent: FunctionComponent<ZoomComponentProps> = ({
@@ -37,11 +41,20 @@ const ZoomComponent: FunctionComponent<ZoomComponentProps> = ({
     className = "",
     style,
     children,
+    focusKey,
 }) => {
     const [globalConfig] = useContext(GlobalConfigContext);
+    const [focus, setFocus] = useContext(FocusContext);
     const [isActive, setIsActive] = useState(false);
     const [canZoom, setCanZoom] = useState(true);
     const [zIndexVal, setZIndexVal] = useState("inherit");
+
+    useEffect(() => {
+        if (focus === focusKey) {
+            setIsActive(true);
+            setFocus("none");
+        }
+    }, [focus, focusKey, setFocus]);
 
     const usedZoom = () => {
         if (canZoom) setIsActive(!isActive);

@@ -25,6 +25,7 @@ interface CustomButtonProps {
     bgColor?: string;
     fontColor?: string;
     fontSize?: string;
+    maxWidth?: string;
 }
 
 const CustomButton: FunctionComponent<CustomButtonProps> = ({
@@ -34,6 +35,7 @@ const CustomButton: FunctionComponent<CustomButtonProps> = ({
     bgColor,
     fontColor,
     fontSize = "var(--font_m)",
+    maxWidth = "100%",
 }) => {
     const getClassName = () => {
         return [className, styleModule.custom_button].join(" ");
@@ -51,6 +53,7 @@ const CustomButton: FunctionComponent<CustomButtonProps> = ({
                 backgroundColor: bgColor,
                 color: fontColor,
                 fontSize: fontSize,
+                maxWidth: maxWidth,
             }}
         >
             {children}
