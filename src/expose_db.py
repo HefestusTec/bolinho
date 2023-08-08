@@ -31,9 +31,8 @@ def get_materials():
     Returns a list of materials in the database
     """
     materials = db_handler.get_materials()
-
-    materials_dict = model_to_dict(materials)
-    return json.dumps(materials_dict, default=lambda x: x.__dict__)
+    materials_dict_list = [model_to_dict(material) for material in materials]
+    return json.dumps(materials_dict_list, default=lambda x: x.__dict__)
 
 
 @eel.expose
@@ -68,8 +67,8 @@ def get_experiments():
     Returns a list of experiments in the database
     """
     experiments = db_handler.get_experiments()
-    experiments_dict = model_to_dict(experiments)
-    return json.dumps(experiments_dict, default=lambda x: x.__dict__)
+    experiments_dict_list = [model_to_dict(experiment) for experiment in experiments]
+    return json.dumps(experiments_dict_list, default=lambda x: x.__dict__)
 
 
 @eel.expose
@@ -87,9 +86,10 @@ def get_experiments_by_material_id(material_id):
     """
     Returns a list of experiments that used the material with the given id
     """
+
     experiments = db_handler.get_experiments_by_material_id(material_id)
-    experiments_dict = model_to_dict(experiments)
-    return json.dumps(experiments_dict, default=lambda x: x.__dict__)
+    experiments_dict_list = [model_to_dict(experiment) for experiment in experiments]
+    return json.dumps(experiments_dict_list, default=lambda x: x.__dict__)
 
 
 # --- Reading --- #
@@ -101,10 +101,12 @@ def get_load_over_time_by_experiment_id(experiment_id):
     Returns a list of load over time data points for the experiment with the given id
     """
     readings = db_handler.get_load_over_time_by_experiment_id(experiment_id)
-    readings_dict = model_to_dict(readings)
+    readings_dict = [model_to_dict(reading) for reading in readings]
+
     # rename the "load" key to "y"
     for reading in readings_dict:
         reading["y"] = reading.pop("load")
+
     return json.dumps(readings_dict, default=lambda x: x.__dict__)
 
 
