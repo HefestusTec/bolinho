@@ -102,7 +102,8 @@ def main():
             gran.sendSerialMessage(message=Messages.GET_BUFFER)
     """
     while True:
-        eel.sleep(1)
+        ui_api.set_focus("connection-component")
+        eel.sleep(2)
 
 
 if __name__ == "__main__":

@@ -16,16 +16,16 @@
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
 import React, { FunctionComponent, useEffect, useState } from "react";
 
-import styleModule from "./extraOptions.module.css";
+import styleModule from "./ConnectionComponent.module.css";
 import ContainerComponent from "components/containerComponent/containerComponent";
 import CustomButton from "components/customSubComponents/customButton/customButton";
 import CustomListSelector from "components/customSubComponents/customListSelector/customListSelector";
 import { PortType } from "types/PortType";
 import { connectToPortJS, getAvailablePortsListJS } from "api/backend-api";
 
-interface ExtraOptionsProps {}
+interface ConnectionComponentProps {}
 
-const ExtraOptions: FunctionComponent<ExtraOptionsProps> = () => {
+const ConnectionComponent: FunctionComponent<ConnectionComponentProps> = () => {
     const [selectedPort, setSelectedPort] = useState<string>("");
     const [availablePorts, setAvailablePorts] = useState<PortType[]>([]);
 
@@ -62,7 +62,7 @@ const ExtraOptions: FunctionComponent<ExtraOptionsProps> = () => {
 
     return (
         <ContainerComponent
-            headerText="Periférico"
+            headerText="Conexão"
             headerButton={
                 <CustomButton
                     fontSize="var(--font_s)"
@@ -93,4 +93,4 @@ const ExtraOptions: FunctionComponent<ExtraOptionsProps> = () => {
     );
 };
 
-export default ExtraOptions;
+export default ConnectionComponent;

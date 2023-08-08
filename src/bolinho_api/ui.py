@@ -48,5 +48,16 @@ class UiAPI:
     def set_return_prompt_function(self, return_function):
         self.return_prompt_function = return_function
 
+    def set_focus(self, focus_element: str):
+        """
+        Focus in an specific element on the frontend.
+
+        WARNING Pay attention to the name of the element you are trying to focus
+
+        You can find them at https://github.com/HefestusTec/bolinho/blob/main/src/web/src/api/apiTypes.ts
+        """
+
+        eel.setFocusJS(focus_element)
+
 
 ui_api = UiAPI()

@@ -20,7 +20,7 @@ import GraphComponent from "../graphComponent/graphComponent";
 import MaterialSelector from "./materialSelector/materialSelector";
 import styleModule from "./mainPage.module.css";
 import ExperimentsInspector from "./experimentsInspector/experimentsInspector";
-import ExtraOptions from "./extraOptions/extraOptions";
+import ConnectionComponent from "./ConnectionComponent/ConnectionComponent";
 import ZoomComponent from "../zoomComponent/zoomComponent";
 
 import { startExperimentRoutineJS } from "../../api/backend-api";
@@ -67,8 +67,9 @@ const MainPage: FunctionComponent<MainPageProps> = ({ materialList }) => {
                 <ZoomComponent
                     className={styleModule.extra_options}
                     scaleOrigin="bottom"
+                    focusKey="connection-component"
                 >
-                    <ExtraOptions />
+                    <ConnectionComponent />
                 </ZoomComponent>
                 <div className={styleModule.ensaio_button_div}>
                     <BigButton
