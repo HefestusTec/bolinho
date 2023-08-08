@@ -16,11 +16,9 @@
 # along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
 
 import eel
-from fake_db import *
 import json
 from DBHandler import DBHandler
-from peewee import model_to_dict
-
+from playhouse.shortcuts import model_to_dict
 
 db_handler = DBHandler()
 
@@ -33,8 +31,8 @@ def get_materials():
     Returns a list of materials in the database
     """
     materials = db_handler.get_materials()
-    materials_dict = model_to_dict(materials)
-    return json.dumps(materials_dict)
+    materials_dict_list = [model_to_dict(material) for material in materials]
+    return json.dumps(materials_dict_list, default=lambda x: x.__dict__)
 
 
 @eel.expose
@@ -44,7 +42,7 @@ def get_material_by_id(material_id):
     """
     material = db_handler.get_material_by_id(material_id)
     material_dict = model_to_dict(material)
-    return json.dumps(material_dict)
+    return json.dumps(material_dict, default=lambda x: x.__dict__)
 
 
 # --- Body --- #
@@ -57,7 +55,7 @@ def get_body_by_id(body_id):
     """
     body = db_handler.get_body_by_id(body_id)
     body_dict = model_to_dict(body)
-    return json.dumps(body_dict)
+    return json.dumps(body_dict, default=lambda x: x.__dict__)
 
 
 # --- Experiment --- #
@@ -69,8 +67,8 @@ def get_experiments():
     Returns a list of experiments in the database
     """
     experiments = db_handler.get_experiments()
-    experiments_dict = model_to_dict(experiments)
-    return json.dumps(experiments_dict)
+    experiments_dict_list = [model_to_dict(experiment) for experiment in experiments]
+    return json.dumps(experiments_dict_list, default=lambda x: x.__dict__)
 
 
 @eel.expose
@@ -80,7 +78,7 @@ def get_experiment_by_id(experiment_id):
     """
     experiment = db_handler.get_experiment_by_id(experiment_id)
     experiment_dict = model_to_dict(experiment)
-    return json.dumps(experiment_dict)
+    return json.dumps(experiment_dict, default=lambda x: x.__dict__)
 
 
 @eel.expose
@@ -88,9 +86,10 @@ def get_experiments_by_material_id(material_id):
     """
     Returns a list of experiments that used the material with the given id
     """
+
     experiments = db_handler.get_experiments_by_material_id(material_id)
-    experiments_dict = model_to_dict(experiments)
-    return json.dumps(experiments_dict)
+    experiments_dict_list = [model_to_dict(experiment) for experiment in experiments]
+    return json.dumps(experiments_dict_list, default=lambda x: x.__dict__)
 
 
 # --- Reading --- #
@@ -102,11 +101,13 @@ def get_load_over_time_by_experiment_id(experiment_id):
     Returns a list of load over time data points for the experiment with the given id
     """
     readings = db_handler.get_load_over_time_by_experiment_id(experiment_id)
-    readings_dict = model_to_dict(readings)
+    readings_dict = [model_to_dict(reading) for reading in readings]
+
     # rename the "load" key to "y"
     for reading in readings_dict:
         reading["y"] = reading.pop("load")
-    return json.dumps(readings_dict)
+
+    return json.dumps(readings_dict, default=lambda x: x.__dict__)
 
 
 @eel.expose
@@ -121,52 +122,36 @@ def get_load_over_position_by_experiment_id(experiment_id):
     for reading in readings_dict:
         reading["x"] = reading.pop("z_pos")
         reading["y"] = reading.pop("load")
-    return json.dumps(readings_dict)
+    return json.dumps(readings_dict, default=lambda x: x.__dict__)
 
 
-@eel.expose
-def get_experiment_list():
-    return json.dumps(experiment_data_base, default=lambda x: x.__dict__)
+"""
+get_materials
+get_experiments
 
 
-@eel.expose
-def get_experiment_at(id):
-    if len(experiment_data_base) - 1 < id:
-        return None
-    return json.dumps(experiment_data_base[id], default=lambda x: x.__dict__)
+get_experiments_by_material_id
 
 
-@eel.expose
-def get_multiple_experiments(ids):
-    experiment_data_array = []
-    for experimentId in ids:
-        if experimentId < len(experiment_data_base):
-            experiment_data_array.append(experiment_data_base[experimentId])
-    return json.dumps(experiment_data_array, default=lambda x: x.__dict__)
+get_body_by_id
+get_experiment_by_id
+get_material_by_id
 
 
-@eel.expose
-def get_material_list():
-    return json.dumps(material_data_base, default=lambda x: x.__dict__)
+get_load_over_time_by_experiment_id -> {x, y}[]
+get_load_over_position_by_experiment_id -> {x, y}[]
 
 
-@eel.expose
-def get_material_at(id):
-    if len(material_data_base) - 1 < id:
-        return None
-    return json.dumps(material_data_base[id], default=lambda x: x.__dict__)
 
 
-@eel.expose
-def get_material_with_experiment(experiment_id):
-    for material in material_data_base:
-        if experiment_id in material.experiment_array:
-            return material
-    return None
+Rotina para vizu um material
+>>>>>>>>>   
 
+get_materials -> material[]
+get_experiments_by_material_id -> Experiment[]
+get_body_by_id -> Body
 
-@eel.expose
-def get_data_point_array_at(id):
-    if len(data_point_array_data_base) - 1 < id:
-        return []
-    return json.dumps(data_point_array_data_base[id], default=lambda x: x.__dict__)
+get_load_over_time_by_experiment_id -> {x, y}[]
+get_load_over_position_by_experiment_id -> {x, y}[]
+
+"""

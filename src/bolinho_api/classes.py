@@ -44,36 +44,7 @@ class DataPoint:
         self.y = y
 
 
-class DataPointArray:
-    """
-    An array of data points make an experiment reading
-    """
-
-    def __init__(self, id=0, experiment_id=0, data_array=[]):
-        self.id = id
-        self.experiment_id = experiment_id
-        self.data_array = data_array
-
-
-class AutoStopParams:
-    """
-    Parameters to trigger the auto stop
-
-    Unity
-    - force_loss:   Newtons
-    - max_force:    Newtons
-    - max_travel:   Millimeters
-    - max_time:     Seconds
-    """
-
-    def __init__(self, force_loss=20, max_force=1000, max_travel=100, max_time=600):
-        self.force_loss = force_loss
-        self.max_force = max_force
-        self.max_travel = max_travel
-        self.max_time = max_time
-
-
-class BodyParams:
+class Body:
     """
     Parameters of the test body
 
@@ -83,65 +54,44 @@ class BodyParams:
     height:     Height of the test body
     """
 
-    def __init__(self, type=1, param_a=0, param_b=0, height=0):
+    def __init__(
+        self, id=0, type=1, material_id=0, param_a=0, param_b=0, height=0, extra_info=""
+    ):
+        self.id = id
         self.type = type
+        self.material_id = material_id
         self.param_a = param_a
         self.param_b = param_b
         self.height = height
-
-
-class ExperimentParams:
-    """
-    Parameters of an experiment
-    """
-
-    def __init__(
-        self,
-        stop_params=AutoStopParams(),
-        body_params=BodyParams(),
-        compress=True,
-        z_speed=5,
-    ):
-        self.stop_params: AutoStopParams = stop_params
-        self.body_params: BodyParams = body_params
-        self.compress: bool = compress
-        self.z_speed: float = z_speed
-
-
-class Date:
-    def __init__(
-        self,
-        day=1,
-        month=1,
-        year=2023,
-    ):
-        self.day = day
-        self.month = month
-        self.year = year
+        self.extra_info = extra_info
 
 
 class Experiment:
     def __init__(
         self,
         id=0,
-        date=Date(),
-        experiment_params=ExperimentParams(),
-        data_array_id=0,
-        material_id=0,
+        name="None",
+        body_id=0,
+        date_time=0,
+        load_loss_limit=0,
+        max_load=0,
+        max_travel=0,
+        max_time=0,
+        z_axis_speed=0,
+        compress=False,
         extra_info="",
     ):
-        self.experiment_params = experiment_params
         self.id = id
-        self.date = date
-        self.data_array_id = data_array_id
-        self.material_id = material_id
-        self.extra_info = extra_info
-
-
-class Supplier:
-    def __init__(self, name="NONE", email=""):
         self.name = name
-        self.email = email
+        self.body_id = body_id
+        self.date_time = date_time
+        self.load_loss_limit = load_loss_limit
+        self.max_load = max_load
+        self.max_travel = max_travel
+        self.max_time = max_time
+        self.z_axis_speed = z_axis_speed
+        self.compress = compress
+        self.extra_info = extra_info
 
 
 class Material:
@@ -153,15 +103,14 @@ class Material:
         self,
         id=0,
         name="NONE",
-        batch=0,
-        experiment_array=[],
-        supplier=Supplier(),
+        batch="",
+        supplier_name="",
+        supplier_contact_info="",
         extra_info="",
     ):
         self.id = id
         self.name = name
         self.batch = batch
-        # array of the ids of experiments with this material
-        self.experiment_array = experiment_array
-        self.supplier = supplier
+        self.supplier_name = supplier_name
+        self.supplier_contact_info = supplier_contact_info
         self.extra_info = extra_info

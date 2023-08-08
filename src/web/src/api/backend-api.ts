@@ -19,9 +19,6 @@
 import { fakeEel } from "../staticDB";
 import { toast } from "react-toastify";
 import { GlobalConfigContextProps } from "./apiTypes";
-import { MaterialType } from "types/MaterialType";
-import { ExperimentType } from "types/ExperimentType";
-import { DataPointType } from "types/DataPointTypes";
 
 // Setting up eel and fakeEel
 export let eel = window.eel;
@@ -51,59 +48,6 @@ export const loadConfigParams = async (): Promise<
     } catch (error) {
         toast.error("Não foi possível carregar o arquivo de configuração");
         return undefined;
-    }
-};
-
-export const getMaterialList = async (): Promise<MaterialType[]> => {
-    try {
-        const materialList: MaterialType[] = JSON.parse(
-            await eel.get_material_list()()
-        );
-        return materialList;
-    } catch (error) {
-        return [];
-    }
-};
-
-export const getMaterialAt = async (
-    index: number
-): Promise<MaterialType | undefined> => {
-    try {
-        return JSON.parse(await eel.get_material_at(index)()) as MaterialType;
-    } catch (error) {
-        toast.error("Não foi possível encontrar o material de índice " + index);
-        return undefined;
-    }
-};
-
-export const getExperimentAt = async (
-    index: number
-): Promise<ExperimentType | undefined> => {
-    try {
-        return JSON.parse(
-            await eel.get_experiment_at(index)()
-        ) as ExperimentType;
-    } catch (error) {
-        toast.error(
-            "Não foi possível encontrar o experimento de índice " + index
-        );
-        return undefined;
-    }
-};
-
-export const getDataPointArrayAt = async (
-    index: number
-): Promise<DataPointType[]> => {
-    try {
-        return JSON.parse(
-            await eel.get_data_point_array_at(index)()
-        ) as DataPointType[];
-    } catch (error) {
-        toast.error(
-            "Não foi possível encontrar a array de ponto de dados de índice " +
-                index
-        );
-        return [];
     }
 };
 

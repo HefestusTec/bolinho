@@ -22,7 +22,7 @@ import {
     SetStateAction,
     useState,
 } from "react";
-import { defaultMaterialType, MaterialType } from "types/MaterialType";
+import { defaultMaterialType, MaterialType } from "types/DataBaseTypes";
 
 export type ExperimentPageType = {
     loadPercentage: number; // Number between 0 - 100
