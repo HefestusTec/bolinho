@@ -78,8 +78,7 @@ const DropdownButton: FunctionComponent<DropdownButtonProps> = ({
                     <div className={styleModule.add_sign}></div>
                 </div>
                 <div className={styleModule.dropdown_button_text}>
-                    Experimento {experiment.id} [
-                    {/*getFormattedDate(experiment?.date)*/}]
+                    Experimento {experiment.id} [{experiment.date_time}]
                 </div>
             </button>
         </li>

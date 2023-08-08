@@ -88,7 +88,7 @@ const MaterialSelectorButton: FunctionComponent<
                     </div>
                 </div>
                 <div className={styleModule.material_selector_text}>
-                    [{material.batch}] {material.name}
+                    [{material.id}] {material.name}
                 </div>
             </button>
             <ul className={getDropdownClassName()}>

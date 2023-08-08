@@ -77,6 +77,7 @@ def get_experiment_by_id(experiment_id):
     Returns the experiment with the given id
     """
     experiment = db_handler.get_experiment_by_id(experiment_id)
+    experiment.date_time = experiment.date_time.strftime("%d/%m/%Y")
     experiment_dict = model_to_dict(experiment)
     return json.dumps(experiment_dict, default=lambda x: x.__dict__)
 
@@ -86,8 +87,9 @@ def get_experiments_by_material_id(material_id):
     """
     Returns a list of experiments that used the material with the given id
     """
-
     experiments = db_handler.get_experiments_by_material_id(material_id)
+    for experiment in experiments:
+        experiment.date_time = experiment.date_time.strftime("%d/%m/%Y")
     experiments_dict_list = [model_to_dict(experiment) for experiment in experiments]
     return json.dumps(experiments_dict_list, default=lambda x: x.__dict__)
 

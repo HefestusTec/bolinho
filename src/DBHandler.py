@@ -30,6 +30,7 @@ class BaseModel(Model):
 
 
 class Material(BaseModel):
+    id = AutoField()
     name = CharField()
     batch = CharField()
     supplier_name = CharField()
@@ -48,6 +49,7 @@ class Body(BaseModel):
         height: Height of the body
     """
 
+    id = AutoField()
     type = IntegerField()
     material_id = ForeignKeyField(Material, backref="bodies")
     param_a = FloatField()
@@ -72,15 +74,16 @@ class Experiment(BaseModel):
         extra_info: Extra information about the experiment
     """
 
+    id = AutoField()
     name = CharField()
     body_id = ForeignKeyField(Body, backref="experiments")
-    datetime = DateTimeField(default=datetime.datetime.now)
+    date_time = DateTimeField(default=datetime.datetime.now())
     load_loss_limit = FloatField()
     max_load = FloatField()
     max_travel = FloatField()
     max_time = FloatField()
     compress = BooleanField()
-    z_speed = FloatField()
+    z_axis_speed = FloatField()
     extra_info = CharField()
 
 
@@ -94,6 +97,7 @@ class Reading(BaseModel):
         z_pos: Z position of the reading
     """
 
+    id = AutoField()
     experiment_id = ForeignKeyField(Experiment, backref="readings")
     x = IntegerField()
     load = FloatField()
@@ -210,13 +214,13 @@ class DBHandler:
                 {
                     "name": "Exp " + str(i),
                     "body_id": i % 10 + 1,
-                    "datetime": datetime.datetime.now(),
+                    "date_time": datetime.datetime.now(),
                     "load_loss_limit": 0.1 + i / 10,
                     "max_load": 0.1 + 2 * i / 10,
                     "max_travel": 0.1 + 3 * i / 10,
                     "max_time": 0.1 + 4 * i / 10,
                     "compress": i % 2 == 0,
-                    "z_speed": 0.1 + 4 * i / 10,
+                    "z_axis_speed": 0.1 + 4 * i / 10,
                     "extra_info": "Extra info " + str(i),
                 }
             )
@@ -270,7 +274,7 @@ class DBHandler:
         for reading in readings:
             print(reading.load, reading.z_pos)
 
-        self.__clear_data()
+        # self.__clear_data()
 
     def __clear_data(self):
         Reading.delete().execute()
