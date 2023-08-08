@@ -45,7 +45,7 @@ const MaterialSelector: FunctionComponent<MaterialSelectorProps> = ({
         <div className={styleModule.material_selector}>
             <div className={styleModule.selector_header}>
                 <div className={styleModule.selector_header_text}>
-                    Selecionar Experimento
+                    Meus Experimento
                 </div>
                 <div className={styleModule.selector_header_bottom}>
                     <input

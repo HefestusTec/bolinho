@@ -16,7 +16,12 @@
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
 
 import { Dispatch, SetStateAction, createContext } from "react";
-import { ExperimentType, MaterialType } from "types/DataBaseTypes";
+import {
+    ExperimentType,
+    MaterialType,
+    defaultExperimentType,
+    defaultMaterialType,
+} from "types/DataBaseTypes";
 import { DataPointType } from "types/DataPointTypes";
 
 export type SelectedObjectType = {
@@ -24,6 +29,13 @@ export type SelectedObjectType = {
     experiment: ExperimentType;
     data_array: DataPointType[];
     color: string;
+};
+
+export const defaultSelectedObjectType = {
+    material: defaultMaterialType,
+    experiment: defaultExperimentType,
+    data_array: [],
+    color: "#FFFFFF",
 };
 
 export const selectedObjectListDefault: SelectedObjectType[] = [];
