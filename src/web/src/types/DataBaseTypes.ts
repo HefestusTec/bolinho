@@ -38,7 +38,7 @@ export type ExperimentType = {
     id: number;
     name: string;
     body_id: number;
-    date_time: number;
+    date_time: string;
     load_loss_limit: number;
     max_load: number;
     max_travel: number;
