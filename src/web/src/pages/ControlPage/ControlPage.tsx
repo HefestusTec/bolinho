@@ -22,6 +22,7 @@ import { FunctionComponent } from "react";
 import CommandsComponent from "./CommandsComponent/CommandsComponent";
 import BigButton from "components/customSubComponents/BigButton/BigButton";
 import UpDownButtons from "./UpDownButtons/UpDownButtons";
+import { stopZAxisJS } from "api/backend-api";
 
 interface ControlPageProps {}
 
@@ -63,7 +64,7 @@ const ControlPage: FunctionComponent<ControlPageProps> = () => {
             />
             <div style={bigButtonContainerStyle}>
                 <BigButton
-                    clickCallBack={() => {}}
+                    clickCallBack={stopZAxisJS}
                     buttonText="PARAR"
                     bgColor="var(--negative_button_color)"
                     fontSize="var(--font_l)"

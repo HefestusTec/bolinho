@@ -151,7 +151,16 @@ export const returnZAxisJS = async (): Promise<number> => {
     try {
         return await eel.return_z_axis()();
     } catch (error) {
-        toast.error("Não foi possível retornar o eixo z à origem");
+        toast.error("Não foi possível retornar o eixo Z à origem");
+        return 0;
+    }
+};
+
+export const stopZAxisJS = async (): Promise<number> => {
+    try {
+        return await eel.stop_z_axis()();
+    } catch (error) {
+        toast.error("Não foi possível parar o eixo Z.");
         return 0;
     }
 };
