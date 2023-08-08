@@ -17,6 +17,10 @@
 import eel
 import json
 import os
+import serial
+import json
+import serial.tools.list_ports
+
 from bolinho_api.ui import ui_api
 from bolinho_api.core import core_api
 
@@ -122,4 +126,49 @@ def stop_z_axis():
     TODO IMPLEMENT THIS FUNCTION
     """
     print("STOP THE Z-AXIS")
+    return 1
+
+
+@eel.expose
+def move_z_axis_millimeters(distance):
+    """
+    Moves the z-axis [distance]mm.
+
+    This distance is set in MILLIMETERS
+
+    Returns 1 if succeeded (if the function was acknowledged).
+
+    TODO IMPLEMENT THIS FUNCTION
+    """
+    print("Move " + str(distance))
+    return 1
+
+
+@eel.expose
+def get_available_ports_list():
+    """
+    Returns a JSON object containing the available COM ports:
+    ``` JSON
+    {
+        "port": x,
+        "desc": y,
+    }
+    ```
+    """
+    ports = serial.tools.list_ports.comports()
+    ports_dict = []
+    for port, desc, _ in sorted(ports):
+        ports_dict.append({"port": port, "desc": desc})
+    return ports_dict
+
+
+@eel.expose
+def connect_to_port(port: str):
+    """
+    Connects to a port. The port argument is a string like `COM4`
+
+    TODO IMPLEMENT THIS FUNCTION
+
+    """
+    print("Connect to port " + str(port))
     return 1
