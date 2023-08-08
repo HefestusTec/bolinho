@@ -66,3 +66,35 @@ def get_data_point_array_at(id):
     if len(data_point_array_data_base) - 1 < id:
         return []
     return json.dumps(data_point_array_data_base[id], default=lambda x: x.__dict__)
+
+
+"""
+get_materials
+get_experiments
+
+
+get_experiments_by_material_id
+
+
+get_body_by_id
+get_experiment_by_id
+get_material_by_id
+
+
+get_load_over_time_by_experiment_id -> {x, y}[]
+get_load_over_position_by_experiment_id -> {x, y}[]
+
+
+
+
+Rotina para vizu um material
+>>>>>>>>>   
+
+get_materials -> material[]
+get_experiments_by_material_id -> Experiment[]
+get_body_by_id -> Body
+
+get_load_over_time_by_experiment_id -> {x, y}[]
+get_load_over_position_by_experiment_id -> {x, y}[]
+
+"""
