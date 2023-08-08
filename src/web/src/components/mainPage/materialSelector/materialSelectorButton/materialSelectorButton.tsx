@@ -58,19 +58,18 @@ const MaterialSelectorButton: FunctionComponent<
         setDropdown(!dropdown);
     };
 
-    const createButton = (experimentIdx: number) => {
+    const createButton = (experimentElem: ExperimentType) => {
         return (
             <DropdownButton
-                experimentIndex={experimentIdx}
-                key={"EX" + experimentIdx.toString()}
+                experiment={experimentElem}
+                material={material}
+                key={"EX" + experimentElem.id.toString()}
             />
         );
     };
 
     const makeExperimentButtons = () => {
-        return material.experiment_array.map((element, idx) =>
-            createButton(element)
-        );
+        return experiments.map((element) => createButton(element));
     };
 
     return (
