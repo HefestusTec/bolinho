@@ -18,9 +18,10 @@
 from peewee import *
 import datetime
 from os.path import exists as path_exists
+from os import makedirs
 
 
-db_path = "bolinho.db"
+db_path = "persist/bolinho.db"
 
 
 class BaseModel(Model):
@@ -31,58 +32,94 @@ class BaseModel(Model):
 class Material(BaseModel):
     name = CharField()
     batch = CharField()
+    supplier_name = CharField()
+    supplier_contact_info = CharField()
+    extra_info = CharField()
 
 
 class Body(BaseModel):
-    body_type = IntegerField()
-    material = ForeignKeyField(Material, backref="bodies")
+    """
+    Body class
+    Attributes:
+        type: Body format (1 = Rectangle; 2 = Cylinder; 3 = Tube)
+        material_id: ID of the material used in the body
+        param_a: (Rectangle = length; Cylinder = External diameter; Tube = External diameter)
+        param_b: (Rectangle = depth; Cylinder = NULL; Tube = Internal diameter)
+        height: Height of the body
+    """
+
+    type = IntegerField()
+    material_id = ForeignKeyField(Material, backref="bodies")
     param_a = FloatField()
     param_b = FloatField()
     height = FloatField()
+    extra_info = CharField()
 
 
 class Experiment(BaseModel):
+    """
+    Experiment class
+    Attributes:
+        name: Name of the experiment
+        body_id: ID of the body used in the experiment
+        datetime: Date and time of the experiment
+        load_loss_limit: Load loss limit (Newton/sec)
+        max_load: Maximum load (Newton)
+        max_travel: Maximum travel (millimeters)
+        max_time: Maximum time (seconds)
+        compress: True if the experiment is compressive, False if it is tensile
+        z_speed: Speed of the z axis (millimeters/second)
+        extra_info: Extra information about the experiment
+    """
+
     name = CharField()
-    body = ForeignKeyField(Body, backref="experiments")
-    date = DateTimeField(default=datetime.datetime.now)
-    time = DateTimeField(default=datetime.datetime.now)
+    body_id = ForeignKeyField(Body, backref="experiments")
+    datetime = DateTimeField(default=datetime.datetime.now)
     load_loss_limit = FloatField()
     max_load = FloatField()
     max_travel = FloatField()
-    max_time = DateTimeField(default=datetime.datetime.now)
+    max_time = FloatField()
     compress = BooleanField()
-    z_axis_speed = FloatField()
+    z_speed = FloatField()
+    extra_info = CharField()
 
 
 class Reading(BaseModel):
-    index = IntegerField()
-    experiment = ForeignKeyField(Experiment, backref="readings")
+    """
+    Readings class
+    Attributes:
+        experiment_id: ID of the experiment
+        x: X position of the reading
+        load: Load of the reading
+        z_pos: Z position of the reading
+    """
+
+    experiment_id = ForeignKeyField(Experiment, backref="readings")
+    x = IntegerField()
     load = FloatField()
     z_pos = FloatField()
-    tension = FloatField()
 
 
 class DBHandler:
     def __init__(self):
         if not path_exists(db_path):
+            makedirs("persist", exist_ok=True)
             self.db = SqliteDatabase(db_path)
             print(f"Connecting to database at {db_path}")
             self.db.connect()
             try:
                 self.db.create_tables([Material, Body, Experiment, Reading])
-                self.populate()
+                self.__populate()
             except peewee.OperationalError as e:
                 raise e
         else:
             self.db = SqliteDatabase(db_path)
             print(f"Connecting to database at {db_path}")
             self.db.connect()
-    
 
     def __del__(self):
         print(f"Closing database connection at {db_path}")
         self.db.close()
-
 
     # --- Material --- #
 
@@ -92,35 +129,16 @@ class DBHandler:
     def get_materials(self):
         return Material.select()
 
-    def get_materials_by_filter(self, filter: dict):
-        return Material.select().where(Material.name == filter["name"])
-
-    def delete_material_by_id(self, id: int):
-        for reading in (
-            Reading.select().join(Experiment).join(Material).where(Material.id == id)
-        ):
-            reading.delete_instance()
-        for experiment in Experiment.select().join(Material).where(Material.id == id):
-            experiment.delete_instance()
-        for material in Material.select().where(Material.id == id):
-            material.delete_instance()
+    def get_material_by_id(self, id: int):
+        return Material.get(Material.id == id)
 
     # --- Body --- #
 
     def add_body(self, data: dict):
         Body.create(**data)
 
-    def get_bodies(self):
-        return Body.select()
-
-    def get_bodies_by_filter(self, filter: dict):
-        return Body.select().where(Body.body_type == filter["body_type"])
-
-    def delete_body_by_id(self, id: int):
-        for experiment in Experiment.select().join(Body).where(Body.id == id):
-            experiment.delete_instance()
-        for body in Body.select().where(Body.id == id):
-            body.delete_instance()
+    def get_body_by_id(self, id: int):
+        return Body.get(Body.id == id)
 
     # --- Experiment --- #
 
@@ -130,37 +148,60 @@ class DBHandler:
     def get_experiments(self):
         return Experiment.select()
 
-    def get_experiments_by_filter(self, filter: dict):
-        return Experiment.select().where(Experiment.name == filter["name"])
+    def get_experiment_by_id(self, id: int):
+        return Experiment.get(Experiment.id == id)
 
-    def delete_experiment_by_id(self, id: int):
-        for reading in Reading.select().join(Experiment).where(Experiment.id == id):
-            reading.delete_instance()
-        for experiment in Experiment.select().where(Experiment.id == id):
-            experiment.delete_instance()
+    def get_experiments_by_material_id(self, material_id: int):
+        return Experiment.select().join(Body).where(Body.material_id == material_id)
 
     # --- Reading --- #
 
     def add_reading(self, data: dict):
         Reading.create(**data)
 
-    def get_experiment_readings(self, experiment_id: int):
-        return Reading.select().where(Reading.experiment == experiment_id)
+    def get_load_over_time_by_experiment_id(self, experiment_id: int):
+        # return x and load
+        return Reading.select(Reading.x, Reading.load).where(
+            Reading.experiment_id == experiment_id
+        )
+
+    def get_load_over_position_by_experiment_id(self, experiment_id: int):
+        # return z_pos and load
+        return Reading.select(Reading.z_pos, Reading.load).where(
+            Reading.experiment_id == experiment_id
+        )
 
     # --- Populate --- #
 
-    def populate(self):
-        self.add_material({"name": "Steel", "batch": "S1"})
-        self.add_material({"name": "Iron", "batch": "I1"})
+    def __populate(self):
+        self.add_material(
+            {
+                "name": "Steel",
+                "batch": "S1",
+                "supplier_name": "Supplier 1",
+                "supplier_contact_info": "Contact info 1",
+                "extra_info": "Extra info 1",
+            }
+        )
+        self.add_material(
+            {
+                "name": "Iron",
+                "batch": "I1",
+                "supplier_name": "Supplier 2",
+                "supplier_contact_info": "Contact info 2",
+                "extra_info": "Extra info 2",
+            }
+        )
 
         for i in range(10):
             self.add_body(
                 {
-                    "body_type": 0,
-                    "material": i % 2 + 1,
+                    "type": i % 3 + 1,
+                    "material_id": i % 2 + 1,
                     "param_a": 0.1 + i / 10,
                     "param_b": 0.1 + 2 * i / 10,
                     "height": 0.1 + 3 * i / 10,
+                    "extra_info": "Extra info " + str(i),
                 }
             )
 
@@ -168,15 +209,15 @@ class DBHandler:
             self.add_experiment(
                 {
                     "name": "Exp " + str(i),
-                    "body": i % 10 + 1,
-                    "date": datetime.datetime.now(),
-                    "time": datetime.datetime.now(),
+                    "body_id": i % 10 + 1,
+                    "datetime": datetime.datetime.now(),
                     "load_loss_limit": 0.1 + i / 10,
                     "max_load": 0.1 + 2 * i / 10,
                     "max_travel": 0.1 + 3 * i / 10,
-                    "max_time": datetime.datetime.now(),
+                    "max_time": 0.1 + 4 * i / 10,
                     "compress": i % 2 == 0,
-                    "z_axis_speed": 0.1 + 4 * i / 10,
+                    "z_speed": 0.1 + 4 * i / 10,
+                    "extra_info": "Extra info " + str(i),
                 }
             )
 
@@ -184,33 +225,52 @@ class DBHandler:
             for j in range(10):
                 self.add_reading(
                     {
-                        "index": j,
-                        "experiment": i % 10 + 1,
+                        "x": j,
+                        "experiment_id": i % 10 + 1,
                         "load": 0.1 + j / 10,
                         "z_pos": 0.1 + 2 * j / 10,
-                        "tension": 0.1 + 3 * j / 10,
                     }
                 )
-        
-        self.__print_data()
-        self.__clear_data()
-        self.__print_data()
-    
 
-    def __print_data(self):
-        print("Materials:")
-        for material in self.get_materials():
+        # test all queries
+        print("Testing get_materials")
+        materials = self.get_materials()
+        for material in materials:
             print(material.name)
-        print("Bodies:")
-        for body in self.get_bodies():
-            print(body.body_type)
-        print("Experiments:")
-        for experiment in self.get_experiments():
+
+        print("Testing get_material_by_id")
+        material = self.get_material_by_id(1)
+        print(material.name)
+
+        print("Testing get_body_by_id")
+        body = self.get_body_by_id(1)
+        print(body.type)
+
+        print("Testing get_experiments")
+        experiments = self.get_experiments()
+        for experiment in experiments:
             print(experiment.name)
-        print("Readings:")
-        for reading in self.get_experiment_readings(1):
-            print(reading.load)
-    
+
+        print("Testing get_experiment_by_id")
+        experiment = self.get_experiment_by_id(1)
+        print(experiment.name)
+
+        print("Testing get_experiments_by_material_id")
+        experiments = self.get_experiments_by_material_id(1)
+        for experiment in experiments:
+            print(experiment.name)
+
+        print("Testing get_load_over_time_by_experiment_id")
+        readings = self.get_load_over_time_by_experiment_id(1)
+        for reading in readings:
+            print(reading.load, reading.x)
+
+        print("Testing get_load_over_position_by_experiment_id")
+        readings = self.get_load_over_position_by_experiment_id(1)
+        for reading in readings:
+            print(reading.load, reading.z_pos)
+
+        self.__clear_data()
 
     def __clear_data(self):
         Reading.delete().execute()
@@ -220,4 +280,4 @@ class DBHandler:
 
 
 if __name__ == "__main__":
-    db = DBHandler()
+    DBHandler()
