@@ -77,6 +77,12 @@ class DBHandler:
             self.db = SqliteDatabase(db_path)
             print(f"Connecting to database at {db_path}")
             self.db.connect()
+    
+
+    def __del__(self):
+        print(f"Closing database connection at {db_path}")
+        self.db.close()
+
 
     # --- Material --- #
 
