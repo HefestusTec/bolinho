@@ -5,3 +5,4 @@ site/
 node_modules/
 src/persist
 src/build
+*.db
