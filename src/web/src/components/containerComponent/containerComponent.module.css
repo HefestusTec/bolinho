@@ -33,9 +33,11 @@
     color: var(--font_color_inverted);
     font-size: var(--font_m);
     font-weight: bold;
+    justify-content: space-between;
     display: flex;
     align-items: center;
     padding-left: 10%;
+    padding-right: 5%;
 }
 
 .container_content {

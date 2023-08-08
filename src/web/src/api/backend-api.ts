@@ -122,7 +122,7 @@ export const moveZAxisMillimetersJS = async (
 };
 
 export const getAvailablePortsListJS = async (): Promise<
-    PortType | undefined
+    PortType[] | undefined
 > => {
     try {
         return await eel.get_available_ports_list()();

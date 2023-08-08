@@ -53,6 +53,7 @@ const CustomListSelector: FunctionComponent<CustomListSelectorProps> = ({
                 clickCallBack={dropDownButtonClicked}
                 className={styleModule.dropdown_button}
                 key={"list_" + name}
+                fontSize="var(--font_s)"
             >
                 {name}
             </CustomButton>
