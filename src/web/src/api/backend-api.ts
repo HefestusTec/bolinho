@@ -128,10 +128,9 @@ export const getAvailablePortsListJS = async (): Promise<
     PortType[] | undefined
 > => {
     try {
-        toast.success("Lista de portas atualizada!");
         return await eel.get_available_ports_list()();
     } catch (error) {
-        toast.error("Não foi possível mover o eixo Z.");
+        toast.error("Não foi possível atualizar a lista de portas.");
         return undefined;
     }
 };
@@ -140,7 +139,7 @@ export const connectToPortJS = async (port: string): Promise<number> => {
     try {
         return await eel.connect_to_port(port)();
     } catch (error) {
-        toast.error("Não foi possível mover o eixo Z.");
+        toast.error("Não foi possível conectar a porta: " + port);
         return 0;
     }
 };
