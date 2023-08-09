@@ -22,6 +22,7 @@ import CustomButton from "components/customSubComponents/customButton/customButt
 import CustomListSelector from "components/customSubComponents/customListSelector/customListSelector";
 import { PortType } from "types/PortType";
 import { connectToPortJS, getAvailablePortsListJS } from "api/backend-api";
+import { toast } from "react-toastify";
 
 interface ConnectionComponentProps {}
 
@@ -40,6 +41,8 @@ const ConnectionComponent: FunctionComponent<ConnectionComponentProps> = () => {
 
     const updateAvailablePorts = () => {
         getAvailablePortsListJS().then((portsResponse) => {
+            toast.success("Lista de portas atualizada!");
+
             if (portsResponse) {
                 setAvailablePorts(portsResponse);
             }
