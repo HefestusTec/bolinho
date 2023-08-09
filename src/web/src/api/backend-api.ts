@@ -125,6 +125,7 @@ export const getAvailablePortsListJS = async (): Promise<
     PortType[] | undefined
 > => {
     try {
+        toast.success("Lista de portas atualizada!");
         return await eel.get_available_ports_list()();
     } catch (error) {
         toast.error("Não foi possível mover o eixo Z.");
