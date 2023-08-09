@@ -15,37 +15,27 @@
 // You should have received a copy of the GNU General Public License
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
 
-import { returnZAxisJS, setCustomMovementDistanceJS } from "api/backend-api";
+import { returnZAxisJS } from "api/backend-api";
 import ContainerComponent from "components/containerComponent/containerComponent";
 import CustomButtonArray from "components/customSubComponents/CustomButtonArray/CustomButtonArray";
 import CustomButton from "components/customSubComponents/customButton/customButton";
 import CustomListSelector from "components/customSubComponents/customListSelector/customListSelector";
-import { FunctionComponent, useEffect, useState } from "react";
-
-type allowedDistances =
-    | "1 mm"
-    | "5 mm"
-    | "10 mm"
-    | "50 mm"
-    | "100 mm"
-    | "500 mm"
-    | "1000 mm";
+import {
+    MovementDistanceContext,
+    ValidDistancesType,
+} from "contexts/MovementDistanceContext";
+import { FunctionComponent, useContext } from "react";
 
 interface CommandsComponentProps {}
 
 const CommandsComponent: FunctionComponent<CommandsComponentProps> = () => {
-    const [distanceAmount, setDistanceAmount] =
-        useState<allowedDistances>("1 mm");
+    const [distanceAmount, setDistanceAmount] = useContext(
+        MovementDistanceContext
+    );
 
     const distanceCallback = (key: string) => {
-        const keyAsNumber: number = Number(key.match(/\d+/));
-        setCustomMovementDistanceJS(keyAsNumber);
-        setDistanceAmount(key as allowedDistances);
+        setDistanceAmount(key as ValidDistancesType);
     };
-
-    useEffect(() => {
-        setCustomMovementDistanceJS(1);
-    }, []);
 
     return (
         <ContainerComponent headerText="Comandos">

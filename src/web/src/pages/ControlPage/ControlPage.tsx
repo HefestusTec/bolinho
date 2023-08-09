@@ -23,6 +23,7 @@ import CommandsComponent from "./CommandsComponent/CommandsComponent";
 import BigButton from "components/customSubComponents/BigButton/BigButton";
 import UpDownButtons from "./UpDownButtons/UpDownButtons";
 import { stopZAxisJS } from "api/backend-api";
+import { MovementDistanceProvider } from "contexts/MovementDistanceContext";
 
 interface ControlPageProps {}
 
@@ -36,7 +37,6 @@ const ControlPage: FunctionComponent<ControlPageProps> = () => {
         gridColumn: "span 6",
         gridRow: "span 10",
         order: 1,
-        backgroundColor: "red",
     };
     const readingsContainerStyle: CSSProperties = {
         gridColumn: "span 6",
@@ -49,7 +49,7 @@ const ControlPage: FunctionComponent<ControlPageProps> = () => {
         order: 3,
     };
     return (
-        <React.Fragment>
+        <MovementDistanceProvider>
             <ZoomComponent
                 style={commandsContainerStyle}
                 scaleOrigin="top left"
@@ -71,7 +71,7 @@ const ControlPage: FunctionComponent<ControlPageProps> = () => {
                     height="90%"
                 />
             </div>
-        </React.Fragment>
+        </MovementDistanceProvider>
     );
 };
 

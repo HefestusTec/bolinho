@@ -78,9 +78,11 @@ export const endExperimentRoutineJS = async (): Promise<number> => {
     }
 };
 
+/*
 export const setCustomMovementDistanceJS = async (
     newDistance: number
 ): Promise<number> => {
+    // DEPRECATED
     try {
         return await eel.set_custom_movement_distance(newDistance)();
     } catch (error) {
@@ -91,6 +93,7 @@ export const setCustomMovementDistanceJS = async (
         return 0;
     }
 };
+*/
 
 export const returnZAxisJS = async (): Promise<number> => {
     try {
