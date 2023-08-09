@@ -78,9 +78,11 @@ export const endExperimentRoutineJS = async (): Promise<number> => {
     }
 };
 
+/*
 export const setCustomMovementDistanceJS = async (
     newDistance: number
 ): Promise<number> => {
+    // DEPRECATED
     try {
         return await eel.set_custom_movement_distance(newDistance)();
     } catch (error) {
@@ -91,6 +93,7 @@ export const setCustomMovementDistanceJS = async (
         return 0;
     }
 };
+*/
 
 export const returnZAxisJS = async (): Promise<number> => {
     try {
@@ -125,6 +128,7 @@ export const getAvailablePortsListJS = async (): Promise<
     PortType[] | undefined
 > => {
     try {
+        toast.success("Lista de portas atualizada!");
         return await eel.get_available_ports_list()();
     } catch (error) {
         toast.error("Não foi possível mover o eixo Z.");

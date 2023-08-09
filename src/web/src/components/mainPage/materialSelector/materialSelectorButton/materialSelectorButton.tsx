@@ -52,7 +52,7 @@ const MaterialSelectorButton: FunctionComponent<
         getExperimentsByMaterialId(material.id).then((experimentsArray) => {
             setExperiments(experimentsArray);
         });
-    }, [dropdown]);
+    }, [dropdown, material]);
 
     const toggleDropDown = () => {
         setDropdown(!dropdown);

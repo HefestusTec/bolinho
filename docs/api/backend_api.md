@@ -154,6 +154,9 @@ ___
 ### setCustomMovementDistanceJS()
 !!! quote "setCustomMovementDistanceJS()"
 
+    !!! warning 
+        DEPRECATED
+
     This function calls the `set_custom_movement_distance(new_movement_distance)` on the backend.
 
     Sets the movement distance that the z-axis moves when the user is controlling the machine manually.

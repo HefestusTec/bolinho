@@ -1,0 +1,59 @@
+/**
+ * Copyright (C) 2023 Hefestus
+ * 
+ * This file is part of Bolinho.
+ * 
+ * Bolinho is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * Bolinho is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+@import url("../../../variables.css");
+
+.outer_div {
+    border-style: solid;
+    border-width: 3px;
+    border-radius: 20px;
+}
+
+.content_div {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.main_button {
+    position: relative;
+
+    height: 35%;
+    aspect-ratio: 1/1;
+    background-image: url(../../../resources/openMenu.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 60%;
+}
+
+.main_button_up {
+    background-image: url(../../../resources/openMenuRotated.svg);
+}
+
+.button_movement_indicator {
+    position: absolute;
+    background-color: var(--background_color);
+    border-radius: 5px;
+    height: fit-content;
+    left: 10%;
+    right: 10%;
+}

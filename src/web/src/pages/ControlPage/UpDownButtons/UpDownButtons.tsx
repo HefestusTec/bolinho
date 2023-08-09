@@ -14,15 +14,77 @@
 //
 // You should have received a copy of the GNU General Public License
 
-import { CSSProperties, FunctionComponent } from "react";
+import { CSSProperties, FunctionComponent, useContext } from "react";
+import styleModule from "./UpDownButtons.module.css";
+import CustomButton from "components/customSubComponents/customButton/customButton";
+import { MovementDistanceContext } from "contexts/MovementDistanceContext";
+import { moveZAxisMillimetersJS } from "api/backend-api";
 
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
 interface UpDownButtonsProps {
     style?: CSSProperties;
 }
 
+enum MovementDirection {
+    UP,
+    DOWN,
+}
+
 const UpDownButtons: FunctionComponent<UpDownButtonsProps> = ({ style }) => {
-    return <div style={style}>asd</div>;
+    const [distanceAmount] = useContext(MovementDistanceContext);
+
+    const moveZAxisCallback = (direction: MovementDirection) => {
+        const movementAmountAsNumber: number = Number(
+            distanceAmount.match(/\d+/)
+        );
+        moveZAxisMillimetersJS(
+            direction === MovementDirection.UP
+                ? movementAmountAsNumber
+                : -movementAmountAsNumber
+        );
+    };
+
+    return (
+        <div style={style} className={styleModule.outer_div}>
+            <div className={styleModule.content_div}>
+                <CustomButton
+                    className={[
+                        styleModule.main_button,
+                        styleModule.main_button_up,
+                    ].join(" ")}
+                    bgColor="var(--content_background_color)"
+                    clickCallBack={() => {
+                        moveZAxisCallback(MovementDirection.UP);
+                    }}
+                >
+                    <div
+                        className={styleModule.button_movement_indicator}
+                        style={{
+                            bottom: "5%",
+                        }}
+                    >
+                        +{distanceAmount}
+                    </div>
+                </CustomButton>
+                <CustomButton
+                    className={styleModule.main_button}
+                    bgColor="var(--content_background_color)"
+                    clickCallBack={() => {
+                        moveZAxisCallback(MovementDirection.DOWN);
+                    }}
+                >
+                    <div
+                        className={styleModule.button_movement_indicator}
+                        style={{
+                            top: "5%",
+                        }}
+                    >
+                        -{distanceAmount}
+                    </div>
+                </CustomButton>
+            </div>
+        </div>
+    );
 };
 
 export default UpDownButtons;

@@ -14,7 +14,7 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
-import React, { FunctionComponent, Suspense, useEffect, useState } from "react";
+import React, { FunctionComponent, useEffect, useState } from "react";
 
 import styleModule from "./experimentDescription.module.css";
 import { SelectedObjectType } from "contexts/selectedObjectListContext";
@@ -22,7 +22,7 @@ import { BodyType, defaultBodyType } from "types/DataBaseTypes";
 import { getBodyById } from "api/db-api";
 
 interface ExperimentDescriptionProps {
-    activeTriplet: SelectedObjectType | undefined;
+    activeTriplet: SelectedObjectType;
 }
 
 const ExperimentDescription: FunctionComponent<ExperimentDescriptionProps> = ({
@@ -30,14 +30,15 @@ const ExperimentDescription: FunctionComponent<ExperimentDescriptionProps> = ({
 }) => {
     const [myBody, setMyBody] = useState<BodyType>(defaultBodyType);
 
+    console.log(myBody);
+
     useEffect(() => {
-        if (activeTriplet === undefined) return;
         getBodyById(activeTriplet.experiment.body_id)
             .then((bodyResponse) => {
                 if (bodyResponse) setMyBody(bodyResponse);
             })
             .catch((err) => console.log(err));
-    }, [activeTriplet]);
+    }, [activeTriplet.experiment.body_id]);
 
     const makeMaterialText = () => {
         if (activeTriplet === undefined) return;
@@ -98,17 +99,7 @@ const ExperimentDescription: FunctionComponent<ExperimentDescriptionProps> = ({
         );
     };
 
-    return (
-        <Suspense fallback={<div>Carregando...</div>}>
-            <div className={styleModule.experiment_description}>
-                {activeTriplet ? (
-                    makeMaterialText()
-                ) : (
-                    <h1> Selecione um experimento...</h1>
-                )}
-            </div>
-        </Suspense>
-    );
+    return <div className={styleModule.content}>{makeMaterialText()}</div>;
 };
 
 export default ExperimentDescription;

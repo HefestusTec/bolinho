@@ -235,7 +235,15 @@ const ExperimentsInspector: FunctionComponent<
                         </ul>
                     </div>
                     <Suspense fallback={<div>Carregando...</div>}>
-                        <ExperimentDescription activeTriplet={activeTriplet} />
+                        <div className={styleModule.experiment_description}>
+                            {activeTriplet ? (
+                                <ExperimentDescription
+                                    activeTriplet={activeTriplet}
+                                />
+                            ) : (
+                                <p> Selecione um experimento...</p>
+                            )}
+                        </div>
                     </Suspense>
                 </div>
             </div>
