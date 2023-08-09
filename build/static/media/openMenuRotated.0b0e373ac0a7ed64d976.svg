@@ -1,0 +1,22 @@
+<!--
+ Copyright (C) 2023 Hefestus
+ 
+ This file is part of Bolinho.
+ 
+ Bolinho is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+ 
+ Bolinho is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+ 
+ You should have received a copy of the GNU General Public License
+ along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
+-->
+
+<svg width="20" height="13" viewBox="0 0 20 13" fill="none" xmlns="http://www.w3.org/2000/svg" transform="rotate(180)">
+  <path d="M2.7325 0.600585L10 7.85225L17.2675 0.600586L19.5 2.83309L10 12.3331L0.499999 2.83308L2.7325 0.600585Z" fill="#444444"/>
+</svg>
