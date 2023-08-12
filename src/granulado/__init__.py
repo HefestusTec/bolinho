@@ -20,5 +20,5 @@ from enum import Enum
 
 
 class Messages(Enum):
-    PING = "a\n"
-    GET_BUFFER = "b\n"
+    PING = "p"
+    GET_BUFFER = "b"
