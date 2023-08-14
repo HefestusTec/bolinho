@@ -31,6 +31,7 @@ export interface GlobalConfigContextProps {
     absoluteMaximumTravel: number;
     port: string;
     animateGraph: boolean;
+    zAxisLength: number; // Z axis length in millimeters
 }
 
 export type FocusKeyType =
