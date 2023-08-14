@@ -32,23 +32,47 @@ temp_ens
 # Instruction Set
 ## Bolinho -> Granulado
 
-* `0x00 [0 bytes]` -> Stops stepper motor
+* `p` -> Ping
 
-* `0x01 [4 bytes]` -> Moves stepper motor [4 bytes (signed)] mm 
+* `m[str]` -> Moves stepper motor x millimeters.
+> str is an `int` in `string` format.
 
-* `0x02 [0 bytes]` -> Returns stepper motor to top
+* `s` -> Stop
 
-* `0x03 [1 byte]` -> Continuos move stepper motor (0 up; 1 down)
+* `t` -> Move to top
+
+* `g` -> Get motor position millimeters.
+
+* `r` -> Get instantaneous reading.
+
+* `@` -> Tare load cell
+
+* `w` -> Calibrate known weight
+
+* `x[str]` -> Set known weight
+> str is an `int` with the weight in `grams` in `string` format.
+
+* `y[str]` -> Set z-axis length
+> str is an `int` with the length of the z-axis in `millimeters` in `string` format.
+
+* `j` -> Get z-axis length
+
+* `z` -> Calibrate z-axis
 
 
 ## Granulado -> Bolinho
 
-* `0x00 [0 bytes]` -> Return when stepper motor stops
+* `p` -> Ping Response
 
-* `0x01 [4 bytes]` -> Returns delta millimeters
+* `e[str]` -> Erro.
+> str is an `string` with the description of the error.
 
-* `0x02 [4 bytes]` -> Returns current position in millimeters
+* `r[str]` -> Returns current reading
+> str is an `int` in `grams` in `string` format.
 
-* `0x03 [0 bytes]` -> Return when triggered stop interrupt top
+* `g[str]` -> Returns current position in millimeters
+> str is an `int` in `string` format.
 
-* `0x04 [0 bytes]` -> Return when triggered stop interrupt bottom
+* `j[str]` -> Returns z-axis length
+> str is an `int` in `string` format.
+

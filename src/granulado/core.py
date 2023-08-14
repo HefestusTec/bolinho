@@ -19,6 +19,7 @@ import eel
 import serial
 from granulado import Messages
 
+
 class Granulado:
     hardware: serial.Serial | None = None
 
@@ -69,7 +70,7 @@ class Granulado:
 
     def sendSerialMessage(self, message: Messages):
         if self.isConnected():
-            self.hardware.write(bytes(message, "utf-8"))
+            self.hardware.write(message.value.encode("utf-8"))
 
     def process(self):
         if self.isConnected():
