@@ -29,11 +29,11 @@ interface MaterialSelectorButtonProps {
 const MaterialSelectorButton: FunctionComponent<
     MaterialSelectorButtonProps
 > = ({ material }) => {
-    const [dropdown, setDropdown] = useState(false);
+    const [isActive, setIsActive] = useState(false);
     const [experiments, setExperiments] = useState<ExperimentType[]>([]);
 
     const getButtonClassName = () => {
-        if (dropdown) {
+        if (isActive) {
             return [
                 styleModule.material_selector_button,
                 styleModule.material_selector_button_active,
@@ -43,7 +43,7 @@ const MaterialSelectorButton: FunctionComponent<
     };
 
     const getDropdownClassName = () => {
-        if (dropdown) {
+        if (isActive) {
             return [styleModule.dropdown_ul].join(" ");
         }
         return [styleModule.dropdown_ul, styleModule.dropdown_hidden].join(" ");
@@ -53,10 +53,10 @@ const MaterialSelectorButton: FunctionComponent<
         getExperimentsByMaterialId(material.id).then((experimentsArray) => {
             setExperiments(experimentsArray);
         });
-    }, [dropdown, material]);
+    }, [isActive, material]);
 
     const toggleDropDown = () => {
-        setDropdown(!dropdown);
+        setIsActive(!isActive);
     };
 
     const createButton = (experimentElem: ExperimentType) => {
@@ -86,14 +86,20 @@ const MaterialSelectorButton: FunctionComponent<
                 >
                     <div className={styleModule.material_selector_side}>
                         <div className={styleModule.add_sign}>
-                            {dropdown ? "-" : "+"}
+                            {isActive ? "-" : "+"}
                         </div>
                     </div>
                     <div className={styleModule.material_selector_text}>
                         [{material.id}] {material.name}
                     </div>
                 </button>
-                <ConfigButton />
+                <ConfigButton
+                    bgColor={
+                        isActive
+                            ? "var(--button_active_color)"
+                            : "var(--button_inactive_color)"
+                    }
+                />
             </span>
 
             <ul className={getDropdownClassName()}>

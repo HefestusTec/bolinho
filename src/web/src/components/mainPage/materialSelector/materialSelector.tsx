@@ -20,6 +20,7 @@ import styleModule from "./materialSelector.module.css";
 import MaterialSelectorButton from "./materialSelectorButton/materialSelectorButton";
 import { MaterialType } from "types/DataBaseTypes";
 import CustomButton from "components/customSubComponents/customButton/customButton";
+import CreateMaterialComponent from "./createMaterialComponent/createMaterialComponent";
 
 interface MaterialSelectorProps {
     materialList: MaterialType[];
@@ -29,7 +30,6 @@ const MaterialSelector: FunctionComponent<MaterialSelectorProps> = ({
     materialList,
 }) => {
     const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
-
     const createButton = (material: MaterialType, idx: number) => {
         return (
             <MaterialSelectorButton
@@ -42,12 +42,6 @@ const MaterialSelector: FunctionComponent<MaterialSelectorProps> = ({
     const makeButtons = () => {
         return materialList.map((element, idx) => createButton(element, idx));
     };
-
-    const dropdown = (
-        <React.Fragment>
-            asd as d<div> asdasd</div>
-        </React.Fragment>
-    );
 
     return (
         <div className={styleModule.material_selector}>
@@ -78,7 +72,7 @@ const MaterialSelector: FunctionComponent<MaterialSelectorProps> = ({
                         Novo
                     </CustomButton>
                 </div>
-                {isDropdownOpen ? dropdown : <></>}
+                {isDropdownOpen ? <CreateMaterialComponent /> : <></>}
             </div>
             <ul className={styleModule.selector_content_ul}>{makeButtons()}</ul>
         </div>
