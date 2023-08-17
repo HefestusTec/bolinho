@@ -22,9 +22,7 @@ import React, {
     FunctionComponent,
 } from "react";
 import ExperimentButton from "./experimentButton/experimentButton";
-import SelectedObjectListContext, {
-    SelectedObjectType,
-} from "contexts/selectedObjectListContext";
+
 import { ReactComponent as ColorIcon } from "../../../resources/colorSelectorIcon.svg";
 import { ReactComponent as AcceptIcon } from "../../../resources/acceptIcon.svg";
 import ColorPicker from "./colorPicker/colorPicker";
@@ -32,39 +30,47 @@ import ExperimentDescription from "./experimentDescription/experimentDescription
 import { toast } from "react-toastify";
 
 import styleModule from "./experimentsInspector.module.css";
+import {
+    SelectedExperimentType,
+    SelectedExperimentsContext,
+} from "contexts/SelectedExperimentsContext";
+import { ExperimentType } from "types/DataBaseTypes";
 
 interface ExperimentsInspectorProps {}
 
 const ExperimentsInspector: FunctionComponent<
     ExperimentsInspectorProps
 > = () => {
-    const [objectList, setObjectList] = useContext(SelectedObjectListContext);
-    const [activeTriplet, setActiveTriplet] = useState<
-        SelectedObjectType | undefined
-    >(undefined);
+    const [selectedExperiments, setSelectedExperiments] = useContext(
+        SelectedExperimentsContext
+    );
+
+    const [activeExperimentId, setActiveExperimentId] = useState<number>(-1);
     const [colorPickerIsActive, setColorPickerIsActive] = useState(false);
 
-    const createButton = (object: SelectedObjectType, idx: number) => {
+    const createButton = (object: SelectedExperimentType, idx: number) => {
         return (
             <ExperimentButton
-                object={object}
-                activeTriplet={activeTriplet}
-                setActiveTriplet={setActiveTriplet}
-                key={object.material.name.toString() + idx}
+                experiment={object}
+                activeExperimentId={activeExperimentId}
+                setActiveExperimentId={setActiveExperimentId}
+                key={object.experiment.id.toString() + idx}
             />
         );
     };
 
     const makeButtons = () => {
-        return objectList.map((element, idx) => createButton(element, idx));
+        return selectedExperiments.map((element, idx) =>
+            createButton(element, idx)
+        );
     };
 
     const makeHeaderText = () => {
-        if (activeTriplet === undefined) return;
+        if (activeExperimentId < 0) return;
 
         try {
-            const name = activeTriplet.material.name;
-            const batch = activeTriplet.material.batch;
+            const name = "activeTriplet.material.name";
+            const batch = "activeTriplet.material.batch";
             return `[${batch}] ${name}`;
         } catch (error) {
             return "Selecione um experimento";
@@ -73,9 +79,9 @@ const ExperimentsInspector: FunctionComponent<
 
     const activateNextExperiment = () => {
         try {
-            objectList.forEach((triplet) => {
-                if (triplet !== activeTriplet) {
-                    setActiveTriplet(triplet);
+            selectedExperiments.forEach((validExperiment) => {
+                if (validExperiment.experiment.id !== activeExperimentId) {
+                    setActiveExperimentId(validExperiment.experiment.id);
                     return;
                 }
             });
@@ -83,25 +89,25 @@ const ExperimentsInspector: FunctionComponent<
     };
 
     const removeActiveExperiment = () => {
-        if (activeTriplet === undefined) return;
+        if (activeExperimentId < 0) return;
         try {
-            const newCartData = objectList.filter(
-                (d) => d.experiment.id !== activeTriplet.experiment.id
+            const newCartData = selectedExperiments.filter(
+                (d) => d.experiment.id !== activeExperimentId
             );
 
-            setObjectList(newCartData);
+            setSelectedExperiments(newCartData);
             activateNextExperiment();
         } catch (error) {}
     };
 
     useEffect(() => {
-        if (objectList.length === 0) {
-            setActiveTriplet(undefined);
+        if (selectedExperiments.length === 0) {
+            setSelectedExperiments([]);
             return;
-        } else if (objectList.length === 1) {
-            setActiveTriplet(objectList[0]);
+        } else if (selectedExperiments.length === 1) {
+            setSelectedExperiments(selectedExperiments[0]);
         }
-    }, [objectList]);
+    }, [selectedExperiments]);
 
     const getHeaderColorClassName = () => {
         if (colorPickerIsActive) {

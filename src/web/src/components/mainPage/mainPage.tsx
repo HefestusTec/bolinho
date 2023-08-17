@@ -27,21 +27,13 @@ import { startExperimentRoutineJS } from "../../api/backend-api";
 
 //import GlobalConfigContext from "../../contexts/globalConfigContext";
 import BigButton from "components/customSubComponents/BigButton/BigButton";
-import SelectedObjectListContext, {
-    SelectedObjectType,
-} from "contexts/selectedObjectListContext";
+import SelectedExperimentsProvider from "contexts/SelectedExperimentsContext";
 
 interface MainPageProps {}
 
 const MainPage: FunctionComponent<MainPageProps> = () => {
-    const [selectedObjectList, setSelectedObjectList] = useState<
-        SelectedObjectType[]
-    >([]);
-
     return (
-        <SelectedObjectListContext.Provider
-            value={[selectedObjectList, setSelectedObjectList]}
-        >
+        <SelectedExperimentsProvider>
             <div className={styleModule.content}>
                 <ZoomComponent
                     className={styleModule.graph_component}
@@ -77,7 +69,7 @@ const MainPage: FunctionComponent<MainPageProps> = () => {
                     />
                 </div>
             </div>
-        </SelectedObjectListContext.Provider>
+        </SelectedExperimentsProvider>
     );
 };
 

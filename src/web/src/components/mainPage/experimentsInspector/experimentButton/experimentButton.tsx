@@ -23,31 +23,31 @@ import React, {
     SetStateAction,
 } from "react";
 import styleModule from "./experimentButton.module.css";
-import { SelectedObjectType } from "contexts/selectedObjectListContext";
+import { SelectedExperimentType } from "contexts/SelectedExperimentsContext";
 
 interface ExperimentButtonProps {
-    object: SelectedObjectType;
-    activeTriplet: SelectedObjectType | undefined;
-    setActiveTriplet: Dispatch<SetStateAction<SelectedObjectType | undefined>>;
+    experiment: SelectedExperimentType;
+    activeExperimentId: number;
+    setActiveExperimentId: Dispatch<SetStateAction<number>>;
 }
 
 const ExperimentButton: FunctionComponent<ExperimentButtonProps> = ({
-    object,
-    activeTriplet,
-    setActiveTriplet,
+    experiment,
+    activeExperimentId,
+    setActiveExperimentId,
 }) => {
     const [isActive, setIsActive] = useState(false);
 
     useEffect(() => {
         try {
-            if (activeTriplet?.experiment.id === object.experiment.id)
+            if (activeExperimentId === experiment.experiment.id)
                 setIsActive(true);
             else setIsActive(false);
         } catch (error) {}
-    }, [activeTriplet, object]);
+    }, [activeExperimentId, experiment]);
 
     const removeSelf = () => {
-        setActiveTriplet(object);
+        setActiveExperimentId(experiment.experiment.id);
     };
 
     const getClassName = () => {
@@ -61,7 +61,7 @@ const ExperimentButton: FunctionComponent<ExperimentButtonProps> = ({
 
     const getStyleColor = () => {
         try {
-            return object.color;
+            return experiment.color;
         } catch (error) {
             return "FFFFFF";
         }
@@ -76,11 +76,11 @@ const ExperimentButton: FunctionComponent<ExperimentButtonProps> = ({
             >
                 <div className={styleModule.experiment_text}>
                     <div className={styleModule.experiment_material_text}>
-                        {object.material.name}
+                        {/* {experiment.material.name} */}
                     </div>
                     <div className={styleModule.experiment_experiment_text}>
-                        Exp{object.experiment.id} [{object.experiment.date_time}
-                        ]
+                        Exp{experiment.experiment.id} [
+                        {experiment.experiment.date_time}]
                     </div>
                 </div>
             </button>

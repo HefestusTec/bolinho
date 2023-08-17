@@ -66,7 +66,6 @@ const MaterialSelectorButton: FunctionComponent<
         return (
             <DropdownButton
                 experiment={experimentElem}
-                material={material}
                 key={"EX" + experimentElem.id.toString()}
             />
         );

@@ -16,51 +16,41 @@
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
 import React, { useContext, FunctionComponent } from "react";
 import styleModule from "./dropdownButton.module.css";
-import SelectedObjectListContext, {
-    SelectedObjectType,
-} from "contexts/selectedObjectListContext";
 import { getRandomColor } from "../../../../../helpers";
 import { toast } from "react-toastify";
 import { getLoadOverTimeByExperimentId } from "api/db-api";
 import { ExperimentType, MaterialType } from "types/DataBaseTypes";
 import ConfigButton from "../configButton/configButton";
+import {
+    SelectedExperimentType,
+    SelectedExperimentsContext,
+} from "contexts/SelectedExperimentsContext";
 
 interface DropdownButtonProps {
     experiment: ExperimentType;
-    material: MaterialType;
 }
 
 const DropdownButton: FunctionComponent<DropdownButtonProps> = ({
     experiment,
-    material,
 }) => {
-    const [objectList, setObjectList] = useContext(SelectedObjectListContext);
-
+    const [selectedExperiments, setSelectedExperiments] = useContext(
+        SelectedExperimentsContext
+    );
     const buttonClicked = () => {
         if (experiment === undefined) return;
 
-        for (let i = 0; i < objectList.length; i++) {
-            if (objectList[i].experiment.id === experiment.id) return;
+        for (let i = 0; i < selectedExperiments.length; i++) {
+            if (selectedExperiments[i].experiment.id === experiment.id) return;
         }
+        const newSelectedObj: SelectedExperimentType = {
+            experiment: experiment,
+            color: getRandomColor(),
+        };
 
-        getLoadOverTimeByExperimentId(experiment.id)
-            .then((dataPointArrayResponse) => {
-                if (dataPointArrayResponse === undefined) return;
-
-                const newSelectedObj: SelectedObjectType = {
-                    material: material,
-                    experiment: experiment,
-                    data_array: dataPointArrayResponse,
-                    color: getRandomColor(),
-                };
-                setObjectList((experimentList) => [
-                    ...experimentList,
-                    newSelectedObj,
-                ]);
-            })
-            .catch((error) => {
-                toast.error(error);
-            });
+        setSelectedExperiments((oldExperiments) => [
+            ...oldExperiments,
+            newSelectedObj,
+        ]);
     };
 
     return (
