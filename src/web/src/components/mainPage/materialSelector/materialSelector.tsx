@@ -14,22 +14,35 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
-import React, { FunctionComponent, useState } from "react";
+import React, { FunctionComponent, useEffect, useMemo, useState } from "react";
 
 import styleModule from "./materialSelector.module.css";
 import MaterialSelectorButton from "./materialSelectorButton/materialSelectorButton";
 import { MaterialType } from "types/DataBaseTypes";
 import CustomButton from "components/customSubComponents/customButton/customButton";
 import CreateMaterialComponent from "./createMaterialComponent/createMaterialComponent";
+import { getMaterialsDB } from "api/db-api";
 
-interface MaterialSelectorProps {
-    materialList: MaterialType[];
-}
+interface MaterialSelectorProps {}
 
-const MaterialSelector: FunctionComponent<MaterialSelectorProps> = ({
-    materialList,
-}) => {
+const MaterialSelector: FunctionComponent<MaterialSelectorProps> = () => {
     const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
+    const [materialList, setMaterialList] = useState<MaterialType[]>([]);
+
+    const [searchQuery, setSearchQuery] = useState<string>("");
+
+    const filteredItems = useMemo(() => {
+        return materialList.filter((item) => {
+            return item.name.toLowerCase().includes(searchQuery.toLowerCase());
+        });
+    }, [materialList, searchQuery]);
+
+    useEffect(() => {
+        getMaterialsDB().then((response) => {
+            setMaterialList(response);
+        });
+    }, []);
+
     const createButton = (material: MaterialType, idx: number) => {
         return (
             <MaterialSelectorButton
@@ -40,7 +53,7 @@ const MaterialSelector: FunctionComponent<MaterialSelectorProps> = ({
     };
 
     const makeButtons = () => {
-        return materialList.map((element, idx) => createButton(element, idx));
+        return filteredItems.map((element, idx) => createButton(element, idx));
     };
 
     return (
@@ -55,7 +68,10 @@ const MaterialSelector: FunctionComponent<MaterialSelectorProps> = ({
                             type="text"
                             className={styleModule.selector_header_search}
                             placeholder="Buscar"
-                        ></input>
+                            onChange={(e) => {
+                                setSearchQuery(e.target.value);
+                            }}
+                        />
                         <button
                             className={
                                 styleModule.selector_header_search_button

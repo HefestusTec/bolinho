@@ -16,7 +16,6 @@
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
 
 import ContainerComponent from "components/containerComponent/containerComponent";
-import BigButton from "components/customSubComponents/BigButton/BigButton";
 import CustomButtonArray from "components/customSubComponents/CustomButtonArray/CustomButtonArray";
 import CustomTextInput from "components/customSubComponents/CustomTextInput/CustomTextInput";
 import CustomButton from "components/customSubComponents/customButton/customButton";
@@ -43,7 +42,7 @@ const CreateMaterialComponent: FunctionComponent<
                     suffix=""
                     alert={false}
                     alertColor="var(--positive_button_color)"
-                />{" "}
+                />
                 <CustomTextInput
                     title="Nome"
                     setValue={setMaxForce}

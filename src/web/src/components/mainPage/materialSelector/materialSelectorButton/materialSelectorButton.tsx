@@ -14,13 +14,21 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
-import { FunctionComponent, useEffect, useState } from "react";
+import {
+    FunctionComponent,
+    useEffect,
+    useRef,
+    useState,
+    useContext,
+} from "react";
 
 import styleModule from "./materialSelectorButton.module.css";
 import DropdownButton from "./dropdownButton/dropdownButton";
 import { ExperimentType, MaterialType } from "types/DataBaseTypes";
 import { getExperimentsByMaterialId } from "api/db-api";
 import ConfigButton from "./configButton/configButton";
+import { CSSTransition } from "react-transition-group";
+import GlobalConfigContext from "contexts/globalConfigContext";
 
 interface MaterialSelectorButtonProps {
     material: MaterialType;
@@ -31,6 +39,8 @@ const MaterialSelectorButton: FunctionComponent<
 > = ({ material }) => {
     const [isActive, setIsActive] = useState(false);
     const [experiments, setExperiments] = useState<ExperimentType[]>([]);
+    const nodeRef = useRef(null);
+    const [globalConfig] = useContext(GlobalConfigContext);
 
     const getButtonClassName = () => {
         if (isActive) {
@@ -40,13 +50,6 @@ const MaterialSelectorButton: FunctionComponent<
             ].join(" ");
         }
         return [styleModule.material_selector_button].join(" ");
-    };
-
-    const getDropdownClassName = () => {
-        if (isActive) {
-            return [styleModule.dropdown_ul].join(" ");
-        }
-        return [styleModule.dropdown_ul, styleModule.dropdown_hidden].join(" ");
     };
 
     useEffect(() => {
@@ -71,6 +74,20 @@ const MaterialSelectorButton: FunctionComponent<
 
     const makeExperimentButtons = () => {
         return experiments.map((element) => createButton(element));
+    };
+
+    const getTimeout = () => {
+        switch (globalConfig.animationSpeed) {
+            case "Desligado":
+                return 0;
+            case "Normal":
+                return 350;
+            case "Rápido":
+                return 150;
+
+            default:
+                return 350;
+        }
     };
 
     return (
@@ -101,10 +118,17 @@ const MaterialSelectorButton: FunctionComponent<
                     }
                 />
             </span>
-
-            <ul className={getDropdownClassName()}>
-                {makeExperimentButtons()}
-            </ul>
+            <CSSTransition
+                nodeRef={nodeRef}
+                timeout={getTimeout()}
+                classNames={"slide-in-animated"}
+                in={isActive}
+                unmountOnExit
+            >
+                <ul className={styleModule.dropdown_ul} ref={nodeRef}>
+                    {makeExperimentButtons()}
+                </ul>
+            </CSSTransition>
         </li>
     );
 };

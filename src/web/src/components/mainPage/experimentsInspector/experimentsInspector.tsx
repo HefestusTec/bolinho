@@ -51,7 +51,7 @@ const ExperimentsInspector: FunctionComponent<
                 activeTriplet={activeTriplet}
                 setActiveTriplet={setActiveTriplet}
                 key={object.material.name.toString() + idx}
-            ></ExperimentButton>
+            />
         );
     };
 

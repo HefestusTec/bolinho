@@ -30,13 +30,10 @@ import BigButton from "components/customSubComponents/BigButton/BigButton";
 import SelectedObjectListContext, {
     SelectedObjectType,
 } from "contexts/selectedObjectListContext";
-import { MaterialType } from "types/DataBaseTypes";
 
-interface MainPageProps {
-    materialList: MaterialType[];
-}
+interface MainPageProps {}
 
-const MainPage: FunctionComponent<MainPageProps> = ({ materialList }) => {
+const MainPage: FunctionComponent<MainPageProps> = () => {
     const [selectedObjectList, setSelectedObjectList] = useState<
         SelectedObjectType[]
     >([]);
@@ -56,7 +53,7 @@ const MainPage: FunctionComponent<MainPageProps> = ({ materialList }) => {
                     className={styleModule.material_selector}
                     scaleOrigin="top left"
                 >
-                    <MaterialSelector materialList={materialList} />
+                    <MaterialSelector />
                 </ZoomComponent>
                 <ZoomComponent
                     className={styleModule.experiments_inspector}

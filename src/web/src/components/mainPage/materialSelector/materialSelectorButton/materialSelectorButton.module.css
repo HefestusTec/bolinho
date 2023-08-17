@@ -94,44 +94,9 @@
 .dropdown_ul {
     margin-top: 5px;
     list-style-type: none;
-    display: flex;
     height: fit-content;
     flex-direction: column;
     padding-left: 2vw;
-    animation: slide-in;
-    animation-duration: var(--animation_slow);
-    animation-timing-function: cubic-bezier(0.47, 1.64, 0.41, 0.7);
-}
-
-.dropdown_hidden {
-    animation: slide-out;
-    animation-duration: var(--animation_slow);
-    animation-timing-function: ease-in;
-    animation-fill-mode: forwards;
-}
-
-@keyframes slide-in {
-    from {
-        transform: translateX(-100%);
-    }
-    to {
-        transform: translateX(0);
-    }
-}
-
-@keyframes slide-out {
-    0% {
-        transform: translateX(0);
-    }
-    99% {
-        transform: translateX(-100%);
-    }
-    100% {
-        height: 0;
-
-        display: none;
-        z-index: -5;
-    }
 }
 
 .material_button_span {
