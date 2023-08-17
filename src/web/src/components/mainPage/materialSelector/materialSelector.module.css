@@ -31,39 +31,43 @@
 
 .selector_header {
     background: var(--primary_color);
-    height: clamp(50px, 12vh, 150px);
-    position: relative;
     align-items: center;
     box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
-    padding-top: 1.5vh;
+    padding-top: 10px;
+    padding-bottom: 10px;
 }
 
 .selector_header_text {
     width: 100%;
-    height: 45%;
     color: var(--font_color_inverted);
     font-family: "Roboto";
     font-style: normal;
     font-weight: 700;
     font-size: var(--font_m);
     text-align: center;
-    white-space: nowrap;
-    overflow: hidden;
+    display: flex;
+    justify-content: space-around;
     text-overflow: ellipsis;
 }
 
 .selector_header_bottom {
-    height: 35%;
     display: flex;
-    float: right;
     width: 100%;
+    margin-top: 10px;
+    justify-content: space-around;
+}
+
+.selector_header_search_bar {
+    margin-left: 10px;
+    display: flex;
+    width: 60%;
+    height: 30px;
 }
 
 .selector_header_search {
     background-color: var(--primary_color_shader);
-    width: 60%;
-    margin-left: 1.6vw;
-    padding-left: 1vw;
+    padding-left: 5px;
+    height: 100%;
     font-family: "Roboto";
     font-size: var(--font_m);
     border: none;
@@ -75,11 +79,12 @@
     text-overflow: ellipsis;
 }
 .selector_header_search_button {
-    width: clamp(25px, 3vw, 40px);
+    width: 50px;
+    height: 100%;
     cursor: pointer;
-
     margin-top: 1px;
     border-radius: 0px 10px 10px 0px;
+    background-size: auto;
     background-color: var(--secondary_color);
     background-image: url(../../../resources/searchIcon.svg);
 
@@ -104,14 +109,17 @@
 }
 
 .selector_header_filter {
-    width: 25%;
+    width: 30px;
+    height: 30px;
     background: none;
     display: flex;
     justify-content: center;
 }
 .selector_header_filter_button {
-    width: clamp(25px, 5vh, 60px);
     background: none;
+    width: 30px;
+    height: 30px;
+
     background-image: url(../../../resources/filterIcon.svg);
     /*filter: invert(var(--invert_icon));*/
     cursor: pointer;
@@ -126,6 +134,11 @@
     .selector_header_filter_button:hover {
         transform: translateY(-0.5vh);
     }
+}
+.expand_button {
+    margin-right: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 .selector_header_filter_button:active {
     transform: translateY(0vh);

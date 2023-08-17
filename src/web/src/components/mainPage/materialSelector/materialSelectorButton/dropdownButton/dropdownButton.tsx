@@ -23,6 +23,7 @@ import { getRandomColor } from "../../../../../helpers";
 import { toast } from "react-toastify";
 import { getLoadOverTimeByExperimentId } from "api/db-api";
 import { ExperimentType, MaterialType } from "types/DataBaseTypes";
+import ConfigButton from "../configButton/configButton";
 
 interface DropdownButtonProps {
     experiment: ExperimentType;
@@ -63,7 +64,7 @@ const DropdownButton: FunctionComponent<DropdownButtonProps> = ({
     };
 
     return (
-        <li key={experiment.id}>
+        <li key={experiment.id} className={styleModule.dropdown_button_li}>
             <button
                 className={styleModule.dropdown_button}
                 aria-label="Material Selector"
@@ -76,6 +77,7 @@ const DropdownButton: FunctionComponent<DropdownButtonProps> = ({
                     Experimento {experiment.id} [{experiment.date_time}]
                 </div>
             </button>
+            <ConfigButton bgColor="var(--content_background_color)" />
         </li>
     );
 };

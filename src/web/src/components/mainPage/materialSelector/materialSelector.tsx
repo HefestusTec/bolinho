@@ -14,11 +14,12 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
-import React, { FunctionComponent } from "react";
+import React, { FunctionComponent, useState } from "react";
 
 import styleModule from "./materialSelector.module.css";
 import MaterialSelectorButton from "./materialSelectorButton/materialSelectorButton";
 import { MaterialType } from "types/DataBaseTypes";
+import CustomButton from "components/customSubComponents/customButton/customButton";
 
 interface MaterialSelectorProps {
     materialList: MaterialType[];
@@ -27,7 +28,8 @@ interface MaterialSelectorProps {
 const MaterialSelector: FunctionComponent<MaterialSelectorProps> = ({
     materialList,
 }) => {
-    //const [graphData, setGraphData] = useState(makeConstData());
+    const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
+
     const createButton = (material: MaterialType, idx: number) => {
         return (
             <MaterialSelectorButton
@@ -41,31 +43,42 @@ const MaterialSelector: FunctionComponent<MaterialSelectorProps> = ({
         return materialList.map((element, idx) => createButton(element, idx));
     };
 
+    const dropdown = (
+        <React.Fragment>
+            asd as d<div> asdasd</div>
+        </React.Fragment>
+    );
+
     return (
         <div className={styleModule.material_selector}>
             <div className={styleModule.selector_header}>
                 <div className={styleModule.selector_header_text}>
-                    Meus Experimento
+                    Meus Experimentos
                 </div>
                 <div className={styleModule.selector_header_bottom}>
-                    <input
-                        type="text"
-                        className={styleModule.selector_header_search}
-                        placeholder="Buscar"
-                    ></input>
-                    <button
-                        className={styleModule.selector_header_search_button}
-                        aria-label="Search Button"
-                    ></button>
-                    <div className={styleModule.selector_header_filter}>
+                    <span className={styleModule.selector_header_search_bar}>
+                        <input
+                            type="text"
+                            className={styleModule.selector_header_search}
+                            placeholder="Buscar"
+                        ></input>
                         <button
                             className={
-                                styleModule.selector_header_filter_button
+                                styleModule.selector_header_search_button
                             }
-                            aria-label="Filter Button"
+                            aria-label="Search Button"
                         ></button>
-                    </div>
+                    </span>
+                    <CustomButton
+                        clickCallBack={() => {
+                            setIsDropdownOpen(!isDropdownOpen);
+                        }}
+                        className={styleModule.expand_button}
+                    >
+                        Novo
+                    </CustomButton>
                 </div>
+                {isDropdownOpen ? dropdown : <></>}
             </div>
             <ul className={styleModule.selector_content_ul}>{makeButtons()}</ul>
         </div>

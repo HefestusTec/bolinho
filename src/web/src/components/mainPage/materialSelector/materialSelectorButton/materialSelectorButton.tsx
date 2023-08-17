@@ -20,6 +20,7 @@ import styleModule from "./materialSelectorButton.module.css";
 import DropdownButton from "./dropdownButton/dropdownButton";
 import { ExperimentType, MaterialType } from "types/DataBaseTypes";
 import { getExperimentsByMaterialId } from "api/db-api";
+import ConfigButton from "./configButton/configButton";
 
 interface MaterialSelectorButtonProps {
     material: MaterialType;
@@ -77,20 +78,24 @@ const MaterialSelectorButton: FunctionComponent<
             key={"mat_idx_" + material.id}
             className={styleModule.material_selector_li}
         >
-            <button
-                className={getButtonClassName()}
-                aria-label="Material Selector"
-                onClick={toggleDropDown}
-            >
-                <div className={styleModule.material_selector_side}>
-                    <div className={styleModule.add_sign}>
-                        {dropdown ? "-" : "+"}
+            <span className={styleModule.material_button_span}>
+                <button
+                    className={getButtonClassName()}
+                    aria-label="Material Selector"
+                    onClick={toggleDropDown}
+                >
+                    <div className={styleModule.material_selector_side}>
+                        <div className={styleModule.add_sign}>
+                            {dropdown ? "-" : "+"}
+                        </div>
                     </div>
-                </div>
-                <div className={styleModule.material_selector_text}>
-                    [{material.id}] {material.name}
-                </div>
-            </button>
+                    <div className={styleModule.material_selector_text}>
+                        [{material.id}] {material.name}
+                    </div>
+                </button>
+                <ConfigButton />
+            </span>
+
             <ul className={getDropdownClassName()}>
                 {makeExperimentButtons()}
             </ul>

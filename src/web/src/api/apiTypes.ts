@@ -34,6 +34,25 @@ export interface GlobalConfigContextProps {
     zAxisLength: number; // Z axis length in millimeters
 }
 
+export const globalConfigDefault: GlobalConfigContextProps = {
+    configVersion: 1, // Version number of the config file
+    theme: "Claro", // Claro | Escuro | Meia Noite
+    animationSpeed: "Normal", // Rápido | Normal | Desligado
+    fontSize: "100%", // 50% | 75% | 100% | 125% | 150% | 200%
+    enableZoom: true, // Should zooming be enable?
+    zoomDelay: 500, // How long [ms] should I press to zoom
+    backgroundBlur: false, // Should it blur when zooming?
+    shadows: true, // Should it render shadows
+    forceVirtualKeyboard: false, // Should it use the virtual keyboard as input
+    enableHover: "enable", // enable | disable
+    absoluteMaximumForce: 10000, // Global limit in Newtons
+    absoluteMaximumTime: 6000, // Global limit in seconds
+    absoluteMaximumTravel: 1000, // Global limit in mm
+    port: "",
+    animateGraph: true,
+    zAxisLength: 1000,
+};
+
 export type FocusKeyType =
     | "connection-component"
     | "material-inspector"
