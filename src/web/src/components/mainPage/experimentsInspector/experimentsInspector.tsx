@@ -34,7 +34,6 @@ import {
     SelectedExperimentType,
     SelectedExperimentsContext,
 } from "contexts/SelectedExperimentsContext";
-import { ExperimentType } from "types/DataBaseTypes";
 
 interface ExperimentsInspectorProps {}
 
@@ -101,12 +100,7 @@ const ExperimentsInspector: FunctionComponent<
     };
 
     useEffect(() => {
-        if (selectedExperiments.length === 0) {
-            setSelectedExperiments([]);
-            return;
-        } else if (selectedExperiments.length === 1) {
-            setSelectedExperiments(selectedExperiments[0]);
-        }
+        setActiveExperimentId(selectedExperiments.length - 1);
     }, [selectedExperiments]);
 
     const getHeaderColorClassName = () => {
@@ -120,7 +114,8 @@ const ExperimentsInspector: FunctionComponent<
     };
 
     const getStyleColor = () => {
-        if (activeTriplet) return activeTriplet.color;
+        if (activeExperimentId >= 0)
+            return selectedExperiments[activeExperimentId].color;
 
         return "var(--primary_color)";
     };
@@ -149,16 +144,16 @@ const ExperimentsInspector: FunctionComponent<
     };
 
     const updateDataColor = () => {
-        if (objectList === undefined || activeTriplet === undefined) return;
+        if (selectedExperiments === undefined || activeExperimentId < 0) return;
         try {
-            let objectListCopy = [...objectList];
+            let objectListCopy = [...selectedExperiments];
             const idx = objectListCopy.findIndex(
-                (element) =>
-                    element.experiment.id === activeTriplet.experiment.id
+                (element) => element.experiment.id === activeExperimentId
             );
 
-            objectListCopy[idx].color = activeTriplet.color;
-            setObjectList(objectListCopy);
+            objectListCopy[idx].color =
+                selectedExperiments[activeExperimentId].color;
+            setSelectedExperiments(objectListCopy);
         } catch (error) {
             toast.error("Não foi possível alterar a cor da plotagem");
         }
@@ -180,8 +175,8 @@ const ExperimentsInspector: FunctionComponent<
     };
 
     const makeRemoveButton = () => {
-        if (activeTriplet === undefined) return;
-        if (Object.keys(activeTriplet).length)
+        if (activeExperimentId < 0) return;
+        if (Object.keys(selectedExperiments).length)
             return (
                 <button
                     className={styleModule.delete_material_button}
@@ -191,8 +186,8 @@ const ExperimentsInspector: FunctionComponent<
     };
 
     const makeHeaderColor = () => {
-        if (activeTriplet === undefined) return;
-        if (Object.keys(activeTriplet).length)
+        if (activeExperimentId < 0) return;
+        if (Object.keys(selectedExperiments).length)
             return (
                 <div
                     className={getHeaderColorClassName()}
@@ -209,8 +204,7 @@ const ExperimentsInspector: FunctionComponent<
         if (colorPickerIsActive)
             return (
                 <ColorPicker
-                    activeTriplet={activeTriplet}
-                    setActiveTriplet={setActiveTriplet}
+                    activeExperimentId={activeExperimentId}
                     colorPickerIsActive={colorPickerIsActive}
                     setColorPickerIsActive={setColorPickerIsActive}
                     deactivateColorPicker={deactivateColorPicker}
@@ -242,9 +236,9 @@ const ExperimentsInspector: FunctionComponent<
                     </div>
                     <Suspense fallback={<div>Carregando...</div>}>
                         <div className={styleModule.experiment_description}>
-                            {activeTriplet ? (
+                            {activeExperimentId >= 0 ? (
                                 <ExperimentDescription
-                                    activeTriplet={activeTriplet}
+                                    activeExperimentIdx={activeExperimentId}
                                 />
                             ) : (
                                 <p> Selecione um experimento...</p>

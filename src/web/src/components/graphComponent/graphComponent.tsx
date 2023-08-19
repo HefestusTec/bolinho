@@ -15,15 +15,22 @@
 // You should have received a copy of the GNU General Public License
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
 
-import React, { useState, useEffect, FunctionComponent } from "react";
+import React, {
+    useState,
+    useEffect,
+    FunctionComponent,
+    useContext,
+} from "react";
 import styleModule from "./graphComponent.module.css";
 
 import "rc-slider/assets/index.css";
 import ChartComponent from "./chartComponent/chartComponent";
 import SliderComponent from "./sliderComponent/sliderComponent";
 import { ExperimentPlotData } from "../../classes";
-import { SelectedObjectType } from "contexts/selectedObjectListContext";
 import { DataPointType } from "types/DataPointTypes";
+import { SelectedExperimentsContext } from "contexts/SelectedExperimentsContext";
+import { getLoadOverTimeByExperimentId } from "api/db-api";
+import { toast } from "react-toastify";
 
 type maxValueType = {
     plotDataArray: ExperimentPlotData[];
@@ -46,13 +53,10 @@ const getMaxData = (experimentArray: ExperimentPlotData[]): DataPointType => {
     return { x: maxX, y: maxY };
 };
 
-interface GraphComponentProps {
-    experimentList: SelectedObjectType[];
-}
+interface GraphComponentProps {}
 
-const GraphComponent: FunctionComponent<GraphComponentProps> = ({
-    experimentList,
-}) => {
+const GraphComponent: FunctionComponent<GraphComponentProps> = () => {
+    const [selectedExperiments] = useContext(SelectedExperimentsContext);
     const [experimentArray, setExperimentArray] = useState(defaultMaxValues);
 
     const [leftHandlePos, setLeftHandlePos] = useState(0);
@@ -60,31 +64,37 @@ const GraphComponent: FunctionComponent<GraphComponentProps> = ({
 
     const [showSideBar, setShowSideBar] = useState(true);
 
+    console.log(experimentArray);
+
     useEffect(() => {
-        const generateExperimentPlotData = () => {
-            let experimentPlotArray: ExperimentPlotData[] = [];
-            experimentList.forEach((element) => {
-                try {
-                    experimentPlotArray.push(
-                        new ExperimentPlotData(
-                            element.material.name,
-                            element.data_array,
-                            element.color
-                        )
-                    );
-                } catch (error) {
-                    console.error(error);
-                }
+        const generateExperimentPlotData = async () => {
+            let returnPlotDataArray: ExperimentPlotData[] = [];
+            selectedExperiments.forEach(async (experiment) => {
+                const data: DataPointType[] =
+                    await getLoadOverTimeByExperimentId(
+                        experiment.experiment.id
+                    ).catch((err) => {
+                        toast.error(err);
+                        return [];
+                    });
+                returnPlotDataArray.push(
+                    new ExperimentPlotData(
+                        experiment.experiment.name,
+                        data,
+                        experiment.color
+                    )
+                );
             });
-            return experimentPlotArray;
+            return returnPlotDataArray;
         };
-        const plotDataArray = generateExperimentPlotData();
-        const maxVals = getMaxData(plotDataArray);
-        setExperimentArray({
-            plotDataArray: plotDataArray,
-            maxValues: maxVals,
+        generateExperimentPlotData().then((generatedPlotData) => {
+            const maxVals = getMaxData(generatedPlotData);
+            setExperimentArray({
+                plotDataArray: generatedPlotData,
+                maxValues: maxVals,
+            });
         });
-    }, [experimentList]);
+    }, [selectedExperiments]);
 
     const getOpenSideBarButtonClassName = () => {
         return showSideBar
@@ -130,14 +140,14 @@ const GraphComponent: FunctionComponent<GraphComponentProps> = ({
                         }}
                         experimentPlotDataArray={experimentArray.plotDataArray}
                         allMaxDataValues={experimentArray.maxValues}
-                    ></ChartComponent>
+                    />
                 </div>
                 <div className={styleModule.side_bar_button_div}>
                     <button
                         className={getOpenSideBarButtonClassName()}
                         onClick={toggleSideBar}
                         aria-label="Toggle Graph SideBar"
-                    ></button>
+                    />
                 </div>
                 <div className={styleModule.bottom_part}>
                     <SliderComponent

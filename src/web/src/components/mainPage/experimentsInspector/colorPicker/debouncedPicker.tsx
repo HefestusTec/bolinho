@@ -14,16 +14,33 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
-import React from "react";
-import useDebounce from "use-debouncy";
+import { Dispatch, FunctionComponent, SetStateAction } from "react";
 import { HexColorPicker } from "react-colorful";
+import { useDebouncedCallback } from "use-debounce";
 
-export const DebouncedPicker = ({ currentColor, colorChanged, onChoose }) => {
-	useDebounce(() => onChoose(currentColor), 200, [currentColor]);
+interface DebouncedPickerProps {
+    color: string;
+    setColor: Dispatch<SetStateAction<string>>;
+}
 
-	const colorChangedLocal = (newColor) => {
-		colorChanged(newColor);
-	};
+const DebouncedPicker: FunctionComponent<DebouncedPickerProps> = ({
+    setColor,
+    color,
+}) => {
+    const debounced = useDebouncedCallback(
+        // function
+        (value) => {
+            setColor(value);
+        },
+        // delay in ms
+        200
+    );
 
-	return <HexColorPicker color={currentColor} onChange={colorChangedLocal} />;
+    const colorChangedLocal = (newColor: string) => {
+        debounced(newColor);
+    };
+
+    return <HexColorPicker color={color} onChange={colorChangedLocal} />;
 };
+
+export default DebouncedPicker;

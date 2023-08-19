@@ -46,7 +46,8 @@ const ExperimentButton: FunctionComponent<ExperimentButtonProps> = ({
         } catch (error) {}
     }, [activeExperimentId, experiment]);
 
-    const removeSelf = () => {
+    const handleClick = () => {
+        console.log(experiment);
         setActiveExperimentId(experiment.experiment.id);
     };
 
@@ -71,15 +72,15 @@ const ExperimentButton: FunctionComponent<ExperimentButtonProps> = ({
         <li>
             <button
                 className={getClassName()}
-                onClick={removeSelf}
+                onClick={handleClick}
                 style={{ "--experiment_color": getStyleColor() } as any}
             >
                 <div className={styleModule.experiment_text}>
                     <div className={styleModule.experiment_material_text}>
-                        {/* {experiment.material.name} */}
+                        {experiment.experiment.name}
                     </div>
                     <div className={styleModule.experiment_experiment_text}>
-                        Exp{experiment.experiment.id} [
+                        Idx:{experiment.experiment.id} [
                         {experiment.experiment.date_time}]
                     </div>
                 </div>

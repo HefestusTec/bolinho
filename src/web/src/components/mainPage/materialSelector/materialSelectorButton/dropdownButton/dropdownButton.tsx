@@ -64,7 +64,8 @@ const DropdownButton: FunctionComponent<DropdownButtonProps> = ({
                     <div className={styleModule.add_sign}></div>
                 </div>
                 <div className={styleModule.dropdown_button_text}>
-                    Experimento {experiment.id} [{experiment.date_time}]
+                    {experiment.name} [{experiment.date_time}] idx:
+                    {experiment.id}
                 </div>
             </button>
             <ConfigButton bgColor="var(--content_background_color)" />

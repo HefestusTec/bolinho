@@ -52,7 +52,7 @@ interface ChartComponentProps {
 
 const ChartComponent: FunctionComponent<ChartComponentProps> = ({
     sliderValue = { min: 0, max: 100 },
-    experimentPlotDataArray = [new ExperimentPlotData()],
+    experimentPlotDataArray = [],
     allMaxDataValues = { x: 50, y: 1 },
 }) => {
     const [maxData, setMaxData] = useState<DataPointType>({ x: 50, y: 1 });
