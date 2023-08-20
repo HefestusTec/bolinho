@@ -16,10 +16,21 @@
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
 import Slider from "rc-slider";
 import styleModule from "./sliderComponent.module.css";
+import { FunctionComponent } from "react";
 
-function SliderComponent({ setChartMinMax, dataRightMax = 100 }) {
-    function handleChange(event) {
-        setChartMinMax(event[0], event[1]);
+interface SliderComponentProps {
+    setChartMinMax: (min: number, max: number) => void;
+    dataRightMax: number;
+}
+
+const SliderComponent: FunctionComponent<SliderComponentProps> = ({
+    setChartMinMax,
+    dataRightMax = 100,
+}) => {
+    function handleChange(event: number | number[]) {
+        if (Array.isArray(event)) {
+            setChartMinMax(event[0], event[1]);
+        }
     }
     return (
         <Slider
@@ -52,8 +63,8 @@ function SliderComponent({ setChartMinMax, dataRightMax = 100 }) {
                 marginTop: "-0.9vh",
                 borderRadius: 5,
             }}
-        ></Slider>
+        />
     );
-}
+};
 
 export default SliderComponent;

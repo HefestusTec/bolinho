@@ -7,9 +7,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 import { saveConfigParams, loadConfigParams } from "./api/backend-api";
 
-import GlobalConfigContext, {
-    globalConfigDefault,
-} from "./contexts/globalConfigContext";
+import GlobalConfigContext from "./contexts/globalConfigContext";
 import Prompter from "./components/prompter/prompter";
 import VirtualInput from "./components/virtualInput/virtualInput";
 import Home from "pages/Home";
@@ -20,6 +18,7 @@ import Experiment from "pages/Experiment/Experiment";
 import { ExperimentPageProvider } from "api/contexts/ExperimentPageContext";
 import { ReadingsProvider } from "api/contexts/ReadingsContext";
 import FocusProvider from "api/contexts/FocusContex";
+import { globalConfigDefault } from "api/apiTypes";
 
 import("./api/linker");
 
@@ -104,8 +103,7 @@ function App() {
                                 className={getAppClassName()}
                                 data-theme={globalConfig.theme}
                                 animation-speed={globalConfig.animationSpeed}
-                                animate-graph={globalConfig.animateGraph}
-                                font-size={globalConfig.fontSize}
+                                custom-font-size={globalConfig.fontSize}
                                 enable-hover={enableHover}
                             >
                                 {getVirtualKeyboard()}

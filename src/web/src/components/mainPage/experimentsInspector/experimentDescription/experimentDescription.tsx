@@ -14,71 +14,61 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
-import React, { FunctionComponent, useEffect, useState } from "react";
+import { FunctionComponent } from "react";
 
 import styleModule from "./experimentDescription.module.css";
-import { SelectedObjectType } from "contexts/selectedObjectListContext";
-import { BodyType, defaultBodyType } from "types/DataBaseTypes";
-import { getBodyById } from "api/db-api";
+import { BodyType, ExperimentType, MaterialType } from "types/DataBaseTypes";
 
 interface ExperimentDescriptionProps {
-    activeTriplet: SelectedObjectType;
+    myBody: BodyType;
+    myExperiment: ExperimentType;
+    myMaterial: MaterialType;
 }
 
 const ExperimentDescription: FunctionComponent<ExperimentDescriptionProps> = ({
-    activeTriplet,
+    myBody,
+    myExperiment,
+    myMaterial,
 }) => {
-    const [myBody, setMyBody] = useState<BodyType>(defaultBodyType);
-
-    console.log(myBody);
-
-    useEffect(() => {
-        getBodyById(activeTriplet.experiment.body_id)
-            .then((bodyResponse) => {
-                if (bodyResponse) setMyBody(bodyResponse);
-            })
-            .catch((err) => console.log(err));
-    }, [activeTriplet.experiment.body_id]);
-
     const makeMaterialText = () => {
-        if (activeTriplet === undefined) return;
+        if (myExperiment === undefined) return;
         return (
             <>
                 <h1>Material</h1>
                 <b>Lote: </b>
-                {activeTriplet.material.batch}
+                {myMaterial.batch}
                 <br />
                 <b>Fornecedor: </b>
-                {activeTriplet.material.supplier_name}
+                {myMaterial.supplier_name}
                 <br />
                 <b>• E-mail: </b>
-                {activeTriplet.material.supplier_contact_info}
+                {myMaterial.supplier_contact_info}
                 <br />
                 <b>Id: </b>
-                {activeTriplet.material.id}
+                {myMaterial.id}
                 <br />
                 <b>Info extra: </b>
-                <p>{activeTriplet.material.extra_info}</p>
+                <p>{myMaterial.extra_info}</p>
                 <hr></hr>
                 <h1>Experimento</h1>
                 <b>Data: </b>
-                {activeTriplet.experiment.date_time}
+                {myExperiment.date_time}
                 <br />
                 <b>Parâmetros: </b>
                 <br />
                 <b>• AutoStop: </b>
                 <br />
                 <>- • Queda de força: </>
-                {activeTriplet.experiment.load_loss_limit}
+                {myExperiment.load_loss_limit}
                 <br />
                 <>- • Força máxima: </>
-                {activeTriplet.experiment.max_load}
+                {myExperiment.max_load}
                 <br />
                 <>- • Distância máxima: </>
-                {activeTriplet.experiment.max_travel}
+                {myExperiment.max_travel}
                 <br />
                 <>- • Tempo máximo: </>
-                {activeTriplet.experiment.max_time}
+                {myExperiment.max_time}
                 <br />
                 <b>• Corpo de prova: </b>
                 <br />
@@ -91,10 +81,10 @@ const ExperimentDescription: FunctionComponent<ExperimentDescriptionProps> = ({
                 <>- • {myBody.height}</>
                 <br />
                 <b>Id: </b>
-                {activeTriplet.experiment.id}
+                {myExperiment.id}
                 <br />
                 <b>Info extra: </b>
-                <p>{activeTriplet.experiment.extra_info}</p>
+                <p>{myExperiment.extra_info}</p>
             </>
         );
     };

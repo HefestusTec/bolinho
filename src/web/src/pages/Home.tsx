@@ -15,13 +15,11 @@
 // You should have received a copy of the GNU General Public License
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
 
-import { getMaterialsDB } from "api/db-api";
 import MainPage from "components/mainPage/mainPage";
 import SideBar from "components/sideBar/sideBar";
 import SubPage from "components/subPage/subPage";
 import React from "react";
-import { FunctionComponent, useEffect, useState } from "react";
-import { MaterialType } from "types/DataBaseTypes";
+import { FunctionComponent, useState } from "react";
 import { PagesEnum } from "types/PagesEnum";
 
 interface homeProps {}
@@ -36,7 +34,6 @@ const Home: FunctionComponent<homeProps> = () => {
     ];
     // options "Início", "Calibrar", "Controlar", "Config.", "Sobre"
     const [currentPage, setCurrentPage] = useState<PagesEnum>("Início");
-    const [materialList, setMaterialList] = useState<MaterialType[]>([]);
 
     const createSubPages = () => {
         return pageList.map((item) => {
@@ -53,11 +50,7 @@ const Home: FunctionComponent<homeProps> = () => {
             return undefined;
         });
     };
-    useEffect(() => {
-        getMaterialsDB().then((response) => {
-            setMaterialList(response);
-        });
-    }, []);
+
     return (
         <React.Fragment>
             <SideBar
@@ -66,7 +59,7 @@ const Home: FunctionComponent<homeProps> = () => {
                 pageList={pageList}
             />
             <div className="content_area">
-                <MainPage materialList={materialList} />
+                <MainPage />
                 {createSubPages()}
             </div>
         </React.Fragment>

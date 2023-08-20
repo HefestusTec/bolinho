@@ -15,7 +15,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
 
-import React, { FunctionComponent, useState } from "react";
+import React, { FunctionComponent } from "react";
 import GraphComponent from "../graphComponent/graphComponent";
 import MaterialSelector from "./materialSelector/materialSelector";
 import styleModule from "./mainPage.module.css";
@@ -27,36 +27,25 @@ import { startExperimentRoutineJS } from "../../api/backend-api";
 
 //import GlobalConfigContext from "../../contexts/globalConfigContext";
 import BigButton from "components/customSubComponents/BigButton/BigButton";
-import SelectedObjectListContext, {
-    SelectedObjectType,
-} from "contexts/selectedObjectListContext";
-import { MaterialType } from "types/DataBaseTypes";
+import SelectedExperimentsProvider from "contexts/SelectedExperimentsContext";
 
-interface MainPageProps {
-    materialList: MaterialType[];
-}
+interface MainPageProps {}
 
-const MainPage: FunctionComponent<MainPageProps> = ({ materialList }) => {
-    const [selectedObjectList, setSelectedObjectList] = useState<
-        SelectedObjectType[]
-    >([]);
-
+const MainPage: FunctionComponent<MainPageProps> = () => {
     return (
-        <SelectedObjectListContext.Provider
-            value={[selectedObjectList, setSelectedObjectList]}
-        >
+        <SelectedExperimentsProvider>
             <div className={styleModule.content}>
                 <ZoomComponent
                     className={styleModule.graph_component}
                     scaleOrigin="top right"
                 >
-                    <GraphComponent experimentList={selectedObjectList} />
+                    <GraphComponent />
                 </ZoomComponent>
                 <ZoomComponent
                     className={styleModule.material_selector}
                     scaleOrigin="top left"
                 >
-                    <MaterialSelector materialList={materialList} />
+                    <MaterialSelector />
                 </ZoomComponent>
                 <ZoomComponent
                     className={styleModule.experiments_inspector}
@@ -80,7 +69,7 @@ const MainPage: FunctionComponent<MainPageProps> = ({ materialList }) => {
                     />
                 </div>
             </div>
-        </SelectedObjectListContext.Provider>
+        </SelectedExperimentsProvider>
     );
 };
 

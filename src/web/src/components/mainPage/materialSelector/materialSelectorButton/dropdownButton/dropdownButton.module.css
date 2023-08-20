@@ -19,13 +19,20 @@
 
 @import url(../../../../../variables.css);
 
+.dropdown_button_li {
+    display: flex;
+    margin-bottom: 5px;
+    height: fit-content;
+
+    transition-duration: var(--animation_fast);
+}
+
 .dropdown_button {
     width: 97%;
-    height: fit-content;
     background: var(--content_background_color);
-    border-radius: 10px;
-    margin-bottom: clamp(3px, 1vh, 10px);
+    border-radius: 10px 0px 0px 10px;
     cursor: pointer;
+    transition-duration: var(--animation_fast);
 
     display: flex;
     float: left;
@@ -34,21 +41,19 @@
     padding-bottom: 1vh;
     align-items: center;
     overflow: hidden;
-    transition-duration: var(--animation_fast);
 }
 [enable-hover="enable"] {
     .dropdown_button:hover {
-        box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
-        transform: translateX(0.5vw);
+        background-color: var(--button_inactive_color);
         outline: var(--font_color) solid 1px;
     }
 }
 
 .dropdown_button:active {
     box-shadow: none;
+    box-shadow: inset 0px 2px 2px rgba(0, 0, 0, 0.25);
 
-    transform: translateX(0.5vw);
-    background-color: var(--active_color);
+    background-color: var(--active_color) !important;
 }
 
 .dropdown_button_side {

@@ -22,3 +22,23 @@ code {
     font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
         monospace;
 }
+
+.slide-in-animated-enter {
+    transform: scale(0.9);
+    transform: translateX(-100%);
+}
+.slide-in-animated-enter-active {
+    opacity: 1;
+    transform: translateX(0);
+    transition-timing-function: cubic-bezier(0.47, 1.64, 0.41, 0.7);
+    transition-duration: var(--animation_slow);
+}
+.slide-in-animated-exit {
+    opacity: 1;
+}
+.slide-in-animated-exit-active {
+    transform: scale(0.9);
+    transform: translateX(-110%);
+
+    transition-duration: var(--animation_slow);
+}

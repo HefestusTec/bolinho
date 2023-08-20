@@ -14,12 +14,21 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
-import { FunctionComponent, useEffect, useState } from "react";
+import {
+    FunctionComponent,
+    useEffect,
+    useRef,
+    useState,
+    useContext,
+} from "react";
 
 import styleModule from "./materialSelectorButton.module.css";
 import DropdownButton from "./dropdownButton/dropdownButton";
 import { ExperimentType, MaterialType } from "types/DataBaseTypes";
 import { getExperimentsByMaterialId } from "api/db-api";
+import ConfigButton from "./configButton/configButton";
+import { CSSTransition } from "react-transition-group";
+import GlobalConfigContext from "contexts/globalConfigContext";
 
 interface MaterialSelectorButtonProps {
     material: MaterialType;
@@ -28,11 +37,13 @@ interface MaterialSelectorButtonProps {
 const MaterialSelectorButton: FunctionComponent<
     MaterialSelectorButtonProps
 > = ({ material }) => {
-    const [dropdown, setDropdown] = useState(false);
+    const [isActive, setIsActive] = useState(false);
     const [experiments, setExperiments] = useState<ExperimentType[]>([]);
+    const nodeRef = useRef(null);
+    const [globalConfig] = useContext(GlobalConfigContext);
 
     const getButtonClassName = () => {
-        if (dropdown) {
+        if (isActive) {
             return [
                 styleModule.material_selector_button,
                 styleModule.material_selector_button_active,
@@ -41,28 +52,20 @@ const MaterialSelectorButton: FunctionComponent<
         return [styleModule.material_selector_button].join(" ");
     };
 
-    const getDropdownClassName = () => {
-        if (dropdown) {
-            return [styleModule.dropdown_ul].join(" ");
-        }
-        return [styleModule.dropdown_ul, styleModule.dropdown_hidden].join(" ");
-    };
-
     useEffect(() => {
         getExperimentsByMaterialId(material.id).then((experimentsArray) => {
             setExperiments(experimentsArray);
         });
-    }, [dropdown, material]);
+    }, [isActive, material]);
 
     const toggleDropDown = () => {
-        setDropdown(!dropdown);
+        setIsActive(!isActive);
     };
 
     const createButton = (experimentElem: ExperimentType) => {
         return (
             <DropdownButton
                 experiment={experimentElem}
-                material={material}
                 key={"EX" + experimentElem.id.toString()}
             />
         );
@@ -72,28 +75,59 @@ const MaterialSelectorButton: FunctionComponent<
         return experiments.map((element) => createButton(element));
     };
 
+    const getTimeout = () => {
+        switch (globalConfig.animationSpeed) {
+            case "Desligado":
+                return 0;
+            case "Normal":
+                return 350;
+            case "Rápido":
+                return 150;
+
+            default:
+                return 350;
+        }
+    };
+
     return (
         <li
             key={"mat_idx_" + material.id}
             className={styleModule.material_selector_li}
         >
-            <button
-                className={getButtonClassName()}
-                aria-label="Material Selector"
-                onClick={toggleDropDown}
-            >
-                <div className={styleModule.material_selector_side}>
-                    <div className={styleModule.add_sign}>
-                        {dropdown ? "-" : "+"}
+            <span className={styleModule.material_button_span}>
+                <button
+                    className={getButtonClassName()}
+                    aria-label="Material Selector"
+                    onClick={toggleDropDown}
+                >
+                    <div className={styleModule.material_selector_side}>
+                        <div className={styleModule.add_sign}>
+                            {isActive ? "-" : "+"}
+                        </div>
                     </div>
-                </div>
-                <div className={styleModule.material_selector_text}>
-                    [{material.id}] {material.name}
-                </div>
-            </button>
-            <ul className={getDropdownClassName()}>
-                {makeExperimentButtons()}
-            </ul>
+                    <div className={styleModule.material_selector_text}>
+                        [{material.id}] {material.name}
+                    </div>
+                </button>
+                <ConfigButton
+                    bgColor={
+                        isActive
+                            ? "var(--button_active_color)"
+                            : "var(--button_inactive_color)"
+                    }
+                />
+            </span>
+            <CSSTransition
+                nodeRef={nodeRef}
+                timeout={getTimeout()}
+                classNames={"slide-in-animated"}
+                in={isActive}
+                unmountOnExit
+            >
+                <ul className={styleModule.dropdown_ul} ref={nodeRef}>
+                    {makeExperimentButtons()}
+                </ul>
+            </CSSTransition>
         </li>
     );
 };

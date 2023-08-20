@@ -20,11 +20,10 @@ import React, {
     useEffect,
     Suspense,
     FunctionComponent,
+    useMemo,
 } from "react";
 import ExperimentButton from "./experimentButton/experimentButton";
-import SelectedObjectListContext, {
-    SelectedObjectType,
-} from "contexts/selectedObjectListContext";
+
 import { ReactComponent as ColorIcon } from "../../../resources/colorSelectorIcon.svg";
 import { ReactComponent as AcceptIcon } from "../../../resources/acceptIcon.svg";
 import ColorPicker from "./colorPicker/colorPicker";
@@ -32,76 +31,101 @@ import ExperimentDescription from "./experimentDescription/experimentDescription
 import { toast } from "react-toastify";
 
 import styleModule from "./experimentsInspector.module.css";
+import {
+    SelectedExperimentType,
+    SelectedExperimentsContext,
+} from "contexts/SelectedExperimentsContext";
+import {
+    BodyType,
+    ExperimentType,
+    MaterialType,
+    defaultBodyType,
+    defaultExperimentType,
+    defaultMaterialType,
+} from "types/DataBaseTypes";
+import { getBodyById, getMaterialById } from "api/db-api";
 
 interface ExperimentsInspectorProps {}
 
 const ExperimentsInspector: FunctionComponent<
     ExperimentsInspectorProps
 > = () => {
-    const [objectList, setObjectList] = useContext(SelectedObjectListContext);
-    const [activeTriplet, setActiveTriplet] = useState<
-        SelectedObjectType | undefined
-    >(undefined);
-    const [colorPickerIsActive, setColorPickerIsActive] = useState(false);
+    const [selectedExperiments, setSelectedExperiments] = useContext(
+        SelectedExperimentsContext
+    );
 
-    const createButton = (object: SelectedObjectType, idx: number) => {
+    const [activeExperimentId, setActiveExperimentId] = useState<number>(-1);
+    const [colorPickerIsActive, setColorPickerIsActive] = useState(false);
+    const [myBody, setMyBody] = useState<BodyType>(defaultBodyType);
+    const [myMaterial, setMyMaterial] =
+        useState<MaterialType>(defaultMaterialType);
+    const myExperiment = useMemo<ExperimentType>(() => {
+        if (activeExperimentId < 0)
+            return defaultExperimentType as ExperimentType;
+
+        return selectedExperiments[activeExperimentId].experiment;
+    }, [activeExperimentId, selectedExperiments]);
+
+    useEffect(() => {
+        if (activeExperimentId < 0) return;
+        getBodyById(selectedExperiments[activeExperimentId].experiment.body_id)
+            .then((bodyResponse) => {
+                if (bodyResponse) setMyBody(bodyResponse);
+            })
+            .catch((err) => console.log(err));
+    }, [activeExperimentId, selectedExperiments]);
+
+    useEffect(() => {
+        if (activeExperimentId < 0) return;
+
+        getMaterialById(myBody.material_id)
+            .then((materialResponse) => {
+                if (materialResponse) setMyMaterial(materialResponse);
+            })
+            .catch((err) => console.log(err));
+    }, [myBody]);
+
+    const createButton = (object: SelectedExperimentType, idx: number) => {
         return (
             <ExperimentButton
-                object={object}
-                activeTriplet={activeTriplet}
-                setActiveTriplet={setActiveTriplet}
-                key={object.material.name.toString() + idx}
-            ></ExperimentButton>
+                experiment={object}
+                activeExperimentId={activeExperimentId}
+                myId={idx}
+                setActiveExperimentId={setActiveExperimentId}
+                key={object.experiment.id.toString() + idx}
+            />
         );
     };
 
     const makeButtons = () => {
-        return objectList.map((element, idx) => createButton(element, idx));
+        return selectedExperiments.map((element, idx) =>
+            createButton(element, idx)
+        );
     };
 
     const makeHeaderText = () => {
-        if (activeTriplet === undefined) return;
+        if (activeExperimentId < 0) return "Selecione um experimento";
 
-        try {
-            const name = activeTriplet.material.name;
-            const batch = activeTriplet.material.batch;
-            return `[${batch}] ${name}`;
-        } catch (error) {
-            return "Selecione um experimento";
-        }
-    };
-
-    const activateNextExperiment = () => {
-        try {
-            objectList.forEach((triplet) => {
-                if (triplet !== activeTriplet) {
-                    setActiveTriplet(triplet);
-                    return;
-                }
-            });
-        } catch (error) {}
+        const name = myMaterial.name;
+        const batch = myMaterial.batch;
+        return `[${batch}] ${name}`;
     };
 
     const removeActiveExperiment = () => {
-        if (activeTriplet === undefined) return;
-        try {
-            const newCartData = objectList.filter(
-                (d) => d.experiment.id !== activeTriplet.experiment.id
-            );
+        if (activeExperimentId < 0) return;
 
-            setObjectList(newCartData);
-            activateNextExperiment();
-        } catch (error) {}
+        let objectListCopy = [...selectedExperiments];
+
+        objectListCopy.splice(activeExperimentId, 1);
+
+        setSelectedExperiments(objectListCopy);
+
+        setActiveExperimentId(objectListCopy.length - 1);
     };
 
     useEffect(() => {
-        if (objectList.length === 0) {
-            setActiveTriplet(undefined);
-            return;
-        } else if (objectList.length === 1) {
-            setActiveTriplet(objectList[0]);
-        }
-    }, [objectList]);
+        setActiveExperimentId(selectedExperiments.length - 1);
+    }, [selectedExperiments]);
 
     const getHeaderColorClassName = () => {
         if (colorPickerIsActive) {
@@ -114,7 +138,8 @@ const ExperimentsInspector: FunctionComponent<
     };
 
     const getStyleColor = () => {
-        if (activeTriplet) return activeTriplet.color;
+        if (activeExperimentId >= 0)
+            return selectedExperiments[activeExperimentId].color;
 
         return "var(--primary_color)";
     };
@@ -143,16 +168,16 @@ const ExperimentsInspector: FunctionComponent<
     };
 
     const updateDataColor = () => {
-        if (objectList === undefined || activeTriplet === undefined) return;
+        if (selectedExperiments === undefined || activeExperimentId < 0) return;
         try {
-            let objectListCopy = [...objectList];
+            let objectListCopy = [...selectedExperiments];
             const idx = objectListCopy.findIndex(
-                (element) =>
-                    element.experiment.id === activeTriplet.experiment.id
+                (element) => element.experiment.id === activeExperimentId
             );
 
-            objectListCopy[idx].color = activeTriplet.color;
-            setObjectList(objectListCopy);
+            objectListCopy[idx].color =
+                selectedExperiments[activeExperimentId].color;
+            setSelectedExperiments(objectListCopy);
         } catch (error) {
             toast.error("Não foi possível alterar a cor da plotagem");
         }
@@ -166,16 +191,12 @@ const ExperimentsInspector: FunctionComponent<
     };
 
     const toggleColorPickIsActive = () => {
-        if (!colorPickerIsActive) {
-            setColorPickerIsActive(true);
-            return;
-        }
-        deactivateColorPicker();
+        setColorPickerIsActive((state) => !state);
     };
 
     const makeRemoveButton = () => {
-        if (activeTriplet === undefined) return;
-        if (Object.keys(activeTriplet).length)
+        if (activeExperimentId < 0) return;
+        if (Object.keys(selectedExperiments).length)
             return (
                 <button
                     className={styleModule.delete_material_button}
@@ -185,8 +206,8 @@ const ExperimentsInspector: FunctionComponent<
     };
 
     const makeHeaderColor = () => {
-        if (activeTriplet === undefined) return;
-        if (Object.keys(activeTriplet).length)
+        if (activeExperimentId < 0) return;
+        if (selectedExperiments.length) {
             return (
                 <div
                     className={getHeaderColorClassName()}
@@ -197,20 +218,7 @@ const ExperimentsInspector: FunctionComponent<
                     {getColorPickerIcon()}
                 </div>
             );
-    };
-
-    const makeColorPicker = () => {
-        if (colorPickerIsActive)
-            return (
-                <ColorPicker
-                    activeTriplet={activeTriplet}
-                    setActiveTriplet={setActiveTriplet}
-                    colorPickerIsActive={colorPickerIsActive}
-                    setColorPickerIsActive={setColorPickerIsActive}
-                    deactivateColorPicker={deactivateColorPicker}
-                    updateDataColor={updateDataColor}
-                />
-            );
+        }
     };
 
     return (
@@ -236,9 +244,11 @@ const ExperimentsInspector: FunctionComponent<
                     </div>
                     <Suspense fallback={<div>Carregando...</div>}>
                         <div className={styleModule.experiment_description}>
-                            {activeTriplet ? (
+                            {activeExperimentId >= 0 ? (
                                 <ExperimentDescription
-                                    activeTriplet={activeTriplet}
+                                    myBody={myBody}
+                                    myExperiment={myExperiment}
+                                    myMaterial={myMaterial}
                                 />
                             ) : (
                                 <p> Selecione um experimento...</p>
@@ -248,7 +258,16 @@ const ExperimentsInspector: FunctionComponent<
                 </div>
             </div>
 
-            {makeColorPicker()}
+            {colorPickerIsActive ? (
+                <ColorPicker
+                    activeExperimentId={activeExperimentId}
+                    colorPickerIsActive={colorPickerIsActive}
+                    setColorPickerIsActive={setColorPickerIsActive}
+                    deactivateColorPicker={deactivateColorPicker}
+                />
+            ) : (
+                <></>
+            )}
         </div>
     );
 };

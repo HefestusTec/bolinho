@@ -23,31 +23,30 @@ import React, {
     SetStateAction,
 } from "react";
 import styleModule from "./experimentButton.module.css";
-import { SelectedObjectType } from "contexts/selectedObjectListContext";
+import { SelectedExperimentType } from "contexts/SelectedExperimentsContext";
 
 interface ExperimentButtonProps {
-    object: SelectedObjectType;
-    activeTriplet: SelectedObjectType | undefined;
-    setActiveTriplet: Dispatch<SetStateAction<SelectedObjectType | undefined>>;
+    experiment: SelectedExperimentType;
+    myId: number;
+    activeExperimentId: number;
+    setActiveExperimentId: Dispatch<SetStateAction<number>>;
 }
 
 const ExperimentButton: FunctionComponent<ExperimentButtonProps> = ({
-    object,
-    activeTriplet,
-    setActiveTriplet,
+    experiment,
+    activeExperimentId,
+    myId,
+    setActiveExperimentId,
 }) => {
     const [isActive, setIsActive] = useState(false);
 
     useEffect(() => {
-        try {
-            if (activeTriplet?.experiment.id === object.experiment.id)
-                setIsActive(true);
-            else setIsActive(false);
-        } catch (error) {}
-    }, [activeTriplet, object]);
+        if (activeExperimentId === myId) setIsActive(true);
+        else setIsActive(false);
+    }, [activeExperimentId, myId]);
 
-    const removeSelf = () => {
-        setActiveTriplet(object);
+    const handleClick = () => {
+        setActiveExperimentId(myId);
     };
 
     const getClassName = () => {
@@ -61,7 +60,7 @@ const ExperimentButton: FunctionComponent<ExperimentButtonProps> = ({
 
     const getStyleColor = () => {
         try {
-            return object.color;
+            return experiment.color;
         } catch (error) {
             return "FFFFFF";
         }
@@ -71,16 +70,16 @@ const ExperimentButton: FunctionComponent<ExperimentButtonProps> = ({
         <li>
             <button
                 className={getClassName()}
-                onClick={removeSelf}
+                onClick={handleClick}
                 style={{ "--experiment_color": getStyleColor() } as any}
             >
                 <div className={styleModule.experiment_text}>
                     <div className={styleModule.experiment_material_text}>
-                        {object.material.name}
+                        {experiment.experiment.name}
                     </div>
                     <div className={styleModule.experiment_experiment_text}>
-                        Exp{object.experiment.id} [{object.experiment.date_time}
-                        ]
+                        Idx:{experiment.experiment.id} [
+                        {experiment.experiment.date_time}]
                     </div>
                 </div>
             </button>
