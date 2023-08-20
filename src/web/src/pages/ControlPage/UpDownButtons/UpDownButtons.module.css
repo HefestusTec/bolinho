@@ -41,6 +41,7 @@
     aspect-ratio: 1/1;
     background-image: url(../../../resources/openMenu.svg);
     background-repeat: no-repeat;
+
     background-position: center;
     background-size: 60%;
 }
@@ -53,6 +54,7 @@
     position: absolute;
     background-color: var(--background_color);
     border-radius: 5px;
+    filter: invert(var(--invert_icon));
     height: fit-content;
     left: 10%;
     right: 10%;

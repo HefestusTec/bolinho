@@ -15,7 +15,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
 
-import React, { FunctionComponent } from "react";
+import React, { FunctionComponent, useState } from "react";
 import GraphComponent from "../graphComponent/graphComponent";
 import MaterialSelector from "./materialSelector/materialSelector";
 import styleModule from "./mainPage.module.css";
@@ -27,19 +27,27 @@ import { startExperimentRoutineJS } from "../../api/backend-api";
 
 //import GlobalConfigContext from "../../contexts/globalConfigContext";
 import BigButton from "components/customSubComponents/BigButton/BigButton";
-import SelectedExperimentsProvider from "contexts/SelectedExperimentsContext";
+import {
+    SelectedExperimentType,
+    SelectedExperimentsContext,
+} from "contexts/SelectedExperimentsContext";
 
 interface MainPageProps {}
 
 const MainPage: FunctionComponent<MainPageProps> = () => {
+    const [selectedExperiments, setSelectedExperiments] = useState<
+        SelectedExperimentType[]
+    >([]);
     return (
-        <SelectedExperimentsProvider>
+        <SelectedExperimentsContext.Provider
+            value={[selectedExperiments, setSelectedExperiments]}
+        >
             <div className={styleModule.content}>
                 <ZoomComponent
                     className={styleModule.graph_component}
                     scaleOrigin="top right"
                 >
-                    <GraphComponent />
+                    <GraphComponent selectedExperiments={selectedExperiments} />
                 </ZoomComponent>
                 <ZoomComponent
                     className={styleModule.material_selector}
@@ -69,7 +77,7 @@ const MainPage: FunctionComponent<MainPageProps> = () => {
                     />
                 </div>
             </div>
-        </SelectedExperimentsProvider>
+        </SelectedExperimentsContext.Provider>
     );
 };
 

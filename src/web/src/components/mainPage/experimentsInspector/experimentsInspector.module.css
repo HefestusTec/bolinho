@@ -111,10 +111,12 @@
 .material_inspector_header_color_active {
     width: 130px;
 }
-.material_inspector_header_color_active:hover {
-    width: 150px;
-}
 
+[enable-hover="enable"] {
+    .material_inspector_header_color_active:hover {
+        width: 150px;
+    }
+}
 .material_inspector_header_color p {
     margin: 0;
     height: 100%;
