@@ -19,6 +19,7 @@ import { ExperimentPageProvider } from "api/contexts/ExperimentPageContext";
 import { ReadingsProvider } from "api/contexts/ReadingsContext";
 import FocusProvider from "api/contexts/FocusContex";
 import { globalConfigDefault } from "api/apiTypes";
+import IsConnectedProvider from "api/contexts/IsConnectedContext";
 
 import("./api/linker");
 
@@ -95,46 +96,50 @@ function App() {
     };
     return (
         <GlobalConfigContext.Provider value={[globalConfig, setGlobalConfig]}>
-            <ReadingsProvider>
-                <FocusProvider>
-                    <ExperimentPageProvider>
-                        <CurrentPageProvider>
-                            <div
-                                className={getAppClassName()}
-                                data-theme={globalConfig.theme}
-                                animation-speed={globalConfig.animationSpeed}
-                                custom-font-size={globalConfig.fontSize}
-                                enable-hover={enableHover}
-                            >
-                                {getVirtualKeyboard()}
-                                {prompter}
-                                {currentPage === "home" ? (
-                                    <Home />
-                                ) : (
-                                    <Experiment />
-                                )}
+            <IsConnectedProvider>
+                <ReadingsProvider>
+                    <FocusProvider>
+                        <ExperimentPageProvider>
+                            <CurrentPageProvider>
                                 <div
-                                    style={{
-                                        position: "absolute",
-                                        zIndex: 300,
-                                    }}
+                                    className={getAppClassName()}
+                                    data-theme={globalConfig.theme}
+                                    animation-speed={
+                                        globalConfig.animationSpeed
+                                    }
+                                    custom-font-size={globalConfig.fontSize}
+                                    enable-hover={enableHover}
                                 >
-                                    <button onClick={callPrompter}>
-                                        Propmt
-                                    </button>{" "}
-                                    <button onClick={toggleKeyboard}>
-                                        Toggle keyboard
-                                    </button>
+                                    {getVirtualKeyboard()}
+                                    {prompter}
+                                    {currentPage === "home" ? (
+                                        <Home />
+                                    ) : (
+                                        <Experiment />
+                                    )}
+                                    <div
+                                        style={{
+                                            position: "absolute",
+                                            zIndex: 300,
+                                        }}
+                                    >
+                                        <button onClick={callPrompter}>
+                                            Propmt
+                                        </button>{" "}
+                                        <button onClick={toggleKeyboard}>
+                                            Toggle keyboard
+                                        </button>
+                                    </div>
                                 </div>
-                            </div>
-                            <ToastContainer
-                                className="toast_notify"
-                                transition={Zoom}
-                            />
-                        </CurrentPageProvider>
-                    </ExperimentPageProvider>
-                </FocusProvider>
-            </ReadingsProvider>
+                                <ToastContainer
+                                    className="toast_notify"
+                                    transition={Zoom}
+                                />
+                            </CurrentPageProvider>
+                        </ExperimentPageProvider>
+                    </FocusProvider>
+                </ReadingsProvider>
+            </IsConnectedProvider>
         </GlobalConfigContext.Provider>
     );
 }

@@ -111,24 +111,107 @@ ___
 
     const dataPointArrya: DataPointType[] = getDataPointArrayAt(21);
     ```
-
 ___
 
+### postMaterialJS(material)
+!!! quote "postMaterialJS(material)" 
+    Posts a new material to the Data base
+    
+    ```javaScript title="React usage example"
+    import { postMaterialJS } from "./api/backend-api";
+
+    postMaterialJS({
+        //...
+    })
+    ```
+___
+
+### patchMaterialByIdJS(patchMaterial)
+!!! quote "patchMaterialByIdJS(patchMaterial)" 
+    Patches an existing material in the Data base
+    
+    ``` javaScript title="React usage example"
+    import { patchMaterialByIdJS } from "./api/backend-api";
+
+    patchMaterialByIdJS({
+        id: 2,
+        supplier_name: "Meu novo fornecedor",
+        supplier_contact_info: "(12) 9 9123-0192",
+        extra_info: "Hehe muito legal",
+    })
+    ```
+___
+
+### deleteMaterialByIdJS(id)
+!!! quote "deleteMaterialByIdJS(id)" 
+    Deletes an existing material in the Data base.
+    
+    ``` javaScript title="React usage example"
+    import { deleteMaterialByIdJS } from "./api/backend-api";
+
+    deleteMaterialByIdJS(22)
+    ```
+___
+
+### postExperimentJS(experiment)
+!!! quote "postExperimentJS(experiment)" 
+    Posts a new experiment to the Data base
+    
+    ```javaScript title="React usage example"
+    import { postExperimentJS } from "./api/backend-api";
+
+    postExperimentJS({
+        // ...
+    })
+    ```
+___
+
+### patchExperimentByIdJS(patchExperiment)
+!!! quote "patchExperimentByIdJS(patchExperiment)" 
+    Patches an existing experiment in the Data base
+    
+    ``` javaScript title="React usage example"
+    import { patchExperimentByIdJS } from "./api/backend-api";
+
+    patchExperimentByIdJS({
+        id: 2,
+        name: "Meu novo nome",
+        extra_info: "Hehe muito legal",
+    })
+    ```
+___
+
+### deleteExperimentByIdJS(id)
+!!! quote "deleteExperimentByIdJS(id)" 
+    Deletes an existing experiment in the Data base.
+    
+    ``` javaScript title="React usage example"
+    import { deleteExperimentByIdJS } from "./api/backend-api";
+
+    deleteExperimentByIdJS(22)
+    ```
+___
 
 ## Core
 
-### startExperimentRoutineJS()
-!!! quote "startExperimentRoutineJS()"
+### startExperimentRoutineJS(experimentId)
+!!! quote "startExperimentRoutineJS(experimentId)"
 
-    This function calls the `start_experiment_routine()` on the backend.
+    This function calls the `start_experiment_routine(experiment_id)` on the backend.
 
-    Usually it should be used to handle when the user press a "start experiment" button or something similar.
-    
+    The front end will call this function when the user click to start experiment.
+
+    Receives an `experiment` object as parameter.
+
+    The backend **MUST** send a command to change to the experiment page.
+
+    Returns 1 if succeeded.
+
     ``` javaScript title="React usage example"
     import { getMaterialList } from "./api/backend-api";
-    
+
     onClick(()=>{
-        startExperimentRoutineJS();
+        startExperimentRoutineJS(2);
     };)
     ```
 
@@ -178,7 +261,6 @@ ___
 
 ### returnZAxisJS()
 !!! quote "returnZAxisJS()"
-
     This function calls the `return_z_axis()` on the backend.
 
     Returns the z-axis to the origin.
@@ -195,14 +277,10 @@ ___
 ___
 ### stopZAxisJS()
 !!! quote "stopZAxisJS()"
-
     This function calls the `stop_z_axis()` on the backend.
-    
     Stops the z-axis.
-
     Returns 1 if succeeded (if the function was acknowledged).
 
-    
     ``` javaScript title="React usage example"
     import { stopZAxisJS } from "./api/backend-api";
     
@@ -211,9 +289,9 @@ ___
     };)
     ```
 ___
-### moveZAxisMillimetersJS()
-!!! quote "moveZAxisMillimetersJS()"
-    This function calls the `move_z_axis_millimeters()` on the backend.
+### moveZAxisMillimetersJS(distance)
+!!! quote "moveZAxisMillimetersJS(distance)"
+    This function calls the `move_z_axis_millimeters(distance)` on the backend.
     Moves the z-axis [distance]mm.
     This distance is set in MILLIMETERS
     Returns 1 if succeeded (if the function was acknowledged).
@@ -260,5 +338,51 @@ ___
     
     onClick(()=>{
         connectToPortJS("COM3");
+    };)
+    ```
+
+___
+### tareLoadJS()
+!!! quote "tareLoadJS()"
+    This function calls the `tare_load()` on the backend.
+    Tares the load cell
+    Returns 1 if succeeded (if the function was acknowledged).
+
+    ``` javaScript title="React usage example"
+    import { tareLoadJS } from "./api/backend-api";
+    
+    onClick(()=>{
+        tareLoadJS();
+    };)
+    ```
+___
+
+### calibrateKnownWeightJS()
+!!! quote "calibrateKnownWeightJS()"
+    This function calls the `calibrate_known_weight()` on the backend.
+    Calibrates the load cell to the known weight
+    Returns 1 if succeeded (if the function was acknowledged).
+
+    ``` javaScript title="React usage example"
+    import { calibrateKnownWeightJS } from "./api/backend-api";
+    
+    onClick(()=>{
+        calibrateKnownWeightJS();
+    };)
+    ```
+
+___
+
+### calibrateZAxisJS()
+!!! quote "calibrateZAxisJS()"
+    This function calls the `calibrate_z_axis()` on the backend.
+    Calibrates z axis of the machine
+    Returns 1 if succeeded (if the function was acknowledged).
+
+    ``` javaScript title="React usage example"
+    import { calibrateZAxisJS } from "./api/backend-api";
+    
+    onClick(()=>{
+        calibrateZAxisJS();
     };)
     ```

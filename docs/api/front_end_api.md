@@ -107,6 +107,9 @@ ___
 
 ### show_connect_prompt()
 !!! quote "show_connect_prompt()"
+    
+    !!! warning
+        DEPRECATED    
 
     Asks the front end to show the connection prompt.
 
@@ -126,6 +129,19 @@ ___
     ```
 
 ___
+
+### set_is_connected()
+!!! quote "set_is_connected()"
+    Sets the variable "isConnected" on the front-end.
+
+    ``` python title="Python usage example"
+    from bolinho_api.core import core_api
+
+    core_api.set_is_connected(True)
+    ```
+___
+
+
 
 ## UI API
 

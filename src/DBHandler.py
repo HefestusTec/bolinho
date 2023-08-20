@@ -30,6 +30,16 @@ class BaseModel(Model):
 
 
 class Material(BaseModel):
+    """
+    Material class
+    Attributes:
+        name: Name of the material
+        batch: Batch of the material
+        supplier_name: Name of the supplier
+        supplier_contact_info: Contact information of the supplier
+        extra_info: Extra information about the material
+    """
+
     id = AutoField()
     name = CharField()
     batch = CharField()
@@ -47,11 +57,12 @@ class Body(BaseModel):
         param_a: (Rectangle = length; Cylinder = External diameter; Tube = External diameter)
         param_b: (Rectangle = depth; Cylinder = NULL; Tube = Internal diameter)
         height: Height of the body
+        extra_info: Extra information about the body
     """
 
     id = AutoField()
     type = IntegerField()
-    material_id = ForeignKeyField(Material, backref="bodies")
+    material = ForeignKeyField(Material, backref="bodies")
     param_a = FloatField()
     param_b = FloatField()
     height = FloatField()
@@ -76,7 +87,7 @@ class Experiment(BaseModel):
 
     id = AutoField()
     name = CharField()
-    body_id = ForeignKeyField(Body, backref="experiments")
+    body = ForeignKeyField(Body, backref="experiments")
     date_time = DateTimeField(default=datetime.datetime.now())
     load_loss_limit = FloatField()
     max_load = FloatField()
@@ -98,7 +109,7 @@ class Reading(BaseModel):
     """
 
     id = AutoField()
-    experiment_id = ForeignKeyField(Experiment, backref="readings")
+    experiment = ForeignKeyField(Experiment, backref="readings")
     x = IntegerField()
     load = FloatField()
     z_pos = FloatField()
@@ -127,8 +138,9 @@ class DBHandler:
 
     # --- Material --- #
 
-    def add_material(self, data: dict):
-        Material.create(**data)
+    def post_material(self, data: dict):
+        material = Material.create(**data)
+        return material.id
 
     def get_materials(self):
         return Material.select()
@@ -136,49 +148,63 @@ class DBHandler:
     def get_material_by_id(self, id: int):
         return Material.get(Material.id == id)
 
+    def patch_material_by_id(self, id: int, data: dict):
+        Material.update(**data).where(Material.id == id).execute()
+
     # --- Body --- #
 
-    def add_body(self, data: dict):
-        Body.create(**data)
+    def post_body(self, data: dict):
+        new_body = Body.create(**data)
+        return new_body.id
 
     def get_body_by_id(self, id: int):
         return Body.get(Body.id == id)
 
     # --- Experiment --- #
 
-    def add_experiment(self, data: dict):
-        Experiment.create(**data)
+    def post_experiment(self, data: dict) -> int:
+        new_experiment = Experiment.create(**data)
+        return new_experiment.id
 
-    def get_experiments(self):
+    def get_experiments(self) -> list:
         return Experiment.select()
 
-    def get_experiment_by_id(self, id: int):
+    def get_experiment_by_id(self, id: int) -> Experiment:
         return Experiment.get(Experiment.id == id)
 
-    def get_experiments_by_material_id(self, material_id: int):
-        return Experiment.select().join(Body).where(Body.material_id == material_id)
+    def get_experiments_by_material_id(self, material_id: int) -> list:
+        return Experiment.select().join(Body).where(Body.material == material_id)
+
+    def patch_experiment_by_id(self, id: int, data: dict) -> None:
+        Experiment.update(**data).where(Experiment.id == id).execute()
+
+    def delete_experiment_by_id(self, id: int) -> None:
+        body = Experiment.get(Experiment.id == id).body
+        Experiment.delete().where(Experiment.id == id).execute()
+        Body.delete().where(Body.id == body.id).execute()
 
     # --- Reading --- #
 
-    def add_reading(self, data: dict):
-        Reading.create(**data)
+    def post_reading(self, data: dict):
+        reading = Reading.create(**data)
+        return reading.id
 
     def get_load_over_time_by_experiment_id(self, experiment_id: int):
         # return x and load
         return Reading.select(Reading.x, Reading.load).where(
-            Reading.experiment_id == experiment_id
+            Reading.experiment == experiment_id
         )
 
     def get_load_over_position_by_experiment_id(self, experiment_id: int):
         # return z_pos and load
         return Reading.select(Reading.z_pos, Reading.load).where(
-            Reading.experiment_id == experiment_id
+            Reading.experiment == experiment_id
         )
 
     # --- Populate --- #
 
     def __populate(self):
-        self.add_material(
+        self.post_material(
             {
                 "name": "Steel",
                 "batch": "S1",
@@ -187,7 +213,7 @@ class DBHandler:
                 "extra_info": "Extra info 1",
             }
         )
-        self.add_material(
+        self.post_material(
             {
                 "name": "Iron",
                 "batch": "I1",
@@ -198,7 +224,7 @@ class DBHandler:
         )
 
         for i in range(10):
-            self.add_body(
+            self.post_body(
                 {
                     "type": i % 3 + 1,
                     "material_id": i % 2 + 1,
@@ -210,7 +236,7 @@ class DBHandler:
             )
 
         for i in range(10):
-            self.add_experiment(
+            self.post_experiment(
                 {
                     "name": "Exp " + str(i),
                     "body_id": i % 10 + 1,
@@ -227,7 +253,7 @@ class DBHandler:
 
         for i in range(10):
             for j in range(10):
-                self.add_reading(
+                self.post_reading(
                     {
                         "x": j,
                         "experiment_id": i % 10 + 1,
@@ -282,6 +308,8 @@ class DBHandler:
         Body.delete().execute()
         Material.delete().execute()
 
+
+db_handler = DBHandler()
 
 if __name__ == "__main__":
     DBHandler()

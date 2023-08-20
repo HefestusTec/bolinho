@@ -27,6 +27,7 @@ interface BigButtonProps {
     fontColor?: string;
     height?: string;
     width?: string;
+    disabled?: boolean;
 }
 
 const BigButton: FunctionComponent<BigButtonProps> = ({
@@ -38,6 +39,7 @@ const BigButton: FunctionComponent<BigButtonProps> = ({
     fontColor = "var(--font_color_inverted)",
     height = "100%",
     width = "100%",
+    disabled,
 }) => {
     const divStyle: React.CSSProperties = {
         display: "flex",
@@ -46,11 +48,12 @@ const BigButton: FunctionComponent<BigButtonProps> = ({
         width: "100%",
     };
     const buttonStyle: React.CSSProperties = {
-        backgroundColor: bgColor,
+        backgroundColor: disabled ? "var(--background2_color)" : bgColor,
         fontSize: fontSize,
         fontWeight: fontWeight,
         color: fontColor,
-
+        pointerEvents: disabled ? "none" : "inherit",
+        boxShadow: disabled ? "none" : "",
         height: height,
         width: width,
     };
@@ -60,6 +63,7 @@ const BigButton: FunctionComponent<BigButtonProps> = ({
                 style={buttonStyle}
                 className={styleModule.big_button}
                 onClick={clickCallBack}
+                disabled={disabled}
             >
                 {buttonText}
             </button>

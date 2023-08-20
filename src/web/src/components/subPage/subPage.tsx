@@ -20,6 +20,7 @@ import styleModule from "./subPage.module.css";
 import BackgroundFader from "../backgroundFader/backgroundFader";
 import { PagesEnum } from "types/PagesEnum";
 import ControlPage from "pages/ControlPage/ControlPage";
+import CalibratePage from "pages/CalibratePage/CalibratePage";
 
 const ConfigPage = lazy(() => import("../../pages/ConfigPage/ConfigPage"));
 const AboutPage = lazy(() => import("../../pages/AboutPage/AboutPage"));
@@ -40,7 +41,7 @@ const SubPage: FunctionComponent<SubPageProps> = ({
             case "Início":
                 return;
             case "Calibrar":
-                break;
+                return <CalibratePage key={myPage}></CalibratePage>;
             case "Controlar":
                 return <ControlPage key={myPage}></ControlPage>;
             case "Configurar":

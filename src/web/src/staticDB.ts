@@ -16,7 +16,13 @@
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
 
 import { goToExperimentPageJS, goToHomePageJS } from "api/exp-core-api";
-import { BodyType, ExperimentType, MaterialType } from "types/DataBaseTypes";
+import {
+    BodyType,
+    ExperimentType,
+    MaterialType,
+    defaultBodyType,
+    defaultMaterialType,
+} from "types/DataBaseTypes";
 import { DataPointType } from "types/DataPointTypes";
 
 var _pj: any;
@@ -73,7 +79,7 @@ body_data_base = [
         height: 2,
         extra_info: "1",
         id: 0,
-        material_id: 0,
+        material: defaultMaterialType,
         param_a: 123,
         param_b: 23,
         type: 1,
@@ -82,7 +88,7 @@ body_data_base = [
         height: 2,
         extra_info: "1",
         id: 1,
-        material_id: 1,
+        material: defaultMaterialType,
         param_a: 123,
         param_b: 23,
         type: 1,
@@ -91,7 +97,7 @@ body_data_base = [
         height: 2,
         extra_info: "1",
         id: 2,
-        material_id: 2,
+        material: defaultMaterialType,
         param_a: 123,
         param_b: 23,
         type: 1,
@@ -106,7 +112,7 @@ data_point_array_data_base = [
 experiment_data_base = [
     {
         id: 0,
-        body_id: 0,
+        body: defaultBodyType,
         compress: false,
         date_time: "23/09/2001",
         extra_info: "Feito pelo hermes",
@@ -119,7 +125,7 @@ experiment_data_base = [
     },
     {
         id: 1,
-        body_id: 1,
+        body: defaultBodyType,
         compress: false,
         date_time: "13/01/2023",
         extra_info: "Cilindro em \u00f3leo",
@@ -132,7 +138,7 @@ experiment_data_base = [
     },
     {
         id: 2,
-        body_id: 2,
+        body: defaultBodyType,
         compress: true,
         date_time: "23/19/3001",
         extra_info: "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
@@ -206,7 +212,7 @@ export class fakeEel {
             experiment_data_base.forEach((element) => {
                 const myMaterial =
                     material_data_base[
-                        body_data_base[element.body_id].material_id
+                        body_data_base[element.body.id].material.id
                     ];
                 if (id === myMaterial.id) experimentsList.push(element);
             });

@@ -72,13 +72,13 @@ const ExperimentDescription: FunctionComponent<ExperimentDescriptionProps> = ({
                 <br />
                 <b>• Corpo de prova: </b>
                 <br />
-                <>- • {myBody.type}</>
+                <>- • Tipo de corpo: {myBody.type}</>
                 <br />
-                <>- • {myBody.param_a}</>
+                <>- • Parâmetro A: {myBody.param_a}</>
                 <br />
-                <>- • {myBody.param_b}</>
+                <>- • Parâmetro B: {myBody.param_b}</>
                 <br />
-                <>- • {myBody.height}</>
+                <>- • Altura do corpo: {myBody.height} [mm]</>
                 <br />
                 <b>Id: </b>
                 {myExperiment.id}

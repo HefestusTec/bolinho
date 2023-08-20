@@ -17,12 +17,27 @@
 
 import eel
 import json
-from DBHandler import DBHandler
+from DBHandler import db_handler
 from playhouse.shortcuts import model_to_dict
+import exposed_core
+from bolinho_api.ui import ui_api
 
-db_handler = DBHandler()
 
 # --- Material --- #
+@eel.expose
+def post_material(data: dict):
+    """
+    Adds a material to the database
+    """
+    data["name"] = data.get("name", "Material sem nome")
+    data["batch"] = data.get("batch", "Lote sem nome")
+    data["supplier_name"] = data.get("supplier_name", "Fornecedor sem nome")
+    data["supplier_contact_info"] = data.get(
+        "supplier_contact_info", "Contato do fornecedor não informado"
+    )
+    data["extra_info"] = data.get("extra_info", "Informações adicionais não informadas")
+
+    return db_handler.post_material(data)
 
 
 @eel.expose
@@ -45,6 +60,32 @@ def get_material_by_id(material_id):
     return json.dumps(material_dict, default=lambda x: x.__dict__)
 
 
+@eel.expose
+def patch_material_by_id(data):
+    """
+    Updates the material with the given id
+    """
+    material_id = int(data.get("id", -1))
+    if material_id == -1:
+        ui_api.error_alert("ID de material inválido.")
+        return
+    current_material = db_handler.get_material_by_id(material_id)
+
+    patch_data = {
+        "supplier_name": data.get("supplier_name", current_material.supplier_name),
+        "supplier_contact_info": data.get(
+            "supplier_contact_info", current_material.supplier_contact_info
+        ),
+        "extra_info": data.get("extra_info", current_material.extra_info),
+    }
+    try:
+        db_handler.patch_material_by_id(material_id, patch_data)
+        return True
+    except Exception as e:
+        ui_api.error_alert(str(e))
+        return False
+
+
 # --- Body --- #
 
 
@@ -59,6 +100,40 @@ def get_body_by_id(body_id):
 
 
 # --- Experiment --- #
+
+
+@eel.expose
+def post_experiment(data: dict = {}):
+    config_params = exposed_core.load_config_params()
+    globalMaxLoad = config_params["absoluteMaximumForce"]
+    globalMaxTravel = config_params["absoluteMaximumTravel"]
+    globalMaxTime = config_params["absoluteMaximumTime"]
+
+    body = data.get("body", {})
+    clean_body = {
+        "type": int(body.get("type", -1)),
+        "material": int(body.get("material_id", -1)),
+        "param_a": float(body.get("param_a", 0)),
+        "param_b": float(body.get("param_b", 0)),
+        "height": float(body.get("height", 0)),
+    }
+    body_id = db_handler.post_body(clean_body)
+
+    experiment = data.get("experiment", {})
+    clean_experiment = {
+        "name": experiment.get("name", "Experimento sem nome"),
+        "body": body_id,
+        "load_loss_limit": float(experiment.get("load_loss_limit", 0)),
+        "max_load": float(experiment.get("max_load", globalMaxLoad)),
+        "max_travel": float(experiment.get("max_travel", globalMaxTravel)),
+        "max_time": float(experiment.get("max_time", globalMaxTime)),
+        "compress": bool(experiment.get("compress", False)),
+        "z_axis_speed": float(experiment.get("z_axis_speed", 0)),
+        "extra_info": experiment.get(
+            "extra_info", "Informações adicionais não informadas"
+        ),
+    }
+    return db_handler.post_experiment(clean_experiment)
 
 
 @eel.expose
@@ -92,6 +167,42 @@ def get_experiments_by_material_id(material_id):
         experiment.date_time = experiment.date_time.strftime("%d/%m/%Y")
     experiments_dict_list = [model_to_dict(experiment) for experiment in experiments]
     return json.dumps(experiments_dict_list, default=lambda x: x.__dict__)
+
+
+@eel.expose
+def patch_experiment_by_id(data):
+    """
+    Updates the experiment with the given id
+    """
+    experiment_id = int(data.get("id", -1))
+    if experiment_id == -1:
+        ui_api.error_alert("ID de experimento inválido.")
+        return
+    current_experiment = db_handler.get_experiment_by_id(experiment_id)
+
+    patch_data = {
+        "name": data.get("name", current_experiment.name),
+        "extra_info": data.get("extra_info", current_experiment.extra_info),
+    }
+    try:
+        db_handler.patch_experiment_by_id(experiment_id, patch_data)
+        return True
+    except Exception as e:
+        ui_api.error_alert(str(e))
+        return False
+
+
+@eel.expose
+def delete_experiment_by_id(experiment_id):
+    """
+    Deletes the experiment with the given id
+    """
+    try:
+        db_handler.delete_experiment_by_id(experiment_id)
+        return True
+    except Exception as e:
+        ui_api.error_alert(str(e))
+        return False
 
 
 # --- Reading --- #

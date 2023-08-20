@@ -29,6 +29,8 @@
     padding-left: 10px;
     padding-right: 10px;
     margin-left: 5%;
+    margin-right: 5%;
+
     color: var(--font_color);
     font-size: var(--font_s);
     font-weight: bold;

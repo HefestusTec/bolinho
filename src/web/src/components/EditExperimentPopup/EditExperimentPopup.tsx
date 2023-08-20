@@ -15,74 +15,76 @@
 // You should have received a copy of the GNU General Public License
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
 
-import { FunctionComponent, useState } from "react";
-import ContainerComponent from "components/containerComponent/containerComponent";
+import { FunctionComponent, useContext, useEffect, useState } from "react";
 import CustomButtonArray from "components/customSubComponents/CustomButtonArray/CustomButtonArray";
 import CustomTextInput from "components/customSubComponents/CustomTextInput/CustomTextInput";
 import CustomButton from "components/customSubComponents/customButton/customButton";
 import React from "react";
+import { patchExperimentByIdJS } from "api/backend-api";
+import { ExperimentType } from "types/DataBaseTypes";
+import { NeedsToRefreshContext } from "contexts/NeedsToRefreshContext";
 
-interface EditExperimentPopupProps {}
+interface EditExperimentPopupProps {
+    experiment: ExperimentType;
+}
 
-const EditExperimentPopup: FunctionComponent<EditExperimentPopupProps> = () => {
-    const [maxForce, setMaxForce] = useState<number>(1);
+const EditExperimentPopup: FunctionComponent<EditExperimentPopupProps> = ({
+    experiment,
+}) => {
+    const [name, setName] = useState<string>(experiment.name);
+    const [extraInfo, setExtraInfo] = useState<string>(experiment.extra_info);
+
+    const [needsToRefresh, setNeedsToRefresh] = useContext(
+        NeedsToRefreshContext
+    );
+
+    const [nameAlert, setNameAlert] = useState<boolean>(false);
+    const [extraInfoAlert, setExtraInfoAlert] = useState<boolean>(false);
+
+    useEffect(() => {
+        setNameAlert(name !== experiment.name);
+        setExtraInfoAlert(extraInfo !== experiment.extra_info);
+    }, [name, extraInfo, experiment, needsToRefresh]);
+
     return (
-        <ContainerComponent headerText="Editar experimento">
+        <React.Fragment>
             <CustomTextInput
                 title="Nome"
-                setValue={setMaxForce}
-                value={maxForce}
+                setValue={setName}
+                value={name}
                 inputType="text"
                 suffix=""
-                alert={false}
+                alert={nameAlert}
                 alertColor="var(--positive_button_color)"
             />
             <CustomTextInput
-                title="Nome"
-                setValue={setMaxForce}
-                value={maxForce}
+                title="Extra"
+                setValue={setExtraInfo}
+                value={extraInfo}
                 inputType="text"
                 suffix=""
-                alert={false}
-                alertColor="var(--positive_button_color)"
-            />
-            <CustomTextInput
-                title="Nome"
-                setValue={setMaxForce}
-                value={maxForce}
-                inputType="text"
-                suffix=""
-                alert={false}
-                alertColor="var(--positive_button_color)"
-            />
-            <CustomTextInput
-                title="Nome"
-                setValue={setMaxForce}
-                value={maxForce}
-                inputType="text"
-                suffix=""
-                alert={false}
+                alert={extraInfoAlert}
                 alertColor="var(--positive_button_color)"
             />
             <CustomButtonArray>
                 <CustomButton
                     bgColor="var(--positive_button_color)"
                     fontColor="var(--font_color_inverted)"
-                    clickCallBack={() => {}}
+                    clickCallBack={() => {
+                        patchExperimentByIdJS({
+                            id: experiment.id,
+                            name: name,
+                            extra_info: extraInfo,
+                        }).then(() => {
+                            setNeedsToRefresh(true);
+                        });
+                    }}
+                    width="50%"
                 >
                     Salvar
                 </CustomButton>
-                <CustomButton
-                    bgColor="var(--negative_button_color)"
-                    fontColor="var(--font_color_inverted)"
-                    clickCallBack={() => {
-                        alert("cancelar");
-                    }}
-                >
-                    Cancelar
-                </CustomButton>
             </CustomButtonArray>
-        </ContainerComponent>
+        </React.Fragment>
     );
 };
 

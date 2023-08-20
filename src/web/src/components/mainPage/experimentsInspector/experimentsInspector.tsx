@@ -68,7 +68,8 @@ const ExperimentsInspector: FunctionComponent<
 
     useEffect(() => {
         if (activeExperimentId < 0) return;
-        getBodyById(selectedExperiments[activeExperimentId].experiment.body_id)
+
+        getBodyById(selectedExperiments[activeExperimentId].experiment.body.id)
             .then((bodyResponse) => {
                 if (bodyResponse) setMyBody(bodyResponse);
             })
@@ -78,7 +79,7 @@ const ExperimentsInspector: FunctionComponent<
     useEffect(() => {
         if (activeExperimentId < 0) return;
 
-        getMaterialById(myBody.material_id)
+        getMaterialById(myBody.material.id)
             .then((materialResponse) => {
                 if (materialResponse) setMyMaterial(materialResponse);
             })

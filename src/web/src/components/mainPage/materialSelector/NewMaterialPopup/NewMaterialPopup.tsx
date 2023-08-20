@@ -15,64 +15,57 @@
 // You should have received a copy of the GNU General Public License
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
 
-import { FunctionComponent, useContext, useEffect, useState } from "react";
+import { FunctionComponent, useState } from "react";
 import CustomButtonArray from "components/customSubComponents/CustomButtonArray/CustomButtonArray";
 import CustomTextInput from "components/customSubComponents/CustomTextInput/CustomTextInput";
 import CustomButton from "components/customSubComponents/customButton/customButton";
 import React from "react";
-import { patchMaterialByIdJS } from "api/backend-api";
-import { MaterialType } from "types/DataBaseTypes";
-import CustomText from "components/customSubComponents/CustomText/CustomText";
-import { NeedsToRefreshContext } from "contexts/NeedsToRefreshContext";
+import { patchExperimentByIdJS, postMaterialJS } from "api/backend-api";
+import { toast } from "react-toastify";
 
-interface EditMaterialPopupProps {
-    material: MaterialType;
+interface NewMaterialPopupProps {
+    closePopup: () => void;
 }
 
-const EditMaterialPopup: FunctionComponent<EditMaterialPopupProps> = ({
-    material,
+const NewMaterialPopup: FunctionComponent<NewMaterialPopupProps> = ({
+    closePopup,
 }) => {
+    const [name, setName] = useState<string>("SEM NOME");
+    const [batch, setBatch] = useState<string>("SEM LOTE");
     const [supplierName, setSupplierName] = useState<string>(
-        material.supplier_name
+        "SEM NOME DO FORNECEDOR"
     );
     const [supplierContactInfo, setSupplierContactInfo] = useState<string>(
-        material.supplier_contact_info
+        "SEM Dados do fornecedor"
     );
-    const [extraInfo, setExtraInfo] = useState<string>(material.extra_info);
-    const [needsToRefresh, setNeedsToRefresh] = useContext(
-        NeedsToRefreshContext
-    );
-    const [supplierNameAlert, setSupplierNameAlert] = useState<boolean>(false);
-    const [supplierContactInfoAlert, setSupplierContactInfoAlert] =
-        useState<boolean>(false);
-    const [extraInfoAlert, setExtraInfoAlert] = useState<boolean>(false);
-
-    useEffect(() => {
-        setSupplierNameAlert(supplierName !== material.supplier_name);
-        setSupplierContactInfoAlert(
-            supplierContactInfo !== material.supplier_contact_info
-        );
-        setExtraInfoAlert(extraInfo !== material.extra_info);
-    }, [
-        supplierName,
-        supplierContactInfo,
-        extraInfo,
-        material,
-        needsToRefresh,
-    ]);
-
+    const [extraInfo, setExtraInfo] = useState<string>("SEM EXTRA INFO");
     return (
         <React.Fragment>
-            <CustomText title="Nome: " value={material.name} />
-            <CustomText title="ID:" value={material.id.toString()} />
-            <CustomText title="Lote" value={material.batch} />
+            <CustomTextInput
+                title="Nome"
+                setValue={setName}
+                value={name}
+                inputType="text"
+                suffix=""
+                alert={false}
+                alertColor="var(--positive_button_color)"
+            />
+            <CustomTextInput
+                title="Lote"
+                setValue={setBatch}
+                value={batch}
+                inputType="text"
+                suffix=""
+                alert={false}
+                alertColor="var(--positive_button_color)"
+            />
             <CustomTextInput
                 title="Fornecedor"
                 setValue={setSupplierName}
                 value={supplierName}
                 inputType="text"
                 suffix=""
-                alert={supplierNameAlert}
+                alert={false}
                 alertColor="var(--positive_button_color)"
             />
             <CustomTextInput
@@ -81,7 +74,7 @@ const EditMaterialPopup: FunctionComponent<EditMaterialPopupProps> = ({
                 value={supplierContactInfo}
                 inputType="text"
                 suffix=""
-                alert={supplierContactInfoAlert}
+                alert={false}
                 alertColor="var(--positive_button_color)"
             />
             <CustomTextInput
@@ -90,7 +83,7 @@ const EditMaterialPopup: FunctionComponent<EditMaterialPopupProps> = ({
                 value={extraInfo}
                 inputType="text"
                 suffix=""
-                alert={extraInfoAlert}
+                alert={false}
                 alertColor="var(--positive_button_color)"
             />
             <CustomButtonArray>
@@ -98,14 +91,22 @@ const EditMaterialPopup: FunctionComponent<EditMaterialPopupProps> = ({
                     bgColor="var(--positive_button_color)"
                     fontColor="var(--font_color_inverted)"
                     clickCallBack={() => {
-                        patchMaterialByIdJS({
-                            id: material.id,
-                            supplier_name: supplierName,
-                            supplier_contact_info: supplierContactInfo,
+                        console.log("new Mat");
+                        postMaterialJS({
+                            name: name,
+                            batch: batch,
                             extra_info: extraInfo,
-                        }).then(() => {
-                            alert(1);
-                            setNeedsToRefresh(true);
+                            supplier_contact_info: supplierContactInfo,
+                            supplier_name: supplierName,
+                        }).then((response) => {
+                            if (response >= 0) {
+                                toast.success("Material criado com sucesso");
+                                closePopup();
+                            } else {
+                                toast.error(
+                                    "Erro durante a criação do material"
+                                );
+                            }
                         });
                     }}
                     width="50%"
@@ -117,4 +118,4 @@ const EditMaterialPopup: FunctionComponent<EditMaterialPopupProps> = ({
     );
 };
 
-export default EditMaterialPopup;
+export default NewMaterialPopup;

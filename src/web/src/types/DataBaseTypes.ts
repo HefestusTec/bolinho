@@ -15,19 +15,36 @@
 // You should have received a copy of the GNU General Public License
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
 
+export type MaterialType = {
+    id: number;
+    name: string;
+    batch: string;
+    supplier_name: string;
+    supplier_contact_info: string;
+    extra_info: string;
+};
+export const defaultMaterialType: MaterialType = {
+    id: 0,
+    name: "NONE",
+    batch: "NONE",
+    supplier_name: "NONE",
+    supplier_contact_info: "NONE",
+    extra_info: "NONE",
+};
+
 export type BodyType = {
     id: number;
     type: number;
-    material_id: number;
+    material: MaterialType;
     param_a: number;
     param_b: number;
     height: number;
     extra_info: string;
 };
-export const defaultBodyType = {
+export const defaultBodyType: BodyType = {
     id: 0,
     type: 0,
-    material_id: 0,
+    material: defaultMaterialType,
     param_a: 0,
     param_b: 0,
     height: 0,
@@ -37,7 +54,7 @@ export const defaultBodyType = {
 export type ExperimentType = {
     id: number;
     name: string;
-    body_id: number;
+    body: BodyType;
     date_time: string;
     load_loss_limit: number;
     max_load: number;
@@ -50,7 +67,7 @@ export type ExperimentType = {
 export const defaultExperimentType: ExperimentType = {
     id: 0,
     name: "",
-    body_id: 0,
+    body: defaultBodyType,
     date_time: "00/00/0000",
     load_loss_limit: 0,
     max_load: 0,
@@ -58,22 +75,5 @@ export const defaultExperimentType: ExperimentType = {
     max_time: 0,
     z_axis_speed: 0,
     compress: false,
-    extra_info: "NONE",
-};
-
-export type MaterialType = {
-    id: number;
-    name: string;
-    batch: string;
-    supplier_name: string;
-    supplier_contact_info: string;
-    extra_info: string;
-};
-export const defaultMaterialType = {
-    id: 0,
-    name: "NONE",
-    batch: "NONE",
-    supplier_name: "NONE",
-    supplier_contact_info: "NONE",
     extra_info: "NONE",
 };
