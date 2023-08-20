@@ -81,6 +81,7 @@ const GlobalLimits: FunctionComponent<GlobalLimitsProps> = ({
                         bgColor="var(--positive_button_color)"
                         fontColor="var(--font_color_inverted)"
                         clickCallBack={saveValues}
+                        width="45%"
                     >
                         Salvar
                     </CustomButton>
@@ -88,6 +89,7 @@ const GlobalLimits: FunctionComponent<GlobalLimitsProps> = ({
                         bgColor="var(--warning_button_color)"
                         fontColor="var(--font_color)"
                         clickCallBack={refreshValues}
+                        width="45%"
                     >
                         Carregar
                     </CustomButton>

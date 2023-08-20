@@ -107,6 +107,9 @@ ___
 
 ### show_connect_prompt()
 !!! quote "show_connect_prompt()"
+    
+    !!! warning
+        DEPRECATED    
 
     Asks the front end to show the connection prompt.
 

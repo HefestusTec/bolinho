@@ -32,6 +32,7 @@ export interface GlobalConfigContextProps {
     port: string;
     animateGraph: boolean;
     zAxisLength: number; // Z axis length in millimeters
+    knownWeight: number; // Known weight for calibration
 }
 
 export const globalConfigDefault: GlobalConfigContextProps = {
@@ -51,10 +52,12 @@ export const globalConfigDefault: GlobalConfigContextProps = {
     port: "",
     animateGraph: true,
     zAxisLength: 1000,
+    knownWeight: 1000,
 };
 
 export type FocusKeyType =
     | "connection-component"
     | "material-inspector"
     | "config-page"
+    | "calib-page"
     | "none";

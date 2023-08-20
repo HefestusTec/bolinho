@@ -143,3 +143,30 @@ export const connectToPortJS = async (port: string): Promise<number> => {
         return 0;
     }
 };
+
+export const tareLoadJs = async (): Promise<number> => {
+    try {
+        return await eel.tare_load()();
+    } catch (error) {
+        toast.error("Não foi possível tarar a célula de carga.");
+        return 0;
+    }
+};
+
+export const calibrateKnownWeightJS = async (): Promise<number> => {
+    try {
+        return await eel.calibrate_known_weight()();
+    } catch (error) {
+        toast.error("Não foi possível calibrar o peso padrão.");
+        return 0;
+    }
+};
+
+export const calibrateZAxisJS = async (): Promise<number> => {
+    try {
+        return await eel.calibrate_z_axis()();
+    } catch (error) {
+        toast.error("Não foi possível calibrar o eixo-z.");
+        return 0;
+    }
+};

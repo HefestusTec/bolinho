@@ -17,14 +17,6 @@
  along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
 -->
 
-## Comandos
-Calibrar peso conhecido
-
-
-## Parâmetros
-Altura eixo-Z (read / write)
-Peso conhecido (read / write)
-
 
 
 ## Criar NOVO MATERIAl
@@ -60,12 +52,12 @@ Peso conhecido (read / write)
 
 
 
-## Editar experimento
+## Editar experimento (id)
 * nome
 * extra info
 
 
-## Editar Material
+## Editar Material (id)
 * Supplier name
 * supplier contact
 * Extra info

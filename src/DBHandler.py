@@ -138,7 +138,7 @@ class DBHandler:
 
     # --- Material --- #
 
-    def add_material(self, data: dict):
+    def post_material(self, data: dict):
         Material.create(**data)
 
     def get_materials(self):
@@ -147,17 +147,21 @@ class DBHandler:
     def get_material_by_id(self, id: int):
         return Material.get(Material.id == id)
 
+    def patch_material_by_id(self, id: int, data: dict):
+        Material.update(**data).where(Material.id == id).execute()
+
     # --- Body --- #
 
-    def add_body(self, data: dict):
-        Body.create(**data)
+    def post_body(self, data: dict):
+        new_body = Body.create(**data)
+        return new_body.id
 
     def get_body_by_id(self, id: int):
         return Body.get(Body.id == id)
 
     # --- Experiment --- #
 
-    def add_experiment(self, data: dict):
+    def post_experiment(self, data: dict):
         Experiment.create(**data)
 
     def get_experiments(self):
@@ -169,9 +173,12 @@ class DBHandler:
     def get_experiments_by_material_id(self, material_id: int):
         return Experiment.select().join(Body).where(Body.material == material_id)
 
+    def patch_experiment_by_id(self, id: int, data: dict):
+        Experiment.update(**data).where(Experiment.id == id).execute()
+
     # --- Reading --- #
 
-    def add_reading(self, data: dict):
+    def post_reading(self, data: dict):
         Reading.create(**data)
 
     def get_load_over_time_by_experiment_id(self, experiment_id: int):
@@ -189,7 +196,7 @@ class DBHandler:
     # --- Populate --- #
 
     def __populate(self):
-        self.add_material(
+        self.post_material(
             {
                 "name": "Steel",
                 "batch": "S1",
@@ -198,7 +205,7 @@ class DBHandler:
                 "extra_info": "Extra info 1",
             }
         )
-        self.add_material(
+        self.post_material(
             {
                 "name": "Iron",
                 "batch": "I1",
@@ -209,7 +216,7 @@ class DBHandler:
         )
 
         for i in range(10):
-            self.add_body(
+            self.post_body(
                 {
                     "type": i % 3 + 1,
                     "material_id": i % 2 + 1,
@@ -221,7 +228,7 @@ class DBHandler:
             )
 
         for i in range(10):
-            self.add_experiment(
+            self.post_experiment(
                 {
                     "name": "Exp " + str(i),
                     "body_id": i % 10 + 1,
@@ -238,7 +245,7 @@ class DBHandler:
 
         for i in range(10):
             for j in range(10):
-                self.add_reading(
+                self.post_reading(
                     {
                         "x": j,
                         "experiment_id": i % 10 + 1,

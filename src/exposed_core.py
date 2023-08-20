@@ -24,7 +24,12 @@ import serial.tools.list_ports
 from bolinho_api.ui import ui_api
 from bolinho_api.core import core_api
 
+from granulado.core import Granulado
+
 _CONFIG_PARAMS_PATH = "persist/configParams.json"
+
+
+granulado = None
 
 
 @eel.expose
@@ -91,13 +96,14 @@ def prompt_return(
 @eel.expose
 def set_custom_movement_distance(new_movement_distance):
     """
+    # DEPRECATED
+
     Sets the movement distance that the z-axis moves when the user is controlling the machine manually.
 
     This distance is set in MILLIMETERS
 
     Returns 1 if succeeded.
 
-    TODO IMPLEMENT THIS FUNCTION
     """
     print("movement distance set to " + str(new_movement_distance))
     return 1
@@ -109,11 +115,9 @@ def return_z_axis():
     Returns the z-axis to the origin.
 
     Returns 1 if succeeded (if the function was acknowledged).
-
-    TODO IMPLEMENT THIS FUNCTION
     """
-    print("Returns the z-axis to the origin")
-    return 1
+    global granulado
+    return granulado.return_z_axis()
 
 
 @eel.expose
@@ -122,11 +126,9 @@ def stop_z_axis():
     Stops the z-axis.
 
     Returns 1 if succeeded (if the function was acknowledged).
-
-    TODO IMPLEMENT THIS FUNCTION
     """
-    print("STOP THE Z-AXIS")
-    return 1
+    global granulado
+    return granulado.stop_z_axis()
 
 
 @eel.expose
@@ -137,11 +139,9 @@ def move_z_axis_millimeters(distance):
     This distance is set in MILLIMETERS
 
     Returns 1 if succeeded (if the function was acknowledged).
-
-    TODO IMPLEMENT THIS FUNCTION
     """
-    print("Move " + str(distance))
-    return 1
+    global granulado
+    return granulado.move_z_axis_millimeters(distance)
 
 
 @eel.expose
@@ -170,5 +170,49 @@ def connect_to_port(port: str):
     TODO IMPLEMENT THIS FUNCTION
 
     """
-    print("Connect to port " + str(port))
+    global granulado
+    granulado = Granulado(port)
+    while not granulado.connect(port, 115200):
+        print(f"Connecting to {port}@115200...")
+        eel.sleep(1)
+
+    return granulado.check_granulado_is_connected()
+
+
+@eel.expose
+def tare_load():
+    """
+    Tares the load cell
+
+    Returns 1 if succeeded (if the function was acknowledged).
+
+    TODO IMPLEMENT THIS FUNCTION
+    """
+    print("Tare load function was called")
+    return 1
+
+
+@eel.expose
+def calibrate_known_weight():
+    """
+    Calibrates the load cell to the known weight
+
+    Returns 1 if succeeded (if the function was acknowledged).
+
+    TODO IMPLEMENT THIS FUNCTION
+    """
+    print("Calibrate to the known weight")
+    return 1
+
+
+@eel.expose
+def calibrate_z_axis():
+    """
+    Calibrates z axis of the machine
+
+    Returns 1 if succeeded (if the function was acknowledged).
+
+    TODO IMPLEMENT THIS FUNCTION
+    """
+    print("Calibrate z axis")
     return 1

@@ -115,6 +115,14 @@ ___
 ___
 
 
+### post_material
+### patch_material_by_id
+
+### post_experiment
+### patch_experiment_by_id
+
+
+
 ## Core
 
 ### startExperimentRoutineJS()
@@ -178,7 +186,6 @@ ___
 
 ### returnZAxisJS()
 !!! quote "returnZAxisJS()"
-
     This function calls the `return_z_axis()` on the backend.
 
     Returns the z-axis to the origin.
@@ -195,14 +202,10 @@ ___
 ___
 ### stopZAxisJS()
 !!! quote "stopZAxisJS()"
-
     This function calls the `stop_z_axis()` on the backend.
-    
     Stops the z-axis.
-
     Returns 1 if succeeded (if the function was acknowledged).
 
-    
     ``` javaScript title="React usage example"
     import { stopZAxisJS } from "./api/backend-api";
     
@@ -260,5 +263,51 @@ ___
     
     onClick(()=>{
         connectToPortJS("COM3");
+    };)
+    ```
+
+___
+### tareLoadJS()
+!!! quote "tareLoadJS()"
+    This function calls the `tare_load()` on the backend.
+    Tares the load cell
+    Returns 1 if succeeded (if the function was acknowledged).
+
+    ``` javaScript title="React usage example"
+    import { tareLoadJS } from "./api/backend-api";
+    
+    onClick(()=>{
+        tareLoadJS();
+    };)
+    ```
+___
+
+### calibrateKnownWeightJS()
+!!! quote "calibrateKnownWeightJS()"
+    This function calls the `calibrate_known_weight()` on the backend.
+    Calibrates the load cell to the known weight
+    Returns 1 if succeeded (if the function was acknowledged).
+
+    ``` javaScript title="React usage example"
+    import { calibrateKnownWeightJS } from "./api/backend-api";
+    
+    onClick(()=>{
+        calibrateKnownWeightJS();
+    };)
+    ```
+
+___
+
+### calibrateZAxisJS()
+!!! quote "calibrateZAxisJS()"
+    This function calls the `calibrate_z_axis()` on the backend.
+    Calibrates z axis of the machine
+    Returns 1 if succeeded (if the function was acknowledged).
+
+    ``` javaScript title="React usage example"
+    import { calibrateZAxisJS } from "./api/backend-api";
+    
+    onClick(()=>{
+        calibrateZAxisJS();
     };)
     ```

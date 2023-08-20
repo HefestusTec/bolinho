@@ -60,6 +60,7 @@ const CommandsComponent: FunctionComponent<CommandsComponentProps> = () => {
                     bgColor="var(--content_background_color)"
                     fontColor="var(--font_color)"
                     clickCallBack={returnZAxisJS}
+                    width="90%"
                 >
                     Retornar Eixo Z
                 </CustomButton>
