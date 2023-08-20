@@ -68,7 +68,6 @@ const ExperimentsInspector: FunctionComponent<
 
     useEffect(() => {
         if (activeExperimentId < 0) return;
-
         getBodyById(selectedExperiments[activeExperimentId].experiment.body_id)
             .then((bodyResponse) => {
                 if (bodyResponse) setMyBody(bodyResponse);
