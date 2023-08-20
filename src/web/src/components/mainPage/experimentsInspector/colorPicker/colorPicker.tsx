@@ -22,23 +22,19 @@ import React, {
     useEffect,
     useState,
 } from "react";
-import { HexColorPicker } from "react-colorful";
 import ClickAwayListener from "react-click-away-listener";
 import { useDebouncedCallback } from "use-debounce";
 
 import styleModule from "./colorPicker.module.css";
-import {
-    SelectedExperimentType,
-    SelectedExperimentsContext,
-} from "contexts/SelectedExperimentsContext";
+import { SelectedExperimentsContext } from "contexts/SelectedExperimentsContext";
 import DebouncedPicker from "./debouncedPicker";
+import { HexColorPicker } from "react-colorful";
 
 interface ColorPickerProps {
     activeExperimentId: number;
     colorPickerIsActive: boolean;
     setColorPickerIsActive: Dispatch<SetStateAction<boolean>>;
     deactivateColorPicker: () => void;
-    updateDataColor: () => void;
 }
 
 const ColorPicker: FunctionComponent<ColorPickerProps> = ({
@@ -46,7 +42,6 @@ const ColorPicker: FunctionComponent<ColorPickerProps> = ({
     colorPickerIsActive,
     setColorPickerIsActive,
     deactivateColorPicker,
-    updateDataColor,
 }) => {
     const [selectedExperiments, setSelectedExperiments] = useContext(
         SelectedExperimentsContext
@@ -57,24 +52,22 @@ const ColorPicker: FunctionComponent<ColorPickerProps> = ({
     // Debouncer allows to dynamically update the data color without having to update every frame
     const debounced = useDebouncedCallback(
         // function
-        () => {
+        (newColor) => {
             setChanging(false);
-            updateDataColor();
+            let selectedExperimentsCopy = [...selectedExperiments];
+            selectedExperimentsCopy[activeExperimentId].color = newColor;
+
+            setSelectedExperiments(selectedExperimentsCopy);
         },
         // delay in ms
         300
     );
 
-    useEffect(() => {
+    const colorChanged = (newColor: string) => {
+        debounced(newColor);
         setChanging(true);
-        try {
-            let selectedExperimentsCopy = {
-                ...selectedExperiments,
-            };
-            selectedExperimentsCopy[activeExperimentId].color = currentColor;
-            setSelectedExperiments(selectedExperimentsCopy);
-        } catch (error) {}
-    }, [currentColor]);
+        setCurrentColor(newColor);
+    };
 
     const clickedOut = () => {
         if (!changing) deactivateColorPicker();
@@ -108,10 +101,12 @@ const ColorPicker: FunctionComponent<ColorPickerProps> = ({
         <React.Fragment>
             <div className={makeClassName()}>
                 <ClickAwayListener onClickAway={clickedOut}>
-                    <DebouncedPicker
+                    <HexColorPicker
                         color={currentColor}
-                        setColor={setCurrentColor}
-                    />
+                        onChange={colorChanged}
+                    >
+                        {makeBackDrop()}
+                    </HexColorPicker>
                 </ClickAwayListener>
             </div>
         </React.Fragment>

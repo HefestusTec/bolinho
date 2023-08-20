@@ -64,8 +64,6 @@ const GraphComponent: FunctionComponent<GraphComponentProps> = () => {
 
     const [showSideBar, setShowSideBar] = useState(true);
 
-    console.log(experimentArray);
-
     useEffect(() => {
         const generateExperimentPlotData = async () => {
             let returnPlotDataArray: ExperimentPlotData[] = [];

@@ -27,6 +27,7 @@ import { SelectedExperimentType } from "contexts/SelectedExperimentsContext";
 
 interface ExperimentButtonProps {
     experiment: SelectedExperimentType;
+    myId: number;
     activeExperimentId: number;
     setActiveExperimentId: Dispatch<SetStateAction<number>>;
 }
@@ -34,21 +35,18 @@ interface ExperimentButtonProps {
 const ExperimentButton: FunctionComponent<ExperimentButtonProps> = ({
     experiment,
     activeExperimentId,
+    myId,
     setActiveExperimentId,
 }) => {
     const [isActive, setIsActive] = useState(false);
 
     useEffect(() => {
-        try {
-            if (activeExperimentId === experiment.experiment.id)
-                setIsActive(true);
-            else setIsActive(false);
-        } catch (error) {}
-    }, [activeExperimentId, experiment]);
+        if (activeExperimentId === myId) setIsActive(true);
+        else setIsActive(false);
+    }, [activeExperimentId, myId]);
 
     const handleClick = () => {
-        console.log(experiment);
-        setActiveExperimentId(experiment.experiment.id);
+        setActiveExperimentId(myId);
     };
 
     const getClassName = () => {

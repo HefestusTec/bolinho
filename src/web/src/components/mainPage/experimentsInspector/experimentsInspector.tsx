@@ -52,6 +52,7 @@ const ExperimentsInspector: FunctionComponent<
             <ExperimentButton
                 experiment={object}
                 activeExperimentId={activeExperimentId}
+                myId={idx}
                 setActiveExperimentId={setActiveExperimentId}
                 key={object.experiment.id.toString() + idx}
             />
@@ -65,38 +66,23 @@ const ExperimentsInspector: FunctionComponent<
     };
 
     const makeHeaderText = () => {
-        if (activeExperimentId < 0) return;
+        if (activeExperimentId < 0) return "Selecione um experimento";
 
-        try {
-            const name = "activeTriplet.material.name";
-            const batch = "activeTriplet.material.batch";
-            return `[${batch}] ${name}`;
-        } catch (error) {
-            return "Selecione um experimento";
-        }
-    };
-
-    const activateNextExperiment = () => {
-        try {
-            selectedExperiments.forEach((validExperiment) => {
-                if (validExperiment.experiment.id !== activeExperimentId) {
-                    setActiveExperimentId(validExperiment.experiment.id);
-                    return;
-                }
-            });
-        } catch (error) {}
+        const name = "activeTriplet.material.name";
+        const batch = "activeTriplet.material.batch";
+        return `[${batch}] ${name}`;
     };
 
     const removeActiveExperiment = () => {
         if (activeExperimentId < 0) return;
-        try {
-            const newCartData = selectedExperiments.filter(
-                (d) => d.experiment.id !== activeExperimentId
-            );
 
-            setSelectedExperiments(newCartData);
-            activateNextExperiment();
-        } catch (error) {}
+        let objectListCopy = [...selectedExperiments];
+
+        objectListCopy.splice(activeExperimentId, 1);
+
+        setSelectedExperiments(objectListCopy);
+
+        setActiveExperimentId(objectListCopy.length - 1);
     };
 
     useEffect(() => {
@@ -167,11 +153,7 @@ const ExperimentsInspector: FunctionComponent<
     };
 
     const toggleColorPickIsActive = () => {
-        if (!colorPickerIsActive) {
-            setColorPickerIsActive(true);
-            return;
-        }
-        deactivateColorPicker();
+        setColorPickerIsActive((state) => !state);
     };
 
     const makeRemoveButton = () => {
@@ -187,7 +169,7 @@ const ExperimentsInspector: FunctionComponent<
 
     const makeHeaderColor = () => {
         if (activeExperimentId < 0) return;
-        if (Object.keys(selectedExperiments).length)
+        if (selectedExperiments.length) {
             return (
                 <div
                     className={getHeaderColorClassName()}
@@ -198,19 +180,7 @@ const ExperimentsInspector: FunctionComponent<
                     {getColorPickerIcon()}
                 </div>
             );
-    };
-
-    const makeColorPicker = () => {
-        if (colorPickerIsActive)
-            return (
-                <ColorPicker
-                    activeExperimentId={activeExperimentId}
-                    colorPickerIsActive={colorPickerIsActive}
-                    setColorPickerIsActive={setColorPickerIsActive}
-                    deactivateColorPicker={deactivateColorPicker}
-                    updateDataColor={updateDataColor}
-                />
-            );
+        }
     };
 
     return (
@@ -248,7 +218,16 @@ const ExperimentsInspector: FunctionComponent<
                 </div>
             </div>
 
-            {makeColorPicker()}
+            {colorPickerIsActive ? (
+                <ColorPicker
+                    activeExperimentId={activeExperimentId}
+                    colorPickerIsActive={colorPickerIsActive}
+                    setColorPickerIsActive={setColorPickerIsActive}
+                    deactivateColorPicker={deactivateColorPicker}
+                />
+            ) : (
+                <></>
+            )}
         </div>
     );
 };

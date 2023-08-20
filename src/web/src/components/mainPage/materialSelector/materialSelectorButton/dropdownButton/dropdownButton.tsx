@@ -17,9 +17,7 @@
 import React, { useContext, FunctionComponent } from "react";
 import styleModule from "./dropdownButton.module.css";
 import { getRandomColor } from "../../../../../helpers";
-import { toast } from "react-toastify";
-import { getLoadOverTimeByExperimentId } from "api/db-api";
-import { ExperimentType, MaterialType } from "types/DataBaseTypes";
+import { ExperimentType } from "types/DataBaseTypes";
 import ConfigButton from "../configButton/configButton";
 import {
     SelectedExperimentType,
