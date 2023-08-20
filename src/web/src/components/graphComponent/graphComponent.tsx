@@ -15,12 +15,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
 
-import React, {
-    useState,
-    useEffect,
-    FunctionComponent,
-    useContext,
-} from "react";
+import React, { useState, useEffect, FunctionComponent } from "react";
 import styleModule from "./graphComponent.module.css";
 
 import "rc-slider/assets/index.css";
@@ -28,10 +23,7 @@ import ChartComponent from "./chartComponent/chartComponent";
 import SliderComponent from "./sliderComponent/sliderComponent";
 import { ExperimentPlotData } from "../../classes";
 import { DataPointType } from "types/DataPointTypes";
-import {
-    SelectedExperimentType,
-    SelectedExperimentsContext,
-} from "contexts/SelectedExperimentsContext";
+import { SelectedExperimentType } from "contexts/SelectedExperimentsContext";
 import { getLoadOverTimeByExperimentId } from "api/db-api";
 import { toast } from "react-toastify";
 

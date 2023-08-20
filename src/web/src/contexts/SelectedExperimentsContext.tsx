@@ -15,13 +15,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
 
-import {
-    Dispatch,
-    FunctionComponent,
-    SetStateAction,
-    createContext,
-    useState,
-} from "react";
+import { Dispatch, SetStateAction, createContext } from "react";
 import { ExperimentType } from "types/DataBaseTypes";
 
 export type SelectedExperimentType = {

@@ -83,7 +83,7 @@ const ExperimentsInspector: FunctionComponent<
                 if (materialResponse) setMyMaterial(materialResponse);
             })
             .catch((err) => console.log(err));
-    }, [myBody]);
+    }, [myBody, activeExperimentId]);
 
     const createButton = (object: SelectedExperimentType, idx: number) => {
         return (
@@ -124,6 +124,11 @@ const ExperimentsInspector: FunctionComponent<
     };
 
     useEffect(() => {
+        setActiveExperimentId((currentId) => {
+            if (currentId < 0 && selectedExperiments.length)
+                return selectedExperiments.length - 1;
+            return currentId;
+        });
         setActiveExperimentId(selectedExperiments.length - 1);
     }, [selectedExperiments]);
 

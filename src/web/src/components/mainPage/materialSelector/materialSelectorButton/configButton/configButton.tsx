@@ -15,9 +15,14 @@
 // You should have received a copy of the GNU General Public License
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
 
-import { FunctionComponent } from "react";
+import { FunctionComponent, RefObject, useRef } from "react";
 import CustomButton from "components/customSubComponents/customButton/customButton";
 import styleModule from "./configButton.module.css";
+import React from "react";
+import Popup from "reactjs-popup";
+import ConfigToolTip from "./configToolTip/configToolTip";
+import BackgroundFader from "components/backgroundFader/backgroundFader";
+import { PopupActions } from "reactjs-popup/dist/types";
 
 interface ConfigButtonProps {
     bgColor?: string;
@@ -26,13 +31,46 @@ interface ConfigButtonProps {
 const ConfigButton: FunctionComponent<ConfigButtonProps> = ({
     bgColor = "var(--button_inactive_color)",
 }) => {
+    const ref = useRef<PopupActions>(null) as RefObject<PopupActions>;
+    const closeTooltip = () => {
+        ref?.current?.close();
+    };
+
     return (
-        <CustomButton
-            className={styleModule.edit_material_button}
-            bgColor={bgColor}
-        >
-            <span className={styleModule.edit_icon} />
-        </CustomButton>
+        <React.Fragment>
+            <CustomButton
+                className={styleModule.edit_material_button}
+                bgColor={bgColor}
+            >
+                <Popup
+                    trigger={() => (
+                        <button className={styleModule.popup_trigger_button}>
+                            <span className={styleModule.edit_icon} />
+                        </button>
+                    )}
+                    ref={ref}
+                    position={[
+                        "top center",
+                        "bottom center",
+                        "right center",
+                        "left center",
+                    ]}
+                    closeOnDocumentClick
+                    className={styleModule.popup_trigger}
+                    keepTooltipInside=".App"
+                >
+                    <React.Fragment>
+                        <ConfigToolTip />
+                        <BackgroundFader
+                            faderIndex={-1}
+                            callbackFunc={() => {
+                                closeTooltip();
+                            }}
+                        ></BackgroundFader>
+                    </React.Fragment>
+                </Popup>
+            </CustomButton>
+        </React.Fragment>
     );
 };
 

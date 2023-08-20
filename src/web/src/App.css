@@ -63,3 +63,10 @@ button {
 .disable_shadows * {
     box-shadow: none !important;
 }
+
+.popup-arrow {
+    color: var(--content_background_color) !important;
+}
+
+.popup-content {
+}
