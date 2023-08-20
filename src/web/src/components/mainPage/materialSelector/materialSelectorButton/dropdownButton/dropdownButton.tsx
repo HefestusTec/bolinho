@@ -71,7 +71,7 @@ const DropdownButton: FunctionComponent<DropdownButtonProps> = ({
                 bgColor="var(--content_background_color)"
                 popupTitle="Editar experimento"
             >
-                <EditExperimentPopup experimentId={experiment.id} />
+                <EditExperimentPopup experiment={experiment} />
             </ConfigButton>
         </li>
     );

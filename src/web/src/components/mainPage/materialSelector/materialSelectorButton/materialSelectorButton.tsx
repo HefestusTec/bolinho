@@ -118,7 +118,7 @@ const MaterialSelectorButton: FunctionComponent<
                     }
                     popupTitle="Editar material"
                 >
-                    <EditMaterialPopup materialId={material.id} />
+                    <EditMaterialPopup material={material} />
                 </ConfigButton>
             </span>
             <CSSTransition

@@ -16,7 +16,9 @@
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
 import React, {
     FunctionComponent,
+    ReactNode,
     RefObject,
+    useContext,
     useEffect,
     useMemo,
     useRef,
@@ -27,19 +29,20 @@ import styleModule from "./materialSelector.module.css";
 import MaterialSelectorButton from "./materialSelectorButton/materialSelectorButton";
 import { MaterialType } from "types/DataBaseTypes";
 import CustomButton from "components/customSubComponents/customButton/customButton";
-import CreateMaterialComponent from "./createMaterialComponent/createMaterialComponent";
 import { getMaterialsDB } from "api/db-api";
 import Popup from "reactjs-popup";
 import BackgroundFader from "components/backgroundFader/backgroundFader";
 import ContainerComponent from "components/containerComponent/containerComponent";
 import { PopupActions } from "reactjs-popup/dist/types";
 import NewMaterialPopup from "./NewMaterialPopup/NewMaterialPopup";
+import { NeedsToRefreshContext } from "contexts/NeedsToRefreshContext";
 
 interface MaterialSelectorProps {}
 
 const MaterialSelector: FunctionComponent<MaterialSelectorProps> = () => {
-    const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
     const [materialList, setMaterialList] = useState<MaterialType[]>([]);
+
+    const [needsToRefresh] = useContext(NeedsToRefreshContext);
 
     const [searchQuery, setSearchQuery] = useState<string>("");
     const ref = useRef<PopupActions>(null) as RefObject<PopupActions>;
@@ -54,7 +57,7 @@ const MaterialSelector: FunctionComponent<MaterialSelectorProps> = () => {
         getMaterialsDB().then((response) => {
             setMaterialList(response);
         });
-    }, []);
+    }, [needsToRefresh]);
 
     const createButton = (material: MaterialType, idx: number) => {
         return (
@@ -64,8 +67,11 @@ const MaterialSelector: FunctionComponent<MaterialSelectorProps> = () => {
             />
         );
     };
-    const makeButtons = () => {
-        return filteredItems.map((element, idx) => createButton(element, idx));
+    const makeButtons = (): ReactNode[] => {
+        return [
+            <button>info</button>,
+            filteredItems.map((element, idx) => createButton(element, idx)),
+        ];
     };
     const closeTooltip = () => {
         ref?.current?.close();
@@ -99,12 +105,13 @@ const MaterialSelector: FunctionComponent<MaterialSelectorProps> = () => {
                             trigger={() => (
                                 <div
                                     style={{
-                                        backgroundColor: "red",
                                         height: "100%",
+                                        paddingTop: "auto",
+                                        paddingBottom: "auto",
                                         display: "flex",
-                                        width: "100%",
                                         paddingLeft: "10px",
                                         paddingRight: "10px",
+                                        textAlign: "center",
                                     }}
                                 >
                                     Novo
@@ -143,7 +150,6 @@ const MaterialSelector: FunctionComponent<MaterialSelectorProps> = () => {
                         </Popup>
                     </CustomButton>
                 </div>
-                {isDropdownOpen ? <CreateMaterialComponent /> : <></>}
             </div>
             <ul className={styleModule.selector_content_ul}>{makeButtons()}</ul>
         </div>

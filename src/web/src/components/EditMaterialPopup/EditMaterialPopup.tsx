@@ -15,37 +15,64 @@
 // You should have received a copy of the GNU General Public License
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
 
-import { FunctionComponent, useState } from "react";
+import { FunctionComponent, useContext, useEffect, useState } from "react";
 import CustomButtonArray from "components/customSubComponents/CustomButtonArray/CustomButtonArray";
 import CustomTextInput from "components/customSubComponents/CustomTextInput/CustomTextInput";
 import CustomButton from "components/customSubComponents/customButton/customButton";
 import React from "react";
 import { patchMaterialByIdJS } from "api/backend-api";
+import { MaterialType } from "types/DataBaseTypes";
+import CustomText from "components/customSubComponents/CustomText/CustomText";
+import { NeedsToRefreshContext } from "contexts/NeedsToRefreshContext";
 
 interface EditMaterialPopupProps {
-    materialId: number;
+    material: MaterialType;
 }
 
 const EditMaterialPopup: FunctionComponent<EditMaterialPopupProps> = ({
-    materialId,
+    material,
 }) => {
     const [supplierName, setSupplierName] = useState<string>(
-        "SEM NOME DO FORNECEDOR"
+        material.supplier_name
     );
     const [supplierContactInfo, setSupplierContactInfo] = useState<string>(
-        "SEM Dados do fornecedor"
+        material.supplier_contact_info
     );
-    const [extraInfo, setExtraInfo] = useState<string>("SEM EXTRA INFO");
+    const [extraInfo, setExtraInfo] = useState<string>(material.extra_info);
+    const [needsToRefresh, setNeedsToRefresh] = useContext(
+        NeedsToRefreshContext
+    );
+    const [supplierNameAlert, setSupplierNameAlert] = useState<boolean>(false);
+    const [supplierContactInfoAlert, setSupplierContactInfoAlert] =
+        useState<boolean>(false);
+    const [extraInfoAlert, setExtraInfoAlert] = useState<boolean>(false);
+
+    useEffect(() => {
+        setSupplierNameAlert(supplierName !== material.supplier_name);
+        setSupplierContactInfoAlert(
+            supplierContactInfo !== material.supplier_contact_info
+        );
+        setExtraInfoAlert(extraInfo !== material.extra_info);
+    }, [
+        supplierName,
+        supplierContactInfo,
+        extraInfo,
+        material,
+        needsToRefresh,
+    ]);
 
     return (
         <React.Fragment>
+            <CustomText title="Nome: " value={material.name} />
+            <CustomText title="ID:" value={material.id.toString()} />
+            <CustomText title="Lote" value={material.batch} />
             <CustomTextInput
                 title="Fornecedor"
                 setValue={setSupplierName}
                 value={supplierName}
                 inputType="text"
                 suffix=""
-                alert={false}
+                alert={supplierNameAlert}
                 alertColor="var(--positive_button_color)"
             />
             <CustomTextInput
@@ -54,7 +81,7 @@ const EditMaterialPopup: FunctionComponent<EditMaterialPopupProps> = ({
                 value={supplierContactInfo}
                 inputType="text"
                 suffix=""
-                alert={false}
+                alert={supplierContactInfoAlert}
                 alertColor="var(--positive_button_color)"
             />
             <CustomTextInput
@@ -63,7 +90,7 @@ const EditMaterialPopup: FunctionComponent<EditMaterialPopupProps> = ({
                 value={extraInfo}
                 inputType="text"
                 suffix=""
-                alert={false}
+                alert={extraInfoAlert}
                 alertColor="var(--positive_button_color)"
             />
             <CustomButtonArray>
@@ -72,10 +99,13 @@ const EditMaterialPopup: FunctionComponent<EditMaterialPopupProps> = ({
                     fontColor="var(--font_color_inverted)"
                     clickCallBack={() => {
                         patchMaterialByIdJS({
-                            id: materialId,
+                            id: material.id,
                             supplier_name: supplierName,
                             supplier_contact_info: supplierContactInfo,
                             extra_info: extraInfo,
+                        }).then(() => {
+                            alert(1);
+                            setNeedsToRefresh(true);
                         });
                     }}
                     width="50%"

@@ -15,22 +15,37 @@
 // You should have received a copy of the GNU General Public License
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
 
-import { FunctionComponent, useState } from "react";
+import { FunctionComponent, useContext, useEffect, useState } from "react";
 import CustomButtonArray from "components/customSubComponents/CustomButtonArray/CustomButtonArray";
 import CustomTextInput from "components/customSubComponents/CustomTextInput/CustomTextInput";
 import CustomButton from "components/customSubComponents/customButton/customButton";
 import React from "react";
 import { patchExperimentByIdJS } from "api/backend-api";
+import { ExperimentType } from "types/DataBaseTypes";
+import { NeedsToRefreshContext } from "contexts/NeedsToRefreshContext";
 
 interface EditExperimentPopupProps {
-    experimentId: number;
+    experiment: ExperimentType;
 }
 
 const EditExperimentPopup: FunctionComponent<EditExperimentPopupProps> = ({
-    experimentId,
+    experiment,
 }) => {
-    const [name, setName] = useState<string>("SEM NOME");
-    const [extraInfo, setExtraInfo] = useState<string>("SEM EXTRA INFO");
+    const [name, setName] = useState<string>(experiment.name);
+    const [extraInfo, setExtraInfo] = useState<string>(experiment.extra_info);
+
+    const [needsToRefresh, setNeedsToRefresh] = useContext(
+        NeedsToRefreshContext
+    );
+
+    const [nameAlert, setNameAlert] = useState<boolean>(false);
+    const [extraInfoAlert, setExtraInfoAlert] = useState<boolean>(false);
+
+    useEffect(() => {
+        setNameAlert(name !== experiment.name);
+        setExtraInfoAlert(extraInfo !== experiment.extra_info);
+    }, [name, extraInfo, experiment, needsToRefresh]);
+
     return (
         <React.Fragment>
             <CustomTextInput
@@ -39,7 +54,7 @@ const EditExperimentPopup: FunctionComponent<EditExperimentPopupProps> = ({
                 value={name}
                 inputType="text"
                 suffix=""
-                alert={false}
+                alert={nameAlert}
                 alertColor="var(--positive_button_color)"
             />
             <CustomTextInput
@@ -48,7 +63,7 @@ const EditExperimentPopup: FunctionComponent<EditExperimentPopupProps> = ({
                 value={extraInfo}
                 inputType="text"
                 suffix=""
-                alert={false}
+                alert={extraInfoAlert}
                 alertColor="var(--positive_button_color)"
             />
             <CustomButtonArray>
@@ -57,9 +72,11 @@ const EditExperimentPopup: FunctionComponent<EditExperimentPopupProps> = ({
                     fontColor="var(--font_color_inverted)"
                     clickCallBack={() => {
                         patchExperimentByIdJS({
-                            id: experimentId,
+                            id: experiment.id,
                             name: name,
                             extra_info: extraInfo,
+                        }).then(() => {
+                            setNeedsToRefresh(true);
                         });
                     }}
                     width="50%"

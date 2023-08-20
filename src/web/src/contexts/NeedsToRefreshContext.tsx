@@ -27,13 +27,13 @@ export const NeedsToRefreshContext = createContext<
     [boolean, Dispatch<SetStateAction<boolean>>]
 >([true, () => {}]);
 
-interface CurrentPageProviderProps {
+interface NeedsToRefreshProviderProps {
     children: any;
 }
 
-const CurrentPageProvider: FunctionComponent<CurrentPageProviderProps> = ({
-    children,
-}) => {
+const NeedsToRefreshProvider: FunctionComponent<
+    NeedsToRefreshProviderProps
+> = ({ children }) => {
     const [needsToRefresh, setNeedsToRefresh] = useState<boolean>(true);
 
     return (
@@ -45,4 +45,4 @@ const CurrentPageProvider: FunctionComponent<CurrentPageProviderProps> = ({
     );
 };
 
-export default CurrentPageProvider;
+export default NeedsToRefreshProvider;

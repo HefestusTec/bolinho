@@ -60,21 +60,30 @@ const ConfigButton: FunctionComponent<ConfigButtonProps> = ({
                     keepTooltipInside=".App"
                 >
                     <React.Fragment>
-                        <ContainerComponent
-                            headerText={popupTitle}
-                            headerButton={
-                                <CustomButton
-                                    fontSize="var(--font_s)"
-                                    fontColor="var(--font_color_inverted)"
-                                    bgColor="var(--negative_button_color)"
-                                    clickCallBack={closeTooltip}
-                                >
-                                    Cancelar
-                                </CustomButton>
-                            }
+                        <div
+                            style={{
+                                display: "flex",
+                                height: "400px",
+                                width: "400px",
+                                overflowY: "scroll",
+                            }}
                         >
-                            {children}
-                        </ContainerComponent>
+                            <ContainerComponent
+                                headerText={popupTitle}
+                                headerButton={
+                                    <CustomButton
+                                        fontSize="var(--font_s)"
+                                        fontColor="var(--font_color_inverted)"
+                                        bgColor="var(--negative_button_color)"
+                                        clickCallBack={closeTooltip}
+                                    >
+                                        Cancelar
+                                    </CustomButton>
+                                }
+                            >
+                                {children}
+                            </ContainerComponent>
+                        </div>
 
                         <BackgroundFader
                             faderIndex={-2}
