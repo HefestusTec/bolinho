@@ -35,24 +35,3 @@ export const SelectedExperimentsContext = createContext<
         Dispatch<SetStateAction<SelectedExperimentType[]>>
     ]
 >([[], () => {}]);
-
-interface SelectedExperimentsProviderProps {
-    children: any;
-}
-
-const SelectedExperimentsProvider: FunctionComponent<
-    SelectedExperimentsProviderProps
-> = ({ children }) => {
-    const [selectedExperiments, setSelectedExperiments] = useState<
-        SelectedExperimentType[]
-    >([]);
-    return (
-        <SelectedExperimentsContext.Provider
-            value={[selectedExperiments, setSelectedExperiments]}
-        >
-            {children}
-        </SelectedExperimentsContext.Provider>
-    );
-};
-
-export default SelectedExperimentsProvider;

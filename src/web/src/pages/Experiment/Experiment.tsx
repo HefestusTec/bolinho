@@ -15,7 +15,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
 
-import { FunctionComponent, useContext } from "react";
+import { FunctionComponent, useContext, useState } from "react";
 import ExperimentSideBar from "./ExperimentSideBar/ExperimentSideBar";
 import styleModule from "./Experiment.module.css";
 import ZoomComponent from "components/zoomComponent/zoomComponent";
@@ -25,60 +25,73 @@ import MainMonitor from "./MainMonitor/MainMonitor";
 import { ExperimentPageContext } from "api/contexts/ExperimentPageContext";
 import { ReadingsContext } from "api/contexts/ReadingsContext";
 import ReadingsContainer from "components/ReadingsContainer/ReadingsContainer";
+import {
+    SelectedExperimentType,
+    SelectedExperimentsContext,
+} from "contexts/SelectedExperimentsContext";
 
 interface ExperimentProps {}
 
 const Experiment: FunctionComponent<ExperimentProps> = () => {
     const [experimentPageContext] = useContext(ExperimentPageContext);
     const [readingsContext] = useContext(ReadingsContext);
+    const [selectedExperiments, setSelectedExperiments] = useState<
+        SelectedExperimentType[]
+    >([]);
     return (
-        <div className={styleModule.experiment_div}>
-            <ExperimentSideBar />
-            <div className={styleModule.experiment_content}>
-                <MainMonitor
-                    className={styleModule.main_monitor}
-                    scaleOrigin="top left"
-                    currentLoad={readingsContext.current_load}
-                />
-                <ZoomComponent
-                    className={styleModule.graph_component}
-                    scaleOrigin="top right"
-                >
-                    <GraphComponent />
-                </ZoomComponent>
-                <ZoomComponent
-                    className={styleModule.parameters_component}
-                    scaleOrigin="bottom left"
-                >
-                    <ContainerComponent headerText="Parâmetros do ensaio">
-                        <p>{experimentPageContext.experimentParameters} </p>
-                    </ContainerComponent>
-                </ZoomComponent>
-                <ReadingsContainer
-                    className={styleModule.readings_component}
-                    scaleOrigin="bottom left"
-                />
-                <ZoomComponent
-                    className={styleModule.experiment_component}
-                    scaleOrigin="bottom right"
-                >
-                    <ContainerComponent headerText="Descrição">
-                        <p>{experimentPageContext.description} </p>
-                    </ContainerComponent>
-                </ZoomComponent>
-                <ZoomComponent
-                    className={styleModule.material_component}
-                    scaleOrigin="bottom right"
-                >
-                    <ContainerComponent headerText="Material">
-                        <p>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing
-                            elit. Nullam malesuada.
-                        </p>
-                    </ContainerComponent>
-                </ZoomComponent>
+        <SelectedExperimentsContext.Provider
+            value={[selectedExperiments, setSelectedExperiments]}
+        >
+            <div className={styleModule.experiment_div}>
+                <ExperimentSideBar />
+                <div className={styleModule.experiment_content}>
+                    <MainMonitor
+                        className={styleModule.main_monitor}
+                        scaleOrigin="top left"
+                        currentLoad={readingsContext.current_load}
+                    />
+                    <ZoomComponent
+                        className={styleModule.graph_component}
+                        scaleOrigin="top right"
+                    >
+                        <GraphComponent
+                            selectedExperiments={selectedExperiments}
+                        />
+                    </ZoomComponent>
+                    <ZoomComponent
+                        className={styleModule.parameters_component}
+                        scaleOrigin="bottom left"
+                    >
+                        <ContainerComponent headerText="Parâmetros do ensaio">
+                            <p>{experimentPageContext.experimentParameters} </p>
+                        </ContainerComponent>
+                    </ZoomComponent>
+                    <ReadingsContainer
+                        className={styleModule.readings_component}
+                        scaleOrigin="bottom left"
+                    />
+                    <ZoomComponent
+                        className={styleModule.experiment_component}
+                        scaleOrigin="bottom right"
+                    >
+                        <ContainerComponent headerText="Descrição">
+                            <p>{experimentPageContext.description} </p>
+                        </ContainerComponent>
+                    </ZoomComponent>
+                    <ZoomComponent
+                        className={styleModule.material_component}
+                        scaleOrigin="bottom right"
+                    >
+                        <ContainerComponent headerText="Material">
+                            <p>
+                                Lorem ipsum dolor sit amet, consectetur
+                                adipiscing elit. Nullam malesuada.
+                            </p>
+                        </ContainerComponent>
+                    </ZoomComponent>
+                </div>
             </div>
-        </div>
+        </SelectedExperimentsContext.Provider>
     );
 };
 
