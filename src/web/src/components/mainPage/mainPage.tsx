@@ -15,7 +15,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
 
-import React, { FunctionComponent, useState } from "react";
+import React, { FunctionComponent, useContext, useState } from "react";
 import GraphComponent from "../graphComponent/graphComponent";
 import MaterialSelector from "./materialSelector/materialSelector";
 import styleModule from "./mainPage.module.css";
@@ -31,6 +31,7 @@ import {
     SelectedExperimentType,
     SelectedExperimentsContext,
 } from "contexts/SelectedExperimentsContext";
+import { IsConnectedContext } from "api/contexts/IsConnectedContext";
 
 interface MainPageProps {}
 
@@ -38,6 +39,8 @@ const MainPage: FunctionComponent<MainPageProps> = () => {
     const [selectedExperiments, setSelectedExperiments] = useState<
         SelectedExperimentType[]
     >([]);
+    const [isConnected] = useContext(IsConnectedContext);
+
     return (
         <SelectedExperimentsContext.Provider
             value={[selectedExperiments, setSelectedExperiments]}
@@ -74,6 +77,7 @@ const MainPage: FunctionComponent<MainPageProps> = () => {
                         buttonText="ENSAIO"
                         bgColor="var(--positive_button_color)"
                         height="50%"
+                        disabled={isConnected}
                     />
                 </div>
             </div>

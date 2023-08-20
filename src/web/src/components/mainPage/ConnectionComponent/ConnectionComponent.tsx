@@ -14,7 +14,12 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
-import React, { FunctionComponent, useEffect, useState } from "react";
+import React, {
+    FunctionComponent,
+    useContext,
+    useEffect,
+    useState,
+} from "react";
 
 import styleModule from "./ConnectionComponent.module.css";
 import ContainerComponent from "components/containerComponent/containerComponent";
@@ -23,12 +28,14 @@ import CustomListSelector from "components/customSubComponents/customListSelecto
 import { PortType } from "types/PortType";
 import { connectToPortJS, getAvailablePortsListJS } from "api/backend-api";
 import { toast } from "react-toastify";
+import { IsConnectedContext } from "api/contexts/IsConnectedContext";
 
 interface ConnectionComponentProps {}
 
 const ConnectionComponent: FunctionComponent<ConnectionComponentProps> = () => {
     const [selectedPort, setSelectedPort] = useState<string>("");
     const [availablePorts, setAvailablePorts] = useState<PortType[]>([]);
+    const [isConnected] = useContext(IsConnectedContext);
 
     const portSelectCallback = (key: string) => {
         const match = key.match(/^(.*?)\s*\|/);
@@ -84,14 +91,25 @@ const ConnectionComponent: FunctionComponent<ConnectionComponentProps> = () => {
                 Porta
             </CustomListSelector>
 
-            <CustomButton
-                className={styleModule.connect_button}
-                bgColor="var(--positive_button_color)"
-                fontColor="var(--font_color_inverted)"
-                clickCallBack={connectToPort}
-            >
-                CONECTAR
-            </CustomButton>
+            {isConnected ? (
+                <CustomButton
+                    className={styleModule.connect_button}
+                    bgColor="var(--negative_button_color)"
+                    fontColor="var(--font_color_inverted)"
+                    clickCallBack={connectToPort}
+                >
+                    DESCONECTAR
+                </CustomButton>
+            ) : (
+                <CustomButton
+                    className={styleModule.connect_button}
+                    bgColor="var(--positive_button_color)"
+                    fontColor="var(--font_color_inverted)"
+                    clickCallBack={connectToPort}
+                >
+                    CONECTAR
+                </CustomButton>
+            )}
         </ContainerComponent>
     );
 };

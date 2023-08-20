@@ -20,6 +20,7 @@ import time
 import serial
 
 from bolinho_api.ui import ui_api
+from bolinho_api.core import core_api
 
 
 class Granulado:
@@ -27,10 +28,87 @@ class Granulado:
         self.__hardware: serial.Serial | None = None
         self.__top = False
         self.__bottom = False
+        self.__moving = False
         self.__instant_load = 0
         self.__instant_position = 0
         self.__ping = 0
+        self.__last_read = 0
         self.__timeout = timeout
+        self.__z_axis_length = 0
+
+    def __del__(self):
+        self.__end()
+
+    def loop(self):
+        if not self.__is_connected():
+            return
+
+        # Check if there is a message to be read
+        if self.__hardware.in_waiting <= 0:
+            now = time.time()
+            if now - self.__last_read > self.__timeout:
+                ui_api.prompt_user(
+                    description="A máquina parece estar desconectada. Verifique a conexão e tente novamente.",
+                    options=["Tentar novamente"],
+                    callback_func=lambda x: ui_api.set_focus("connection-component"),
+                )
+                return
+        # Read message from usb
+        received = self.__hardware.readline()
+        self.__last_read = time.time()
+        # decode to utf-8
+        decodedMessage = received.decode()
+        response = decodedMessage[0]
+
+        if response == "p":
+            self.__ping = time.time()
+        elif response == "e":
+            self.__error(decodedMessage[1:])
+        elif response == "r":
+            self.__instant_load = int(decodedMessage[1:])
+        elif response == "g":
+            self.__instant_position = int(decodedMessage[1:])
+        elif response == "j":
+            self.__z_axis_length = int(decodedMessage[1:])
+        if response == "t":
+            self.__top = True
+            self.__bottom = False
+            self.__moving = False
+        elif response == "b":
+            self.__top = False
+            self.__bottom = True
+            self.__moving = False
+        elif response == "m":
+            self.__top = self.__bottom = False
+            self.__moving = True
+        elif response == "s":
+            self.__moving = False
+
+    def __error(self, error_message):
+        self.__send_serial_message("s")
+        ui_api.prompt_user(
+            description=f"Erro: {error_message}",
+            options=["Voltar para a página inicial"],
+            callback_func=core_api.go_to_home_page,
+        )
+
+    def __run_experiment(self):
+        self.___
+        pass
+
+    def check_experiment_routine(self):
+        checks = [
+            self.check_granulado_is_connected(),
+            self.check_global_limits(),
+            self.check_current_load(),
+        ]
+
+        if all(checks):
+            ui_api.prompt_user(
+                description="A máquina está calibrada?",
+                options=["Sim", "Não"],
+                callback_func=self.__machine_calibrated_callback,
+            )
 
     def __machine_calibrated_callback(self, response):
         if response == "Não":
@@ -39,58 +117,25 @@ class Granulado:
         if response == "Sim":
             self.__run_experiment()
 
-    def loop(self):
-        # Read message from usb
-        received = self.__hardware.readline()
-        # decode to utf-8
-        decodedMessage = received.decode()
-        response = decodedMessage[0]
-
-        if response == "p":
-            self.__ping = time.time()
-        if response == "t":
-            self.__top
-        elif response == "b":
-            self.__bottom = True
-        elif response == "r":
-            self.__instant_load = int(decodedMessage[1:])
-        elif response == "g":
-            self.__instant_position = int(decodedMessage[1:])
-        elif response == "e":
-            self.__error(decodedMessage[1:])
-
-    def __error(error_message):
-        ui_api.prompt_user(
-            description=f"Erro: {error_message}",
-            options=["Ok"],
-            callback_func=lambda x: None,
-        )
-
-    def __run_experiment(self):
-        pass
-
-    def check_experiment_routine(self):
-        if not self.check_granulado_is_connected():
-            return False
-        if not self.check_global_limits():
-            return False
-        if not self.check_current_load():
-            return False
-
-        ui_api.prompt_user(
-            description="A máquina está calibrada?",
-            options=["Sim", "Não"],
-            callback_func=self.__machine_calibrated_callback,
-        )
-
     def check_granulado_is_connected(self):
         if self.__send_serial_message("p"):
-            # Read message from usb
-            received = self.__hardware.readline()
-            # Decode message
-            decodedMessage = received.decode()
-            if decodedMessage == "p":
-                return True
+            eel.sleep(0.1)
+            if time.time() - self.__ping > 0.1:
+                ui_api.prompt_user(
+                    description="A máquina parece estar desconectada. Verifique a conexão e tente novamente.",
+                    options=["Tentar novamente"],
+                    callback_func=lambda x: ui_api.set_focus("connection-component"),
+                )
+                core_api.set_is_connected(False)
+                return False
+            core_api.set_is_connected(True)
+            return True
+        ui_api.prompt_user(
+            description="A máquina parece estar desconectada. Verifique a conexão e tente novamente.",
+            options=["Tentar novamente"],
+            callback_func=lambda x: ui_api.set_focus("connection-component"),
+        )
+        core_api.set_is_connected(False)
         return False
 
     def check_global_limits(self):
@@ -115,7 +160,7 @@ class Granulado:
         """Is the backend connected to the embedded hardware, returns a boolean"""
         return False if self.__hardware is None else True
 
-    def connect(self, port: str, baudrate: int, timeout: float = 0.1):
+    def connect(self, port: str, baudrate: int):
         """
         Connects to a serial device
 
@@ -134,7 +179,7 @@ class Granulado:
         """
         try:
             self.__hardware = serial.Serial(
-                port=port, baudrate=baudrate, timeout=timeout
+                port=port, baudrate=baudrate, timeout=self.__timeout
             )
             return 1
         except:
@@ -146,5 +191,5 @@ class Granulado:
             return True
         return False
 
-    def end(self):
+    def __end(self):
         self.__hardware.close()

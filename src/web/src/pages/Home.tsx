@@ -15,10 +15,11 @@
 // You should have received a copy of the GNU General Public License
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
 
+import { FocusContext } from "api/contexts/FocusContex";
 import MainPage from "components/mainPage/mainPage";
 import SideBar from "components/sideBar/sideBar";
 import SubPage from "components/subPage/subPage";
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import { FunctionComponent, useState } from "react";
 import { PagesEnum } from "types/PagesEnum";
 
@@ -34,6 +35,22 @@ const Home: FunctionComponent<homeProps> = () => {
     ];
     // options "Início", "Calibrar", "Controlar", "Config.", "Sobre"
     const [currentPage, setCurrentPage] = useState<PagesEnum>("Início");
+    const [focus, setFocus] = useContext(FocusContext);
+
+    useEffect(() => {
+        switch (focus) {
+            case "config-page":
+                setCurrentPage("Configurar");
+                setFocus("none");
+                break;
+            case "calib-page":
+                setCurrentPage("Calibrar");
+                setFocus("none");
+                break;
+            default:
+                break;
+        }
+    }, [focus, setFocus]);
 
     const createSubPages = () => {
         return pageList.map((item) => {

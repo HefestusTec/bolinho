@@ -130,6 +130,19 @@ ___
 
 ___
 
+### set_is_connected()
+!!! quote "set_is_connected()"
+    Sets the variable "isConnected" on the front-end.
+
+    ``` python title="Python usage example"
+    from bolinho_api.core import core_api
+
+    core_api.set_is_connected(True)
+    ```
+___
+
+
+
 ## UI API
 
 Collection of all functions/API calls available to the backend for UI in general. You can find them in the `bolinho_api/ui.py` file.

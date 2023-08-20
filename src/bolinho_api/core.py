@@ -53,5 +53,11 @@ class CoreAPI:
         """
         return eel.showConnectPromptJS()()
 
+    def set_is_connected(self, is_connected: bool):
+        """
+        Sets the variable "isConnected" on the front-end.
+        """
+        eel.setIsConnectedJS(is_connected)
+
 
 core_api = CoreAPI()
