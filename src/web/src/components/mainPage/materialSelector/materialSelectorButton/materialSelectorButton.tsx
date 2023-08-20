@@ -29,6 +29,7 @@ import { getExperimentsByMaterialId } from "api/db-api";
 import ConfigButton from "./configButton/configButton";
 import { CSSTransition } from "react-transition-group";
 import GlobalConfigContext from "contexts/globalConfigContext";
+import EditMaterialPopup from "components/EditMaterialPopup/EditMaterialPopup";
 
 interface MaterialSelectorButtonProps {
     material: MaterialType;
@@ -115,7 +116,9 @@ const MaterialSelectorButton: FunctionComponent<
                             ? "var(--button_active_color)"
                             : "var(--button_inactive_color)"
                     }
-                />
+                >
+                    <EditMaterialPopup />
+                </ConfigButton>
             </span>
             <CSSTransition
                 nodeRef={nodeRef}

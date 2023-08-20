@@ -23,6 +23,8 @@ import {
     SelectedExperimentType,
     SelectedExperimentsContext,
 } from "contexts/SelectedExperimentsContext";
+import EditMaterialPopup from "components/EditMaterialPopup/EditMaterialPopup";
+import EditExperimentPopup from "components/EditExperimentPopup/EditExperimentPopup";
 
 interface DropdownButtonProps {
     experiment: ExperimentType;
@@ -66,7 +68,9 @@ const DropdownButton: FunctionComponent<DropdownButtonProps> = ({
                     {experiment.id}
                 </div>
             </button>
-            <ConfigButton bgColor="var(--content_background_color)" />
+            <ConfigButton bgColor="var(--content_background_color)">
+                <EditExperimentPopup />
+            </ConfigButton>
         </li>
     );
 };
