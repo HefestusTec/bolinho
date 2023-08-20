@@ -14,59 +14,22 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
-import React, {
-    FunctionComponent,
-    useContext,
-    useEffect,
-    useMemo,
-    useState,
-} from "react";
+import { FunctionComponent } from "react";
 
 import styleModule from "./experimentDescription.module.css";
-import {
-    BodyType,
-    MaterialType,
-    defaultBodyType,
-    defaultMaterialType,
-} from "types/DataBaseTypes";
-import { getBodyById, getMaterialById } from "api/db-api";
-import { SelectedExperimentsContext } from "contexts/SelectedExperimentsContext";
+import { BodyType, ExperimentType, MaterialType } from "types/DataBaseTypes";
 
 interface ExperimentDescriptionProps {
-    activeExperimentIdx: number;
+    myBody: BodyType;
+    myExperiment: ExperimentType;
+    myMaterial: MaterialType;
 }
 
 const ExperimentDescription: FunctionComponent<ExperimentDescriptionProps> = ({
-    activeExperimentIdx,
+    myBody,
+    myExperiment,
+    myMaterial,
 }) => {
-    const [selectedExperiments] = useContext(SelectedExperimentsContext);
-    const [myBody, setMyBody] = useState<BodyType>(defaultBodyType);
-    const [myMaterial, setMyMaterial] =
-        useState<MaterialType>(defaultMaterialType);
-    const myExperiment = useMemo(() => {
-        if (activeExperimentIdx < 0) return;
-
-        return selectedExperiments[activeExperimentIdx].experiment;
-    }, [activeExperimentIdx, selectedExperiments]);
-
-    console.log(myBody);
-
-    useEffect(() => {
-        getBodyById(selectedExperiments[activeExperimentIdx].experiment.body_id)
-            .then((bodyResponse) => {
-                if (bodyResponse) setMyBody(bodyResponse);
-            })
-            .catch((err) => console.log(err));
-    }, [activeExperimentIdx, selectedExperiments]);
-
-    useEffect(() => {
-        getMaterialById(myBody.material_id)
-            .then((materialResponse) => {
-                if (materialResponse) setMyMaterial(materialResponse);
-            })
-            .catch((err) => console.log(err));
-    }, [myBody]);
-
     const makeMaterialText = () => {
         if (myExperiment === undefined) return;
         return (

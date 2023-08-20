@@ -103,8 +103,7 @@ function App() {
                                 className={getAppClassName()}
                                 data-theme={globalConfig.theme}
                                 animation-speed={globalConfig.animationSpeed}
-                                animate-graph={globalConfig.animateGraph}
-                                font-size={globalConfig.fontSize}
+                                custom-font-size={globalConfig.fontSize}
                                 enable-hover={enableHover}
                             >
                                 {getVirtualKeyboard()}

@@ -44,6 +44,7 @@ const defaultMaxValues: maxValueType = {
 
 const getMaxData = (experimentArray: ExperimentPlotData[]): DataPointType => {
     if (experimentArray.length === 0) return defaultMaxValues.maxValues;
+
     let maxX = 0;
     let maxY = Number.MIN_VALUE;
     experimentArray.forEach((element) => {
@@ -67,7 +68,8 @@ const GraphComponent: FunctionComponent<GraphComponentProps> = () => {
     useEffect(() => {
         const generateExperimentPlotData = async () => {
             let returnPlotDataArray: ExperimentPlotData[] = [];
-            selectedExperiments.forEach(async (experiment) => {
+            for (let i = 0; i < selectedExperiments.length; i++) {
+                const experiment = selectedExperiments[i];
                 const data: DataPointType[] =
                     await getLoadOverTimeByExperimentId(
                         experiment.experiment.id
@@ -82,7 +84,8 @@ const GraphComponent: FunctionComponent<GraphComponentProps> = () => {
                         experiment.color
                     )
                 );
-            });
+            }
+
             return returnPlotDataArray;
         };
         generateExperimentPlotData().then((generatedPlotData) => {

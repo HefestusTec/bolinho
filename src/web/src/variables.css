@@ -137,7 +137,7 @@ html {
     --animation_slow: 0;
 }
 
-[font-size="50%"] {
+[custom-font-size="50%"] {
     --font_xxs: 6px;
     --font_xs: 7px;
     --font_s: 9px;
@@ -146,7 +146,7 @@ html {
     --font_xl: 22.5px;
 }
 
-[font-size="75%"] {
+[custom-font-size="75%"] {
     --font_xxs: 9px;
     --font_xs: 10.5px;
     --font_s: 13.5px;
@@ -155,7 +155,7 @@ html {
     --font_xl: 33.75px;
 }
 
-[font-size="100%"] {
+[custom-font-size="100%"] {
     --font_xxs: 12px;
     --font_xs: 14px;
     --font_s: 18px;
@@ -164,7 +164,7 @@ html {
     --font_xl: 45px;
 }
 
-[font-size="125%"] {
+[custom-font-size="125%"] {
     --font_xxs: 15px;
     --font_xs: 17.5px;
     --font_s: 22.5px;
@@ -173,7 +173,7 @@ html {
     --font_xl: 56.25px;
 }
 
-[font-size="150%"] {
+[custom-font-size="150%"] {
     --font_xxs: 18px;
     --font_xs: 21px;
     --font_s: 27px;
@@ -182,7 +182,7 @@ html {
     --font_xl: 67.5px;
 }
 
-[font-size="200%"] {
+[custom-font-size="200%"] {
     --font_xxs: 24px;
     --font_xs: 28px;
     --font_s: 36px;

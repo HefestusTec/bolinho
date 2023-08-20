@@ -47,11 +47,11 @@ export type ExperimentType = {
     compress: boolean;
     extra_info: string;
 };
-export const defaultExperimentType = {
+export const defaultExperimentType: ExperimentType = {
     id: 0,
     name: "",
     body_id: 0,
-    date_time: 0,
+    date_time: "00/00/0000",
     load_loss_limit: 0,
     max_load: 0,
     max_travel: 0,

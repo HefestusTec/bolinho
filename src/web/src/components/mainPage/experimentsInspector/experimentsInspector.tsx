@@ -20,6 +20,7 @@ import React, {
     useEffect,
     Suspense,
     FunctionComponent,
+    useMemo,
 } from "react";
 import ExperimentButton from "./experimentButton/experimentButton";
 
@@ -34,6 +35,15 @@ import {
     SelectedExperimentType,
     SelectedExperimentsContext,
 } from "contexts/SelectedExperimentsContext";
+import {
+    BodyType,
+    ExperimentType,
+    MaterialType,
+    defaultBodyType,
+    defaultExperimentType,
+    defaultMaterialType,
+} from "types/DataBaseTypes";
+import { getBodyById, getMaterialById } from "api/db-api";
 
 interface ExperimentsInspectorProps {}
 
@@ -46,6 +56,35 @@ const ExperimentsInspector: FunctionComponent<
 
     const [activeExperimentId, setActiveExperimentId] = useState<number>(-1);
     const [colorPickerIsActive, setColorPickerIsActive] = useState(false);
+    const [myBody, setMyBody] = useState<BodyType>(defaultBodyType);
+    const [myMaterial, setMyMaterial] =
+        useState<MaterialType>(defaultMaterialType);
+    const myExperiment = useMemo<ExperimentType>(() => {
+        if (activeExperimentId < 0)
+            return defaultExperimentType as ExperimentType;
+
+        return selectedExperiments[activeExperimentId].experiment;
+    }, [activeExperimentId, selectedExperiments]);
+
+    useEffect(() => {
+        if (activeExperimentId < 0) return;
+
+        getBodyById(selectedExperiments[activeExperimentId].experiment.body_id)
+            .then((bodyResponse) => {
+                if (bodyResponse) setMyBody(bodyResponse);
+            })
+            .catch((err) => console.log(err));
+    }, [activeExperimentId, selectedExperiments]);
+
+    useEffect(() => {
+        if (activeExperimentId < 0) return;
+
+        getMaterialById(myBody.material_id)
+            .then((materialResponse) => {
+                if (materialResponse) setMyMaterial(materialResponse);
+            })
+            .catch((err) => console.log(err));
+    }, [myBody]);
 
     const createButton = (object: SelectedExperimentType, idx: number) => {
         return (
@@ -68,8 +107,8 @@ const ExperimentsInspector: FunctionComponent<
     const makeHeaderText = () => {
         if (activeExperimentId < 0) return "Selecione um experimento";
 
-        const name = "activeTriplet.material.name";
-        const batch = "activeTriplet.material.batch";
+        const name = myMaterial.name;
+        const batch = myMaterial.batch;
         return `[${batch}] ${name}`;
     };
 
@@ -208,7 +247,9 @@ const ExperimentsInspector: FunctionComponent<
                         <div className={styleModule.experiment_description}>
                             {activeExperimentId >= 0 ? (
                                 <ExperimentDescription
-                                    activeExperimentIdx={activeExperimentId}
+                                    myBody={myBody}
+                                    myExperiment={myExperiment}
+                                    myMaterial={myMaterial}
                                 />
                             ) : (
                                 <p> Selecione um experimento...</p>

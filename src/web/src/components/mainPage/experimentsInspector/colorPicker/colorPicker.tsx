@@ -19,7 +19,6 @@ import React, {
     FunctionComponent,
     SetStateAction,
     useContext,
-    useEffect,
     useState,
 } from "react";
 import ClickAwayListener from "react-click-away-listener";
@@ -27,7 +26,6 @@ import { useDebouncedCallback } from "use-debounce";
 
 import styleModule from "./colorPicker.module.css";
 import { SelectedExperimentsContext } from "contexts/SelectedExperimentsContext";
-import DebouncedPicker from "./debouncedPicker";
 import { HexColorPicker } from "react-colorful";
 
 interface ColorPickerProps {
