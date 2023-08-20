@@ -65,8 +65,5 @@ button {
 }
 
 .popup-arrow {
-    color: var(--content_background_color) !important;
-}
-
-.popup-content {
+    color: var(--content_background_color);
 }
