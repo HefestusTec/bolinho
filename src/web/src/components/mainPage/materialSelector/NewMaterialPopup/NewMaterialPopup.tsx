@@ -20,16 +20,24 @@ import CustomButtonArray from "components/customSubComponents/CustomButtonArray/
 import CustomTextInput from "components/customSubComponents/CustomTextInput/CustomTextInput";
 import CustomButton from "components/customSubComponents/customButton/customButton";
 import React from "react";
-import { patchExperimentByIdJS } from "api/backend-api";
+import { patchExperimentByIdJS, postMaterialJS } from "api/backend-api";
+import { toast } from "react-toastify";
 
-interface EditExperimentPopupProps {
-    experimentId: number;
+interface NewMaterialPopupProps {
+    closePopup: () => void;
 }
 
-const EditExperimentPopup: FunctionComponent<EditExperimentPopupProps> = ({
-    experimentId,
+const NewMaterialPopup: FunctionComponent<NewMaterialPopupProps> = ({
+    closePopup,
 }) => {
     const [name, setName] = useState<string>("SEM NOME");
+    const [batch, setBatch] = useState<string>("SEM LOTE");
+    const [supplierName, setSupplierName] = useState<string>(
+        "SEM NOME DO FORNECEDOR"
+    );
+    const [supplierContactInfo, setSupplierContactInfo] = useState<string>(
+        "SEM Dados do fornecedor"
+    );
     const [extraInfo, setExtraInfo] = useState<string>("SEM EXTRA INFO");
     return (
         <React.Fragment>
@@ -37,6 +45,33 @@ const EditExperimentPopup: FunctionComponent<EditExperimentPopupProps> = ({
                 title="Nome"
                 setValue={setName}
                 value={name}
+                inputType="text"
+                suffix=""
+                alert={false}
+                alertColor="var(--positive_button_color)"
+            />
+            <CustomTextInput
+                title="Lote"
+                setValue={setBatch}
+                value={batch}
+                inputType="text"
+                suffix=""
+                alert={false}
+                alertColor="var(--positive_button_color)"
+            />
+            <CustomTextInput
+                title="Fornecedor"
+                setValue={setSupplierName}
+                value={supplierName}
+                inputType="text"
+                suffix=""
+                alert={false}
+                alertColor="var(--positive_button_color)"
+            />
+            <CustomTextInput
+                title="Informações do fornecedor"
+                setValue={setSupplierContactInfo}
+                value={supplierContactInfo}
                 inputType="text"
                 suffix=""
                 alert={false}
@@ -56,10 +91,22 @@ const EditExperimentPopup: FunctionComponent<EditExperimentPopupProps> = ({
                     bgColor="var(--positive_button_color)"
                     fontColor="var(--font_color_inverted)"
                     clickCallBack={() => {
-                        patchExperimentByIdJS({
-                            id: experimentId,
+                        console.log("new Mat");
+                        postMaterialJS({
                             name: name,
+                            batch: batch,
                             extra_info: extraInfo,
+                            supplier_contact_info: supplierContactInfo,
+                            supplier_name: supplierName,
+                        }).then((response) => {
+                            if (response >= 0) {
+                                toast.success("Material criado com sucesso");
+                                closePopup();
+                            } else {
+                                toast.error(
+                                    "Erro durante a criação do material"
+                                );
+                            }
                         });
                     }}
                     width="50%"
@@ -71,4 +118,4 @@ const EditExperimentPopup: FunctionComponent<EditExperimentPopupProps> = ({
     );
 };
 
-export default EditExperimentPopup;
+export default NewMaterialPopup;

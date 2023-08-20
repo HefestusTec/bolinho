@@ -73,7 +73,11 @@ const MainPage: FunctionComponent<MainPageProps> = () => {
                 </ZoomComponent>
                 <div className={styleModule.ensaio_button_div}>
                     <BigButton
-                        clickCallBack={startExperimentRoutineJS}
+                        clickCallBack={() => {
+                            console.log("Botão de ensaio foi chamado");
+                            // FIXME
+                            startExperimentRoutineJS(0);
+                        }}
                         buttonText="ENSAIO"
                         bgColor="var(--positive_button_color)"
                         height="50%"

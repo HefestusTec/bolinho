@@ -116,8 +116,9 @@ const MaterialSelectorButton: FunctionComponent<
                             ? "var(--button_active_color)"
                             : "var(--button_inactive_color)"
                     }
+                    popupTitle="Editar material"
                 >
-                    <EditMaterialPopup />
+                    <EditMaterialPopup materialId={material.id} />
                 </ConfigButton>
             </span>
             <CSSTransition

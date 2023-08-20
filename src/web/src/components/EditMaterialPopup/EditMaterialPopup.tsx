@@ -16,49 +16,51 @@
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
 
 import { FunctionComponent, useState } from "react";
-import ContainerComponent from "components/containerComponent/containerComponent";
 import CustomButtonArray from "components/customSubComponents/CustomButtonArray/CustomButtonArray";
 import CustomTextInput from "components/customSubComponents/CustomTextInput/CustomTextInput";
 import CustomButton from "components/customSubComponents/customButton/customButton";
 import React from "react";
+import { patchMaterialByIdJS } from "api/backend-api";
 
-interface EditMaterialPopupProps {}
+interface EditMaterialPopupProps {
+    materialId: number;
+}
 
-const EditMaterialPopup: FunctionComponent<EditMaterialPopupProps> = () => {
-    const [maxForce, setMaxForce] = useState<number>(1);
+const EditMaterialPopup: FunctionComponent<EditMaterialPopupProps> = ({
+    materialId,
+}) => {
+    const [supplierName, setSupplierName] = useState<string>(
+        "SEM NOME DO FORNECEDOR"
+    );
+    const [supplierContactInfo, setSupplierContactInfo] = useState<string>(
+        "SEM Dados do fornecedor"
+    );
+    const [extraInfo, setExtraInfo] = useState<string>("SEM EXTRA INFO");
+
     return (
-        <ContainerComponent headerText="Editar material">
+        <React.Fragment>
             <CustomTextInput
-                title="Nome"
-                setValue={setMaxForce}
-                value={maxForce}
+                title="Fornecedor"
+                setValue={setSupplierName}
+                value={supplierName}
                 inputType="text"
                 suffix=""
                 alert={false}
                 alertColor="var(--positive_button_color)"
             />
             <CustomTextInput
-                title="Nome"
-                setValue={setMaxForce}
-                value={maxForce}
+                title="Informações do fornecedor"
+                setValue={setSupplierContactInfo}
+                value={supplierContactInfo}
                 inputType="text"
                 suffix=""
                 alert={false}
                 alertColor="var(--positive_button_color)"
             />
             <CustomTextInput
-                title="Nome"
-                setValue={setMaxForce}
-                value={maxForce}
-                inputType="text"
-                suffix=""
-                alert={false}
-                alertColor="var(--positive_button_color)"
-            />
-            <CustomTextInput
-                title="Nome"
-                setValue={setMaxForce}
-                value={maxForce}
+                title="Extra"
+                setValue={setExtraInfo}
+                value={extraInfo}
                 inputType="text"
                 suffix=""
                 alert={false}
@@ -68,21 +70,20 @@ const EditMaterialPopup: FunctionComponent<EditMaterialPopupProps> = () => {
                 <CustomButton
                     bgColor="var(--positive_button_color)"
                     fontColor="var(--font_color_inverted)"
-                    clickCallBack={() => {}}
+                    clickCallBack={() => {
+                        patchMaterialByIdJS({
+                            id: materialId,
+                            supplier_name: supplierName,
+                            supplier_contact_info: supplierContactInfo,
+                            extra_info: extraInfo,
+                        });
+                    }}
+                    width="50%"
                 >
                     Salvar
                 </CustomButton>
-                <CustomButton
-                    bgColor="var(--negative_button_color)"
-                    fontColor="var(--font_color_inverted)"
-                    clickCallBack={() => {
-                        alert("cancelar");
-                    }}
-                >
-                    Cancelar
-                </CustomButton>
             </CustomButtonArray>
-        </ContainerComponent>
+        </React.Fragment>
     );
 };
 

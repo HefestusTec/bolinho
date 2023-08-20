@@ -20,11 +20,13 @@ import os
 import serial
 import json
 import serial.tools.list_ports
+from time import time
 
 from bolinho_api.ui import ui_api
 from bolinho_api.core import core_api
 
 from granulado.core import Granulado
+from DBHandler import db_handler
 
 _CONFIG_PARAMS_PATH = "persist/configParams.json"
 
@@ -54,16 +56,74 @@ def save_config_params(new_params):
 
 
 @eel.expose
-def start_experiment_routine():
+def start_experiment_routine(experiment_id: int):
     """
     The front end will call this function when the user click to start experiment.
+
+    Receives an `id` to an experiment as parameter.
 
     The backend **MUST** send a command to change to the experiment page.
 
     Returns 1 if succeeded.
     """
+    experiment = db_handler.get_experiment_by_id(experiment_id)
+    if experiment is None:
+        ui_api.error_alert(
+            "Não foi possível iniciar o experimento. O experimento não foi encontrado.",
+        )
+    material_id = experiment.get("material_id")
+    if material_id is None:
+        ui_api.error_alert(
+            "Não foi possível iniciar o experimento. O experimento não possui material associado.",
+        )
+    material = db_handler.get_material_by_id(material_id)
+    if material is None:
+        ui_api.error_alert(
+            "Não foi possível iniciar o experimento. O material não foi encontrado.",
+        )
+    compress = material.get("compress")
+    if compress is None:
+        ui_api.error_alert(
+            "Não foi possível iniciar o experimento. O material não possui parâmetro de compressão/tração definida.",
+        )
 
-    # TODO Add implementation
+    global granulado
+    if not granulado.stop_z_axis():
+        ui_api.error_alert(
+            "Não foi possível iniciar o experimento. O eixo Z não foi parado. O Granulado está conectado?",
+        )
+    if not (granulado.return_z_axis() if compress else granulado.bottom_z_axis()):
+        ui_api.error_alert(
+            "Não foi possível iniciar o experimento. O eixo Z não foi retornado ao topo. O Granulado está conectado?",
+        )
+
+    while granulado.get_is_moving():
+        eel.sleep(1)
+
+    if not (granulado.bottom_z_axis() if compress else granulado.return_z_axis()):
+        ui_api.error_alert(
+            "Não foi possível iniciar o experimento. O eixo Z não foi movido para a base. O Granulado está conectado?",
+        )
+
+    readings = []
+
+    while granulado.get_is_moving():
+        readings.append(granulado.get_readings())
+        eel.sleep(0.01)
+
+    data = [
+        {
+            "x": x,
+            "experiment": experiment_id,
+            "load": reading[x][0],
+            "z_pos": reading[x][1],
+        }
+        for x, reading in enumerate(readings)
+    ]
+
+    reading_ids = [db_handler.post_reading(reading) for reading in data]
+
+    # Do not remove
     core_api.go_to_experiment_page()
     return 1
 

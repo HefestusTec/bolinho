@@ -60,11 +60,16 @@ export const returnPromptResult = (result: string) => {
     }
 };
 
-export const startExperimentRoutineJS = async (): Promise<number> => {
+export const startExperimentRoutineJS = async (
+    experimentId: number
+): Promise<number> => {
     try {
-        return await eel.start_experiment_routine()();
+        return await eel.start_experiment_routine(experimentId)();
     } catch (error) {
-        toast.error("Não foi possível iniciar a rotina de ensaio");
+        toast.error(
+            "Não foi possível iniciar a rotina de ensaio para o experimento de ID: " +
+                experimentId
+        );
         return 0;
     }
 };
@@ -167,6 +172,111 @@ export const calibrateZAxisJS = async (): Promise<number> => {
         return await eel.calibrate_z_axis()();
     } catch (error) {
         toast.error("Não foi possível calibrar o eixo-z.");
+        return 0;
+    }
+};
+
+export type PostMaterialType = {
+    name: string;
+    batch: string;
+    supplier_name: string;
+    supplier_contact_info: string;
+    extra_info: string;
+};
+
+export const postMaterialJS = async (
+    material: PostMaterialType
+): Promise<number> => {
+    try {
+        return await eel.post_material(material)();
+    } catch (error) {
+        toast.error("Não foi possível criar esse novo material.");
+        return 0;
+    }
+};
+
+export type PostExperimentType = {
+    body: {
+        type: number;
+        material_id: number;
+        param_a: number;
+        param_b: number;
+        height: number;
+        extra_info: string;
+    };
+    experiment: {
+        name: string;
+        load_loss_limit: number;
+        max_load: number;
+        max_travel: number;
+        max_time: number;
+        compress: boolean;
+        z_axis_speed: number;
+        extra_info: string;
+    };
+};
+
+export const postExperimentJS = async (
+    experiment: PostExperimentType
+): Promise<number> => {
+    // Returns the id of the new experiment
+    try {
+        return await eel.post_experiment(experiment)();
+    } catch (error) {
+        toast.error("Não foi possível criar esse novo experimento.");
+        return 0;
+    }
+};
+
+export type PatchMaterialType = {
+    id: number;
+    supplier_name: string;
+    supplier_contact_info: string;
+    extra_info: string;
+};
+
+export const patchMaterialByIdJS = async (
+    patchMaterial: PatchMaterialType
+): Promise<number> => {
+    try {
+        return await eel.patch_material_by_id(patchMaterial)();
+    } catch (error) {
+        toast.error("Não foi possível criar esse novo material.");
+        return 0;
+    }
+};
+
+export type PatchExperimentType = {
+    id: number;
+    name: string;
+    extra_info: string;
+};
+
+export const patchExperimentByIdJS = async (
+    patchExperiment: PatchExperimentType
+): Promise<number> => {
+    try {
+        return await eel.patch_experiment_by_id(patchExperiment)();
+    } catch (error) {
+        toast.error("Não foi possível criar esse novo material.");
+        return 0;
+    }
+};
+
+export const deleteMaterialByIdJS = async (id: number): Promise<number> => {
+    try {
+        return await eel.delete_material_by_id(id)();
+    } catch (error) {
+        toast.error("Não foi possível deletar o Material de ID: " + id);
+        return 0;
+    }
+};
+
+export const deleteExperimentByIdJS = async (id: number): Promise<number> => {
+    try {
+        return await eel.delete_experiment_by_id(id)();
+    } catch (error) {
+        toast.error("Não foi possível deletar o Experimento de ID: " + id);
         return 0;
     }
 };

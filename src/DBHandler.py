@@ -139,7 +139,8 @@ class DBHandler:
     # --- Material --- #
 
     def post_material(self, data: dict):
-        Material.create(**data)
+        material = Material.create(**data)
+        return material.id
 
     def get_materials(self):
         return Material.select()
@@ -161,25 +162,32 @@ class DBHandler:
 
     # --- Experiment --- #
 
-    def post_experiment(self, data: dict):
-        Experiment.create(**data)
+    def post_experiment(self, data: dict) -> int:
+        new_experiment = Experiment.create(**data)
+        return new_experiment.id
 
-    def get_experiments(self):
+    def get_experiments(self) -> list:
         return Experiment.select()
 
-    def get_experiment_by_id(self, id: int):
+    def get_experiment_by_id(self, id: int) -> Experiment:
         return Experiment.get(Experiment.id == id)
 
-    def get_experiments_by_material_id(self, material_id: int):
+    def get_experiments_by_material_id(self, material_id: int) -> list:
         return Experiment.select().join(Body).where(Body.material == material_id)
 
-    def patch_experiment_by_id(self, id: int, data: dict):
+    def patch_experiment_by_id(self, id: int, data: dict) -> None:
         Experiment.update(**data).where(Experiment.id == id).execute()
+
+    def delete_experiment_by_id(self, id: int) -> None:
+        body = Experiment.get(Experiment.id == id).body
+        Experiment.delete().where(Experiment.id == id).execute()
+        Body.delete().where(Body.id == body.id).execute()
 
     # --- Reading --- #
 
     def post_reading(self, data: dict):
-        Reading.create(**data)
+        reading = Reading.create(**data)
+        return reading.id
 
     def get_load_over_time_by_experiment_id(self, experiment_id: int):
         # return x and load
@@ -300,6 +308,8 @@ class DBHandler:
         Body.delete().execute()
         Material.delete().execute()
 
+
+db_handler = DBHandler()
 
 if __name__ == "__main__":
     DBHandler()

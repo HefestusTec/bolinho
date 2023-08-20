@@ -84,6 +84,15 @@ class Granulado:
         elif response == "s":
             self.__moving = False
 
+    def start_experiment(self, compress: bool):
+        pass
+
+    def get_is_moving(self):
+        return self.__moving
+
+    def get_end_of_axis(self):
+        return self.__top, self.__bottom
+
     def __error(self, error_message):
         self.__send_serial_message("s")
         ui_api.prompt_user(
@@ -92,8 +101,7 @@ class Granulado:
             callback_func=core_api.go_to_home_page,
         )
 
-    def __run_experiment(self):
-        self.___
+    def __run_experiment(self, experiment_id, compress):
         pass
 
     def check_experiment_routine(self):
@@ -138,6 +146,15 @@ class Granulado:
         core_api.set_is_connected(False)
         return False
 
+    def get_readings(self):
+        """
+        Sends messages to Granulado to get the current load and position, waits for the response and returns the values
+        """
+        if self.__send_serial_message("r"):
+            if self.__send_serial_message("g"):
+                eel.sleep(0.1)
+                return self.__instant_load, self.__instant_position
+
     def check_global_limits(self):
         pass
 
@@ -145,15 +162,27 @@ class Granulado:
         pass
 
     def return_z_axis(self):
-        return self.__send_serial_message("t")
+        if not self.__top:
+            self.__top = self.__bottom = False
+            return self.__send_serial_message("t")
+        return False
+
+    def bottom_z_axis(self):
+        if not self.__bottom:
+            self.__top = self.__bottom = False
+            return self.__send_serial_message("b")
+        return False
 
     def stop_z_axis(self):
+        self.__moving = False
         return self.__send_serial_message("s")
 
     def move_z_axis_millimeters(self, millimeters: int):
+        self.__moving = True
         return self.__send_serial_message(f"m{int(millimeters)}")
 
     def tare_load(self):
+        self.__moving = False
         return self.__send_serial_message("@")
 
     def __is_connected(self):

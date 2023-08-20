@@ -17,12 +17,10 @@
 
 import eel
 import json
-from DBHandler import DBHandler
+from DBHandler import db_handler
 from playhouse.shortcuts import model_to_dict
 import exposed_core
 from bolinho_api.ui import ui_api
-
-db_handler = DBHandler()
 
 
 # --- Material --- #
@@ -39,7 +37,7 @@ def post_material(data: dict):
     )
     data["extra_info"] = data.get("extra_info", "Informações adicionais não informadas")
 
-    db_handler.post_material(data)
+    return db_handler.post_material(data)
 
 
 @eel.expose
@@ -80,7 +78,12 @@ def patch_material_by_id(data):
         ),
         "extra_info": data.get("extra_info", current_material.extra_info),
     }
-    db_handler.patch_material_by_id(material_id, patch_data)
+    try:
+        db_handler.patch_material_by_id(material_id, patch_data)
+        return True
+    except Exception as e:
+        ui_api.error_alert(str(e))
+        return False
 
 
 # --- Body --- #
@@ -107,27 +110,30 @@ def post_experiment(data: dict = {}):
     globalMaxTime = config_params["absoluteMaximumTime"]
 
     body = data.get("body", {})
-    body["type"] = int(body.get("type", -1))
-    body["material"] = int(body.get("material", -1))
-    body["param_a"] = float(body.get("param_a", 0))
-    body["param_b"] = float(body.get("param_b", 0))
-    body["height"] = float(body.get("height", 0))
-    body["extra_info"] = body.get("extra_info", "Informações adicionais não informadas")
-    body_id = db_handler.post_body(body)
+    clean_body = {
+        "type": int(body.get("type", -1)),
+        "material": int(body.get("material_id", -1)),
+        "param_a": float(body.get("param_a", 0)),
+        "param_b": float(body.get("param_b", 0)),
+        "height": float(body.get("height", 0)),
+    }
+    body_id = db_handler.post_body(clean_body)
 
     experiment = data.get("experiment", {})
-    experiment["name"] = experiment.get("name", "Experimento sem nome")
-    experiment["body"] = body_id
-    experiment["load_loss_limit"] = float(experiment.get("load_loss_limit", 0))
-    experiment["max_load"] = float(experiment.get("max_load", globalMaxLoad))
-    experiment["max_travel"] = float(experiment.get("max_travel", globalMaxTravel))
-    experiment["max_time"] = float(experiment.get("max_time", globalMaxTime))
-    experiment["compress"] = bool(experiment.get("compress", False))
-    experiment["z_axis_speed"] = float(experiment.get("z_axis_speed", 0))
-    experiment["extra_info"] = experiment.get(
-        "extra_info", "Informações adicionais não informadas"
-    )
-    db_handler.post_experiment(experiment)
+    clean_experiment = {
+        "name": experiment.get("name", "Experimento sem nome"),
+        "body": body_id,
+        "load_loss_limit": float(experiment.get("load_loss_limit", 0)),
+        "max_load": float(experiment.get("max_load", globalMaxLoad)),
+        "max_travel": float(experiment.get("max_travel", globalMaxTravel)),
+        "max_time": float(experiment.get("max_time", globalMaxTime)),
+        "compress": bool(experiment.get("compress", False)),
+        "z_axis_speed": float(experiment.get("z_axis_speed", 0)),
+        "extra_info": experiment.get(
+            "extra_info", "Informações adicionais não informadas"
+        ),
+    }
+    return db_handler.post_experiment(clean_experiment)
 
 
 @eel.expose
@@ -178,7 +184,25 @@ def patch_experiment_by_id(data):
         "name": data.get("name", current_experiment.name),
         "extra_info": data.get("extra_info", current_experiment.extra_info),
     }
-    db_handler.patch_experiment_by_id(experiment_id, patch_data)
+    try:
+        db_handler.patch_experiment_by_id(experiment_id, patch_data)
+        return True
+    except Exception as e:
+        ui_api.error_alert(str(e))
+        return False
+
+
+@eel.expose
+def delete_experiment_by_id(experiment_id):
+    """
+    Deletes the experiment with the given id
+    """
+    try:
+        db_handler.delete_experiment_by_id(experiment_id)
+        return True
+    except Exception as e:
+        ui_api.error_alert(str(e))
+        return False
 
 
 # --- Reading --- #
