@@ -63,6 +63,8 @@ This software is licensed and distributed under the **[GNU General Public Licens
 * React Circular Progressbar - [see license](https://github.com/kevinsqi/react-circular-progressbar/blob/master/LICENSE) 
 
 * React Transition Group - [see license](https://github.com/reactjs/react-transition-group/blob/master/LICENSE)
+
+* Reactjs popup - [see license](https://github.com/yjose/reactjs-popup/blob/master/LICENSE)
 ___
 
 Agradecemos do fundo do coração todos os autores dos diferentes projetos utilizados, **software livre** é liberdade, muito obrigado a todos.

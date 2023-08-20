@@ -23,7 +23,6 @@ import {
     SelectedExperimentType,
     SelectedExperimentsContext,
 } from "contexts/SelectedExperimentsContext";
-import EditMaterialPopup from "components/EditMaterialPopup/EditMaterialPopup";
 import EditExperimentPopup from "components/EditExperimentPopup/EditExperimentPopup";
 
 interface DropdownButtonProps {
