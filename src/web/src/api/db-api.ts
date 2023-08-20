@@ -50,7 +50,10 @@ export const getMaterialsDB = async (): Promise<MaterialType[]> => {
 
 export const getExperimentsDB = async (): Promise<ExperimentType[]> => {
     try {
-        return JSON.parse(await eel.get_experiments()()) as ExperimentType[];
+        const response = JSON.parse(
+            await eel.get_experiments()()
+        ) as ExperimentType[];
+        return response;
     } catch (error) {
         toast.error("Não foi possível receber os experimentos");
         return [];
@@ -87,9 +90,12 @@ export const getExperimentById = async (
     id: number
 ): Promise<ExperimentType | undefined> => {
     try {
-        return JSON.parse(
+        const response = JSON.parse(
             await eel.get_experiment_by_id(id)()
         ) as ExperimentType;
+        console.log(response);
+
+        return response;
     } catch (error) {
         toast.error("Não foi possível receber o corpo de id:  " + id);
         return undefined;

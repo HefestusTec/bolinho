@@ -30,6 +30,16 @@ class BaseModel(Model):
 
 
 class Material(BaseModel):
+    """
+    Material class
+    Attributes:
+        name: Name of the material
+        batch: Batch of the material
+        supplier_name: Name of the supplier
+        supplier_contact_info: Contact information of the supplier
+        extra_info: Extra information about the material
+    """
+
     id = AutoField()
     name = CharField()
     batch = CharField()
@@ -47,11 +57,12 @@ class Body(BaseModel):
         param_a: (Rectangle = length; Cylinder = External diameter; Tube = External diameter)
         param_b: (Rectangle = depth; Cylinder = NULL; Tube = Internal diameter)
         height: Height of the body
+        extra_info: Extra information about the body
     """
 
     id = AutoField()
     type = IntegerField()
-    material_id = ForeignKeyField(Material, backref="bodies")
+    material = ForeignKeyField(Material, backref="bodies")
     param_a = FloatField()
     param_b = FloatField()
     height = FloatField()
@@ -76,7 +87,7 @@ class Experiment(BaseModel):
 
     id = AutoField()
     name = CharField()
-    body_id = ForeignKeyField(Body, backref="experiments")
+    body = ForeignKeyField(Body, backref="experiments")
     date_time = DateTimeField(default=datetime.datetime.now())
     load_loss_limit = FloatField()
     max_load = FloatField()
@@ -98,7 +109,7 @@ class Reading(BaseModel):
     """
 
     id = AutoField()
-    experiment_id = ForeignKeyField(Experiment, backref="readings")
+    experiment = ForeignKeyField(Experiment, backref="readings")
     x = IntegerField()
     load = FloatField()
     z_pos = FloatField()
@@ -156,7 +167,7 @@ class DBHandler:
         return Experiment.get(Experiment.id == id)
 
     def get_experiments_by_material_id(self, material_id: int):
-        return Experiment.select().join(Body).where(Body.material_id == material_id)
+        return Experiment.select().join(Body).where(Body.material == material_id)
 
     # --- Reading --- #
 
@@ -166,13 +177,13 @@ class DBHandler:
     def get_load_over_time_by_experiment_id(self, experiment_id: int):
         # return x and load
         return Reading.select(Reading.x, Reading.load).where(
-            Reading.experiment_id == experiment_id
+            Reading.experiment == experiment_id
         )
 
     def get_load_over_position_by_experiment_id(self, experiment_id: int):
         # return z_pos and load
         return Reading.select(Reading.z_pos, Reading.load).where(
-            Reading.experiment_id == experiment_id
+            Reading.experiment == experiment_id
         )
 
     # --- Populate --- #

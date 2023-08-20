@@ -44,56 +44,6 @@ class DataPoint:
         self.y = y
 
 
-class Body:
-    """
-    Parameters of the test body
-
-    type:       Body format | 1 = Rectangle | 2 = Cylinder | 3 = Tube
-    param_a:    Rectangle = length | Cylinder = External diameter | Tube = External diameter
-    param_b:    Rectangle = depth | Cylinder = NULL | Tube = Internal diameter
-    height:     Height of the test body
-    """
-
-    def __init__(
-        self, id=0, type=1, material_id=0, param_a=0, param_b=0, height=0, extra_info=""
-    ):
-        self.id = id
-        self.type = type
-        self.material_id = material_id
-        self.param_a = param_a
-        self.param_b = param_b
-        self.height = height
-        self.extra_info = extra_info
-
-
-class Experiment:
-    def __init__(
-        self,
-        id=0,
-        name="None",
-        body_id=0,
-        date_time=0,
-        load_loss_limit=0,
-        max_load=0,
-        max_travel=0,
-        max_time=0,
-        z_axis_speed=0,
-        compress=False,
-        extra_info="",
-    ):
-        self.id = id
-        self.name = name
-        self.body_id = body_id
-        self.date_time = date_time
-        self.load_loss_limit = load_loss_limit
-        self.max_load = max_load
-        self.max_travel = max_travel
-        self.max_time = max_time
-        self.z_axis_speed = z_axis_speed
-        self.compress = compress
-        self.extra_info = extra_info
-
-
 class Material:
     """
     Class that gathers a material information
@@ -113,4 +63,82 @@ class Material:
         self.batch = batch
         self.supplier_name = supplier_name
         self.supplier_contact_info = supplier_contact_info
+        self.extra_info = extra_info
+
+
+class Body:
+    """
+    Parameters of the test body
+
+    type:       Body format | 1 = Rectangle | 2 = Cylinder | 3 = Tube
+    param_a:    Rectangle = length | Cylinder = External diameter | Tube = External diameter
+    param_b:    Rectangle = depth | Cylinder = NULL | Tube = Internal diameter
+    height:     Height of the test body
+    """
+
+    def __init__(
+        self,
+        id=0,
+        type=1,
+        material=Material(
+            id=0,
+            name="Base Material",
+            batch="",
+            supplier_name="",
+            supplier_contact_info="",
+            extra_info="",
+        ),
+        param_a=0,
+        param_b=0,
+        height=0,
+        extra_info="",
+    ):
+        self.id = id
+        self.type = type
+        self.material = material
+        self.param_a = param_a
+        self.param_b = param_b
+        self.height = height
+        self.extra_info = extra_info
+
+
+class Experiment:
+    def __init__(
+        self,
+        id=0,
+        name="None",
+        body: Body = Body(
+            id=0,
+            type=1,
+            material=Material(
+                name="Material",
+                batch="Batch",
+                supplier_name="",
+                supplier_contact_info="",
+                extra_info="",
+            ),
+            param_a=0,
+            param_b=0,
+            height=0,
+            extra_info="",
+        ),
+        date_time=0,
+        load_loss_limit=0,
+        max_load=0,
+        max_travel=0,
+        max_time=0,
+        z_axis_speed=0,
+        compress=False,
+        extra_info="",
+    ):
+        self.id = id
+        self.name = name
+        self.body = body
+        self.date_time = date_time
+        self.load_loss_limit = load_loss_limit
+        self.max_load = max_load
+        self.max_travel = max_travel
+        self.max_time = max_time
+        self.z_axis_speed = z_axis_speed
+        self.compress = compress
         self.extra_info = extra_info
