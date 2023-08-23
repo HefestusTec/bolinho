@@ -16,10 +16,9 @@
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
 
 import { Dispatch, SetStateAction, createContext } from "react";
-import { ExperimentType } from "types/DataBaseTypes";
 
 export type SelectedExperimentType = {
-    experiment: ExperimentType;
+    id: number;
     color: string;
 };
 

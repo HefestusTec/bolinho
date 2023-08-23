@@ -43,6 +43,7 @@ import {
 } from "types/DataBaseTypes";
 import { getBodyById, getMaterialById } from "api/db-api";
 import { RefreshDataContext } from "api/contexts/RefreshContext";
+import useFetchExperiments from "hooks/useFetchExperiments";
 
 interface ExperimentsInspectorProps {}
 
@@ -59,33 +60,37 @@ const ExperimentsInspector: FunctionComponent<
     const [myBody, setMyBody] = useState<BodyType>(defaultBodyType);
     const [myMaterial, setMyMaterial] =
         useState<MaterialType>(defaultMaterialType);
+
+    const [experimentList] = useFetchExperiments();
+
     const myExperiment = useMemo<ExperimentType>(() => {
         if (activeExperimentId < 0)
             return defaultExperimentType as ExperimentType;
 
-        return selectedExperiments[activeExperimentId].experiment;
-    }, [activeExperimentId, selectedExperiments]);
+        return experimentList[activeExperimentId];
+    }, [activeExperimentId, experimentList]);
 
     const myButtons = useMemo<ReactNode[]>(() => {
-        return selectedExperiments.map((element, idx) => (
+        return experimentList.map((element, idx) => (
             <ExperimentButton
                 experiment={element}
+                experimentColor={selectedExperiments[idx].color}
                 activeExperimentId={activeExperimentId}
                 myId={idx}
                 setActiveExperimentId={setActiveExperimentId}
-                key={element.experiment.id.toString() + idx}
+                key={element.id.toString() + idx}
             />
         ));
-    }, [activeExperimentId, selectedExperiments]);
+    }, [activeExperimentId, selectedExperiments, experimentList]);
 
     useEffect(() => {
         if (activeExperimentId < 0) return;
-        getBodyById(selectedExperiments[activeExperimentId].experiment.body.id)
+        getBodyById(experimentList[activeExperimentId].body.id)
             .then((bodyResponse) => {
                 if (bodyResponse) setMyBody(bodyResponse);
             })
             .catch((err) => console.log(err));
-    }, [activeExperimentId, selectedExperiments, refreshData]);
+    }, [activeExperimentId, experimentList, refreshData]);
 
     useEffect(() => {
         if (activeExperimentId < 0) return;
@@ -119,12 +124,12 @@ const ExperimentsInspector: FunctionComponent<
 
     useEffect(() => {
         setActiveExperimentId((currentId) => {
-            if (currentId < 0 && selectedExperiments.length)
-                return selectedExperiments.length - 1;
+            if (currentId < 0 && experimentList.length)
+                return experimentList.length - 1;
             return currentId;
         });
-        setActiveExperimentId(selectedExperiments.length - 1);
-    }, [selectedExperiments]);
+        setActiveExperimentId(experimentList.length - 1);
+    }, [experimentList]);
 
     const getHeaderColorClassName = () => {
         if (colorPickerIsActive) {
@@ -171,7 +176,7 @@ const ExperimentsInspector: FunctionComponent<
         try {
             let objectListCopy = [...selectedExperiments];
             const idx = objectListCopy.findIndex(
-                (element) => element.experiment.id === activeExperimentId
+                (element) => element.id === activeExperimentId
             );
 
             objectListCopy[idx].color =

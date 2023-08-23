@@ -39,10 +39,10 @@ const DropdownButton: FunctionComponent<DropdownButtonProps> = ({
         if (experiment === undefined) return;
 
         for (let i = 0; i < selectedExperiments.length; i++) {
-            if (selectedExperiments[i].experiment.id === experiment.id) return;
+            if (selectedExperiments[i].id === experiment.id) return;
         }
         const newSelectedObj: SelectedExperimentType = {
-            experiment: experiment,
+            id: experiment.id,
             color: getRandomColor(),
         };
 

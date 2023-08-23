@@ -23,10 +23,11 @@ import React, {
     SetStateAction,
 } from "react";
 import styleModule from "./experimentButton.module.css";
-import { SelectedExperimentType } from "contexts/SelectedExperimentsContext";
+import { ExperimentType } from "types/DataBaseTypes";
 
 interface ExperimentButtonProps {
-    experiment: SelectedExperimentType;
+    experiment: ExperimentType;
+    experimentColor: string;
     myId: number;
     activeExperimentId: number;
     setActiveExperimentId: Dispatch<SetStateAction<number>>;
@@ -34,6 +35,7 @@ interface ExperimentButtonProps {
 
 const ExperimentButton: FunctionComponent<ExperimentButtonProps> = ({
     experiment,
+    experimentColor,
     activeExperimentId,
     myId,
     setActiveExperimentId,
@@ -60,7 +62,7 @@ const ExperimentButton: FunctionComponent<ExperimentButtonProps> = ({
 
     const getStyleColor = () => {
         try {
-            return experiment.color;
+            return experimentColor;
         } catch (error) {
             return "FFFFFF";
         }
@@ -75,11 +77,10 @@ const ExperimentButton: FunctionComponent<ExperimentButtonProps> = ({
             >
                 <div className={styleModule.experiment_text}>
                     <div className={styleModule.experiment_material_text}>
-                        {experiment.experiment.name}
+                        {experiment.name}
                     </div>
                     <div className={styleModule.experiment_experiment_text}>
-                        Idx:{experiment.experiment.id} [
-                        {experiment.experiment.date_time}]
+                        Idx:{experiment.id} [{experiment.date_time}]
                     </div>
                 </div>
             </button>

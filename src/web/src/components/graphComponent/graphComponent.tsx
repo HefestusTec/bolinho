@@ -15,12 +15,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
 
-import React, {
-    useState,
-    useEffect,
-    FunctionComponent,
-    useContext,
-} from "react";
+import React, { useState, useEffect, FunctionComponent } from "react";
 import styleModule from "./graphComponent.module.css";
 
 import "rc-slider/assets/index.css";
@@ -31,7 +26,7 @@ import { DataPointType } from "types/DataPointTypes";
 import { SelectedExperimentType } from "contexts/SelectedExperimentsContext";
 import { getLoadOverTimeByExperimentId } from "api/db-api";
 import { toast } from "react-toastify";
-import { RefreshDataContext } from "api/contexts/RefreshContext";
+import useFetchExperiments from "hooks/useFetchExperiments";
 
 type maxValueType = {
     plotDataArray: ExperimentPlotData[];
@@ -66,27 +61,29 @@ const GraphComponent: FunctionComponent<GraphComponentProps> = ({
 
     const [leftHandlePos, setLeftHandlePos] = useState(0);
     const [rightHandlePos, setRightHandlePos] = useState(100);
-    const [refreshData] = useContext(RefreshDataContext);
 
     const [showSideBar, setShowSideBar] = useState(true);
+
+    const [experimentList] = useFetchExperiments();
 
     useEffect(() => {
         const generateExperimentPlotData = async () => {
             let returnPlotDataArray: ExperimentPlotData[] = [];
-            for (let i = 0; i < selectedExperiments.length; i++) {
-                const experiment = selectedExperiments[i];
+            for (let i = 0; i < experimentList.length; i++) {
+                const experiment = experimentList[i];
+                const experimentColor = selectedExperiments[i].color;
                 const data: DataPointType[] =
-                    await getLoadOverTimeByExperimentId(
-                        experiment.experiment.id
-                    ).catch((err) => {
-                        toast.error(err);
-                        return [];
-                    });
+                    await getLoadOverTimeByExperimentId(experiment.id).catch(
+                        (err) => {
+                            toast.error(err);
+                            return [];
+                        }
+                    );
                 returnPlotDataArray.push(
                     new ExperimentPlotData(
-                        experiment.experiment.name,
+                        experiment.name,
                         data,
-                        experiment.color
+                        experimentColor
                     )
                 );
             }
@@ -100,7 +97,7 @@ const GraphComponent: FunctionComponent<GraphComponentProps> = ({
                 maxValues: maxVals,
             });
         });
-    }, [selectedExperiments, refreshData]);
+    }, [selectedExperiments, experimentList]);
 
     const getOpenSideBarButtonClassName = () => {
         return showSideBar
