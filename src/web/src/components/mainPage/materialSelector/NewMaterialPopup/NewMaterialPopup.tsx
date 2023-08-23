@@ -20,7 +20,7 @@ import CustomButtonArray from "components/customSubComponents/CustomButtonArray/
 import CustomTextInput from "components/customSubComponents/CustomTextInput/CustomTextInput";
 import CustomButton from "components/customSubComponents/customButton/customButton";
 import React from "react";
-import { patchExperimentByIdJS, postMaterialJS } from "api/backend-api";
+import { postMaterialJS } from "api/backend-api";
 import { toast } from "react-toastify";
 
 interface NewMaterialPopupProps {
@@ -91,7 +91,6 @@ const NewMaterialPopup: FunctionComponent<NewMaterialPopupProps> = ({
                     bgColor="var(--positive_button_color)"
                     fontColor="var(--font_color_inverted)"
                     clickCallBack={() => {
-                        console.log("new Mat");
                         postMaterialJS({
                             name: name,
                             batch: batch,

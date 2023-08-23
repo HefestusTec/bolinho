@@ -59,5 +59,15 @@ class CoreAPI:
         """
         eel.setIsConnectedJS(is_connected)
 
+    def refresh_data(self):
+        """
+        Triggers a call to refresh the data.
+
+        It will refetch every material, element and reading.
+
+        A use case is to trigger a refresh to show an update on the readings
+        """
+        eel.refreshDataJS()
+
 
 core_api = CoreAPI()

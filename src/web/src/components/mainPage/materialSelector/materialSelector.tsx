@@ -35,14 +35,15 @@ import BackgroundFader from "components/backgroundFader/backgroundFader";
 import ContainerComponent from "components/containerComponent/containerComponent";
 import { PopupActions } from "reactjs-popup/dist/types";
 import NewMaterialPopup from "./NewMaterialPopup/NewMaterialPopup";
-import { NeedsToRefreshContext } from "contexts/NeedsToRefreshContext";
+import { RefreshDataContext } from "api/contexts/RefreshContext";
+import useRefresh from "hooks/useRefresh";
 
 interface MaterialSelectorProps {}
 
 const MaterialSelector: FunctionComponent<MaterialSelectorProps> = () => {
     const [materialList, setMaterialList] = useState<MaterialType[]>([]);
 
-    const [needsToRefresh] = useContext(NeedsToRefreshContext);
+    const [refreshData] = useContext(RefreshDataContext);
 
     const [searchQuery, setSearchQuery] = useState<string>("");
     const ref = useRef<PopupActions>(null) as RefObject<PopupActions>;
@@ -57,7 +58,7 @@ const MaterialSelector: FunctionComponent<MaterialSelectorProps> = () => {
         getMaterialsDB().then((response) => {
             setMaterialList(response);
         });
-    }, [needsToRefresh]);
+    }, [refreshData]);
 
     const createButton = (material: MaterialType, idx: number) => {
         return (

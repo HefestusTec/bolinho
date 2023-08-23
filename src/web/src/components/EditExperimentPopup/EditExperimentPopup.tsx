@@ -19,24 +19,27 @@ import { FunctionComponent, useContext, useEffect, useState } from "react";
 import CustomButtonArray from "components/customSubComponents/CustomButtonArray/CustomButtonArray";
 import CustomTextInput from "components/customSubComponents/CustomTextInput/CustomTextInput";
 import CustomButton from "components/customSubComponents/customButton/customButton";
-import React from "react";
-import { patchExperimentByIdJS } from "api/backend-api";
+import { deleteExperimentByIdJS, patchExperimentByIdJS } from "api/backend-api";
 import { ExperimentType } from "types/DataBaseTypes";
-import { NeedsToRefreshContext } from "contexts/NeedsToRefreshContext";
+import ContainerComponent from "components/containerComponent/containerComponent";
+import { toast } from "react-toastify";
+import { RefreshDataContext } from "api/contexts/RefreshContext";
+import useRefresh from "hooks/useRefresh";
 
 interface EditExperimentPopupProps {
     experiment: ExperimentType;
+    closeTooltip?: () => void;
 }
 
 const EditExperimentPopup: FunctionComponent<EditExperimentPopupProps> = ({
     experiment,
+    closeTooltip,
 }) => {
     const [name, setName] = useState<string>(experiment.name);
     const [extraInfo, setExtraInfo] = useState<string>(experiment.extra_info);
 
-    const [needsToRefresh, setNeedsToRefresh] = useContext(
-        NeedsToRefreshContext
-    );
+    const [refreshData] = useContext(RefreshDataContext);
+    const refresh = useRefresh();
 
     const [nameAlert, setNameAlert] = useState<boolean>(false);
     const [extraInfoAlert, setExtraInfoAlert] = useState<boolean>(false);
@@ -44,10 +47,50 @@ const EditExperimentPopup: FunctionComponent<EditExperimentPopupProps> = ({
     useEffect(() => {
         setNameAlert(name !== experiment.name);
         setExtraInfoAlert(extraInfo !== experiment.extra_info);
-    }, [name, extraInfo, experiment, needsToRefresh]);
+    }, [name, extraInfo, experiment, refreshData]);
+
+    const saveExperiment = () => {
+        patchExperimentByIdJS({
+            id: experiment.id,
+            name: name,
+            extra_info: extraInfo,
+        }).then((response) => {
+            if (response) {
+                toast.success("Experimento atualizado com sucesso");
+                refresh();
+                if (closeTooltip) closeTooltip();
+                return;
+            }
+            toast.error("Não foi possível atualizar esse experimento");
+        });
+    };
+    const deleteExperiment = () => {
+        deleteExperimentByIdJS(experiment.id).then((response) => {
+            if (response) {
+                toast.success("Experimento deletado com sucesso");
+                refresh();
+                if (closeTooltip) closeTooltip();
+                return;
+            }
+            toast.error("Não foi possível deletar esse experimento");
+        });
+    };
 
     return (
-        <React.Fragment>
+        <ContainerComponent
+            headerText={"Editar experimento"}
+            headerButton={
+                <CustomButton
+                    fontSize="var(--font_s)"
+                    fontColor="var(--font_color_inverted)"
+                    bgColor="var(--negative_button_color)"
+                    clickCallBack={deleteExperiment}
+                    padding="5px"
+                >
+                    EXCLUIR
+                </CustomButton>
+            }
+        >
             <CustomTextInput
                 title="Nome"
                 setValue={setName}
@@ -68,23 +111,25 @@ const EditExperimentPopup: FunctionComponent<EditExperimentPopupProps> = ({
             />
             <CustomButtonArray>
                 <CustomButton
+                    bgColor="var(--button_inactive_color)"
+                    fontColor="var(--font_color)"
+                    clickCallBack={() => {
+                        if (closeTooltip) closeTooltip();
+                    }}
+                    width="50%"
+                >
+                    Cancelar
+                </CustomButton>
+                <CustomButton
                     bgColor="var(--positive_button_color)"
                     fontColor="var(--font_color_inverted)"
-                    clickCallBack={() => {
-                        patchExperimentByIdJS({
-                            id: experiment.id,
-                            name: name,
-                            extra_info: extraInfo,
-                        }).then(() => {
-                            setNeedsToRefresh(true);
-                        });
-                    }}
+                    clickCallBack={saveExperiment}
                     width="50%"
                 >
                     Salvar
                 </CustomButton>
             </CustomButtonArray>
-        </React.Fragment>
+        </ContainerComponent>
     );
 };
 

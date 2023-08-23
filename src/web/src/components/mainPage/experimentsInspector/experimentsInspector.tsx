@@ -21,6 +21,7 @@ import React, {
     Suspense,
     FunctionComponent,
     useMemo,
+    ReactNode,
 } from "react";
 import ExperimentButton from "./experimentButton/experimentButton";
 
@@ -31,10 +32,7 @@ import ExperimentDescription from "./experimentDescription/experimentDescription
 import { toast } from "react-toastify";
 
 import styleModule from "./experimentsInspector.module.css";
-import {
-    SelectedExperimentType,
-    SelectedExperimentsContext,
-} from "contexts/SelectedExperimentsContext";
+import { SelectedExperimentsContext } from "contexts/SelectedExperimentsContext";
 import {
     BodyType,
     ExperimentType,
@@ -44,6 +42,7 @@ import {
     defaultMaterialType,
 } from "types/DataBaseTypes";
 import { getBodyById, getMaterialById } from "api/db-api";
+import { RefreshDataContext } from "api/contexts/RefreshContext";
 
 interface ExperimentsInspectorProps {}
 
@@ -53,6 +52,7 @@ const ExperimentsInspector: FunctionComponent<
     const [selectedExperiments, setSelectedExperiments] = useContext(
         SelectedExperimentsContext
     );
+    const [refreshData] = useContext(RefreshDataContext);
 
     const [activeExperimentId, setActiveExperimentId] = useState<number>(-1);
     const [colorPickerIsActive, setColorPickerIsActive] = useState(false);
@@ -66,15 +66,26 @@ const ExperimentsInspector: FunctionComponent<
         return selectedExperiments[activeExperimentId].experiment;
     }, [activeExperimentId, selectedExperiments]);
 
+    const myButtons = useMemo<ReactNode[]>(() => {
+        return selectedExperiments.map((element, idx) => (
+            <ExperimentButton
+                experiment={element}
+                activeExperimentId={activeExperimentId}
+                myId={idx}
+                setActiveExperimentId={setActiveExperimentId}
+                key={element.experiment.id.toString() + idx}
+            />
+        ));
+    }, [activeExperimentId, selectedExperiments]);
+
     useEffect(() => {
         if (activeExperimentId < 0) return;
-
         getBodyById(selectedExperiments[activeExperimentId].experiment.body.id)
             .then((bodyResponse) => {
                 if (bodyResponse) setMyBody(bodyResponse);
             })
             .catch((err) => console.log(err));
-    }, [activeExperimentId, selectedExperiments]);
+    }, [activeExperimentId, selectedExperiments, refreshData]);
 
     useEffect(() => {
         if (activeExperimentId < 0) return;
@@ -84,25 +95,7 @@ const ExperimentsInspector: FunctionComponent<
                 if (materialResponse) setMyMaterial(materialResponse);
             })
             .catch((err) => console.log(err));
-    }, [myBody, activeExperimentId]);
-
-    const createButton = (object: SelectedExperimentType, idx: number) => {
-        return (
-            <ExperimentButton
-                experiment={object}
-                activeExperimentId={activeExperimentId}
-                myId={idx}
-                setActiveExperimentId={setActiveExperimentId}
-                key={object.experiment.id.toString() + idx}
-            />
-        );
-    };
-
-    const makeButtons = () => {
-        return selectedExperiments.map((element, idx) =>
-            createButton(element, idx)
-        );
-    };
+    }, [myBody, activeExperimentId, refreshData]);
 
     const makeHeaderText = () => {
         if (activeExperimentId < 0) return "Selecione um experimento";
@@ -245,7 +238,7 @@ const ExperimentsInspector: FunctionComponent<
                                 styleModule.material_inspector_search_area_ul
                             }
                         >
-                            {makeButtons()}
+                            {myButtons}
                         </ul>
                     </div>
                     <Suspense fallback={<div>Carregando...</div>}>

@@ -26,9 +26,9 @@ import styleModule from "./materialSelectorButton.module.css";
 import DropdownButton from "./dropdownButton/dropdownButton";
 import { ExperimentType, MaterialType } from "types/DataBaseTypes";
 import { getExperimentsByMaterialId } from "api/db-api";
-import ConfigButton from "./configButton/configButton";
 import { CSSTransition } from "react-transition-group";
 import GlobalConfigContext from "contexts/globalConfigContext";
+import ConfigButton from "./configButton/configButton";
 import EditMaterialPopup from "components/EditMaterialPopup/EditMaterialPopup";
 
 interface MaterialSelectorButtonProps {
@@ -116,7 +116,6 @@ const MaterialSelectorButton: FunctionComponent<
                             ? "var(--button_active_color)"
                             : "var(--button_inactive_color)"
                     }
-                    popupTitle="Editar material"
                 >
                     <EditMaterialPopup material={material} />
                 </ConfigButton>

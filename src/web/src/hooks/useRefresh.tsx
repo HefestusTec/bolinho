@@ -14,35 +14,17 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
+import { RefreshDataContext } from "api/contexts/RefreshContext";
+import { useContext } from "react";
 
-import {
-    Dispatch,
-    FunctionComponent,
-    SetStateAction,
-    createContext,
-    useState,
-} from "react";
+const useRefresh = () => {
+    const [, setRefreshData] = useContext(RefreshDataContext);
 
-export const NeedsToRefreshContext = createContext<
-    [boolean, Dispatch<SetStateAction<boolean>>]
->([true, () => {}]);
+    const refresh = () => {
+        setRefreshData((old) => !old);
+    };
 
-interface NeedsToRefreshProviderProps {
-    children: any;
-}
-
-const NeedsToRefreshProvider: FunctionComponent<
-    NeedsToRefreshProviderProps
-> = ({ children }) => {
-    const [needsToRefresh, setNeedsToRefresh] = useState<boolean>(true);
-
-    return (
-        <NeedsToRefreshContext.Provider
-            value={[needsToRefresh, setNeedsToRefresh]}
-        >
-            {children}
-        </NeedsToRefreshContext.Provider>
-    );
+    return refresh;
 };
 
-export default NeedsToRefreshProvider;
+export default useRefresh;

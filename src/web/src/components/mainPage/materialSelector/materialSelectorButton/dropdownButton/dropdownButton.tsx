@@ -18,12 +18,12 @@ import React, { useContext, FunctionComponent } from "react";
 import styleModule from "./dropdownButton.module.css";
 import { getRandomColor } from "../../../../../helpers";
 import { ExperimentType } from "types/DataBaseTypes";
-import ConfigButton from "../configButton/configButton";
 import {
     SelectedExperimentType,
     SelectedExperimentsContext,
 } from "contexts/SelectedExperimentsContext";
 import EditExperimentPopup from "components/EditExperimentPopup/EditExperimentPopup";
+import ConfigButton from "../configButton/configButton";
 
 interface DropdownButtonProps {
     experiment: ExperimentType;
@@ -67,10 +67,7 @@ const DropdownButton: FunctionComponent<DropdownButtonProps> = ({
                     {experiment.id}
                 </div>
             </button>
-            <ConfigButton
-                bgColor="var(--content_background_color)"
-                popupTitle="Editar experimento"
-            >
+            <ConfigButton bgColor="var(--content_background_color)">
                 <EditExperimentPopup experiment={experiment} />
             </ConfigButton>
         </li>

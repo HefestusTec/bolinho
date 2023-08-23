@@ -141,6 +141,20 @@ ___
     ```
 ___
 
+### refresh_data()
+!!! quote "refresh_data()"
+    Sets the variable "isConnected" on the front-end.
+
+    ``` python title="Python usage example"
+    from bolinho_api.core import core_api
+
+    add_material_to_db() #Arbitrary function that adds a material to the DB   
+
+    core_api.refresh_data()
+    ```
+___
+
+
 
 
 ## UI API

@@ -15,7 +15,12 @@
 // You should have received a copy of the GNU General Public License
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
 
-import React, { useState, useEffect, FunctionComponent } from "react";
+import React, {
+    useState,
+    useEffect,
+    FunctionComponent,
+    useContext,
+} from "react";
 import styleModule from "./graphComponent.module.css";
 
 import "rc-slider/assets/index.css";
@@ -26,6 +31,7 @@ import { DataPointType } from "types/DataPointTypes";
 import { SelectedExperimentType } from "contexts/SelectedExperimentsContext";
 import { getLoadOverTimeByExperimentId } from "api/db-api";
 import { toast } from "react-toastify";
+import { RefreshDataContext } from "api/contexts/RefreshContext";
 
 type maxValueType = {
     plotDataArray: ExperimentPlotData[];
@@ -60,6 +66,7 @@ const GraphComponent: FunctionComponent<GraphComponentProps> = ({
 
     const [leftHandlePos, setLeftHandlePos] = useState(0);
     const [rightHandlePos, setRightHandlePos] = useState(100);
+    const [refreshData] = useContext(RefreshDataContext);
 
     const [showSideBar, setShowSideBar] = useState(true);
 
@@ -93,7 +100,7 @@ const GraphComponent: FunctionComponent<GraphComponentProps> = ({
                 maxValues: maxVals,
             });
         });
-    }, [selectedExperiments]);
+    }, [selectedExperiments, refreshData]);
 
     const getOpenSideBarButtonClassName = () => {
         return showSideBar
