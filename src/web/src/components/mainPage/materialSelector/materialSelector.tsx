@@ -36,7 +36,6 @@ import ContainerComponent from "components/containerComponent/containerComponent
 import { PopupActions } from "reactjs-popup/dist/types";
 import NewMaterialPopup from "./NewMaterialPopup/NewMaterialPopup";
 import { RefreshDataContext } from "api/contexts/RefreshContext";
-import useRefresh from "hooks/useRefresh";
 
 interface MaterialSelectorProps {}
 

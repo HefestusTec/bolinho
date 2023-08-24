@@ -25,6 +25,7 @@ import ContainerComponent from "components/containerComponent/containerComponent
 import { toast } from "react-toastify";
 import { RefreshDataContext } from "api/contexts/RefreshContext";
 import useRefresh from "hooks/useRefresh";
+import useConfirm from "hooks/useConfirm";
 
 interface EditExperimentPopupProps {
     experiment: ExperimentType;
@@ -43,6 +44,7 @@ const EditExperimentPopup: FunctionComponent<EditExperimentPopupProps> = ({
 
     const [nameAlert, setNameAlert] = useState<boolean>(false);
     const [extraInfoAlert, setExtraInfoAlert] = useState<boolean>(false);
+    const [ConfirmationDialog, confirm] = useConfirm();
 
     useEffect(() => {
         setNameAlert(name !== experiment.name);
@@ -84,7 +86,9 @@ const EditExperimentPopup: FunctionComponent<EditExperimentPopupProps> = ({
                     fontSize="var(--font_s)"
                     fontColor="var(--font_color_inverted)"
                     bgColor="var(--negative_button_color)"
-                    clickCallBack={deleteExperiment}
+                    clickCallBack={() => {
+                        confirm(deleteExperiment);
+                    }}
                     padding="5px"
                 >
                     EXCLUIR
@@ -123,12 +127,15 @@ const EditExperimentPopup: FunctionComponent<EditExperimentPopupProps> = ({
                 <CustomButton
                     bgColor="var(--positive_button_color)"
                     fontColor="var(--font_color_inverted)"
-                    clickCallBack={saveExperiment}
+                    clickCallBack={() => {
+                        confirm(saveExperiment);
+                    }}
                     width="50%"
                 >
                     Salvar
                 </CustomButton>
             </CustomButtonArray>
+            <ConfirmationDialog />
         </ContainerComponent>
     );
 };

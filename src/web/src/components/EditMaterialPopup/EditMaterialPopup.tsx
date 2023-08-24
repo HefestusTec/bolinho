@@ -26,6 +26,7 @@ import { RefreshDataContext } from "api/contexts/RefreshContext";
 import ContainerComponent from "components/containerComponent/containerComponent";
 import { toast } from "react-toastify";
 import useRefresh from "hooks/useRefresh";
+import useConfirm from "hooks/useConfirm";
 
 interface EditMaterialPopupProps {
     material: MaterialType;
@@ -50,6 +51,7 @@ const EditMaterialPopup: FunctionComponent<EditMaterialPopupProps> = ({
     const [supplierContactInfoAlert, setSupplierContactInfoAlert] =
         useState<boolean>(false);
     const [extraInfoAlert, setExtraInfoAlert] = useState<boolean>(false);
+    const [ConfirmationDialog, confirm] = useConfirm();
 
     useEffect(() => {
         setSupplierNameAlert(supplierName !== material.supplier_name);
@@ -95,7 +97,9 @@ const EditMaterialPopup: FunctionComponent<EditMaterialPopupProps> = ({
                     fontSize="var(--font_s)"
                     fontColor="var(--font_color_inverted)"
                     bgColor="var(--negative_button_color)"
-                    clickCallBack={deleteMaterial}
+                    clickCallBack={() => {
+                        confirm(deleteMaterial);
+                    }}
                     padding="5px"
                 >
                     EXCLUIR
@@ -146,12 +150,15 @@ const EditMaterialPopup: FunctionComponent<EditMaterialPopupProps> = ({
                 <CustomButton
                     bgColor="var(--positive_button_color)"
                     fontColor="var(--font_color_inverted)"
-                    clickCallBack={saveMaterial}
+                    clickCallBack={() => {
+                        confirm(saveMaterial);
+                    }}
                     width="50%"
                 >
                     Salvar
                 </CustomButton>
             </CustomButtonArray>
+            <ConfirmationDialog />
         </ContainerComponent>
     );
 };
