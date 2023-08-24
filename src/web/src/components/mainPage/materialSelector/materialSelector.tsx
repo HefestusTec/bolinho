@@ -98,14 +98,17 @@ const MaterialSelector: FunctionComponent<MaterialSelectorProps> = () => {
                                 styleModule.selector_header_search_button
                             }
                             aria-label="Search Button"
-                        ></button>
+                        />
                     </span>
-                    <CustomButton className={styleModule.expand_button}>
+                    <CustomButton
+                        className={styleModule.expand_button}
+                        bgColor="var(--button_active_color)"
+                        padding="5px"
+                    >
                         <Popup
                             trigger={() => (
                                 <div
                                     style={{
-                                        height: "100%",
                                         paddingTop: "auto",
                                         paddingBottom: "auto",
                                         display: "flex",

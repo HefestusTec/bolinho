@@ -137,6 +137,10 @@ html {
     --animation_slow: 0;
 }
 
+[enable-hover="enable"] {
+    --use_hover: "enable";
+}
+
 [custom-font-size="50%"] {
     --font_xxs: 6px;
     --font_xs: 7px;

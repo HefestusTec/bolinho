@@ -22,6 +22,7 @@ import CustomButton from "components/customSubComponents/customButton/customButt
 import React from "react";
 import { postMaterialJS } from "api/backend-api";
 import { toast } from "react-toastify";
+import useConfirm from "hooks/useConfirm";
 
 interface NewMaterialPopupProps {
     closePopup: () => void;
@@ -39,6 +40,24 @@ const NewMaterialPopup: FunctionComponent<NewMaterialPopupProps> = ({
         "SEM Dados do fornecedor"
     );
     const [extraInfo, setExtraInfo] = useState<string>("SEM EXTRA INFO");
+    const [ConfirmationDialog, confirm] = useConfirm();
+
+    const postNewMaterial = () => {
+        postMaterialJS({
+            name: name,
+            batch: batch,
+            extra_info: extraInfo,
+            supplier_contact_info: supplierContactInfo,
+            supplier_name: supplierName,
+        }).then((response) => {
+            if (response >= 0) {
+                toast.success("Material criado com sucesso");
+                closePopup();
+            } else {
+                toast.error("Erro durante a criação do material");
+            }
+        });
+    };
     return (
         <React.Fragment>
             <CustomTextInput
@@ -88,31 +107,27 @@ const NewMaterialPopup: FunctionComponent<NewMaterialPopupProps> = ({
             />
             <CustomButtonArray>
                 <CustomButton
+                    bgColor="var(--button_inactive_color)"
+                    fontColor="var(--font_color)"
+                    clickCallBack={() => {
+                        if (closePopup) closePopup();
+                    }}
+                    width="50%"
+                >
+                    Cancelar
+                </CustomButton>
+                <CustomButton
                     bgColor="var(--positive_button_color)"
                     fontColor="var(--font_color_inverted)"
                     clickCallBack={() => {
-                        postMaterialJS({
-                            name: name,
-                            batch: batch,
-                            extra_info: extraInfo,
-                            supplier_contact_info: supplierContactInfo,
-                            supplier_name: supplierName,
-                        }).then((response) => {
-                            if (response >= 0) {
-                                toast.success("Material criado com sucesso");
-                                closePopup();
-                            } else {
-                                toast.error(
-                                    "Erro durante a criação do material"
-                                );
-                            }
-                        });
+                        confirm(postNewMaterial);
                     }}
                     width="50%"
                 >
                     Salvar
                 </CustomButton>
             </CustomButtonArray>
+            <ConfirmationDialog />
         </React.Fragment>
     );
 };
