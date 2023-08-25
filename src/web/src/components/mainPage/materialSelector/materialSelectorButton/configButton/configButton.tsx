@@ -50,7 +50,7 @@ const ConfigButton: FunctionComponent<ConfigButtonProps> = ({
                         </div>
                     )}
                     ref={ref}
-                    position={"right center"}
+                    position={["bottom right", "bottom left", "top center"]}
                     closeOnDocumentClick
                     className={styleModule.popup_trigger}
                     keepTooltipInside=".App"
@@ -58,9 +58,8 @@ const ConfigButton: FunctionComponent<ConfigButtonProps> = ({
                     <React.Fragment>
                         <div
                             style={{
-                                display: "flex",
-                                height: "400px",
-                                width: "400px",
+                                width: "30vw",
+                                maxHeight: "70vh",
                                 overflowY: "scroll",
                             }}
                         >

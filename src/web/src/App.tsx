@@ -51,6 +51,19 @@ function App() {
         if (initialized) {
             setEnableHover(globalConfig.enableHover);
             saveConfigParams(globalConfig);
+            document.documentElement.setAttribute(
+                "data-theme",
+                globalConfig.theme
+            );
+            document.documentElement.setAttribute(
+                "animation-speed",
+                globalConfig.animationSpeed
+            );
+            document.documentElement.setAttribute(
+                "custom-font-size",
+                globalConfig.fontSize
+            );
+            document.documentElement.setAttribute("enable-hover", enableHover);
         } else {
             // Loading the config params from the file
             loadConfigParams().then((response) => {
@@ -60,7 +73,7 @@ function App() {
             });
             setInitialized(true);
         }
-    }, [globalConfig, initialized]);
+    }, [globalConfig, initialized, enableHover]);
 
     const getAppClassName = () => {
         if (globalConfig.shadows) return "App";
@@ -101,15 +114,7 @@ function App() {
                     <FocusProvider>
                         <ExperimentPageProvider>
                             <CurrentPageProvider>
-                                <div
-                                    className={getAppClassName()}
-                                    data-theme={globalConfig.theme}
-                                    animation-speed={
-                                        globalConfig.animationSpeed
-                                    }
-                                    custom-font-size={globalConfig.fontSize}
-                                    enable-hover={enableHover}
-                                >
+                                <div className={getAppClassName()}>
                                     {getVirtualKeyboard()}
                                     {prompter}
                                     {currentPage === "home" ? (

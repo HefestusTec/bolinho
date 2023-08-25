@@ -20,7 +20,7 @@
 /* This file tracks all css variables in the project */
 
 html {
-    --background_color: #ffffff; /* Background color of the components */
+    --background_color: #ffffff;
     --primary_color: #444444; /* Primary color, for example this is the color of the headers */
     --primary_color_shader: #525252; /* Search bar color */
     --widget_color: #525252; /* Widget color */
@@ -64,6 +64,39 @@ html {
     --num_rows_sub_page: 14;
 
     --zoom_scale: 1.4;
+}
+
+.nonemamsd {
+    /* Background color of the components */
+    --background_color: var(--background_color);
+    /* Primary color, for example this is the color of the headers */
+    --primary_color: var(--primary_color);
+    /* Search bar color */
+    --primary_color_shader: var(--primary_color_shader);
+    /* Widget color */
+    --widget_color: var(--widget_color);
+    /* Search button color */
+    --secondary_color: var(--secondary_color);
+    --button_active_color: var(--button_active_color);
+    --button_inactive_color: var(--button_inactive_color);
+    /* Second background color of the components */
+    --background2_color: var(--background2_color);
+    /* Background color of the content area */
+    --content_background_color: var(--content_background_color);
+    /* Main font color */
+    --font_color: var(--font_color);
+    /* Inverted font color */
+    --font_color_inverted: var(--font_color_inverted);
+    /* Auto invert color of icons */
+    --invert_icon: var(--invert_icon);
+    /* Color of positive buttons, such as go, start etc. */
+    --positive_button_color: var(--positive_button_color);
+    /* Color of positive buttons, such as go, start etc. */
+    --warning_button_color: var(--warning_button_color);
+    /* Color of negative buttons, such as end, cancel etc. */
+    --negative_button_color: var(--negative_button_color);
+    --active_color: var(--active_color); /* Color when you press a button */
+    --logo_schumacher: var(--logo_schumacher);
 }
 
 [data-theme="Claro"] {
@@ -135,10 +168,6 @@ html {
 [animation-speed="Desligado"] {
     --animation_fast: 0;
     --animation_slow: 0;
-}
-
-[enable-hover="enable"] {
-    --use_hover: "enable";
 }
 
 [custom-font-size="50%"] {

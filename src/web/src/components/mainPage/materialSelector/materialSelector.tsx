@@ -68,10 +68,7 @@ const MaterialSelector: FunctionComponent<MaterialSelectorProps> = () => {
         );
     };
     const makeButtons = (): ReactNode[] => {
-        return [
-            <button>info</button>,
-            filteredItems.map((element, idx) => createButton(element, idx)),
-        ];
+        return filteredItems.map((element, idx) => createButton(element, idx));
     };
     const closeTooltip = () => {
         ref?.current?.close();

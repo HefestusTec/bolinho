@@ -17,16 +17,16 @@
 
 import { FunctionComponent, useContext, useEffect, useState } from "react";
 import CustomButtonArray from "components/customSubComponents/CustomButtonArray/CustomButtonArray";
-import CustomTextInput from "components/customSubComponents/CustomTextInput/CustomTextInput";
 import CustomButton from "components/customSubComponents/customButton/customButton";
 import { deleteMaterialByIdJS, patchMaterialByIdJS } from "api/backend-api";
 import { MaterialType } from "types/DataBaseTypes";
-import CustomText from "components/customSubComponents/CustomText/CustomText";
 import { RefreshDataContext } from "api/contexts/RefreshContext";
 import ContainerComponent from "components/containerComponent/containerComponent";
 import { toast } from "react-toastify";
 import useRefresh from "hooks/useRefresh";
 import useConfirm from "hooks/useConfirm";
+import CustomTextAreaInput from "components/customSubComponents/CustomTextAreaInput/CustomTextAreaInput";
+import CustomTextArea from "components/customSubComponents/CustomTextArea/CustomTextArea";
 
 interface EditMaterialPopupProps {
     material: MaterialType;
@@ -91,7 +91,7 @@ const EditMaterialPopup: FunctionComponent<EditMaterialPopupProps> = ({
 
     return (
         <ContainerComponent
-            headerText={"Editar material"}
+            headerText={`Editar material `}
             headerButton={
                 <CustomButton
                     fontSize="var(--font_s)"
@@ -106,10 +106,20 @@ const EditMaterialPopup: FunctionComponent<EditMaterialPopupProps> = ({
                 </CustomButton>
             }
         >
-            <CustomText title="Nome: " value={material.name} />
-            <CustomText title="ID:" value={material.id.toString()} />
-            <CustomText title="Lote" value={material.batch} />
-            <CustomTextInput
+            <CustomTextArea
+                style={{
+                    padding: "10px",
+                }}
+            >
+                Dados:
+                <hr></hr>
+                Nome: {material.name}
+                <br />
+                ID: {material.id} <br />
+                Lote: {material.batch}
+                <br />
+            </CustomTextArea>
+            <CustomTextAreaInput
                 title="Fornecedor"
                 setValue={setSupplierName}
                 value={supplierName}
@@ -118,7 +128,7 @@ const EditMaterialPopup: FunctionComponent<EditMaterialPopupProps> = ({
                 alert={supplierNameAlert}
                 alertColor="var(--positive_button_color)"
             />
-            <CustomTextInput
+            <CustomTextAreaInput
                 title="Informações do fornecedor"
                 setValue={setSupplierContactInfo}
                 value={supplierContactInfo}
@@ -127,7 +137,7 @@ const EditMaterialPopup: FunctionComponent<EditMaterialPopupProps> = ({
                 alert={supplierContactInfoAlert}
                 alertColor="var(--positive_button_color)"
             />
-            <CustomTextInput
+            <CustomTextAreaInput
                 title="Extra"
                 setValue={setExtraInfo}
                 value={extraInfo}

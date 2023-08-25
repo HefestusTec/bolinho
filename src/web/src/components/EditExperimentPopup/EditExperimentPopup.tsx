@@ -17,7 +17,6 @@
 
 import { FunctionComponent, useContext, useEffect, useState } from "react";
 import CustomButtonArray from "components/customSubComponents/CustomButtonArray/CustomButtonArray";
-import CustomTextInput from "components/customSubComponents/CustomTextInput/CustomTextInput";
 import CustomButton from "components/customSubComponents/customButton/customButton";
 import { deleteExperimentByIdJS, patchExperimentByIdJS } from "api/backend-api";
 import { ExperimentType } from "types/DataBaseTypes";
@@ -26,6 +25,8 @@ import { toast } from "react-toastify";
 import { RefreshDataContext } from "api/contexts/RefreshContext";
 import useRefresh from "hooks/useRefresh";
 import useConfirm from "hooks/useConfirm";
+import CustomTextArea from "components/customSubComponents/CustomTextArea/CustomTextArea";
+import CustomTextAreaInput from "components/customSubComponents/CustomTextAreaInput/CustomTextAreaInput";
 
 interface EditExperimentPopupProps {
     experiment: ExperimentType;
@@ -95,7 +96,86 @@ const EditExperimentPopup: FunctionComponent<EditExperimentPopupProps> = ({
                 </CustomButton>
             }
         >
-            <CustomTextInput
+            <CustomTextArea
+                style={{
+                    padding: "10px",
+                }}
+            >
+                <table>
+                    <th>
+                        <b>Dados do experimento:</b>
+                    </th>
+                    <th>
+                        <br /> <br />
+                    </th>
+                    <tr>
+                        <th>ID</th>
+                        <th>{experiment.id}</th>
+                    </tr>
+                    <tr>
+                        <th>Data</th>
+                        <th>{experiment.date_time}</th>
+                    </tr>
+                    <tr>
+                        <th>Tipo de exp.</th>
+                        <th>
+                            {experiment.compress ? "compressão" : "expansão"}
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>Limite de perda de carga</th>
+                        <th>{experiment.load_loss_limit.toFixed(2)} N</th>
+                    </tr>
+                    <tr>
+                        <th>Carga máxima</th>
+                        <th>{experiment.max_load.toFixed(2)} N</th>
+                    </tr>
+                    <tr>
+                        <th>Distância máxima</th>
+                        <th>{experiment.max_travel.toFixed(2)} mm</th>
+                    </tr>
+                    <tr>
+                        <th>Velocidade do eixo-z</th>
+                        <th>{experiment.z_axis_speed.toFixed(2)} mm/s</th>
+                    </tr>
+                    <tr>
+                        <th>
+                            <hr />
+                        </th>
+                        <th>
+                            <br />
+                        </th>
+                    </tr>
+
+                    <th>
+                        <b>Dados do corpo:</b>
+                    </th>
+                    <th>
+                        <br /> <br />
+                    </th>
+                    <tr>
+                        <th>ID</th>
+                        <th>{experiment.body.id}</th>
+                    </tr>
+                    <tr>
+                        <th>Altura</th>
+                        <th>{experiment.body.height.toFixed(2)} mm</th>
+                    </tr>
+                    <tr>
+                        <th>Parâmetro A</th>
+                        <th>{experiment.body.param_a} </th>
+                    </tr>
+                    <tr>
+                        <th>Parâmetro B</th>
+                        <th>{experiment.body.param_b}</th>
+                    </tr>
+                    <tr>
+                        <th>Tipo</th>
+                        <th>{experiment.body.type}</th>
+                    </tr>
+                </table>
+            </CustomTextArea>
+            <CustomTextAreaInput
                 title="Nome"
                 setValue={setName}
                 value={name}
@@ -104,7 +184,7 @@ const EditExperimentPopup: FunctionComponent<EditExperimentPopupProps> = ({
                 alert={nameAlert}
                 alertColor="var(--positive_button_color)"
             />
-            <CustomTextInput
+            <CustomTextAreaInput
                 title="Extra"
                 setValue={setExtraInfo}
                 value={extraInfo}
