@@ -96,11 +96,7 @@ const EditExperimentPopup: FunctionComponent<EditExperimentPopupProps> = ({
                 </CustomButton>
             }
         >
-            <CustomTextArea
-                style={{
-                    padding: "10px",
-                }}
-            >
+            <CustomTextArea>
                 <table>
                     <th>
                         <b>Dados do experimento:</b>

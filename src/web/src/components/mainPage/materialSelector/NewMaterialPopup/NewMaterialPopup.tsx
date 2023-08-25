@@ -17,12 +17,12 @@
 
 import { FunctionComponent, useState } from "react";
 import CustomButtonArray from "components/customSubComponents/CustomButtonArray/CustomButtonArray";
-import CustomTextInput from "components/customSubComponents/CustomTextInput/CustomTextInput";
 import CustomButton from "components/customSubComponents/customButton/customButton";
 import React from "react";
 import { postMaterialJS } from "api/backend-api";
 import { toast } from "react-toastify";
 import useConfirm from "hooks/useConfirm";
+import CustomTextAreaInput from "components/customSubComponents/CustomTextAreaInput/CustomTextAreaInput";
 
 interface NewMaterialPopupProps {
     closePopup: () => void;
@@ -60,7 +60,7 @@ const NewMaterialPopup: FunctionComponent<NewMaterialPopupProps> = ({
     };
     return (
         <React.Fragment>
-            <CustomTextInput
+            <CustomTextAreaInput
                 title="Nome"
                 setValue={setName}
                 value={name}
@@ -69,7 +69,7 @@ const NewMaterialPopup: FunctionComponent<NewMaterialPopupProps> = ({
                 alert={false}
                 alertColor="var(--positive_button_color)"
             />
-            <CustomTextInput
+            <CustomTextAreaInput
                 title="Lote"
                 setValue={setBatch}
                 value={batch}
@@ -78,7 +78,7 @@ const NewMaterialPopup: FunctionComponent<NewMaterialPopupProps> = ({
                 alert={false}
                 alertColor="var(--positive_button_color)"
             />
-            <CustomTextInput
+            <CustomTextAreaInput
                 title="Fornecedor"
                 setValue={setSupplierName}
                 value={supplierName}
@@ -87,7 +87,7 @@ const NewMaterialPopup: FunctionComponent<NewMaterialPopupProps> = ({
                 alert={false}
                 alertColor="var(--positive_button_color)"
             />
-            <CustomTextInput
+            <CustomTextAreaInput
                 title="Informações do fornecedor"
                 setValue={setSupplierContactInfo}
                 value={supplierContactInfo}
@@ -96,7 +96,7 @@ const NewMaterialPopup: FunctionComponent<NewMaterialPopupProps> = ({
                 alert={false}
                 alertColor="var(--positive_button_color)"
             />
-            <CustomTextInput
+            <CustomTextAreaInput
                 title="Extra"
                 setValue={setExtraInfo}
                 value={extraInfo}

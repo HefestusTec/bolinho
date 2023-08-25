@@ -106,18 +106,27 @@ const EditMaterialPopup: FunctionComponent<EditMaterialPopupProps> = ({
                 </CustomButton>
             }
         >
-            <CustomTextArea
-                style={{
-                    padding: "10px",
-                }}
-            >
-                Dados:
-                <hr></hr>
-                Nome: {material.name}
-                <br />
-                ID: {material.id} <br />
-                Lote: {material.batch}
-                <br />
+            <CustomTextArea>
+                <table>
+                    <th>
+                        <b>Dados do material:</b>
+                    </th>
+                    <th>
+                        <br /> <br />
+                    </th>
+                    <tr>
+                        <th>Nome</th>
+                        <th>{material.name}</th>
+                    </tr>
+                    <tr>
+                        <th>ID</th>
+                        <th>{material.id}</th>
+                    </tr>
+                    <tr>
+                        <th>Lote</th>
+                        <th>{material.batch}</th>
+                    </tr>
+                </table>
             </CustomTextArea>
             <CustomTextAreaInput
                 title="Fornecedor"

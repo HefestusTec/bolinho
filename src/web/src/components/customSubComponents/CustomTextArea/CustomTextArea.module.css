@@ -23,16 +23,28 @@
     height: fit-content;
     min-height: calc(var(--font_m) * 2.7);
     margin-bottom: 2vh;
-    justify-content: space-between;
-    padding-left: 10px;
-    padding-right: 10px;
     margin-left: 5%;
     margin-right: 5%;
-    overflow: scroll;
+    overflow: hidden;
     color: var(--font_color);
     font-size: var(--font_s);
     border-radius: 10px;
     border: 3px solid var(--primary_color);
+}
+.text_area_header {
+    width: 100%;
+    min-height: calc(var(--font_m) * 2.7);
+    display: flex;
+    background-color: var(--primary_color);
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
+}
+
+.text_area_content {
+    padding-left: 10px;
+    padding-right: 10px;
+    overflow: scroll;
 }
 
 .custom_text_div table {
@@ -49,4 +61,15 @@ th {
 
 .custom_text_div tr:nth-child(odd) {
     background-color: var(--background2_color);
+}
+
+.expand_menu_indicator {
+    margin-left: 10px;
+    filter: invert(var(--invert_icon));
+    display: inline-block;
+    transition-duration: var(--animation_fast);
+}
+
+.expand_menu_indicator_open {
+    transform: rotate(180deg);
 }

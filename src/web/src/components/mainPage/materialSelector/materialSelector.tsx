@@ -124,23 +124,31 @@ const MaterialSelector: FunctionComponent<MaterialSelectorProps> = () => {
                             keepTooltipInside=".App"
                         >
                             <React.Fragment>
-                                <ContainerComponent
-                                    headerText={"Novo material"}
-                                    headerButton={
-                                        <CustomButton
-                                            fontSize="var(--font_s)"
-                                            fontColor="var(--font_color_inverted)"
-                                            bgColor="var(--negative_button_color)"
-                                            clickCallBack={closeTooltip}
-                                        >
-                                            Cancelar
-                                        </CustomButton>
-                                    }
+                                <div
+                                    style={{
+                                        width: "30vw",
+                                        maxHeight: "70vh",
+                                        overflowY: "scroll",
+                                    }}
                                 >
-                                    <NewMaterialPopup
-                                        closePopup={closeTooltip}
-                                    />
-                                </ContainerComponent>
+                                    <ContainerComponent
+                                        headerText={"Novo material"}
+                                        headerButton={
+                                            <CustomButton
+                                                fontSize="var(--font_s)"
+                                                fontColor="var(--font_color_inverted)"
+                                                bgColor="var(--negative_button_color)"
+                                                clickCallBack={closeTooltip}
+                                            >
+                                                Cancelar
+                                            </CustomButton>
+                                        }
+                                    >
+                                        <NewMaterialPopup
+                                            closePopup={closeTooltip}
+                                        />
+                                    </ContainerComponent>
+                                </div>
 
                                 <BackgroundFader
                                     faderIndex={-2}
