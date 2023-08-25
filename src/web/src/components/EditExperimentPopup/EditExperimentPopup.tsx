@@ -159,15 +159,15 @@ const EditExperimentPopup: FunctionComponent<EditExperimentPopupProps> = ({
                     </tr>
                     <tr>
                         <th>Parâmetro A</th>
-                        <th>{experiment.body.param_a} </th>
+                        <th>{experiment.body.param_a.toFixed(2)} </th>
                     </tr>
                     <tr>
                         <th>Parâmetro B</th>
-                        <th>{experiment.body.param_b}</th>
+                        <th>{experiment.body.param_b.toFixed(2)}</th>
                     </tr>
                     <tr>
                         <th>Tipo</th>
-                        <th>{experiment.body.type}</th>
+                        <th>{experiment.body.type.toFixed(2)}</th>
                     </tr>
                 </table>
             </CustomTextArea>

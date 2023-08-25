@@ -42,3 +42,24 @@ code {
 
     transition-duration: var(--animation_slow);
 }
+
+.fade-in-animated-enter {
+    transform: scale(0.9);
+    opacity: 0;
+}
+.fade-in-animated-enter-active {
+    opacity: 1;
+    transform: scale(1);
+
+    transition-timing-function: cubic-bezier(0.47, 1.64, 0.41, 0.7);
+    transition-duration: var(--animation_slow);
+}
+.fade-in-animated-exit {
+    opacity: 1;
+}
+.fade-in-animated-exit-active {
+    transform: scale(0.9);
+    opacity: 0;
+
+    transition-duration: var(--animation_slow);
+}

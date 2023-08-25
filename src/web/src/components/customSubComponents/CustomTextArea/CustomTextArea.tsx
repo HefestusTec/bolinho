@@ -15,10 +15,19 @@
 // You should have received a copy of the GNU General Public License
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
 
-import { CSSProperties, FunctionComponent, ReactNode, useState } from "react";
+import {
+    CSSProperties,
+    FunctionComponent,
+    ReactNode,
+    useContext,
+    useRef,
+    useState,
+} from "react";
 import styleModule from "./CustomTextArea.module.css";
 import CustomButton from "../customButton/customButton";
 import openIcon from "../../../resources/openMenu.svg";
+import { CSSTransition } from "react-transition-group";
+import GlobalConfigContext from "contexts/globalConfigContext";
 
 interface CustomTextAreaProps {
     children: ReactNode;
@@ -39,6 +48,22 @@ const CustomTextArea: FunctionComponent<CustomTextAreaProps> = ({
         }
         return [styleModule.expand_menu_indicator].join(" ");
     };
+    const [globalConfig] = useContext(GlobalConfigContext);
+    const nodeRef = useRef(null);
+
+    const getTimeout = () => {
+        switch (globalConfig.animationSpeed) {
+            case "Desligado":
+                return 0;
+            case "Normal":
+                return 350;
+            case "Rápido":
+                return 150;
+
+            default:
+                return 350;
+        }
+    };
 
     return (
         <div className={styleModule.custom_text_div}>
@@ -57,9 +82,21 @@ const CustomTextArea: FunctionComponent<CustomTextAreaProps> = ({
                     </div>
                 </CustomButton>
             </header>
-            <div style={style} className={styleModule.text_area_content}>
-                {isOpen && children}
-            </div>
+            <CSSTransition
+                nodeRef={nodeRef}
+                timeout={getTimeout()}
+                classNames={"fade-in-animated"}
+                in={isOpen}
+                unmountOnExit
+            >
+                <div
+                    style={style}
+                    className={styleModule.text_area_content}
+                    ref={nodeRef}
+                >
+                    {children}
+                </div>
+            </CSSTransition>
         </div>
     );
 };
