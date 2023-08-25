@@ -19,7 +19,7 @@ import { FocusContext } from "api/contexts/FocusContex";
 import MainPage from "components/mainPage/mainPage";
 import SideBar from "components/sideBar/sideBar";
 import SubPage from "components/subPage/subPage";
-import NeedsToRefreshProvider from "contexts/NeedsToRefreshContext";
+import RefreshDataProvider from "api/contexts/RefreshContext";
 import React, { useContext, useEffect } from "react";
 import { FunctionComponent, useState } from "react";
 import { PagesEnum } from "types/PagesEnum";
@@ -70,7 +70,7 @@ const Home: FunctionComponent<homeProps> = () => {
     };
 
     return (
-        <NeedsToRefreshProvider>
+        <RefreshDataProvider>
             <SideBar
                 currentPage={currentPage}
                 setCurrentPage={setCurrentPage}
@@ -80,7 +80,7 @@ const Home: FunctionComponent<homeProps> = () => {
                 <MainPage />
                 {createSubPages()}
             </div>
-        </NeedsToRefreshProvider>
+        </RefreshDataProvider>
     );
 };
 

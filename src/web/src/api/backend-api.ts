@@ -267,6 +267,7 @@ export const deleteMaterialByIdJS = async (id: number): Promise<number> => {
     try {
         return await eel.delete_material_by_id(id)();
     } catch (error) {
+        console.error(error);
         toast.error("Não foi possível deletar o Material de ID: " + id);
         return 0;
     }

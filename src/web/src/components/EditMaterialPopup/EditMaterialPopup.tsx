@@ -17,20 +17,25 @@
 
 import { FunctionComponent, useContext, useEffect, useState } from "react";
 import CustomButtonArray from "components/customSubComponents/CustomButtonArray/CustomButtonArray";
-import CustomTextInput from "components/customSubComponents/CustomTextInput/CustomTextInput";
 import CustomButton from "components/customSubComponents/customButton/customButton";
-import React from "react";
-import { patchMaterialByIdJS } from "api/backend-api";
+import { deleteMaterialByIdJS, patchMaterialByIdJS } from "api/backend-api";
 import { MaterialType } from "types/DataBaseTypes";
-import CustomText from "components/customSubComponents/CustomText/CustomText";
-import { NeedsToRefreshContext } from "contexts/NeedsToRefreshContext";
+import { RefreshDataContext } from "api/contexts/RefreshContext";
+import ContainerComponent from "components/containerComponent/containerComponent";
+import { toast } from "react-toastify";
+import useRefresh from "hooks/useRefresh";
+import useConfirm from "hooks/useConfirm";
+import CustomTextAreaInput from "components/customSubComponents/CustomTextAreaInput/CustomTextAreaInput";
+import CustomTextArea from "components/customSubComponents/CustomTextArea/CustomTextArea";
 
 interface EditMaterialPopupProps {
     material: MaterialType;
+    closeTooltip?: () => void;
 }
 
 const EditMaterialPopup: FunctionComponent<EditMaterialPopupProps> = ({
     material,
+    closeTooltip,
 }) => {
     const [supplierName, setSupplierName] = useState<string>(
         material.supplier_name
@@ -39,13 +44,14 @@ const EditMaterialPopup: FunctionComponent<EditMaterialPopupProps> = ({
         material.supplier_contact_info
     );
     const [extraInfo, setExtraInfo] = useState<string>(material.extra_info);
-    const [needsToRefresh, setNeedsToRefresh] = useContext(
-        NeedsToRefreshContext
-    );
+
+    const [refreshData] = useContext(RefreshDataContext);
+    const refresh = useRefresh();
     const [supplierNameAlert, setSupplierNameAlert] = useState<boolean>(false);
     const [supplierContactInfoAlert, setSupplierContactInfoAlert] =
         useState<boolean>(false);
     const [extraInfoAlert, setExtraInfoAlert] = useState<boolean>(false);
+    const [ConfirmationDialog, confirm] = useConfirm();
 
     useEffect(() => {
         setSupplierNameAlert(supplierName !== material.supplier_name);
@@ -53,20 +59,76 @@ const EditMaterialPopup: FunctionComponent<EditMaterialPopupProps> = ({
             supplierContactInfo !== material.supplier_contact_info
         );
         setExtraInfoAlert(extraInfo !== material.extra_info);
-    }, [
-        supplierName,
-        supplierContactInfo,
-        extraInfo,
-        material,
-        needsToRefresh,
-    ]);
+    }, [supplierName, supplierContactInfo, extraInfo, material, refreshData]);
+
+    const saveMaterial = () => {
+        patchMaterialByIdJS({
+            id: material.id,
+            supplier_name: supplierName,
+            supplier_contact_info: supplierContactInfo,
+            extra_info: extraInfo,
+        }).then((response) => {
+            if (response) {
+                toast.success("Material atualizado com sucesso");
+                refresh();
+                if (closeTooltip) closeTooltip();
+                return;
+            }
+            toast.error("Não foi possível atualizar esse material");
+        });
+    };
+    const deleteMaterial = () => {
+        deleteMaterialByIdJS(material.id).then((response) => {
+            if (response) {
+                toast.success("Material deletado com sucesso");
+                refresh();
+                if (closeTooltip) closeTooltip();
+                return;
+            }
+            toast.error("Não foi possível deletar esse material");
+        });
+    };
 
     return (
-        <React.Fragment>
-            <CustomText title="Nome: " value={material.name} />
-            <CustomText title="ID:" value={material.id.toString()} />
-            <CustomText title="Lote" value={material.batch} />
-            <CustomTextInput
+        <ContainerComponent
+            headerText={`Editar material `}
+            headerButton={
+                <CustomButton
+                    fontSize="var(--font_s)"
+                    fontColor="var(--font_color_inverted)"
+                    bgColor="var(--negative_button_color)"
+                    clickCallBack={() => {
+                        confirm(deleteMaterial);
+                    }}
+                    padding="5px"
+                >
+                    EXCLUIR
+                </CustomButton>
+            }
+        >
+            <CustomTextArea>
+                <table>
+                    <th>
+                        <b>Dados do material:</b>
+                    </th>
+                    <th>
+                        <br /> <br />
+                    </th>
+                    <tr>
+                        <th>Nome</th>
+                        <th>{material.name}</th>
+                    </tr>
+                    <tr>
+                        <th>ID</th>
+                        <th>{material.id}</th>
+                    </tr>
+                    <tr>
+                        <th>Lote</th>
+                        <th>{material.batch}</th>
+                    </tr>
+                </table>
+            </CustomTextArea>
+            <CustomTextAreaInput
                 title="Fornecedor"
                 setValue={setSupplierName}
                 value={supplierName}
@@ -75,7 +137,7 @@ const EditMaterialPopup: FunctionComponent<EditMaterialPopupProps> = ({
                 alert={supplierNameAlert}
                 alertColor="var(--positive_button_color)"
             />
-            <CustomTextInput
+            <CustomTextAreaInput
                 title="Informações do fornecedor"
                 setValue={setSupplierContactInfo}
                 value={supplierContactInfo}
@@ -84,7 +146,7 @@ const EditMaterialPopup: FunctionComponent<EditMaterialPopupProps> = ({
                 alert={supplierContactInfoAlert}
                 alertColor="var(--positive_button_color)"
             />
-            <CustomTextInput
+            <CustomTextAreaInput
                 title="Extra"
                 setValue={setExtraInfo}
                 value={extraInfo}
@@ -95,25 +157,28 @@ const EditMaterialPopup: FunctionComponent<EditMaterialPopupProps> = ({
             />
             <CustomButtonArray>
                 <CustomButton
+                    bgColor="var(--button_inactive_color)"
+                    fontColor="var(--font_color)"
+                    clickCallBack={() => {
+                        if (closeTooltip) closeTooltip();
+                    }}
+                    width="50%"
+                >
+                    Cancelar
+                </CustomButton>
+                <CustomButton
                     bgColor="var(--positive_button_color)"
                     fontColor="var(--font_color_inverted)"
                     clickCallBack={() => {
-                        patchMaterialByIdJS({
-                            id: material.id,
-                            supplier_name: supplierName,
-                            supplier_contact_info: supplierContactInfo,
-                            extra_info: extraInfo,
-                        }).then(() => {
-                            alert(1);
-                            setNeedsToRefresh(true);
-                        });
+                        confirm(saveMaterial);
                     }}
                     width="50%"
                 >
                     Salvar
                 </CustomButton>
             </CustomButtonArray>
-        </React.Fragment>
+            <ConfirmationDialog />
+        </ContainerComponent>
     );
 };
 

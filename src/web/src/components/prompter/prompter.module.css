@@ -74,7 +74,7 @@
 .description_p {
     padding: 2%;
     color: var(--font_color);
-    font-size: var(--font_xxs);
+    font-size: var(--font_s);
 }
 .options_div {
     width: 95%;

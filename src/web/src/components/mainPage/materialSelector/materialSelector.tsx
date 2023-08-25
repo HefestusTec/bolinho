@@ -35,14 +35,14 @@ import BackgroundFader from "components/backgroundFader/backgroundFader";
 import ContainerComponent from "components/containerComponent/containerComponent";
 import { PopupActions } from "reactjs-popup/dist/types";
 import NewMaterialPopup from "./NewMaterialPopup/NewMaterialPopup";
-import { NeedsToRefreshContext } from "contexts/NeedsToRefreshContext";
+import { RefreshDataContext } from "api/contexts/RefreshContext";
 
 interface MaterialSelectorProps {}
 
 const MaterialSelector: FunctionComponent<MaterialSelectorProps> = () => {
     const [materialList, setMaterialList] = useState<MaterialType[]>([]);
 
-    const [needsToRefresh] = useContext(NeedsToRefreshContext);
+    const [refreshData] = useContext(RefreshDataContext);
 
     const [searchQuery, setSearchQuery] = useState<string>("");
     const ref = useRef<PopupActions>(null) as RefObject<PopupActions>;
@@ -57,7 +57,7 @@ const MaterialSelector: FunctionComponent<MaterialSelectorProps> = () => {
         getMaterialsDB().then((response) => {
             setMaterialList(response);
         });
-    }, [needsToRefresh]);
+    }, [refreshData]);
 
     const createButton = (material: MaterialType, idx: number) => {
         return (
@@ -68,10 +68,7 @@ const MaterialSelector: FunctionComponent<MaterialSelectorProps> = () => {
         );
     };
     const makeButtons = (): ReactNode[] => {
-        return [
-            <button>info</button>,
-            filteredItems.map((element, idx) => createButton(element, idx)),
-        ];
+        return filteredItems.map((element, idx) => createButton(element, idx));
     };
     const closeTooltip = () => {
         ref?.current?.close();
@@ -98,14 +95,17 @@ const MaterialSelector: FunctionComponent<MaterialSelectorProps> = () => {
                                 styleModule.selector_header_search_button
                             }
                             aria-label="Search Button"
-                        ></button>
+                        />
                     </span>
-                    <CustomButton className={styleModule.expand_button}>
+                    <CustomButton
+                        className={styleModule.expand_button}
+                        bgColor="var(--button_active_color)"
+                        padding="5px"
+                    >
                         <Popup
                             trigger={() => (
                                 <div
                                     style={{
-                                        height: "100%",
                                         paddingTop: "auto",
                                         paddingBottom: "auto",
                                         display: "flex",
@@ -124,23 +124,31 @@ const MaterialSelector: FunctionComponent<MaterialSelectorProps> = () => {
                             keepTooltipInside=".App"
                         >
                             <React.Fragment>
-                                <ContainerComponent
-                                    headerText={"Novo material"}
-                                    headerButton={
-                                        <CustomButton
-                                            fontSize="var(--font_s)"
-                                            fontColor="var(--font_color_inverted)"
-                                            bgColor="var(--negative_button_color)"
-                                            clickCallBack={closeTooltip}
-                                        >
-                                            Cancelar
-                                        </CustomButton>
-                                    }
+                                <div
+                                    style={{
+                                        width: "30vw",
+                                        maxHeight: "70vh",
+                                        overflowY: "scroll",
+                                    }}
                                 >
-                                    <NewMaterialPopup
-                                        closePopup={closeTooltip}
-                                    />
-                                </ContainerComponent>
+                                    <ContainerComponent
+                                        headerText={"Novo material"}
+                                        headerButton={
+                                            <CustomButton
+                                                fontSize="var(--font_s)"
+                                                fontColor="var(--font_color_inverted)"
+                                                bgColor="var(--negative_button_color)"
+                                                clickCallBack={closeTooltip}
+                                            >
+                                                Cancelar
+                                            </CustomButton>
+                                        }
+                                    >
+                                        <NewMaterialPopup
+                                            closePopup={closeTooltip}
+                                        />
+                                    </ContainerComponent>
+                                </div>
 
                                 <BackgroundFader
                                     faderIndex={-2}

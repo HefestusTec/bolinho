@@ -17,11 +17,12 @@
 
 import { FunctionComponent, useState } from "react";
 import CustomButtonArray from "components/customSubComponents/CustomButtonArray/CustomButtonArray";
-import CustomTextInput from "components/customSubComponents/CustomTextInput/CustomTextInput";
 import CustomButton from "components/customSubComponents/customButton/customButton";
 import React from "react";
-import { patchExperimentByIdJS, postMaterialJS } from "api/backend-api";
+import { postMaterialJS } from "api/backend-api";
 import { toast } from "react-toastify";
+import useConfirm from "hooks/useConfirm";
+import CustomTextAreaInput from "components/customSubComponents/CustomTextAreaInput/CustomTextAreaInput";
 
 interface NewMaterialPopupProps {
     closePopup: () => void;
@@ -39,9 +40,27 @@ const NewMaterialPopup: FunctionComponent<NewMaterialPopupProps> = ({
         "SEM Dados do fornecedor"
     );
     const [extraInfo, setExtraInfo] = useState<string>("SEM EXTRA INFO");
+    const [ConfirmationDialog, confirm] = useConfirm();
+
+    const postNewMaterial = () => {
+        postMaterialJS({
+            name: name,
+            batch: batch,
+            extra_info: extraInfo,
+            supplier_contact_info: supplierContactInfo,
+            supplier_name: supplierName,
+        }).then((response) => {
+            if (response >= 0) {
+                toast.success("Material criado com sucesso");
+                closePopup();
+            } else {
+                toast.error("Erro durante a criação do material");
+            }
+        });
+    };
     return (
         <React.Fragment>
-            <CustomTextInput
+            <CustomTextAreaInput
                 title="Nome"
                 setValue={setName}
                 value={name}
@@ -50,7 +69,7 @@ const NewMaterialPopup: FunctionComponent<NewMaterialPopupProps> = ({
                 alert={false}
                 alertColor="var(--positive_button_color)"
             />
-            <CustomTextInput
+            <CustomTextAreaInput
                 title="Lote"
                 setValue={setBatch}
                 value={batch}
@@ -59,7 +78,7 @@ const NewMaterialPopup: FunctionComponent<NewMaterialPopupProps> = ({
                 alert={false}
                 alertColor="var(--positive_button_color)"
             />
-            <CustomTextInput
+            <CustomTextAreaInput
                 title="Fornecedor"
                 setValue={setSupplierName}
                 value={supplierName}
@@ -68,7 +87,7 @@ const NewMaterialPopup: FunctionComponent<NewMaterialPopupProps> = ({
                 alert={false}
                 alertColor="var(--positive_button_color)"
             />
-            <CustomTextInput
+            <CustomTextAreaInput
                 title="Informações do fornecedor"
                 setValue={setSupplierContactInfo}
                 value={supplierContactInfo}
@@ -77,7 +96,7 @@ const NewMaterialPopup: FunctionComponent<NewMaterialPopupProps> = ({
                 alert={false}
                 alertColor="var(--positive_button_color)"
             />
-            <CustomTextInput
+            <CustomTextAreaInput
                 title="Extra"
                 setValue={setExtraInfo}
                 value={extraInfo}
@@ -88,32 +107,27 @@ const NewMaterialPopup: FunctionComponent<NewMaterialPopupProps> = ({
             />
             <CustomButtonArray>
                 <CustomButton
+                    bgColor="var(--button_inactive_color)"
+                    fontColor="var(--font_color)"
+                    clickCallBack={() => {
+                        if (closePopup) closePopup();
+                    }}
+                    width="50%"
+                >
+                    Cancelar
+                </CustomButton>
+                <CustomButton
                     bgColor="var(--positive_button_color)"
                     fontColor="var(--font_color_inverted)"
                     clickCallBack={() => {
-                        console.log("new Mat");
-                        postMaterialJS({
-                            name: name,
-                            batch: batch,
-                            extra_info: extraInfo,
-                            supplier_contact_info: supplierContactInfo,
-                            supplier_name: supplierName,
-                        }).then((response) => {
-                            if (response >= 0) {
-                                toast.success("Material criado com sucesso");
-                                closePopup();
-                            } else {
-                                toast.error(
-                                    "Erro durante a criação do material"
-                                );
-                            }
-                        });
+                        confirm(postNewMaterial);
                     }}
                     width="50%"
                 >
                     Salvar
                 </CustomButton>
             </CustomButtonArray>
+            <ConfirmationDialog />
         </React.Fragment>
     );
 };

@@ -22,19 +22,15 @@ import React from "react";
 import Popup from "reactjs-popup";
 import BackgroundFader from "components/backgroundFader/backgroundFader";
 import { PopupActions } from "reactjs-popup/dist/types";
-import "./configButtonStyle.css"; // Tell webpack that Button.js uses these styles
-import ContainerComponent from "components/containerComponent/containerComponent";
 
 interface ConfigButtonProps {
     bgColor?: string;
-    children: ReactNode;
-    popupTitle?: string;
+    children?: ReactNode;
 }
 
 const ConfigButton: FunctionComponent<ConfigButtonProps> = ({
     bgColor = "var(--button_inactive_color)",
     children,
-    popupTitle = "",
 }) => {
     const ref = useRef<PopupActions>(null) as RefObject<PopupActions>;
     const closeTooltip = () => {
@@ -54,7 +50,7 @@ const ConfigButton: FunctionComponent<ConfigButtonProps> = ({
                         </div>
                     )}
                     ref={ref}
-                    position={"right center"}
+                    position={["bottom right", "bottom left", "top center"]}
                     closeOnDocumentClick
                     className={styleModule.popup_trigger}
                     keepTooltipInside=".App"
@@ -62,27 +58,15 @@ const ConfigButton: FunctionComponent<ConfigButtonProps> = ({
                     <React.Fragment>
                         <div
                             style={{
-                                display: "flex",
-                                height: "400px",
-                                width: "400px",
+                                width: "30vw",
+                                maxHeight: "70vh",
                                 overflowY: "scroll",
                             }}
                         >
-                            <ContainerComponent
-                                headerText={popupTitle}
-                                headerButton={
-                                    <CustomButton
-                                        fontSize="var(--font_s)"
-                                        fontColor="var(--font_color_inverted)"
-                                        bgColor="var(--negative_button_color)"
-                                        clickCallBack={closeTooltip}
-                                    >
-                                        Cancelar
-                                    </CustomButton>
-                                }
-                            >
-                                {children}
-                            </ContainerComponent>
+                            {React.cloneElement(
+                                children as React.ReactElement,
+                                { closeTooltip }
+                            )}
                         </div>
 
                         <BackgroundFader

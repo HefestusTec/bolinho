@@ -26,6 +26,7 @@ import { DataPointType } from "types/DataPointTypes";
 import { SelectedExperimentType } from "contexts/SelectedExperimentsContext";
 import { getLoadOverTimeByExperimentId } from "api/db-api";
 import { toast } from "react-toastify";
+import useFetchExperiments from "hooks/useFetchExperiments";
 
 type maxValueType = {
     plotDataArray: ExperimentPlotData[];
@@ -63,23 +64,26 @@ const GraphComponent: FunctionComponent<GraphComponentProps> = ({
 
     const [showSideBar, setShowSideBar] = useState(true);
 
+    const [experimentList] = useFetchExperiments();
+
     useEffect(() => {
         const generateExperimentPlotData = async () => {
             let returnPlotDataArray: ExperimentPlotData[] = [];
-            for (let i = 0; i < selectedExperiments.length; i++) {
-                const experiment = selectedExperiments[i];
+            for (let i = 0; i < experimentList.length; i++) {
+                const experiment = experimentList[i];
+                const experimentColor = selectedExperiments[i].color;
                 const data: DataPointType[] =
-                    await getLoadOverTimeByExperimentId(
-                        experiment.experiment.id
-                    ).catch((err) => {
-                        toast.error(err);
-                        return [];
-                    });
+                    await getLoadOverTimeByExperimentId(experiment.id).catch(
+                        (err) => {
+                            toast.error(err);
+                            return [];
+                        }
+                    );
                 returnPlotDataArray.push(
                     new ExperimentPlotData(
-                        experiment.experiment.name,
+                        experiment.name,
                         data,
-                        experiment.color
+                        experimentColor
                     )
                 );
             }
@@ -93,7 +97,7 @@ const GraphComponent: FunctionComponent<GraphComponentProps> = ({
                 maxValues: maxVals,
             });
         });
-    }, [selectedExperiments]);
+    }, [selectedExperiments, experimentList]);
 
     const getOpenSideBarButtonClassName = () => {
         return showSideBar

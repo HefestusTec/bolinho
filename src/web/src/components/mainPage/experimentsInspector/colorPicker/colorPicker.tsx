@@ -84,17 +84,6 @@ const ColorPicker: FunctionComponent<ColorPickerProps> = ({
         setColorPickerIsActive(false);
     };
 
-    const makeBackDrop = () => {
-        if (colorPickerIsActive)
-            return (
-                <div
-                    className={styleModule.color_picker_back_drop}
-                    onClick={closeColorPicker}
-                ></div>
-            );
-        return;
-    };
-
     return (
         <React.Fragment>
             <div className={makeClassName()}>
@@ -103,7 +92,14 @@ const ColorPicker: FunctionComponent<ColorPickerProps> = ({
                         color={currentColor}
                         onChange={colorChanged}
                     >
-                        {makeBackDrop()}
+                        {colorPickerIsActive ? (
+                            <div
+                                className={styleModule.color_picker_back_drop}
+                                onClick={closeColorPicker}
+                            />
+                        ) : (
+                            <></>
+                        )}
                     </HexColorPicker>
                 </ClickAwayListener>
             </div>
