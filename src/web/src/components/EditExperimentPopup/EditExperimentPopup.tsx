@@ -28,6 +28,7 @@ import useConfirm from "hooks/useConfirm";
 import CustomTextArea from "components/customSubComponents/CustomTextArea/CustomTextArea";
 import CustomTextAreaInput from "components/customSubComponents/CustomTextAreaInput/CustomTextAreaInput";
 import { SelectedExperimentsContext } from "contexts/SelectedExperimentsContext";
+import { getBodyTypeAsText } from "helpers";
 
 interface EditExperimentPopupProps {
     experiment: ExperimentType;
@@ -100,6 +101,7 @@ const EditExperimentPopup: FunctionComponent<EditExperimentPopupProps> = ({
             }
             containerContentStyle={{
                 paddingRight: 0,
+                maxHeight: "70vh",
             }}
         >
             <CustomTextArea>
@@ -121,12 +123,12 @@ const EditExperimentPopup: FunctionComponent<EditExperimentPopupProps> = ({
                     <tr>
                         <th>Tipo de exp.</th>
                         <th>
-                            {experiment.compress ? "compressão" : "expansão"}
+                            {experiment.compress ? "Compressão" : "Expansão"}
                         </th>
                     </tr>
                     <tr>
                         <th>Limite de perda de carga</th>
-                        <th>{experiment.load_loss_limit.toFixed(2)} N</th>
+                        <th>{experiment.load_loss_limit.toFixed(2)} N/s</th>
                     </tr>
                     <tr>
                         <th>Carga máxima</th>
@@ -165,15 +167,15 @@ const EditExperimentPopup: FunctionComponent<EditExperimentPopupProps> = ({
                     </tr>
                     <tr>
                         <th>Parâmetro A</th>
-                        <th>{experiment.body.param_a.toFixed(2)} </th>
+                        <th>{experiment.body.param_a.toFixed(2)} mm</th>
                     </tr>
                     <tr>
                         <th>Parâmetro B</th>
-                        <th>{experiment.body.param_b.toFixed(2)}</th>
+                        <th>{experiment.body.param_b.toFixed(2)} mm</th>
                     </tr>
                     <tr>
                         <th>Tipo</th>
-                        <th>{experiment.body.type.toFixed(2)}</th>
+                        <th>{getBodyTypeAsText(experiment.body.type)}</th>
                     </tr>
                 </table>
             </CustomTextArea>

@@ -56,9 +56,22 @@ def save_config_params(new_params):
 
 
 @eel.expose
-def start_experiment_routine(experiment_id: int):
+def check_can_start_experiment():
     """
     The front end will call this function when the user click to start experiment.
+
+    The backend **MUST** respond with a 1 if everything is ok or 0 if something is not correct.
+
+    In case something is wrong the backend also displays an error to the user telling what went wrong
+    """
+    # TODO implement me
+    return 1
+
+
+@eel.expose
+def start_experiment_routine(experiment_id: int):
+    """
+    The front end will call this function after everything is correct and ready to change pages.
 
     Receives an `id` to an experiment as parameter.
 

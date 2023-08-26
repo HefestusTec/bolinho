@@ -14,19 +14,11 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
-export function pingJS() {
-    // Ping function, returns 1 if the connection was successful
-    return 1;
-}
-try {
-    window.eel.expose(pingJS, "pingJS");
-} catch (error) {}
+export type ValidBodyTypeType = "Retangular" | "Cilíndrico" | "Tubo" | "Outro";
 
-// TODO implement the function
-export function showConnectPromptJS() {
-    // Shows the connect prompt, returns 1 if it was successful
-    alert("Show connect prompt");
-}
-try {
-    window.eel.expose(showConnectPromptJS, "showConnectPromptJS");
-} catch (error) {}
+export const validBodyTypeArray: ValidBodyTypeType[] = [
+    "Retangular",
+    "Cilíndrico",
+    "Tubo",
+    "Outro",
+];

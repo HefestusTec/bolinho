@@ -38,8 +38,8 @@
     .custom_button:hover {
         cursor: pointer;
         outline: var(--font_color) solid 1px;
-        background-color: var(--button_inactive_color);
-        transform: scaleX(110%);
+        transform: scale(107%);
+        opacity: 80%;
     }
 }
 .custom_button:active {

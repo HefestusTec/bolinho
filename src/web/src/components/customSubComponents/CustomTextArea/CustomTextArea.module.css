@@ -23,8 +23,8 @@
     height: fit-content;
     min-height: calc(var(--font_m) * 2.7);
     margin-bottom: 2vh;
-    margin-left: 5%;
-    margin-right: 5%;
+    margin-left: 10px;
+    margin-right: 10px;
     overflow: hidden;
     color: var(--font_color);
     font-size: var(--font_s);
@@ -43,6 +43,7 @@
 
 .text_area_content {
     padding-left: 10px;
+    padding-top: 10px;
     padding-right: 10px;
     overflow: scroll;
 }

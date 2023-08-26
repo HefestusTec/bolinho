@@ -54,6 +54,8 @@ const getMaxData = (experimentArray: ExperimentPlotData[]): DataPointType => {
     return { x: maxX, y: maxY };
 };
 
+const sideBarWidth = "140px";
+
 interface GraphComponentProps {}
 
 const GraphComponent: FunctionComponent<GraphComponentProps> = () => {
@@ -69,8 +71,6 @@ const GraphComponent: FunctionComponent<GraphComponentProps> = () => {
     const [plotType, setPlotType] = useState<PlotTypeType>("loadOverTime");
 
     useEffect(() => {
-        console.log(plotType);
-
         const fetchPlotData = (id: number) => {
             switch (plotType) {
                 case "loadOverTime":
@@ -129,12 +129,6 @@ const GraphComponent: FunctionComponent<GraphComponentProps> = () => {
         setShowSideBar(!showSideBar);
     };
 
-    const getGraphAreaClassName = () => {
-        return showSideBar
-            ? [styleModule.graph_area, styleModule.graph_area_mini].join(" ")
-            : [styleModule.graph_area].join(" ");
-    };
-
     const getSideBarClassName = () => {
         return showSideBar
             ? [styleModule.side_bar].join(" ")
@@ -147,7 +141,14 @@ const GraphComponent: FunctionComponent<GraphComponentProps> = () => {
     };
     return (
         <div className={styleModule.graph_component}>
-            <div className={getGraphAreaClassName()}>
+            <div
+                className={styleModule.graph_area}
+                style={{
+                    width: showSideBar
+                        ? `calc(100% - ${sideBarWidth})`
+                        : "100%",
+                }}
+            >
                 <div className={styleModule.chart_component_div}>
                     <ChartComponent
                         sliderValue={{
@@ -172,7 +173,12 @@ const GraphComponent: FunctionComponent<GraphComponentProps> = () => {
                     />
                 </div>
             </div>
-            <div className={getSideBarClassName()}>
+            <div
+                className={getSideBarClassName()}
+                style={{
+                    width: sideBarWidth,
+                }}
+            >
                 <GraphSideBar setPlotType={setPlotType} />
             </div>
         </div>

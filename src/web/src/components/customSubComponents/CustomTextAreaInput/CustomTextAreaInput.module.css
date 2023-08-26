@@ -30,6 +30,7 @@
 .main_button {
     border-width: 0px;
     border-style: solid;
+    font-family: "Roboto";
 
     color: var(--font_color);
     font-size: var(--font_m);
@@ -82,6 +83,7 @@
     width: 100%;
     border: none;
     outline: none;
+    font-family: "Roboto";
     color: var(--font_color);
     background-color: none;
     background-color: var(--background_color);

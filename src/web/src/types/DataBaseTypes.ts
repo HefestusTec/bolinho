@@ -48,7 +48,7 @@ export const defaultBodyType: BodyType = {
     param_a: 0,
     param_b: 0,
     height: 0,
-    extra_info: "NONE",
+    extra_info: "Default Info",
 };
 
 export type ExperimentType = {

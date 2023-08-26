@@ -11,15 +11,15 @@ import GlobalConfigContext from "./contexts/globalConfigContext";
 import Prompter from "./components/prompter/prompter";
 import VirtualInput from "./components/virtualInput/virtualInput";
 import Home from "pages/Home";
-import CurrentPageProvider from "contexts/currentPageContext";
 import { PageType } from "types/PageType";
-import { setCurrentPageCallBack } from "api/exp-core-api";
 import Experiment from "pages/Experiment/Experiment";
 import { ExperimentPageProvider } from "api/contexts/ExperimentPageContext";
 import { ReadingsProvider } from "api/contexts/ReadingsContext";
 import FocusProvider from "api/contexts/FocusContex";
 import { globalConfigDefault } from "api/apiTypes";
 import IsConnectedProvider from "api/contexts/IsConnectedContext";
+import { setCurrentPageCallBack } from "staticDB";
+import CurrentPageProvider from "api/contexts/CurrentPageContext";
 
 import("./api/linker");
 

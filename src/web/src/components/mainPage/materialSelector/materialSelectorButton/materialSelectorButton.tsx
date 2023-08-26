@@ -89,7 +89,6 @@ const MaterialSelectorButton: FunctionComponent<
                 return 350;
         }
     };
-
     return (
         <li
             key={"mat_idx_" + material.id}
@@ -106,8 +105,15 @@ const MaterialSelectorButton: FunctionComponent<
                             {isActive ? "-" : "+"}
                         </div>
                     </div>
+                    <span className={styleModule.material_selector_id}>
+                        [{material.id}]
+                    </span>
+
                     <div className={styleModule.material_selector_text}>
-                        [{material.id}] {material.name}
+                        {material.name}
+                        <div className={styleModule.material_selector_info}>
+                            {`${material.supplier_name}: ${material.batch}`}
+                        </div>
                     </div>
                 </button>
                 <ConfigButton

@@ -32,13 +32,17 @@ import GlobalConfigContext from "contexts/globalConfigContext";
 interface CustomTextAreaProps {
     children: ReactNode;
     style?: CSSProperties;
+    title?: string;
+    defaultIsOpen?: boolean;
 }
 
 const CustomTextArea: FunctionComponent<CustomTextAreaProps> = ({
     children,
     style,
+    title = "Expandir detalhes",
+    defaultIsOpen = false,
 }) => {
-    const [isOpen, setIsOpen] = useState<boolean>(false);
+    const [isOpen, setIsOpen] = useState<boolean>(defaultIsOpen);
     const getExpandMenuIndicatorClassName = () => {
         if (isOpen) {
             return [
@@ -76,7 +80,7 @@ const CustomTextArea: FunctionComponent<CustomTextAreaProps> = ({
                     fontColor="var(--font_color)"
                     padding="10px"
                 >
-                    Expandir detalhes
+                    {title}
                     <div className={getExpandMenuIndicatorClassName()}>
                         <img src={openIcon} alt="Logo" />{" "}
                     </div>

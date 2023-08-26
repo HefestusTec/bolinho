@@ -23,13 +23,17 @@ import ExperimentsInspector from "./experimentsInspector/experimentsInspector";
 import ConnectionComponent from "./ConnectionComponent/ConnectionComponent";
 import ZoomComponent from "../zoomComponent/zoomComponent";
 
-import { startExperimentRoutineJS } from "../../api/backend-api";
+import {
+    checkCanStartExperimentJS,
+    startExperimentRoutineJS,
+} from "../../api/backend-api";
 
 //import GlobalConfigContext from "../../contexts/globalConfigContext";
 import BigButton from "components/customSubComponents/BigButton/BigButton";
 import { SelectedExperimentsContext } from "contexts/SelectedExperimentsContext";
 import { IsConnectedContext } from "api/contexts/IsConnectedContext";
-import { goToExperimentPageJS } from "api/exp-core-api";
+import { CurrentPageContext } from "api/contexts/CurrentPageContext";
+import NewExperimentPopup from "components/NewExperimentPopup/NewExperimentPopup";
 
 interface MainPageProps {}
 
@@ -38,6 +42,25 @@ const MainPage: FunctionComponent<MainPageProps> = () => {
         []
     );
     const [isConnected] = useContext(IsConnectedContext);
+    const [, setCurrentPage] = useContext(CurrentPageContext);
+    const [isCreateExperimentOpen, setIsCreateExperimentOpen] =
+        useState<boolean>(false);
+
+    const experimentWasCreated = (id: number) => {
+        startExperimentRoutineJS(id).then((res) => {
+            if (res === 1) setCurrentPage("experiment");
+        });
+    };
+
+    const closeExperimentPopup = () => {
+        setIsCreateExperimentOpen(false);
+    };
+
+    const startExperiment = async () => {
+        const canStart = await checkCanStartExperimentJS();
+        if (!canStart) return;
+        setIsCreateExperimentOpen(true);
+    };
 
     return (
         <SelectedExperimentsContext.Provider
@@ -72,10 +95,7 @@ const MainPage: FunctionComponent<MainPageProps> = () => {
                 <div className={styleModule.ensaio_button_div}>
                     <BigButton
                         clickCallBack={() => {
-                            console.log("Botão de ensaio foi chamado");
-                            // FIXME
-                            goToExperimentPageJS();
-                            startExperimentRoutineJS(0);
+                            startExperiment();
                         }}
                         buttonText="ENSAIO"
                         bgColor="var(--positive_button_color)"
@@ -84,6 +104,14 @@ const MainPage: FunctionComponent<MainPageProps> = () => {
                     />
                 </div>
             </div>
+            {isCreateExperimentOpen ? (
+                <NewExperimentPopup
+                    closePopup={closeExperimentPopup}
+                    handleExperimentCreated={experimentWasCreated}
+                />
+            ) : (
+                <></>
+            )}
         </SelectedExperimentsContext.Provider>
     );
 };

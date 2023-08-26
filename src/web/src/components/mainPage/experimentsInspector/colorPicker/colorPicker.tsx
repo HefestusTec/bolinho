@@ -20,7 +20,6 @@ import React, {
     SetStateAction,
     useState,
 } from "react";
-import ClickAwayListener from "react-click-away-listener";
 import { useDebouncedCallback } from "use-debounce";
 
 import styleModule from "./colorPicker.module.css";
@@ -28,6 +27,7 @@ import { HexColorPicker } from "react-colorful";
 import { ExperimentType } from "types/DataBaseTypes";
 import { patchExperimentByIdJS } from "api/backend-api";
 import useRefresh from "hooks/useRefresh";
+import BackgroundFader from "components/backgroundFader/backgroundFader";
 
 interface ColorPickerProps {
     activeExperiment: ExperimentType;
@@ -89,22 +89,19 @@ const ColorPicker: FunctionComponent<ColorPickerProps> = ({
 
     return (
         <React.Fragment>
-            <div className={makeClassName()}>
-                <ClickAwayListener onClickAway={clickedOut}>
-                    <HexColorPicker
-                        color={currentColor}
-                        onChange={colorChanged}
-                    >
-                        {colorPickerIsActive ? (
-                            <div
-                                className={styleModule.color_picker_back_drop}
-                                onClick={closeColorPicker}
-                            />
-                        ) : (
-                            <></>
-                        )}
-                    </HexColorPicker>
-                </ClickAwayListener>
+            <BackgroundFader callbackFunc={clickedOut} invisible={true} />
+
+            <div className={makeClassName()} style={{ zIndex: 10 }}>
+                <HexColorPicker color={currentColor} onChange={colorChanged}>
+                    {colorPickerIsActive ? (
+                        <div
+                            className={styleModule.color_picker_back_drop}
+                            onClick={closeColorPicker}
+                        />
+                    ) : (
+                        <></>
+                    )}
+                </HexColorPicker>
             </div>
         </React.Fragment>
     );

@@ -127,24 +127,14 @@ const MaterialSelector: FunctionComponent<MaterialSelectorProps> = () => {
                                 <div
                                     style={{
                                         width: "30vw",
-                                        maxHeight: "70vh",
                                         overflowY: "scroll",
                                     }}
                                 >
                                     <ContainerComponent
                                         headerText={"Novo material"}
-                                        headerButton={
-                                            <CustomButton
-                                                fontSize="var(--font_s)"
-                                                fontColor="var(--font_color_inverted)"
-                                                bgColor="var(--negative_button_color)"
-                                                clickCallBack={closeTooltip}
-                                            >
-                                                Cancelar
-                                            </CustomButton>
-                                        }
                                         containerContentStyle={{
                                             paddingRight: 0,
+                                            maxHeight: "70vh",
                                         }}
                                     >
                                         <NewMaterialPopup
