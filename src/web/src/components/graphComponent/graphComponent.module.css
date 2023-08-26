@@ -29,15 +29,9 @@
 }
 
 .graph_area {
-    height: 100%;
     width: 100%;
     position: relative;
-
     transition-duration: var(--animation_slow);
-}
-
-.graph_area_mini {
-    width: 80%;
 }
 
 .chart_component_div {
@@ -95,7 +89,6 @@
 
 .side_bar {
     height: 100%;
-    width: 20%;
     background-color: black;
 }
 
