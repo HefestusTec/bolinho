@@ -29,6 +29,8 @@ import {
 } from "api/db-api";
 import { toast } from "react-toastify";
 import useFetchExperiments from "hooks/useFetchExperiments";
+import { PlotTypeType } from "types/PlotTypeType";
+import GraphSideBar from "./graphSideBar/graphSideBar";
 
 type maxValueType = {
     plotDataArray: ExperimentPlotData[];
@@ -52,13 +54,9 @@ const getMaxData = (experimentArray: ExperimentPlotData[]): DataPointType => {
     return { x: maxX, y: maxY };
 };
 
-interface GraphComponentProps {
-    selectedExperiments: number[];
-}
+interface GraphComponentProps {}
 
-const GraphComponent: FunctionComponent<GraphComponentProps> = ({
-    selectedExperiments,
-}) => {
+const GraphComponent: FunctionComponent<GraphComponentProps> = () => {
     const [experimentArray, setExperimentArray] = useState(defaultMaxValues);
 
     const [leftHandlePos, setLeftHandlePos] = useState(0);
@@ -68,19 +66,33 @@ const GraphComponent: FunctionComponent<GraphComponentProps> = ({
 
     const [experimentList] = useFetchExperiments();
 
+    const [plotType, setPlotType] = useState<PlotTypeType>("loadOverTime");
+
     useEffect(() => {
+        console.log(plotType);
+
+        const fetchPlotData = (id: number) => {
+            switch (plotType) {
+                case "loadOverTime":
+                    return getLoadOverTimeByExperimentId(id);
+                case "loadOverPosition":
+                    return getLoadOverPositionByExperimentId(id);
+                default:
+                    return getLoadOverTimeByExperimentId(id);
+            }
+        };
+
         const generateExperimentPlotData = async () => {
             let returnPlotDataArray: ExperimentPlotData[] = [];
             for (let i = 0; i < experimentList.length; i++) {
                 const experiment = experimentList[i];
                 const experimentColor = experimentList[i].plot_color;
-                const data: DataPointType[] =
-                    await getLoadOverTimeByExperimentId(experiment.id).catch(
-                        (err) => {
-                            toast.error(err);
-                            return [];
-                        }
-                    );
+                const data: DataPointType[] = await fetchPlotData(
+                    experiment.id
+                ).catch((err) => {
+                    toast.error(err);
+                    return [];
+                });
                 returnPlotDataArray.push(
                     new ExperimentPlotData(
                         experiment.name,
@@ -99,7 +111,7 @@ const GraphComponent: FunctionComponent<GraphComponentProps> = ({
                 maxValues: maxVals,
             });
         });
-    }, [experimentList]);
+    }, [experimentList, plotType]);
 
     const getOpenSideBarButtonClassName = () => {
         return showSideBar
@@ -160,7 +172,9 @@ const GraphComponent: FunctionComponent<GraphComponentProps> = ({
                     />
                 </div>
             </div>
-            <div className={getSideBarClassName()}></div>
+            <div className={getSideBarClassName()}>
+                <GraphSideBar setPlotType={setPlotType} />
+            </div>
         </div>
     );
 };

@@ -48,7 +48,7 @@ const MainPage: FunctionComponent<MainPageProps> = () => {
                     className={styleModule.graph_component}
                     scaleOrigin="top right"
                 >
-                    <GraphComponent selectedExperiments={selectedExperiments} />
+                    <GraphComponent />
                 </ZoomComponent>
                 <ZoomComponent
                     className={styleModule.material_selector}

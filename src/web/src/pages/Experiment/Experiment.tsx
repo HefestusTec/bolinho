@@ -51,9 +51,7 @@ const Experiment: FunctionComponent<ExperimentProps> = () => {
                         className={styleModule.graph_component}
                         scaleOrigin="top right"
                     >
-                        <GraphComponent
-                            selectedExperiments={selectedExperiments}
-                        />
+                        <GraphComponent />
                     </ZoomComponent>
                     <ZoomComponent
                         className={styleModule.parameters_component}
