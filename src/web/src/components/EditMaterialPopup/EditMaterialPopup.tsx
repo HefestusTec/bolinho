@@ -27,6 +27,7 @@ import useRefresh from "hooks/useRefresh";
 import useConfirm from "hooks/useConfirm";
 import CustomTextAreaInput from "components/customSubComponents/CustomTextAreaInput/CustomTextAreaInput";
 import CustomTextArea from "components/customSubComponents/CustomTextArea/CustomTextArea";
+import { SelectedExperimentsContext } from "contexts/SelectedExperimentsContext";
 
 interface EditMaterialPopupProps {
     material: MaterialType;
@@ -41,6 +42,8 @@ const EditMaterialPopup: FunctionComponent<EditMaterialPopupProps> = ({
     const [supplierName, setSupplierName] = useState<string>(
         material.supplier_name
     );
+    const [, setSelectedExperiments] = useContext(SelectedExperimentsContext);
+
     const [supplierContactInfo, setSupplierContactInfo] = useState<string>(
         material.supplier_contact_info
     );
@@ -91,6 +94,7 @@ const EditMaterialPopup: FunctionComponent<EditMaterialPopupProps> = ({
         });
     };
     const deleteMaterial = () => {
+        setSelectedExperiments([]);
         deleteMaterialByIdJS(material.id).then((response) => {
             if (response) {
                 toast.success("Material deletado com sucesso");

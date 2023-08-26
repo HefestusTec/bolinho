@@ -27,6 +27,7 @@ import useRefresh from "hooks/useRefresh";
 import useConfirm from "hooks/useConfirm";
 import CustomTextArea from "components/customSubComponents/CustomTextArea/CustomTextArea";
 import CustomTextAreaInput from "components/customSubComponents/CustomTextAreaInput/CustomTextAreaInput";
+import { SelectedExperimentsContext } from "contexts/SelectedExperimentsContext";
 
 interface EditExperimentPopupProps {
     experiment: ExperimentType;
@@ -39,7 +40,7 @@ const EditExperimentPopup: FunctionComponent<EditExperimentPopupProps> = ({
 }) => {
     const [name, setName] = useState<string>(experiment.name);
     const [extraInfo, setExtraInfo] = useState<string>(experiment.extra_info);
-
+    const [, setSelectedExperiments] = useContext(SelectedExperimentsContext);
     const [refreshData] = useContext(RefreshDataContext);
     const refresh = useRefresh();
 
@@ -69,6 +70,7 @@ const EditExperimentPopup: FunctionComponent<EditExperimentPopupProps> = ({
         });
     };
     const deleteExperiment = () => {
+        setSelectedExperiments([]);
         deleteExperimentByIdJS(experiment.id).then((response) => {
             if (response) {
                 toast.success("Experimento deletado com sucesso");
