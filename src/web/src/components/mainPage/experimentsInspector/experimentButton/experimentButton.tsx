@@ -80,7 +80,7 @@ const ExperimentButton: FunctionComponent<ExperimentButtonProps> = ({
                         {experiment.name}
                     </div>
                     <div className={styleModule.experiment_experiment_text}>
-                        Idx:{experiment.id} [{experiment.date_time}]
+                        ID:{experiment.id} [{experiment.date_time}]
                     </div>
                 </div>
             </button>

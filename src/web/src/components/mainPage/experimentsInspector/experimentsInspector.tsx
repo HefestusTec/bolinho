@@ -229,8 +229,8 @@ const ExperimentsInspector: FunctionComponent<
                             {activeExperimentId >= 0 ? (
                                 <ExperimentDescription
                                     myBody={myBody}
-                                    myExperiment={myExperiment}
-                                    myMaterial={myMaterial}
+                                    experiment={myExperiment}
+                                    material={myMaterial}
                                 />
                             ) : (
                                 <p> Selecione um experimento...</p>

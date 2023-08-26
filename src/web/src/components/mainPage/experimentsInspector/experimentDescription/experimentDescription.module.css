@@ -33,3 +33,18 @@
     word-wrap: break-word;
     white-space: break-spaces;
 }
+
+.content td,
+th {
+    text-align: left;
+    padding: 2px;
+}
+
+.content table {
+    border: 1px solid var(--font_color);
+    width: 100%;
+}
+
+.content tr:nth-child(odd) {
+    background-color: var(--background2_color);
+}

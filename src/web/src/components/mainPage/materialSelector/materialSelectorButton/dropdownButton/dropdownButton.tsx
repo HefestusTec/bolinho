@@ -55,7 +55,7 @@ const DropdownButton: FunctionComponent<DropdownButtonProps> = ({
                     <div className={styleModule.add_sign}></div>
                 </div>
                 <div className={styleModule.dropdown_button_text}>
-                    {experiment.name} [{experiment.date_time}] idx:
+                    {experiment.name} [{experiment.date_time}] ID:
                     {experiment.id}
                 </div>
             </button>
