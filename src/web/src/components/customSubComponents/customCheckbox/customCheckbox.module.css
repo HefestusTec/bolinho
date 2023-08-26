@@ -21,8 +21,8 @@
     font-weight: bold;
     align-items: center;
     display: inline;
-    margin-left: 10px;
-    margin-right: 10px;
+    margin-left: 5%;
+    margin-right: 5%;
     border-radius: 2px;
     transition-duration: var(--animation_fast);
     border-width: 0px 0px 5px 0px;

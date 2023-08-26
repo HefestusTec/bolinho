@@ -70,7 +70,7 @@ class Body:
     """
     Parameters of the test body
 
-    type:       Body format | 1 = Rectangle | 2 = Cylinder | 3 = Tube
+    type:       Body format | 1 = Rectangle | 2 = Cylinder | 3 = Tube | 4 = Other
     param_a:    Rectangle = length | Cylinder = External diameter | Tube = External diameter
     param_b:    Rectangle = depth | Cylinder = NULL | Tube = Internal diameter
     height:     Height of the test body

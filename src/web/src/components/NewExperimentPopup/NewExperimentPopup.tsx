@@ -31,26 +31,18 @@ import CustomCheckbox from "components/customSubComponents/customCheckbox/custom
 import CustomListSelector from "components/customSubComponents/customListSelector/customListSelector";
 import CustomTextInput from "components/customSubComponents/CustomTextInput/CustomTextInput";
 import { getRandomColor } from "helpers";
+import { ValidBodyTypeType, validBodyTypeArray } from "types/ValidBodyTypeType";
 
 interface NewExperimentPopupProps {
     handleExperimentCreated: (id: number) => void;
     closePopup: () => void;
 }
 
-type AcceptedBodyTypes = "Rectangular" | "Cilíndrico" | "Tubo" | "Outro";
-
-const bodyTypeArray: AcceptedBodyTypes[] = [
-    "Rectangular",
-    "Cilíndrico",
-    "Tubo",
-    "Outro",
-];
-
 const NewExperimentPopup: FunctionComponent<NewExperimentPopupProps> = ({
     handleExperimentCreated,
     closePopup,
 }) => {
-    const [bodyType, setBodyType] = useState<AcceptedBodyTypes>("Rectangular");
+    const [bodyType, setBodyType] = useState<ValidBodyTypeType>("Retangular");
     const [bodyMaterialID, setBodyMaterialId] = useState<number>(1);
     const [bodyParamA, setBodyParamA] = useState<number>(0);
     const [bodyParamB, setBodyParamB] = useState<number>(0);
@@ -82,7 +74,7 @@ const NewExperimentPopup: FunctionComponent<NewExperimentPopupProps> = ({
     const postExperiment = () => {
         const bodyTypeAsNumber = (() => {
             switch (bodyType) {
-                case "Rectangular":
+                case "Retangular":
                     return 1;
                 case "Cilíndrico":
                     return 2;
@@ -226,9 +218,9 @@ const NewExperimentPopup: FunctionComponent<NewExperimentPopupProps> = ({
                             title="Corpo de prova"
                         >
                             <CustomListSelector
-                                keys={bodyTypeArray}
+                                keys={validBodyTypeArray}
                                 clickCallBack={(key) => {
-                                    setBodyType(key as AcceptedBodyTypes);
+                                    setBodyType(key as ValidBodyTypeType);
                                 }}
                                 selected={bodyType}
                             >

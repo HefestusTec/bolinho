@@ -39,6 +39,8 @@
     padding: 0;
     align-items: center;
     overflow: hidden;
+    color: var(--font_color);
+
     transition-duration: var(--animation_fast);
 }
 [enable-hover="enable"] {
@@ -77,6 +79,10 @@
     color: var(--font_color);
 }
 
+.material_selector_id {
+    font-size: var(--font_xs);
+    font-family: "Roboto";
+}
 .material_selector_text {
     padding-left: 1vw;
     width: stretch;
@@ -85,10 +91,13 @@
     font-style: normal;
     font-weight: 700;
     font-size: var(--font_s);
-    color: var(--font_color);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+.material_selector_info {
+    font-size: var(--font_xs);
+    font-weight: 200;
 }
 
 .dropdown_ul {

@@ -103,8 +103,8 @@ const ExperimentsInspector: FunctionComponent<
         if (activeExperimentId < 0) return "Selecione um experimento";
 
         const name = myMaterial.name;
-        const batch = myMaterial.batch;
-        return `[${batch}] ${name}`;
+        const id = myMaterial.id;
+        return `[${id}] ${name}`;
     };
     const removeActiveExperiment = () => {
         if (activeExperimentId < 0) return;

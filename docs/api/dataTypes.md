@@ -90,7 +90,7 @@ ___
     ``` python
     class BodyParams:
         def __init__(self, type=0, param_a=0, param_b=0, height=0):
-            # Body format | 1 = Rectangle | 2 = Cylinder | 3 = Tube
+            # Body format | 1 = Rectangle | 2 = Cylinder | 3 = Tube | 4 = Other
             self.type = type
 
             # Rectangle = length | Cylinder = External diameter | Tube = External diameter
@@ -107,6 +107,7 @@ ___
         * 1 = Rectangle
         * 2 = Cylinder
         * 3 = Tube
+        * 4 = Other
         * Type: `int`
         * Unity: N/A
     * `param_a`: Param 'a' of the body
