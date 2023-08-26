@@ -19,31 +19,30 @@
 @import url(../../variables.css);
 
 .background {
-	--position_type: fixed;
-	--fader_index: 2;
+    --position_type: fixed;
+    --fader_index: 2;
 
-	position: var(--position_type);
+    position: var(--position_type);
 
-	left: 0px;
-	right: 0px;
-	top: 0px;
-	bottom: 0px;
-	z-index: var(--fader_index);
-	background-color: rgba(0, 0, 0, 0.6);
-	animation: fade-in;
-	animation-duration: var(--animation_slow);
+    left: 0px;
+    right: 0px;
+    top: 0px;
+    bottom: 0px;
+    z-index: var(--fader_index);
+    animation: fade-in;
+    animation-duration: var(--animation_slow);
 }
 
 .blur {
-	--blur_amount: 3px;
-	backdrop-filter: blur(var(--blur_amount));
+    --blur_amount: 3px;
+    backdrop-filter: blur(var(--blur_amount));
 }
 
 @keyframes fade-in {
-	from {
-		opacity: 0%;
-	}
-	to {
-		opacity: 100%;
-	}
+    from {
+        opacity: 0%;
+    }
+    to {
+        opacity: 100%;
+    }
 }

@@ -14,16 +14,29 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
-import React, { useContext, useMemo } from "react";
+import React, {
+    CSSProperties,
+    FunctionComponent,
+    useContext,
+    useMemo,
+} from "react";
 import styleModule from "./backgroundFader.module.css";
 
 import GlobalConfigContext from "../../contexts/globalConfigContext";
 
-export default function BackgroundFader({
+interface BackgroundFaderProps {
+    callbackFunc?: () => void;
+    fullscreen?: boolean;
+    faderIndex?: number;
+    invisible?: boolean;
+}
+
+const BackgroundFader: FunctionComponent<BackgroundFaderProps> = ({
     callbackFunc,
     fullscreen = true,
     faderIndex = 2,
-}) {
+    invisible = false,
+}) => {
     const [globalConfig] = useContext(GlobalConfigContext);
 
     const getBackgroundStyle = useMemo(() => {
@@ -31,10 +44,18 @@ export default function BackgroundFader({
             return {
                 "--position_type": "absolute",
                 "--fader_index": faderIndex,
-            };
+                backgroundColor: invisible
+                    ? "none !important"
+                    : "rgba(0, 0, 0, 0.6)",
+            } as CSSProperties;
         }
-        return { "--fader_index": faderIndex };
-    }, [fullscreen, faderIndex]);
+        return {
+            "--fader_index": faderIndex,
+            backgroundColor: invisible
+                ? "none !important"
+                : "rgba(0, 0, 0, 0.6)",
+        } as CSSProperties;
+    }, [fullscreen, faderIndex, invisible]);
 
     const getClassName = useMemo(() => {
         if (globalConfig.backgroundBlur)
@@ -46,8 +67,12 @@ export default function BackgroundFader({
     return (
         <div
             className={getClassName}
-            onClick={callbackFunc}
+            onClick={() => {
+                if (callbackFunc) callbackFunc();
+            }}
             style={getBackgroundStyle}
-        ></div>
+        />
     );
-}
+};
+
+export default BackgroundFader;

@@ -57,11 +57,7 @@ const MainPage: FunctionComponent<MainPageProps> = () => {
     };
 
     const startExperiment = async () => {
-        console.log("Botão de ensaio foi chamado");
-        // FIXME
         const canStart = await checkCanStartExperimentJS();
-        console.log("canStart? " + canStart);
-
         if (!canStart) return;
         setIsCreateExperimentOpen(true);
     };

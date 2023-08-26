@@ -14,10 +14,6 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
-
-import { Dispatch, SetStateAction } from "react";
-import { PageType } from "types/PageType";
-
 export function pingJS() {
     // Ping function, returns 1 if the connection was successful
     return 1;

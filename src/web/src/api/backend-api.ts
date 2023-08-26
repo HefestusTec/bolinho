@@ -238,6 +238,7 @@ export type PostExperimentType = {
         compress: boolean;
         z_axis_speed: number;
         extra_info: string;
+        plot_color: string;
     };
 };
 

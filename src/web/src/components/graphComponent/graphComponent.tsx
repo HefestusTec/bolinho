@@ -71,8 +71,6 @@ const GraphComponent: FunctionComponent<GraphComponentProps> = () => {
     const [plotType, setPlotType] = useState<PlotTypeType>("loadOverTime");
 
     useEffect(() => {
-        console.log(plotType);
-
         const fetchPlotData = (id: number) => {
             switch (plotType) {
                 case "loadOverTime":

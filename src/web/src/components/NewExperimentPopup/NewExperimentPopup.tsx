@@ -30,6 +30,7 @@ import CustomTextArea from "components/customSubComponents/CustomTextArea/Custom
 import CustomCheckbox from "components/customSubComponents/customCheckbox/customCheckbox";
 import CustomListSelector from "components/customSubComponents/customListSelector/customListSelector";
 import CustomTextInput from "components/customSubComponents/CustomTextInput/CustomTextInput";
+import { getRandomColor } from "helpers";
 
 interface NewExperimentPopupProps {
     handleExperimentCreated: (id: number) => void;
@@ -112,6 +113,7 @@ const NewExperimentPopup: FunctionComponent<NewExperimentPopupProps> = ({
                 compress: experimentCompress,
                 z_axis_speed: experimentZAxisSpeed,
                 extra_info: experimentExtraInfo,
+                plot_color: getRandomColor(),
             },
         }).then((id) => {
             refresh();
@@ -129,10 +131,11 @@ const NewExperimentPopup: FunctionComponent<NewExperimentPopupProps> = ({
             />
             <div
                 style={{
-                    position: "fixed",
-                    right: "10%",
-                    bottom: "10%",
-                    width: "50%",
+                    position: "absolute",
+                    right: "10px",
+                    top: "10px",
+                    bottom: "10px",
+                    width: "65%",
                     zIndex: 2,
                 }}
             >
@@ -140,7 +143,7 @@ const NewExperimentPopup: FunctionComponent<NewExperimentPopupProps> = ({
                     headerText={"Novo experimento"}
                     containerContentStyle={{
                         paddingRight: 0,
-                        maxHeight: "70vh",
+                        maxHeight: "100%",
                     }}
                 >
                     <span style={{ display: "flex" }}>
