@@ -33,15 +33,12 @@ import ExperimentDescription from "./experimentDescription/experimentDescription
 import styleModule from "./experimentsInspector.module.css";
 import { SelectedExperimentsContext } from "contexts/SelectedExperimentsContext";
 import {
-    BodyType,
     ExperimentType,
     MaterialType,
-    defaultBodyType,
     defaultExperimentType,
     defaultMaterialType,
 } from "types/DataBaseTypes";
-import { getBodyById, getMaterialById } from "api/db-api";
-import { RefreshDataContext } from "api/contexts/RefreshContext";
+import { getMaterialById } from "api/db-api";
 import useFetchExperiments from "hooks/useFetchExperiments";
 
 interface ExperimentsInspectorProps {}
@@ -52,11 +49,9 @@ const ExperimentsInspector: FunctionComponent<
     const [selectedExperiments, setSelectedExperiments] = useContext(
         SelectedExperimentsContext
     );
-    const [refreshData] = useContext(RefreshDataContext);
 
     const [activeExperimentId, setActiveExperimentId] = useState<number>(-1);
     const [colorPickerIsActive, setColorPickerIsActive] = useState(false);
-    const [myBody, setMyBody] = useState<BodyType>(defaultBodyType);
     const [myMaterial, setMyMaterial] =
         useState<MaterialType>(defaultMaterialType);
 
@@ -84,20 +79,14 @@ const ExperimentsInspector: FunctionComponent<
 
     useEffect(() => {
         if (activeExperimentId < 0 || !experimentList.length) return;
-        getBodyById(experimentList[activeExperimentId].body.id)
-            .then((bodyResponse) => {
-                if (bodyResponse) {
-                    setMyBody(bodyResponse);
-                    getMaterialById(bodyResponse.material.id).then(
-                        (materialResponse) => {
-                            if (materialResponse)
-                                setMyMaterial(materialResponse);
-                        }
-                    );
-                }
-            })
-            .catch((err) => console.log(err));
-    }, [activeExperimentId, experimentList, refreshData]);
+        if (myExperiment) {
+            getMaterialById(myExperiment.body.material.id)
+                .then((materialResponse) => {
+                    if (materialResponse) setMyMaterial(materialResponse);
+                })
+                .catch((err) => console.log(err));
+        }
+    }, [myExperiment, activeExperimentId, experimentList]);
 
     const makeHeaderText = () => {
         if (activeExperimentId < 0) return "Selecione um experimento";
@@ -228,7 +217,6 @@ const ExperimentsInspector: FunctionComponent<
                         <div className={styleModule.experiment_description}>
                             {activeExperimentId >= 0 ? (
                                 <ExperimentDescription
-                                    myBody={myBody}
                                     experiment={myExperiment}
                                     material={myMaterial}
                                 />

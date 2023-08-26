@@ -17,17 +17,15 @@
 import { FunctionComponent } from "react";
 
 import styleModule from "./experimentDescription.module.css";
-import { BodyType, ExperimentType, MaterialType } from "types/DataBaseTypes";
+import { ExperimentType, MaterialType } from "types/DataBaseTypes";
 import { getBodyTypeAsText } from "helpers";
 
 interface ExperimentDescriptionProps {
-    myBody: BodyType;
     experiment: ExperimentType;
     material: MaterialType;
 }
 
 const ExperimentDescription: FunctionComponent<ExperimentDescriptionProps> = ({
-    myBody,
     experiment,
     material,
 }) => {

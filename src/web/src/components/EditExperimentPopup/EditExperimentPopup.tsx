@@ -128,7 +128,7 @@ const EditExperimentPopup: FunctionComponent<EditExperimentPopupProps> = ({
                     </tr>
                     <tr>
                         <th>Limite de perda de carga</th>
-                        <th>{experiment.load_loss_limit.toFixed(2)} N</th>
+                        <th>{experiment.load_loss_limit.toFixed(2)} N/s</th>
                     </tr>
                     <tr>
                         <th>Carga máxima</th>
