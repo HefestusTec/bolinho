@@ -27,18 +27,16 @@ import { startExperimentRoutineJS } from "../../api/backend-api";
 
 //import GlobalConfigContext from "../../contexts/globalConfigContext";
 import BigButton from "components/customSubComponents/BigButton/BigButton";
-import {
-    SelectedExperimentType,
-    SelectedExperimentsContext,
-} from "contexts/SelectedExperimentsContext";
+import { SelectedExperimentsContext } from "contexts/SelectedExperimentsContext";
 import { IsConnectedContext } from "api/contexts/IsConnectedContext";
+import { goToExperimentPageJS } from "api/exp-core-api";
 
 interface MainPageProps {}
 
 const MainPage: FunctionComponent<MainPageProps> = () => {
-    const [selectedExperiments, setSelectedExperiments] = useState<
-        SelectedExperimentType[]
-    >([]);
+    const [selectedExperiments, setSelectedExperiments] = useState<number[]>(
+        []
+    );
     const [isConnected] = useContext(IsConnectedContext);
 
     return (
@@ -76,6 +74,7 @@ const MainPage: FunctionComponent<MainPageProps> = () => {
                         clickCallBack={() => {
                             console.log("Botão de ensaio foi chamado");
                             // FIXME
+                            goToExperimentPageJS();
                             startExperimentRoutineJS(0);
                         }}
                         buttonText="ENSAIO"

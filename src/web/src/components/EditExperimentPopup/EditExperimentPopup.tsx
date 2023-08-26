@@ -57,6 +57,7 @@ const EditExperimentPopup: FunctionComponent<EditExperimentPopupProps> = ({
             id: experiment.id,
             name: name,
             extra_info: extraInfo,
+            plot_color: experiment.plot_color,
         }).then((response) => {
             if (response) {
                 toast.success("Experimento atualizado com sucesso");
@@ -95,6 +96,9 @@ const EditExperimentPopup: FunctionComponent<EditExperimentPopupProps> = ({
                     EXCLUIR
                 </CustomButton>
             }
+            containerContentStyle={{
+                paddingRight: 0,
+            }}
         >
             <CustomTextArea>
                 <table>

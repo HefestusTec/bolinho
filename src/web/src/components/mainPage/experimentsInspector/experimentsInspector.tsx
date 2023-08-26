@@ -29,7 +29,6 @@ import { ReactComponent as ColorIcon } from "../../../resources/colorSelectorIco
 import { ReactComponent as AcceptIcon } from "../../../resources/acceptIcon.svg";
 import ColorPicker from "./colorPicker/colorPicker";
 import ExperimentDescription from "./experimentDescription/experimentDescription";
-import { toast } from "react-toastify";
 
 import styleModule from "./experimentsInspector.module.css";
 import { SelectedExperimentsContext } from "contexts/SelectedExperimentsContext";
@@ -74,33 +73,31 @@ const ExperimentsInspector: FunctionComponent<
         return experimentList.map((element, idx) => (
             <ExperimentButton
                 experiment={element}
-                experimentColor={selectedExperiments[idx].color}
+                experimentColor={element.plot_color}
                 activeExperimentId={activeExperimentId}
                 myId={idx}
                 setActiveExperimentId={setActiveExperimentId}
                 key={element.id.toString() + idx}
             />
         ));
-    }, [activeExperimentId, selectedExperiments, experimentList]);
+    }, [activeExperimentId, experimentList]);
 
     useEffect(() => {
-        if (activeExperimentId < 0) return;
+        if (activeExperimentId < 0 || !experimentList.length) return;
         getBodyById(experimentList[activeExperimentId].body.id)
             .then((bodyResponse) => {
-                if (bodyResponse) setMyBody(bodyResponse);
+                if (bodyResponse) {
+                    setMyBody(bodyResponse);
+                    getMaterialById(bodyResponse.material.id).then(
+                        (materialResponse) => {
+                            if (materialResponse)
+                                setMyMaterial(materialResponse);
+                        }
+                    );
+                }
             })
             .catch((err) => console.log(err));
     }, [activeExperimentId, experimentList, refreshData]);
-
-    useEffect(() => {
-        if (activeExperimentId < 0) return;
-
-        getMaterialById(myBody.material.id)
-            .then((materialResponse) => {
-                if (materialResponse) setMyMaterial(materialResponse);
-            })
-            .catch((err) => console.log(err));
-    }, [myBody, activeExperimentId, refreshData]);
 
     const makeHeaderText = () => {
         if (activeExperimentId < 0) return "Selecione um experimento";
@@ -109,14 +106,12 @@ const ExperimentsInspector: FunctionComponent<
         const batch = myMaterial.batch;
         return `[${batch}] ${name}`;
     };
-
     const removeActiveExperiment = () => {
         if (activeExperimentId < 0) return;
 
         let objectListCopy = [...selectedExperiments];
 
         objectListCopy.splice(activeExperimentId, 1);
-
         setSelectedExperiments(objectListCopy);
 
         setActiveExperimentId(objectListCopy.length - 1);
@@ -143,7 +138,7 @@ const ExperimentsInspector: FunctionComponent<
 
     const getStyleColor = () => {
         if (activeExperimentId >= 0)
-            return selectedExperiments[activeExperimentId].color;
+            return experimentList[activeExperimentId]?.plot_color;
 
         return "var(--primary_color)";
     };
@@ -171,26 +166,9 @@ const ExperimentsInspector: FunctionComponent<
         return;
     };
 
-    const updateDataColor = () => {
-        if (selectedExperiments === undefined || activeExperimentId < 0) return;
-        try {
-            let objectListCopy = [...selectedExperiments];
-            const idx = objectListCopy.findIndex(
-                (element) => element.id === activeExperimentId
-            );
-
-            objectListCopy[idx].color =
-                selectedExperiments[activeExperimentId].color;
-            setSelectedExperiments(objectListCopy);
-        } catch (error) {
-            toast.error("Não foi possível alterar a cor da plotagem");
-        }
-    };
-
     const deactivateColorPicker = () => {
         if (colorPickerIsActive) {
             setColorPickerIsActive(false);
-            updateDataColor();
         }
     };
 
@@ -264,7 +242,7 @@ const ExperimentsInspector: FunctionComponent<
 
             {colorPickerIsActive ? (
                 <ColorPicker
-                    activeExperimentId={activeExperimentId}
+                    activeExperiment={experimentList[activeExperimentId]}
                     colorPickerIsActive={colorPickerIsActive}
                     setColorPickerIsActive={setColorPickerIsActive}
                     deactivateColorPicker={deactivateColorPicker}

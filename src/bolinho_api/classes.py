@@ -130,6 +130,7 @@ class Experiment:
         z_axis_speed=0,
         compress=False,
         extra_info="",
+        plot_color="#ffffff",
     ):
         self.id = id
         self.name = name
@@ -142,3 +143,4 @@ class Experiment:
         self.z_axis_speed = z_axis_speed
         self.compress = compress
         self.extra_info = extra_info
+        self.plot_color = plot_color

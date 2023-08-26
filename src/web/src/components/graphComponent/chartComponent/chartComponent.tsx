@@ -56,7 +56,6 @@ const ChartComponent: FunctionComponent<ChartComponentProps> = ({
     allMaxDataValues = { x: 50, y: 1 },
 }) => {
     const [maxData, setMaxData] = useState<DataPointType>({ x: 50, y: 1 });
-
     const getDataSets = () => {
         return experimentPlotDataArray.map((object) => object.dataset);
     };

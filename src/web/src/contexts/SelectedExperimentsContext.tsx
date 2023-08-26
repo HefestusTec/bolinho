@@ -17,14 +17,6 @@
 
 import { Dispatch, SetStateAction, createContext } from "react";
 
-export type SelectedExperimentType = {
-    id: number;
-    color: string;
-};
-
 export const SelectedExperimentsContext = createContext<
-    [
-        SelectedExperimentType[],
-        Dispatch<SetStateAction<SelectedExperimentType[]>>
-    ]
+    [number[], Dispatch<SetStateAction<number[]>>]
 >([[], () => {}]);

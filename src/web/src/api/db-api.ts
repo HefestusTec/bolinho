@@ -43,6 +43,7 @@ export const getMaterialsDB = async (): Promise<MaterialType[]> => {
     try {
         return JSON.parse(await eel.get_materials()()) as MaterialType[];
     } catch (error) {
+        console.error(error);
         toast.error("Não foi possível receber os materiais");
         return [];
     }
@@ -55,6 +56,7 @@ export const getExperimentsDB = async (): Promise<ExperimentType[]> => {
         ) as ExperimentType[];
         return response;
     } catch (error) {
+        console.error(error);
         toast.error("Não foi possível receber os experimentos");
         return [];
     }
@@ -68,6 +70,7 @@ export const getExperimentsByMaterialId = async (
             await eel.get_experiments_by_material_id(id)()
         ) as ExperimentType[];
     } catch (error) {
+        console.error(error);
         toast.error(
             "Não foi possível receber o experimento com material_id " + id
         );
@@ -81,6 +84,7 @@ export const getBodyById = async (
     try {
         return JSON.parse(await eel.get_body_by_id(id)()) as BodyType;
     } catch (error) {
+        console.error(error);
         toast.error("Não foi possível receber o corpo de id:  " + id);
         return undefined;
     }
@@ -93,10 +97,9 @@ export const getExperimentById = async (
         const response = JSON.parse(
             await eel.get_experiment_by_id(id)()
         ) as ExperimentType;
-        console.log(response);
-
         return response;
     } catch (error) {
+        console.error(error);
         toast.error("Não foi possível receber o corpo de id:  " + id);
         return undefined;
     }
@@ -108,6 +111,7 @@ export const getMaterialById = async (
     try {
         return JSON.parse(await eel.get_material_by_id(id)()) as MaterialType;
     } catch (error) {
+        console.error(error);
         toast.error("Não foi possível receber o material de id:  " + id);
         return undefined;
     }
@@ -121,6 +125,7 @@ export const getLoadOverTimeByExperimentId = async (
             await eel.get_load_over_time_by_experiment_id(id)()
         ) as DataPointType[];
     } catch (error) {
+        console.error(error);
         toast.error(
             "Não foi possível receber a leitura de carga pelo tempo do experimento de id:  " +
                 id
@@ -137,6 +142,7 @@ export const getLoadOverPositionByExperimentId = async (
             await eel.get_load_over_position_by_experiment_id(id)()
         ) as DataPointType[];
     } catch (error) {
+        console.error(error);
         toast.error(
             "Não foi possível receber a leitura de carga pela posição do experimento de id:  " +
                 id

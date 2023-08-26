@@ -23,8 +23,10 @@ import ChartComponent from "./chartComponent/chartComponent";
 import SliderComponent from "./sliderComponent/sliderComponent";
 import { ExperimentPlotData } from "../../classes";
 import { DataPointType } from "types/DataPointTypes";
-import { SelectedExperimentType } from "contexts/SelectedExperimentsContext";
-import { getLoadOverTimeByExperimentId } from "api/db-api";
+import {
+    getLoadOverTimeByExperimentId,
+    getLoadOverPositionByExperimentId,
+} from "api/db-api";
 import { toast } from "react-toastify";
 import useFetchExperiments from "hooks/useFetchExperiments";
 
@@ -51,7 +53,7 @@ const getMaxData = (experimentArray: ExperimentPlotData[]): DataPointType => {
 };
 
 interface GraphComponentProps {
-    selectedExperiments: SelectedExperimentType[];
+    selectedExperiments: number[];
 }
 
 const GraphComponent: FunctionComponent<GraphComponentProps> = ({
@@ -71,7 +73,7 @@ const GraphComponent: FunctionComponent<GraphComponentProps> = ({
             let returnPlotDataArray: ExperimentPlotData[] = [];
             for (let i = 0; i < experimentList.length; i++) {
                 const experiment = experimentList[i];
-                const experimentColor = selectedExperiments[i].color;
+                const experimentColor = experimentList[i].plot_color;
                 const data: DataPointType[] =
                     await getLoadOverTimeByExperimentId(experiment.id).catch(
                         (err) => {
@@ -97,7 +99,7 @@ const GraphComponent: FunctionComponent<GraphComponentProps> = ({
                 maxValues: maxVals,
             });
         });
-    }, [selectedExperiments, experimentList]);
+    }, [experimentList]);
 
     const getOpenSideBarButtonClassName = () => {
         return showSideBar
@@ -131,7 +133,6 @@ const GraphComponent: FunctionComponent<GraphComponentProps> = ({
         setLeftHandlePos(min);
         setRightHandlePos(max);
     };
-
     return (
         <div className={styleModule.graph_component}>
             <div className={getGraphAreaClassName()}>

@@ -15,7 +15,14 @@
 // You should have received a copy of the GNU General Public License
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
 
-import { FunctionComponent, ReactNode, RefObject, useRef } from "react";
+import {
+    Dispatch,
+    FunctionComponent,
+    ReactNode,
+    RefObject,
+    SetStateAction,
+    useRef,
+} from "react";
 import CustomButton from "components/customSubComponents/customButton/customButton";
 import styleModule from "./configButton.module.css";
 import React from "react";
@@ -26,11 +33,13 @@ import { PopupActions } from "reactjs-popup/dist/types";
 interface ConfigButtonProps {
     bgColor?: string;
     children?: ReactNode;
+    setParentZIndex?: Dispatch<SetStateAction<number>>;
 }
 
 const ConfigButton: FunctionComponent<ConfigButtonProps> = ({
     bgColor = "var(--button_inactive_color)",
     children,
+    setParentZIndex,
 }) => {
     const ref = useRef<PopupActions>(null) as RefObject<PopupActions>;
     const closeTooltip = () => {
@@ -50,16 +59,24 @@ const ConfigButton: FunctionComponent<ConfigButtonProps> = ({
                         </div>
                     )}
                     ref={ref}
-                    position={["bottom right", "bottom left", "top center"]}
+                    position={["right top", "right bottom", "right center"]}
                     closeOnDocumentClick
                     className={styleModule.popup_trigger}
                     keepTooltipInside=".App"
+                    onOpen={() => {
+                        if (setParentZIndex) setParentZIndex(9);
+                    }}
+                    onClose={() => {
+                        if (setParentZIndex) setParentZIndex(0);
+                    }}
                 >
                     <React.Fragment>
                         <div
                             style={{
-                                width: "30vw",
-                                maxHeight: "70vh",
+                                position: "fixed",
+                                width: "35%",
+                                maxHeight: "80%",
+                                top: "5%",
                                 overflowY: "scroll",
                             }}
                         >

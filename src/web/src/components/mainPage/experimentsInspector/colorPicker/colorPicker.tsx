@@ -18,44 +18,47 @@ import React, {
     Dispatch,
     FunctionComponent,
     SetStateAction,
-    useContext,
     useState,
 } from "react";
 import ClickAwayListener from "react-click-away-listener";
 import { useDebouncedCallback } from "use-debounce";
 
 import styleModule from "./colorPicker.module.css";
-import { SelectedExperimentsContext } from "contexts/SelectedExperimentsContext";
 import { HexColorPicker } from "react-colorful";
+import { ExperimentType } from "types/DataBaseTypes";
+import { patchExperimentByIdJS } from "api/backend-api";
+import useRefresh from "hooks/useRefresh";
 
 interface ColorPickerProps {
-    activeExperimentId: number;
+    activeExperiment: ExperimentType;
     colorPickerIsActive: boolean;
     setColorPickerIsActive: Dispatch<SetStateAction<boolean>>;
     deactivateColorPicker: () => void;
 }
 
 const ColorPicker: FunctionComponent<ColorPickerProps> = ({
-    activeExperimentId,
+    activeExperiment,
     colorPickerIsActive,
     setColorPickerIsActive,
     deactivateColorPicker,
 }) => {
-    const [selectedExperiments, setSelectedExperiments] = useContext(
-        SelectedExperimentsContext
-    );
     const [currentColor, setCurrentColor] = useState("#FFFFFF");
     const [changing, setChanging] = useState(false);
+
+    const refresh = useRefresh();
 
     // Debouncer allows to dynamically update the data color without having to update every frame
     const debounced = useDebouncedCallback(
         // function
         (newColor) => {
             setChanging(false);
-            let selectedExperimentsCopy = [...selectedExperiments];
-            selectedExperimentsCopy[activeExperimentId].color = newColor;
-
-            setSelectedExperiments(selectedExperimentsCopy);
+            patchExperimentByIdJS({
+                name: activeExperiment.name,
+                extra_info: activeExperiment.extra_info,
+                id: activeExperiment.id,
+                plot_color: newColor,
+            });
+            refresh();
         },
         // delay in ms
         300

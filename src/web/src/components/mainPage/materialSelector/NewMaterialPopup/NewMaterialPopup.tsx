@@ -23,6 +23,7 @@ import { postMaterialJS } from "api/backend-api";
 import { toast } from "react-toastify";
 import useConfirm from "hooks/useConfirm";
 import CustomTextAreaInput from "components/customSubComponents/CustomTextAreaInput/CustomTextAreaInput";
+import useRefresh from "hooks/useRefresh";
 
 interface NewMaterialPopupProps {
     closePopup: () => void;
@@ -41,6 +42,7 @@ const NewMaterialPopup: FunctionComponent<NewMaterialPopupProps> = ({
     );
     const [extraInfo, setExtraInfo] = useState<string>("SEM EXTRA INFO");
     const [ConfirmationDialog, confirm] = useConfirm();
+    const refresh = useRefresh();
 
     const postNewMaterial = () => {
         postMaterialJS({
@@ -56,6 +58,7 @@ const NewMaterialPopup: FunctionComponent<NewMaterialPopupProps> = ({
             } else {
                 toast.error("Erro durante a criação do material");
             }
+            refresh();
         });
     };
     return (

@@ -16,12 +16,8 @@
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
 import React, { useContext, FunctionComponent } from "react";
 import styleModule from "./dropdownButton.module.css";
-import { getRandomColor } from "../../../../../helpers";
 import { ExperimentType } from "types/DataBaseTypes";
-import {
-    SelectedExperimentType,
-    SelectedExperimentsContext,
-} from "contexts/SelectedExperimentsContext";
+import { SelectedExperimentsContext } from "contexts/SelectedExperimentsContext";
 import EditExperimentPopup from "components/EditExperimentPopup/EditExperimentPopup";
 import ConfigButton from "../configButton/configButton";
 
@@ -39,16 +35,12 @@ const DropdownButton: FunctionComponent<DropdownButtonProps> = ({
         if (experiment === undefined) return;
 
         for (let i = 0; i < selectedExperiments.length; i++) {
-            if (selectedExperiments[i].id === experiment.id) return;
+            if (selectedExperiments[i] === experiment.id) return;
         }
-        const newSelectedObj: SelectedExperimentType = {
-            id: experiment.id,
-            color: getRandomColor(),
-        };
 
         setSelectedExperiments((oldExperiments) => [
             ...oldExperiments,
-            newSelectedObj,
+            experiment.id,
         ]);
     };
 

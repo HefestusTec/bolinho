@@ -37,6 +37,7 @@ const EditMaterialPopup: FunctionComponent<EditMaterialPopupProps> = ({
     material,
     closeTooltip,
 }) => {
+    const [materialName, setMaterialName] = useState<string>(material.name);
     const [supplierName, setSupplierName] = useState<string>(
         material.supplier_name
     );
@@ -47,6 +48,8 @@ const EditMaterialPopup: FunctionComponent<EditMaterialPopupProps> = ({
 
     const [refreshData] = useContext(RefreshDataContext);
     const refresh = useRefresh();
+    const [materialNameAlert, setMaterialNameAlert] = useState<boolean>(false);
+
     const [supplierNameAlert, setSupplierNameAlert] = useState<boolean>(false);
     const [supplierContactInfoAlert, setSupplierContactInfoAlert] =
         useState<boolean>(false);
@@ -54,15 +57,25 @@ const EditMaterialPopup: FunctionComponent<EditMaterialPopupProps> = ({
     const [ConfirmationDialog, confirm] = useConfirm();
 
     useEffect(() => {
+        setMaterialNameAlert(materialName !== material.name);
+
         setSupplierNameAlert(supplierName !== material.supplier_name);
         setSupplierContactInfoAlert(
             supplierContactInfo !== material.supplier_contact_info
         );
         setExtraInfoAlert(extraInfo !== material.extra_info);
-    }, [supplierName, supplierContactInfo, extraInfo, material, refreshData]);
+    }, [
+        supplierName,
+        supplierContactInfo,
+        extraInfo,
+        material,
+        refreshData,
+        materialName,
+    ]);
 
     const saveMaterial = () => {
         patchMaterialByIdJS({
+            name: materialName,
             id: material.id,
             supplier_name: supplierName,
             supplier_contact_info: supplierContactInfo,
@@ -105,6 +118,9 @@ const EditMaterialPopup: FunctionComponent<EditMaterialPopupProps> = ({
                     EXCLUIR
                 </CustomButton>
             }
+            containerContentStyle={{
+                paddingRight: 0,
+            }}
         >
             <CustomTextArea>
                 <table>
@@ -128,6 +144,15 @@ const EditMaterialPopup: FunctionComponent<EditMaterialPopupProps> = ({
                     </tr>
                 </table>
             </CustomTextArea>
+            <CustomTextAreaInput
+                title="Nome do material"
+                setValue={setMaterialName}
+                value={materialName}
+                inputType="text"
+                suffix=""
+                alert={materialNameAlert}
+                alertColor="var(--positive_button_color)"
+            />
             <CustomTextAreaInput
                 title="Fornecedor"
                 setValue={setSupplierName}
