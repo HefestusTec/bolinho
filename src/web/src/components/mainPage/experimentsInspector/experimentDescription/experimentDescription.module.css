@@ -43,6 +43,7 @@ th {
 .content table {
     border: 1px solid var(--font_color);
     width: 100%;
+    overflow: hidden;
 }
 
 .content tr:nth-child(odd) {
