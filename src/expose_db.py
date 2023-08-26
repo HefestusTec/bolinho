@@ -72,6 +72,7 @@ def patch_material_by_id(data):
     current_material = db_handler.get_material_by_id(material_id)
 
     patch_data = {
+        "name": data.get("name", current_material.name),
         "supplier_name": data.get("supplier_name", current_material.supplier_name),
         "supplier_contact_info": data.get(
             "supplier_contact_info", current_material.supplier_contact_info
@@ -80,6 +81,19 @@ def patch_material_by_id(data):
     }
     try:
         db_handler.patch_material_by_id(material_id, patch_data)
+        return True
+    except Exception as e:
+        ui_api.error_alert(str(e))
+        return False
+
+
+@eel.expose
+def delete_material_by_id(id):
+    """
+    Deletes the material with the given id
+    """
+    try:
+        db_handler.delete_material_by_id(id)
         return True
     except Exception as e:
         ui_api.error_alert(str(e))
@@ -170,6 +184,18 @@ def get_experiments_by_material_id(material_id):
 
 
 @eel.expose
+def get_experiment_by_id_list(experiment_id_list):
+    """
+    Returns a list of experiments that used the material with the given id
+    """
+    experiments = db_handler.get_experiment_by_id_list(experiment_id_list)
+    for experiment in experiments:
+        experiment.date_time = experiment.date_time.strftime("%d/%m/%Y")
+    experiments_dict_list = [model_to_dict(experiment) for experiment in experiments]
+    return json.dumps(experiments_dict_list, default=lambda x: x.__dict__)
+
+
+@eel.expose
 def patch_experiment_by_id(data):
     """
     Updates the experiment with the given id
@@ -183,6 +209,7 @@ def patch_experiment_by_id(data):
     patch_data = {
         "name": data.get("name", current_experiment.name),
         "extra_info": data.get("extra_info", current_experiment.extra_info),
+        "plot_color": data.get("plot_color", current_experiment.plot_color),
     }
     try:
         db_handler.patch_experiment_by_id(experiment_id, patch_data)
@@ -229,7 +256,7 @@ def get_load_over_position_by_experiment_id(experiment_id):
     Returns a list of load over position data points for the experiment with the given id
     """
     readings = db_handler.get_load_over_position_by_experiment_id(experiment_id)
-    readings_dict = model_to_dict(readings)
+    readings_dict = [model_to_dict(reading) for reading in readings]
     # rename the "z_pos" key to "x"
     # rename the "load" key to "y"
     for reading in readings_dict:

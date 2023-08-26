@@ -63,6 +63,7 @@ export type ExperimentType = {
     z_axis_speed: number;
     compress: boolean;
     extra_info: string;
+    plot_color: string;
 };
 export const defaultExperimentType: ExperimentType = {
     id: 0,
@@ -76,4 +77,5 @@ export const defaultExperimentType: ExperimentType = {
     z_axis_speed: 0,
     compress: false,
     extra_info: "NONE",
+    plot_color: "#ffffff",
 };

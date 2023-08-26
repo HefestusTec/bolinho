@@ -96,6 +96,7 @@ class Experiment(BaseModel):
     compress = BooleanField()
     z_axis_speed = FloatField()
     extra_info = CharField()
+    plot_color = CharField()
 
 
 class Reading(BaseModel):
@@ -125,7 +126,7 @@ class DBHandler:
             try:
                 self.db.create_tables([Material, Body, Experiment, Reading])
                 self.__populate()
-            except peewee.OperationalError as e:
+            except OperationalError as e:
                 raise e
         else:
             self.db = SqliteDatabase(db_path)
@@ -151,6 +152,9 @@ class DBHandler:
     def patch_material_by_id(self, id: int, data: dict):
         Material.update(**data).where(Material.id == id).execute()
 
+    def delete_material_by_id(self, id: int):
+        Material.delete().where(Material.id == id).execute()
+
     # --- Body --- #
 
     def post_body(self, data: dict):
@@ -171,6 +175,9 @@ class DBHandler:
 
     def get_experiment_by_id(self, id: int) -> Experiment:
         return Experiment.get(Experiment.id == id)
+
+    def get_experiment_by_id_list(self, ids: list) -> list:
+        return Experiment.select().where(Experiment.id.in_(ids))
 
     def get_experiments_by_material_id(self, material_id: int) -> list:
         return Experiment.select().join(Body).where(Body.material == material_id)
@@ -248,6 +255,7 @@ class DBHandler:
                     "compress": i % 2 == 0,
                     "z_axis_speed": 0.1 + 4 * i / 10,
                     "extra_info": "Extra info " + str(i),
+                    "plot_color": "#ffffff",
                 }
             )
 

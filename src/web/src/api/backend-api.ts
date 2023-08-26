@@ -229,6 +229,7 @@ export const postExperimentJS = async (
 };
 
 export type PatchMaterialType = {
+    name: string;
     id: number;
     supplier_name: string;
     supplier_contact_info: string;
@@ -250,6 +251,7 @@ export type PatchExperimentType = {
     id: number;
     name: string;
     extra_info: string;
+    plot_color: string;
 };
 
 export const patchExperimentByIdJS = async (

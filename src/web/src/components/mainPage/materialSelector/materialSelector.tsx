@@ -143,6 +143,9 @@ const MaterialSelector: FunctionComponent<MaterialSelectorProps> = () => {
                                                 Cancelar
                                             </CustomButton>
                                         }
+                                        containerContentStyle={{
+                                            paddingRight: 0,
+                                        }}
                                     >
                                         <NewMaterialPopup
                                             closePopup={closeTooltip}

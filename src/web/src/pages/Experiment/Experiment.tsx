@@ -25,19 +25,16 @@ import MainMonitor from "./MainMonitor/MainMonitor";
 import { ExperimentPageContext } from "api/contexts/ExperimentPageContext";
 import { ReadingsContext } from "api/contexts/ReadingsContext";
 import ReadingsContainer from "components/ReadingsContainer/ReadingsContainer";
-import {
-    SelectedExperimentType,
-    SelectedExperimentsContext,
-} from "contexts/SelectedExperimentsContext";
+import { SelectedExperimentsContext } from "contexts/SelectedExperimentsContext";
 
 interface ExperimentProps {}
 
 const Experiment: FunctionComponent<ExperimentProps> = () => {
     const [experimentPageContext] = useContext(ExperimentPageContext);
     const [readingsContext] = useContext(ReadingsContext);
-    const [selectedExperiments, setSelectedExperiments] = useState<
-        SelectedExperimentType[]
-    >([]);
+    const [selectedExperiments, setSelectedExperiments] = useState<number[]>(
+        []
+    );
     return (
         <SelectedExperimentsContext.Provider
             value={[selectedExperiments, setSelectedExperiments]}
