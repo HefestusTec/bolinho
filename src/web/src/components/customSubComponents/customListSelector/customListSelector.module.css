@@ -12,8 +12,8 @@
     align-items: center;
     height: max-content;
 
-    padding-left: 5%;
-    padding-right: 5%;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
 .custom_list_selector {

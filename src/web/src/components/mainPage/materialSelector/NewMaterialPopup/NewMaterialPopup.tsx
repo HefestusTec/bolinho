@@ -127,7 +127,7 @@ const NewMaterialPopup: FunctionComponent<NewMaterialPopupProps> = ({
                     }}
                     width="50%"
                 >
-                    Salvar
+                    Criar
                 </CustomButton>
             </CustomButtonArray>
             <ConfirmationDialog />

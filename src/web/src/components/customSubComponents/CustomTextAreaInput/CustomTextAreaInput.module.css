@@ -36,8 +36,8 @@
     font-weight: bold;
     align-items: center;
     display: flex;
-    margin-left: 5%;
-    margin-right: 5%;
+    margin-left: 10px;
+    margin-right: 10px;
     border-radius: 2px;
     transition-duration: var(--animation_fast);
     border-radius: 5px;

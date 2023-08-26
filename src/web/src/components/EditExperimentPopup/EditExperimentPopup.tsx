@@ -100,6 +100,7 @@ const EditExperimentPopup: FunctionComponent<EditExperimentPopupProps> = ({
             }
             containerContentStyle={{
                 paddingRight: 0,
+                maxHeight: "70vh",
             }}
         >
             <CustomTextArea>

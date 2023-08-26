@@ -15,7 +15,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
 
-import { goToExperimentPageJS, goToHomePageJS } from "api/exp-core-api";
+import { Dispatch, SetStateAction } from "react";
 import {
     BodyType,
     ExperimentType,
@@ -24,7 +24,13 @@ import {
     defaultMaterialType,
 } from "types/DataBaseTypes";
 import { DataPointType } from "types/DataPointTypes";
-
+import { PageType } from "types/PageType";
+let setCurrentPage: Dispatch<SetStateAction<PageType>> | null = null;
+export function setCurrentPageCallBack(
+    callback: Dispatch<SetStateAction<PageType>>
+) {
+    setCurrentPage = callback;
+}
 var _pj: any;
 
 var experiment_data_base: ExperimentType[],
@@ -237,3 +243,21 @@ export class fakeEel {
         goToHomePageJS();
     }
 }
+
+function goToExperimentPageJS() {
+    // Routs to the experiment page, returns 1 if it was successful
+    if (setCurrentPage == null) return;
+    setCurrentPage("experiment");
+}
+try {
+    window.eel.expose(goToExperimentPageJS, "goToExperimentPageJS");
+} catch (error) {}
+
+function goToHomePageJS() {
+    // Routs to the experiment page, returns 1 if it was successful
+    if (setCurrentPage == null) return;
+    setCurrentPage("home");
+}
+try {
+    window.eel.expose(goToHomePageJS, "goToHomePageJS");
+} catch (error) {}

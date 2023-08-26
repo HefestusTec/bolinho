@@ -18,37 +18,12 @@
 import { Dispatch, SetStateAction } from "react";
 import { PageType } from "types/PageType";
 
-let setCurrentPage: Dispatch<SetStateAction<PageType>> | null = null;
-
-export function setCurrentPageCallBack(
-    callback: Dispatch<SetStateAction<PageType>>
-) {
-    setCurrentPage = callback;
-}
 export function pingJS() {
     // Ping function, returns 1 if the connection was successful
     return 1;
 }
 try {
     window.eel.expose(pingJS, "pingJS");
-} catch (error) {}
-
-export function goToExperimentPageJS() {
-    // Routs to the experiment page, returns 1 if it was successful
-    if (setCurrentPage == null) return;
-    setCurrentPage("experiment");
-}
-try {
-    window.eel.expose(goToExperimentPageJS, "goToExperimentPageJS");
-} catch (error) {}
-
-export function goToHomePageJS() {
-    // Routs to the experiment page, returns 1 if it was successful
-    if (setCurrentPage == null) return;
-    setCurrentPage("home");
-}
-try {
-    window.eel.expose(goToHomePageJS, "goToHomePageJS");
 } catch (error) {}
 
 // TODO implement the function

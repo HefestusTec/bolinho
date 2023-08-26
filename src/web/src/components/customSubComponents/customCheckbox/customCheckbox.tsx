@@ -19,9 +19,9 @@ import React, { FunctionComponent } from "react";
 import styleModule from "./customCheckbox.module.css";
 
 interface CustomCheckboxProps {
-    children: any;
+    children?: any;
     clickCallBack: () => void;
-    className: string;
+    className?: string;
     checked: boolean;
 }
 

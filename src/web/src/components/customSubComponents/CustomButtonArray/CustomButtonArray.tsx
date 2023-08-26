@@ -41,7 +41,7 @@ const CustomButtonArray: FunctionComponent<CustomButtonArrayProps> = ({
         minHeight: "calc(var(--font_m) * 2.7)",
         paddingLeft: "5%",
         marginBottom: "2vh",
-        gap: "5px",
+        gap: "20px",
         justifyContent: "center",
     };
 

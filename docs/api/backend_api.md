@@ -194,21 +194,42 @@ ___
 
 ## Core
 
+### checkCanStartExperimentJS()
+!!! quote "checkCanStartExperimentJS()"
+
+    This function calls the `check_can_start_experiment(experiment_id)` on the backend.
+
+    The front end will call this function when the user click to start experiment.
+
+    The backend **MUST** respond with a 1 if everything is ok or 0 if something is not correct.
+
+    In case something is wrong the backend also displays an error to the user telling what went wrong
+
+    ``` javaScript title="React usage example"
+    import { checkCanStartExperimentJS } from "./api/backend-api";
+
+    onClick(()=>{
+        checkCanStartExperimentJS(2);
+    };)
+    ```
+
+___
+
 ### startExperimentRoutineJS(experimentId)
 !!! quote "startExperimentRoutineJS(experimentId)"
 
     This function calls the `start_experiment_routine(experiment_id)` on the backend.
 
-    The front end will call this function when the user click to start experiment.
+    The front end will call this function after everything is correct and ready to change pages.
 
-    Receives an `experiment` object as parameter.
+    Receives an `id` to an experiment as parameter.
 
     The backend **MUST** send a command to change to the experiment page.
 
     Returns 1 if succeeded.
 
     ``` javaScript title="React usage example"
-    import { getMaterialList } from "./api/backend-api";
+    import { startExperimentRoutineJS } from "./api/backend-api";
 
     onClick(()=>{
         startExperimentRoutineJS(2);

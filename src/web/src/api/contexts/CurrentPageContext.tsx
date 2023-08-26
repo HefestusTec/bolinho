@@ -37,6 +37,23 @@ const CurrentPageProvider: FunctionComponent<CurrentPageProviderProps> = ({
 }) => {
     const [currentPage, setCurrentPage] = useState<PageType>("home");
 
+    function goToExperimentPageJS() {
+        // Routs to the experiment page, returns 1 if it was successful
+        if (setCurrentPage == null) return;
+        setCurrentPage("experiment");
+    }
+
+    function goToHomePageJS() {
+        // Routs to the experiment page, returns 1 if it was successful
+        if (setCurrentPage == null) return;
+        setCurrentPage("home");
+    }
+    try {
+        window.eel.expose(goToExperimentPageJS, "goToExperimentPageJS");
+
+        window.eel.expose(goToHomePageJS, "goToHomePageJS");
+    } catch (error) {}
+
     return (
         <CurrentPageContext.Provider value={[currentPage, setCurrentPage]}>
             {children}

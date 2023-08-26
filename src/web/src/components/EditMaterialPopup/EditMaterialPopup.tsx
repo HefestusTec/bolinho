@@ -124,6 +124,7 @@ const EditMaterialPopup: FunctionComponent<EditMaterialPopupProps> = ({
             }
             containerContentStyle={{
                 paddingRight: 0,
+                maxHeight: "70vh",
             }}
         >
             <CustomTextArea>
