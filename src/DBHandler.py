@@ -19,6 +19,7 @@ from peewee import *
 import datetime
 from os.path import exists as path_exists
 from os import makedirs
+import random
 
 
 db_path = "persist/bolinho.db"
@@ -255,18 +256,18 @@ class DBHandler:
                     "compress": i % 2 == 0,
                     "z_axis_speed": 0.1 + 4 * i / 10,
                     "extra_info": "Extra info " + str(i),
-                    "plot_color": "#FF0000",
+                    "plot_color": "#" + str(random.randint(0, 999999)),
                 }
             )
 
         for i in range(10):
-            for j in range(10):
+            for j in range(50):
                 self.post_reading(
                     {
                         "x": j,
                         "experiment_id": i % 10 + 1,
-                        "load": 0.1 + j / 10,
-                        "z_pos": 0.1 + 2 * j / 10,
+                        "load": random.randint(0, 200),
+                        "z_pos": (j * 2) - 50,
                     }
                 )
 
