@@ -316,11 +316,11 @@ const NewExperimentPopup: FunctionComponent<NewExperimentPopupProps> = ({
                             }}
                             width="50%"
                         >
-                            Criar
+                            Criar e iniciar
                         </CustomButton>
                     </CustomButtonArray>
                     <ConfirmationDialog />
-                </ContainerComponent>{" "}
+                </ContainerComponent>
             </div>
         </React.Fragment>
     );

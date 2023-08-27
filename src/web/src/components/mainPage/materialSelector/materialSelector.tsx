@@ -49,7 +49,10 @@ const MaterialSelector: FunctionComponent<MaterialSelectorProps> = () => {
 
     const filteredItems = useMemo(() => {
         return materialList.filter((item) => {
-            return item.name.toLowerCase().includes(searchQuery.toLowerCase());
+            const materialNameToFilter = `[${item.id}] ${item.name} ${item.supplier_name} ${item.batch}`;
+            return materialNameToFilter
+                .toLowerCase()
+                .includes(searchQuery.toLowerCase());
         });
     }, [materialList, searchQuery]);
 
@@ -85,7 +88,7 @@ const MaterialSelector: FunctionComponent<MaterialSelectorProps> = () => {
                         <input
                             type="text"
                             className={styleModule.selector_header_search}
-                            placeholder="Buscar"
+                            placeholder="Buscar material..."
                             onChange={(e) => {
                                 setSearchQuery(e.target.value);
                             }}
