@@ -66,7 +66,7 @@ const useConfirm = (
                     callbackFunc={() => {
                         handleCancel();
                     }}
-                    faderIndex={0}
+                    faderIndex={2}
                 />
                 <div
                     style={{
@@ -75,6 +75,7 @@ const useConfirm = (
                         left: "50%",
                         transform: "translate(-50%, -50%)",
                         width: "300px",
+                        zIndex: 2,
                     }}
                 >
                     <ContainerComponent headerText={title}>
