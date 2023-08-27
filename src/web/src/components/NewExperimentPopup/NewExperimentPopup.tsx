@@ -15,7 +15,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
 
-import { FunctionComponent, useState } from "react";
+import { FunctionComponent, useContext, useEffect, useState } from "react";
 import CustomButtonArray from "components/customSubComponents/CustomButtonArray/CustomButtonArray";
 import CustomButton from "components/customSubComponents/customButton/customButton";
 import { postExperimentJS } from "api/backend-api";
@@ -32,6 +32,13 @@ import CustomListSelector from "components/customSubComponents/customListSelecto
 import CustomTextInput from "components/customSubComponents/CustomTextInput/CustomTextInput";
 import { getRandomColor } from "helpers";
 import { ValidBodyTypeType, validBodyTypeArray } from "types/ValidBodyTypeType";
+import CustomFilteredListSelector, {
+    CustomFilteredListKeyType,
+} from "components/customSubComponents/CustomFilteredListSelector/CustomFilteredListSelector";
+import { MaterialType } from "types/DataBaseTypes";
+import { getMaterialsDB } from "api/db-api";
+import { RefreshDataContext } from "api/contexts/RefreshContext";
+import { toast } from "react-toastify";
 
 interface NewExperimentPopupProps {
     handleExperimentCreated: (id: number) => void;
@@ -43,7 +50,7 @@ const NewExperimentPopup: FunctionComponent<NewExperimentPopupProps> = ({
     closePopup,
 }) => {
     const [bodyType, setBodyType] = useState<ValidBodyTypeType>("Retangular");
-    const [bodyMaterialID, setBodyMaterialId] = useState<number>(1);
+    const [selectedMaterialId, setSelectedMaterialID] = useState<number>(-1);
     const [bodyParamA, setBodyParamA] = useState<number>(0);
     const [bodyParamB, setBodyParamB] = useState<number>(0);
     const [bodyHeight, setBodyHeight] = useState<number>(0);
@@ -63,6 +70,14 @@ const NewExperimentPopup: FunctionComponent<NewExperimentPopupProps> = ({
     const [experimentExtraInfo, setExperimentExtraInfo] = useState<string>(
         "Sem informações extras"
     );
+    const [refreshData] = useContext(RefreshDataContext);
+    const [materialList, setMaterialList] = useState<MaterialType[]>([]);
+
+    useEffect(() => {
+        getMaterialsDB().then((response) => {
+            setMaterialList(response);
+        });
+    }, [refreshData]);
 
     const toggleCompress = () => {
         setExperimentCompress((o) => !o);
@@ -86,11 +101,14 @@ const NewExperimentPopup: FunctionComponent<NewExperimentPopupProps> = ({
                     return 1;
             }
         })();
-
+        if (!materialList.some((el) => el.id === selectedMaterialId)) {
+            toast.error("Material inválido");
+            return;
+        }
         postExperimentJS({
             body: {
                 type: bodyTypeAsNumber,
-                material_id: bodyMaterialID,
+                material_id: selectedMaterialId,
                 param_a: bodyParamA,
                 param_b: bodyParamB,
                 height: bodyHeight,
@@ -111,6 +129,13 @@ const NewExperimentPopup: FunctionComponent<NewExperimentPopupProps> = ({
             refresh();
             handleExperimentCreated(id);
         });
+    };
+
+    const makeKeys = (): CustomFilteredListKeyType[] => {
+        return materialList.map((element) => ({
+            title: `[${element.id}] ${element.name}`,
+            key: element.id,
+        }));
     };
 
     return (
@@ -226,15 +251,13 @@ const NewExperimentPopup: FunctionComponent<NewExperimentPopupProps> = ({
                             >
                                 Tipo
                             </CustomListSelector>
-                            <CustomTextInput
-                                title="ID do material"
-                                setValue={setBodyMaterialId}
-                                value={bodyMaterialID}
-                                inputType="number"
-                                suffix=""
-                                alert={false}
+                            <CustomFilteredListSelector
+                                setSelectedKey={setSelectedMaterialID}
+                                keys={makeKeys()}
                                 alertColor="var(--positive_button_color)"
-                            />
+                            >
+                                Material
+                            </CustomFilteredListSelector>
                             <CustomTextInput
                                 title="Parâmetro A"
                                 setValue={setBodyParamA}

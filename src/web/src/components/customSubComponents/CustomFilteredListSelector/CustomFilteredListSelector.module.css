@@ -11,9 +11,6 @@
     margin-bottom: 2vh;
     align-items: center;
     height: max-content;
-
-    margin-left: 5%;
-    margin-right: 5%;
 }
 
 .custom_list_selector {
@@ -22,6 +19,9 @@
     font-weight: bold;
     align-items: center;
     border-radius: 2px;
+    margin-left: 5%;
+    margin-right: 5%;
+
     transition-duration: var(--animation_slow);
     border-radius: 5px;
     width: stretch;
@@ -58,6 +58,8 @@
     border-radius: 5px;
     padding: 5px;
     min-width: 30px;
+    width: 50%;
+
     height: 60%;
     align-items: center;
     display: flex;
@@ -81,7 +83,7 @@
     background-color: var(--content_background_color);
     width: stretch;
     margin-left: 20%;
-    margin-right: 5px;
+    margin-right: calc(5% + 5px);
     animation: fade-in;
     animation-duration: var(--animation_slow);
     animation-timing-function: cubic-bezier(0.47, 1.64, 0.41, 0.7);
@@ -110,4 +112,15 @@
     min-height: calc(var(--font_m) * 2.2);
 
     width: 80%;
+}
+
+.text_input {
+    height: stretch;
+    width: 100%;
+    border: none;
+    outline: none;
+    color: var(--font_color);
+    background-color: none;
+    background-color: var(--background_color);
+    font-size: var(--font_s);
 }
