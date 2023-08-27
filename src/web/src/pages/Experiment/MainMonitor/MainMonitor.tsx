@@ -20,6 +20,8 @@ import ZoomComponent from "components/zoomComponent/zoomComponent";
 import { FunctionComponent } from "react";
 import styleModule from "./MainMonitor.module.css";
 import BigButton from "components/customSubComponents/BigButton/BigButton";
+import useConfirm from "hooks/useConfirm";
+import React from "react";
 
 interface MainMonitorProps {
     className: string;
@@ -32,24 +34,31 @@ const MainMonitor: FunctionComponent<MainMonitorProps> = ({
     scaleOrigin,
     currentLoad,
 }) => {
+    const [ConfirmationDialog, confirm] = useConfirm();
+
     return (
-        <ZoomComponent
-            className={[className, styleModule.main_monitor_div].join(" ")}
-            scaleOrigin={scaleOrigin}
-        >
-            <div className={styleModule.force_monitor_div}>
-                <h1 className={styleModule.force_monitor_text}>
-                    {currentLoad} N
-                </h1>
-            </div>
-            <BigButton
-                clickCallBack={endExperimentRoutineJS}
-                buttonText="ENCERRAR"
-                bgColor="var(--negative_button_color)"
-                fontSize="var(--font_l)"
-                height="90%"
-            />
-        </ZoomComponent>
+        <React.Fragment>
+            <ZoomComponent
+                className={[className, styleModule.main_monitor_div].join(" ")}
+                scaleOrigin={scaleOrigin}
+            >
+                <div className={styleModule.force_monitor_div}>
+                    <h1 className={styleModule.force_monitor_text}>
+                        {currentLoad} N
+                    </h1>
+                </div>
+                <BigButton
+                    clickCallBack={() => {
+                        confirm(endExperimentRoutineJS);
+                    }}
+                    buttonText="ENCERRAR"
+                    bgColor="var(--negative_button_color)"
+                    fontSize="var(--font_l)"
+                    height="90%"
+                />
+            </ZoomComponent>
+            <ConfirmationDialog />
+        </React.Fragment>
     );
 };
 
