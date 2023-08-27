@@ -255,7 +255,7 @@ class DBHandler:
                     "compress": i % 2 == 0,
                     "z_axis_speed": 0.1 + 4 * i / 10,
                     "extra_info": "Extra info " + str(i),
-                    "plot_color": "#ffffff",
+                    "plot_color": "#FF0000",
                 }
             )
 

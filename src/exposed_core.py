@@ -79,6 +79,9 @@ def start_experiment_routine(experiment_id: int):
 
     Returns 1 if succeeded.
     """
+    core_api.go_to_experiment_page()
+
+    return 1
     experiment = db_handler.get_experiment_by_id(experiment_id)
     if experiment is None:
         ui_api.error_alert(
