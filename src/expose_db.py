@@ -122,7 +122,6 @@ def post_experiment(data: dict = {}):
     globalMaxLoad = config_params["absoluteMaximumForce"]
     globalMaxTravel = config_params["absoluteMaximumTravel"]
     globalMaxTime = config_params["absoluteMaximumTime"]
-
     body = data.get("body", {})
     clean_body = {
         "type": int(body.get("type", -1)),
@@ -130,6 +129,7 @@ def post_experiment(data: dict = {}):
         "param_a": float(body.get("param_a", 0)),
         "param_b": float(body.get("param_b", 0)),
         "height": float(body.get("height", 0)),
+        "extra_info": body.get("extra_info", "Informações adicionais não informadas"),
     }
     body_id = db_handler.post_body(clean_body)
 
@@ -143,6 +143,7 @@ def post_experiment(data: dict = {}):
         "max_time": float(experiment.get("max_time", globalMaxTime)),
         "compress": bool(experiment.get("compress", False)),
         "z_axis_speed": float(experiment.get("z_axis_speed", 0)),
+        "plot_color": experiment.get("plot_color", "#ff0000"),
         "extra_info": experiment.get(
             "extra_info", "Informações adicionais não informadas"
         ),

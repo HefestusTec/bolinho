@@ -112,18 +112,21 @@ nav:
     - Home:
           - Home: index.md
           - Setup: setup.md
-    - Back End:
-          - Back End: backEnd/index.md
-          - DBHandler: backEnd/DBHandler.md
-          - DataHandler: backEnd/DataHandler.md
-          - Routines: backEnd/Routines.md
-    - Front End:
-          - Front End: frontEnd/index.md
-          - Pages: frontEnd/pages.md
-          - Components: frontEnd/components.md
-          - Contexts: frontEnd/contexts.md
-          - Alerts: frontEnd/alerts.md
-          - Styling: frontEnd/styling.md
+#     - Back End:
+#           - Back End: backEnd/index.md
+#           - DBHandler: backEnd/DBHandler.md
+#           - DataHandler: backEnd/DataHandler.md
+#           - Routines: backEnd/Routines.md
+#     - Front End:
+#           - Front End: frontEnd/index.md
+#           - Pages: frontEnd/pages.md
+#           - Components: frontEnd/components.md
+#           - Contexts: frontEnd/contexts.md
+#           - Alerts: frontEnd/alerts.md
+#           - Styling: frontEnd/styling.md
+    - How to use:
+          - How to use: howToUse/index.md
+
     - Embedded:
           - Embedded: embedded/index.md
     - API:

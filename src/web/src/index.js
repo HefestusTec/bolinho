@@ -7,11 +7,14 @@ import reportWebVitals from "./reportWebVitals";
 
 import "@fontsource/roboto";
 import "react-circular-progressbar/dist/styles.css";
+import CurrentPageProvider from "api/contexts/CurrentPageContext";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
     <React.StrictMode>
-        <App />
+        <CurrentPageProvider>
+            <App />
+        </CurrentPageProvider>
     </React.StrictMode>
 );
 

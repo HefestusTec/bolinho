@@ -1,6 +1,6 @@
 import "./App.css";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 //import FpsMeter from "./components/fpsMeter/fpsMeter";
 import { ToastContainer, Zoom } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -11,7 +11,6 @@ import GlobalConfigContext from "./contexts/globalConfigContext";
 import Prompter from "./components/prompter/prompter";
 import VirtualInput from "./components/virtualInput/virtualInput";
 import Home from "pages/Home";
-import { PageType } from "types/PageType";
 import Experiment from "pages/Experiment/Experiment";
 import { ExperimentPageProvider } from "api/contexts/ExperimentPageContext";
 import { ReadingsProvider } from "api/contexts/ReadingsContext";
@@ -19,7 +18,7 @@ import FocusProvider from "api/contexts/FocusContex";
 import { globalConfigDefault } from "api/apiTypes";
 import IsConnectedProvider from "api/contexts/IsConnectedContext";
 import { setCurrentPageCallBack } from "staticDB";
-import CurrentPageProvider from "api/contexts/CurrentPageContext";
+import { CurrentPageContext } from "api/contexts/CurrentPageContext";
 
 import("./api/linker");
 
@@ -40,11 +39,10 @@ function App() {
     const [vKeyboard, setVKeyboard] = useState(false);
     const [enableHover, setEnableHover] = useState(globalConfig.enableHover);
 
-    const [currentPage, setCurrentPage] = useState<PageType>("home");
-
+    const [currentPage, setCurrentPage] = useContext(CurrentPageContext);
     useEffect(() => {
         setCurrentPageCallBack(setCurrentPage);
-    }, []);
+    }, [setCurrentPage]);
 
     // Updating the save file every time global config is changed
     useEffect(() => {
@@ -94,12 +92,6 @@ function App() {
         window.eel.expose(promptUserJS, "promptUserJS");
     } catch (error) {}
 
-    const callPrompter = () => {
-        promptUserJS(
-            "Essa é uma mensagem que pode ser acionada pelo backend, o usuário PRECISA responder com uma das opções (também fornecidas pelo backend). Ao selecionar uma resposta a callback function ligada à esse prompt é chamada e a resposta é passada como argumento.",
-            ["SIM", "NÃO", "TALVEZ", "NÃO", "TALVEZ"]
-        );
-    };
     const toggleKeyboard = () => {
         setVKeyboard(!vKeyboard);
     };
@@ -113,34 +105,29 @@ function App() {
                 <ReadingsProvider>
                     <FocusProvider>
                         <ExperimentPageProvider>
-                            <CurrentPageProvider>
-                                <div className={getAppClassName()}>
-                                    {getVirtualKeyboard()}
-                                    {prompter}
-                                    {currentPage === "home" ? (
-                                        <Home />
-                                    ) : (
-                                        <Experiment />
-                                    )}
-                                    <div
-                                        style={{
-                                            position: "absolute",
-                                            zIndex: 300,
-                                        }}
-                                    >
-                                        <button onClick={callPrompter}>
-                                            Propmt
-                                        </button>{" "}
-                                        <button onClick={toggleKeyboard}>
-                                            Toggle keyboard
-                                        </button>
-                                    </div>
+                            <div className={getAppClassName()}>
+                                {getVirtualKeyboard()}
+                                {prompter}
+                                {currentPage === "home" ? (
+                                    <Home />
+                                ) : (
+                                    <Experiment />
+                                )}
+                                <div
+                                    style={{
+                                        position: "absolute",
+                                        zIndex: 300,
+                                    }}
+                                >
+                                    <button onClick={toggleKeyboard}>
+                                        Toggle keyboard
+                                    </button>
                                 </div>
-                                <ToastContainer
-                                    className="toast_notify"
-                                    transition={Zoom}
-                                />
-                            </CurrentPageProvider>
+                            </div>
+                            <ToastContainer
+                                className="toast_notify"
+                                transition={Zoom}
+                            />
                         </ExperimentPageProvider>
                     </FocusProvider>
                 </ReadingsProvider>
