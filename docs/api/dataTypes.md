@@ -41,74 +41,87 @@ All different data types will be shown in this page
 
 ___
 
-## DataPointArray
+## Material
 !!! quote ""
     ``` python
-    class DataPointArray:
-        def __init__(self, id=0, data_array=[]):
+    class Material:
+        def __init__(
+            self,
+            id=0,
+            name="NONE",
+            batch="",
+            supplier_name="",
+            supplier_contact_info="",
+            extra_info="",
+        ):
             self.id = id
-            self.data_array = data_array 
+            self.name = name
+            self.batch = batch
+            self.supplier_name = supplier_name
+            self.supplier_contact_info = supplier_contact_info
+            self.extra_info = extra_info
     ```
-    > * `id`: Identification (or key) of this element on the data base.
+    > * `id`:
         * type: `int`
-        * Unity: `mm`
-    * `data_array`: Array of data points, this is the "reading" of an experiment.
-        * Type: [`[DataPoint...]`](#datapoint)
         * Unity: N/A
-
+    * `name`: 
+        * type: `string`
+        * Unity: N/A
+    * `batch`:
+        * type: `string`
+        * Unity: N/A
+    * `supplier_name`:
+        * type: `string`
+        * Unity: N/A
+    * `supplier_contact_info`:
+        * type: `string`
+        * Unity: N/A
+    * `extra_info`:
+        * type: `string`
+        * Unity: N/A
 ___
 
-## AutoStopParams
-
+## Body
 !!! quote ""
     ``` python
-    class AutoStopParams:
-        def __init__(self, force_loss=20, max_force=1000, max_travel=100, max_time=600):
-            self.force_loss = force_loss
-            self.max_force = max_force
-            self.max_travel = max_travel
-            self.max_time = max_time
-    ```
-    > * `force_loss`: Max force loss to trigger auto-stop.
-        * Type: `float`
-        * Unity: `%`
-    * `max_force`: Max force limit to trigger auto-stop.
-        * Type: `float`
-        * Unity: `N`
-    * `max_travel`: Max distance the experiment head can travel during the experiment.
-        * Type: `float`
-        * Unity: `mm`
-    * `max_time`: Experiment time limit.
-        * Type: `float`
-        * Unity: `s`
-
-___
-
-## BodyParams
-
-!!! quote ""
-    ``` python
-    class BodyParams:
-        def __init__(self, type=0, param_a=0, param_b=0, height=0):
-            # Body format | 1 = Rectangle | 2 = Cylinder | 3 = Tube | 4 = Other
+    class Body:
+        def __init__(
+            self,
+            id=0,
+            type=1,
+            material=Material(
+                id=0,
+                name="Base Material",
+                batch="",
+                supplier_name="",
+                supplier_contact_info="",
+                extra_info="",
+            ),
+            param_a=0,
+            param_b=0,
+            height=0,
+            extra_info="",
+        ):
+            self.id = id
             self.type = type
-
-            # Rectangle = length | Cylinder = External diameter | Tube = External diameter
+            self.material = material
             self.param_a = param_a
-
-            # Rectangle = depth | Cylinder = NULL | Tube = Internal diameter
             self.param_b = param_b
-
-            # Height of the test body
             self.height = height
-
+            self.extra_info = extra_info
     ```
-    > * `type`: Body format
-        * 1 = Rectangle
-        * 2 = Cylinder
-        * 3 = Tube
-        * 4 = Other
+    > * `id`:
         * Type: `int`
+        * Unity: N/A
+    * `type`: Body format
+            * 1 = Rectangle
+            * 2 = Cylinder
+            * 3 = Tube
+            * 4 = Other
+            * Type: `int`
+            * Unity: N/A
+    * `material`:
+        * Type: [`Material`](#Material)
         * Unity: N/A
     * `param_a`: Param 'a' of the body
         * Rectangle = length
@@ -125,151 +138,92 @@ ___
     * `height`: Height of the test body
         * Type: `float`
         * Unity: `mm`
-
+    * `extra_info`:
+        * type: `string`
+        * Unity: N/A
 ___
-## ExperimentParams
-
-!!! quote ""
-    ``` python
-    class ExperimentParams:
-        def __init__(
-            self,
-            stop_params=AutoStopParams(),
-            body_params=BodyParams(),
-            compress=True,
-            z_speed=5,
-        ):
-            self.stop_params = stop_params
-            self.body_params = body_params
-            self.compress = compress
-            self.z_speed = z_speed
-    ```
-    > * `stop_params`: Auto stop parameters of the experiment.
-        * Type: [`AutoStopParams`](#autostopparams)
-        * Unity: N/A
-    * `body_params`: Body parameters of the experiment.
-        * Type: [`BodyParams`](#bodyparams)
-        * Unity: N/A
-    * `compress`: Dictates if the experiment head move up or down. true = compress | false = expand.
-        * Type: `bool`
-        * Unity: N/A
-    * `z_speed`: Z axis speed during the experiment.
-        * Type: `float`
-        * Unity: `mm/s`
-
-___
-
-## Date
-!!! quote ""
-    ``` python
-    class Date:
-        def __init__(
-            self,
-            day=1,
-            month=1,
-            year=2023,
-        ):
-            self.day = day
-            self.month = month
-            self.year = year
-    ```
-    > * `day`: Day.
-        * Type: `int`
-        * Unity: N/A
-    * `month`: Month.
-        * Type: `int`
-        * Unity: N/A  
-    * `year`: Year.
-        * Type: `int`
-        * Unity: N/A   
-
-___
-
 
 ## Experiment
+
 !!! quote ""
     ``` python
     class Experiment:
         def __init__(
             self,
             id=0,
-            date=Date(),
-            experiment_params=ExperimentParams(),
-            data_array_id=0,
+            name="None",
+            body: Body = Body(
+                id=0,
+                type=1,
+                material=Material(
+                    name="Material",
+                    batch="Batch",
+                    supplier_name="",
+                    supplier_contact_info="",
+                    extra_info="",
+                ),
+                param_a=0,
+                param_b=0,
+                height=0,
+                extra_info="",
+            ),
+            date_time=0,
+            load_loss_limit=0,
+            max_load=0,
+            max_travel=0,
+            max_time=0,
+            z_axis_speed=0,
+            compress=False,
             extra_info="",
-        ):
-            self.experiment_params = experiment_params
-            self.id = id
-            self.data_array_id = data_array_id
-            self.extra_info = extra_info
-    ```
-    > * `id`: id (or key) of the experiment on the data base.
-        * Type: `int`
-        * Unity: N/A
-    * `date`: Date of the experiment.
-        * Type: [`Date`](#date)
-        * Unity: N/A    
-    * `experiment_params`: Parameters of the experiment.
-        * Type: [`ExperimentParams`](#experimentparams)
-        * Unity: N/A    
-    * `data_array_id`: Identification (or key) of this experiment [`DataPointArray`](#datapointarray) or "reading", on the data base
-        * Type: `int`
-        * Unity: N/A
-    * `extra_info`: Extra information about the experiment.
-        * Type: `String`
-        * Unity: N/A
-
-___
-
-## Supplier
-!!! quote ""
-    ``` python
-    class Supplier:
-        def __init__(self, name="NONE", email=""):
-            self.name = name
-            self.email = email
-    ```
-    > * `name`: Name of the material supplier.
-        * Type: `String`
-        * Unity: N/A
-    * `email`: E-mail of the supplier.
-        * Type: `String`
-        * Unity: N/A   
-
-___
-
-## Material
-!!! quote ""
-    ``` python
-    class Material:
-        def __init__(
-            self, id=0, name="NONE", batch=0, experiment_array=[], supplier=Supplier(), extra_info=""
+            plot_color="#ffffff",
         ):
             self.id = id
             self.name = name
-            self.batch = batch
-            # array of the ids of experiments with this material
-            self.experiment_array = experiment_array
-            self.supplier = supplier
+            self.body = body
+            self.date_time = date_time
+            self.load_loss_limit = load_loss_limit
+            self.max_load = max_load
+            self.max_travel = max_travel
+            self.max_time = max_time
+            self.z_axis_speed = z_axis_speed
+            self.compress = compress
             self.extra_info = extra_info
+            self.plot_color = plot_color
     ```
-    > * `id`: Id (or key) of the material on the data base.
+    > * `id`:
         * Type: `int`
         * Unity: N/A
-    * `name`: Name of the material.
-        * Type: `String`
-        * Unity: N/A    
-    * `batch`: Batch of the material.
-        * Type: `int`
+    * `name`: 
+        * type: `string`
         * Unity: N/A
-    * `experiment_array`: Array with the `ids` or `keys` of the [experiments](#experiment) made with this material.
-        * Type: `[int...]`
+    * `body`:
+        * Type: [`Body`](#Body)
         * Unity: N/A
-    * `supplier`: Supplier of the material.
-        * Type: [`Supplier`](#supplier)
-        * Unity: N/A 
-    * `extra_info`: Extra information about the material.
-        * Type: `String`
+    * `date_time`: Date and time formatted as `dd/mm/yyyy`
+        * Type: `string`
         * Unity: N/A
-
+    * `load_loss_limit`: Max load loss to trigger auto-stop.
+        * Type: `float`
+        * Unity: `N/s`
+    * `max_load`: Max load limit to trigger auto-stop.
+        * Type: `float`
+        * Unity: `N`
+    * `max_travel`: Max distance the experiment head can travel during the experiment.
+        * Type: `float`
+        * Unity: `mm`
+    * `max_time`: Experiment time limit.
+        * Type: `float`
+        * Unity: `s`
+    * `z_axis_speed`:
+        * Type: `float`
+        * Unity: `mm/s`
+    * `compress`: Is the experiment type of compression? `false` implies expansion.
+        * Type: `bool`
+        * Unity: N/A
+    * `extra_info`:
+        * type: `string`
+        * Unity: N/A
+    * `plot_color`: System parameter
+        * type: `string`
+        * Unity: N/A
 ___
