@@ -105,25 +105,25 @@ class Granulado:
         pass
 
     def check_experiment_routine(self):
-        checks = [
-            self.check_granulado_is_connected(),
-            self.check_global_limits(),
-            self.check_current_load(),
-        ]
-
-        if all(checks):
-            ui_api.prompt_user(
-                description="A máquina está calibrada?",
-                options=["Sim", "Não"],
-                callback_func=self.__machine_calibrated_callback,
-            )
+        ui_api.prompt_user(
+            description="A máquina está calibrada?",
+            options=["Sim", "Não"],
+            callback_func=self.__machine_calibrated_callback,
+        )
 
     def __machine_calibrated_callback(self, response):
         if response == "Não":
             ui_api.set_focus("calib-page")
-            return
-        if response == "Sim":
-            self.__run_experiment()
+        elif response == "Sim":
+            checks = [
+                self.check_granulado_is_connected(),
+                self.check_global_limits(),
+                self.check_current_load(),
+            ]
+            if all(checks):
+                self.__run_experiment()
+                return 1
+        return 0
 
     def check_granulado_is_connected(self):
         if self.__send_serial_message("p"):
@@ -156,10 +156,53 @@ class Granulado:
                 return self.__instant_load, self.__instant_position
 
     def check_global_limits(self):
-        pass
+        """
+        Check if:
+            max force, max travel and max time are greater than 0,
+            Z axis length is greater than 0,
+            known weight is greater than 0, and
+            port is set.
+        """
+        from exposed_core import load_config_params
+
+        config = load_config_params()
+        checks = [
+            config.get("absoluteMaximumForce", 0) > 0,
+            config.get("absoluteMaximumTravel", 0) > 0,
+            config.get("absoluteMaximumTime", 0) > 0,
+            config.get("zAxisLength", 0) > 0,
+            config.get("knownWeight", 0) > 0,
+            len(config.get("port", "")) > 0,
+        ]
+        if all(checks):
+            return True
+
+        prompt_text = f"""Os seguintes parâmetros devem ser definidos antes de iniciar o experimento:
+        {'- Força máxima absoluta' if not checks[0] else ''}
+        {'- Deslocamento máximo absoluto' if not checks[1] else ''}
+        {'- Tempo máximo absoluto' if not checks[2] else ''}
+        {'- Comprimento do eixo Z' if not checks[3] else ''}
+        {'- Peso conhecido' if not checks[4] else ''}
+        {'- Porta' if not checks[5] else ''}
+        """
+
+        ui_api.prompt_user(
+            description=prompt_text,
+            options=["Definir parâmetros"],
+            callback_func=lambda x: ui_api.set_focus("config-page"),
+        )
+        return False
 
     def check_current_load(self):
-        pass
+        """
+        Check if the current load is lesser than a threshold (10N)
+        """
+        if self.__instant_load > 10:
+            ui_api.error_alert(
+                "A máquina está sob carga. Retire a carga e tente novamente."
+            )
+            return False
+        return True
 
     def return_z_axis(self):
         if not self.__top:
@@ -174,7 +217,6 @@ class Granulado:
         return False
 
     def stop_z_axis(self):
-        self.__moving = False
         return self.__send_serial_message("s")
 
     def move_z_axis_millimeters(self, millimeters: int):
@@ -182,6 +224,9 @@ class Granulado:
         return self.__send_serial_message(f"m{int(millimeters)}")
 
     def tare_load(self):
+        """
+        Send serial message to Granulado to tare the load cell
+        """
         self.__moving = False
         return self.__send_serial_message("@")
 
@@ -216,9 +261,12 @@ class Granulado:
 
     def __send_serial_message(self, message: str):
         if self.__is_connected():
-            self.__hardware.write(message)
-            return True
-        return False
+            return False
+        self.__hardware.write(message)
+        return True
 
     def __end(self):
+        if not self.__is_connected():
+            return
         self.__hardware.close()
+        self.__hardware = None

@@ -64,8 +64,12 @@ def check_can_start_experiment():
 
     In case something is wrong the backend also displays an error to the user telling what went wrong
     """
-    # TODO implement me
-    return 1
+    if granulado is None:
+        ui_api.error_alert(
+            "Não foi possível iniciar o experimento. O Granulado não está conectado.",
+        )
+        return 0
+    return granulado.check_experiment_routine()
 
 
 @eel.expose
@@ -241,17 +245,19 @@ def get_available_ports_list():
 @eel.expose
 def connect_to_port(port: str):
     """
-    Connects to a port. The port argument is a string like `COM4`
-
-    TODO IMPLEMENT THIS FUNCTION
-
+    Connects to a port. The port argument is a string like `COM4` or `/dev/ttyUSB0`
     """
     global granulado
     granulado = Granulado(port)
+    retries: int = 0
     while not granulado.connect(port, 115200):
         print(f"Connecting to {port}@115200...")
         eel.sleep(1)
+        if retries > 5:
+            return False
+        retries += 1
 
+    eel.sleep(1)
     return granulado.check_granulado_is_connected()
 
 
@@ -261,11 +267,9 @@ def tare_load():
     Tares the load cell
 
     Returns 1 if succeeded (if the function was acknowledged).
-
-    TODO IMPLEMENT THIS FUNCTION
     """
-    print("Tare load function was called")
-    return 1
+    global granulado
+    return granulado.tare_load()
 
 
 @eel.expose

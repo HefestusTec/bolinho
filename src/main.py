@@ -76,7 +76,6 @@ def wait_for_connection():
         try:
             if core_api.ping():
                 break
-            pass
         except:
             eel.sleep(1)
 
