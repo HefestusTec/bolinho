@@ -89,15 +89,10 @@ def main():
 
     # infinite loop so it doesn't close the socket
     gran = Granulado()
-    while not gran.connect("COM4", 115200):
-        eel.sleep(1)
-    doOnce = True
     while True:
-        gran.process()
-        if doOnce:
-            doOnce = False
-            gran.sendSerialMessage(message=Messages.PING)
-            # gran.sendSerialMessage(message=Messages.GET_BUFFER)
+        gran.loop()
+        
+        # gran.sendSerialMessage(message=Messages.GET_BUFFER)
     while True:
         eel.sleep(1)
 

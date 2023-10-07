@@ -24,7 +24,7 @@ from bolinho_api.core import core_api
 
 
 class Granulado:
-    def __init__(self, timeout: float = 0.1):
+    def __init__(self, timeout: float = 2):
         self.__hardware: serial.Serial | None = None
         self.__top = False
         self.__bottom = False
@@ -40,11 +40,15 @@ class Granulado:
         self.__end()
 
     def loop(self):
-        if not self.__is_connected():
+        if not self.is_connected():
+            eel.sleep(1)
             return
+        self.__send_serial_message("p")
 
         # Check if there is a message to be read
+        """
         if self.__hardware.in_waiting <= 0:
+        
             now = time.time()
             if now - self.__last_read > self.__timeout:
                 ui_api.prompt_user(
@@ -53,6 +57,7 @@ class Granulado:
                     callback_func=lambda x: ui_api.set_focus("connection-component"),
                 )
                 return
+                """
         # Read message from usb
         received = self.__hardware.readline()
         self.__last_read = time.time()
@@ -83,6 +88,8 @@ class Granulado:
             self.__moving = True
         elif response == "s":
             self.__moving = False
+        
+        eel.sleep(1)
 
     def start_experiment(self, compress: bool):
         pass
@@ -127,8 +134,8 @@ class Granulado:
 
     def check_granulado_is_connected(self):
         if self.__send_serial_message("p"):
-            eel.sleep(0.1)
-            if time.time() - self.__ping > 0.1:
+            eel.sleep(1)
+            if time.time() - self.__ping > 1000:
                 ui_api.prompt_user(
                     description="A máquina parece estar desconectada. Verifique a conexão e tente novamente.",
                     options=["Tentar novamente"],
@@ -230,9 +237,9 @@ class Granulado:
         self.__moving = False
         return self.__send_serial_message("@")
 
-    def __is_connected(self):
+    def is_connected(self):
         """Is the backend connected to the embedded hardware, returns a boolean"""
-        return False if self.__hardware is None else True
+        return self.__hardware is not None
 
     def connect(self, port: str, baudrate: int):
         """
@@ -252,21 +259,28 @@ class Granulado:
             ```
         """
         try:
+            from exposed_core import load_config_params, save_config_params
+
             self.__hardware = serial.Serial(
-                port=port, baudrate=baudrate, timeout=self.__timeout
+                port=port, baudrate=baudrate
             )
+            print(self.__hardware)
+            config = load_config_params()
+            config["port"] = port
+            save_config_params(config)
             return 1
         except:
             return 0
 
     def __send_serial_message(self, message: str):
-        if self.__is_connected():
+        if not self.is_connected():
             return False
-        self.__hardware.write(message)
+        print(message)
+        self.__hardware.write(bytes(message, 'utf-8'))
         return True
 
     def __end(self):
-        if not self.__is_connected():
+        if not self.is_connected():
             return
         self.__hardware.close()
         self.__hardware = None
