@@ -28,6 +28,7 @@ from bolinho_api.experiment import experiment_api
 
 from granulado.core import Granulado
 from granulado import Messages
+from bolinho_handler import app_handler
 
 parser = ArgumentParser()
 parser.add_argument(
@@ -88,13 +89,10 @@ def main():
     wait_for_connection()
 
     # infinite loop so it doesn't close the socket
-    gran = Granulado()
     while True:
-        gran.loop()
+        app_handler.app.process()
         
-        # gran.sendSerialMessage(message=Messages.GET_BUFFER)
-    while True:
-        eel.sleep(1)
+
 
 
 if __name__ == "__main__":

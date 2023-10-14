@@ -25,10 +25,9 @@ class Readings:
     This class gathers the machine readings such as position and load.
     """
 
-    def __init__(self, z_axis_pos=0, current_load=0, max_load=0, status=""):
+    def __init__(self, z_axis_pos=0, current_load=0, status=""):
         self.z_axis_pos = z_axis_pos
         self.current_load = current_load
-        self.max_load = max_load
         self.status = status
 
 
