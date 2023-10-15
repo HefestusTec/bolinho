@@ -17,7 +17,6 @@
 
 import eel
 from state_class import StateE
-from state_class import app_state
 
 
 class CoreAPI:
@@ -32,21 +31,17 @@ class CoreAPI:
     def go_to_experiment_page(self):
         """
         Asks the frontend to go to the experiment page.
-        Changes te state in the state machine
 
         Returns 1 if succeeded.
         """
-        app_state.change_state(StateE.RUNNING_EXPERIMENT)
         return eel.goToExperimentPageJS()()
 
     def go_to_home_page(self):
         """
         Asks the frontend to go to the home page.
-        Changes te state in the state machine
 
         Returns 1 if succeeded.
         """
-        app_state.change_state(StateE.INSPECTING)
         return eel.goToHomePageJS()()
 
     def show_connect_prompt(self):

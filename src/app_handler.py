@@ -16,13 +16,13 @@
 # along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
 
 from granulado.core import Granulado
-import bolinho_api.experiment as b_experiment
+from bolinho_api.experiment import experiment_api
+from bolinho_api.core import core_api
 import bolinho_api.classes as b_classes
-import bolinho_api.core as b_core
 import eel
 from state_class import StateE
 from state_class import app_state
-
+import time
 
 
 
@@ -32,17 +32,37 @@ class AppHandler:
     """
     def __init__(self):
         self.gran = Granulado()
+        self.__experiment_id: int = -1 # Id of the active experiment -1 means no selected experiment
+        self.__time_since_last_refresh = 0.0
+    
+    def wait_for_connection(self):
+        """
+        Will stay in a infinite loop until connected to the WebUi
+        """
+        while True:
+            try:
+                if core_api.ping():
+                    break
+            except:
+                eel.sleep(1)
 
     def process(self):
         print(f"current state: {app_state.state}")
         match app_state.state:
             case StateE.INSPECTING:
                 self.__update_ui_readings()
-                eel.sleep(0.2) # 5 FPS refresh rate
+                eel.sleep(0.1) # 10 FPS refresh rate
             case StateE.RUNNING_EXPERIMENT:
                 self.gran.loop()
-                self.__update_ui_readings()
-                b_core.core_api.refresh_data()
+                
+                current_time = time.time() * 1000.0
+                if(current_time + 100 > self.__time_since_last_refresh): # ~10 FPS refresh rate
+                    self.__time_since_last_refresh = current_time
+                    self.__update_ui_readings()
+                    core_api.refresh_data()
+
+                eel.sleep(0) # allows Eel to gracefully shutdown the process when the WebUi is disconnected
+
 
 
     def __update_ui_readings(self):
@@ -56,8 +76,15 @@ class AppHandler:
             new_readings.z_axis_pos = current_pos
             new_readings.status = "Conectado"
 
-        b_experiment.experiment_api.set_readings(new_readings)
+        experiment_api.set_readings(new_readings)
+
+    def start_experiment(self, experiment_id: int):
+        self.__experiment_id = experiment_id
+        app_state.change_state(StateE.RUNNING_EXPERIMENT)
+    
+    def end_experiment(self):
+        self.__experiment_id = -1
+        app_state.change_state(StateE.INSPECTING)
 
 
-
-app = AppHandler()
+bolinho_app = AppHandler()

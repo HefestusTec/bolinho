@@ -20,13 +20,13 @@ import os
 import serial
 import json
 import serial.tools.list_ports
-from time import time
 
 from bolinho_api.ui import ui_api
 from bolinho_api.core import core_api
 
 from granulado.core import Granulado
 from DBHandler import db_handler
+from app_handler import bolinho_app
 
 _CONFIG_PARAMS_PATH = "persist/configParams.json"
 
@@ -84,6 +84,7 @@ def start_experiment_routine(experiment_id: int):
     Returns 1 if succeeded.
     """
     core_api.go_to_experiment_page()
+    bolinho_app.start_experiment(experiment_id)
 
     return 1
     experiment = db_handler.get_experiment_by_id(experiment_id)
@@ -160,6 +161,8 @@ def end_experiment_routine():
 
     # TODO Add implementation
     core_api.go_to_home_page()
+    bolinho_app.end_experiment()
+
     return 1
 
 

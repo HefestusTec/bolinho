@@ -22,13 +22,9 @@ from argparse import ArgumentParser
 from bolinho_api.classes import Readings
 import expose_db, exposed_core  # não remover
 
-from bolinho_api.ui import ui_api
-from bolinho_api.core import core_api
-from bolinho_api.experiment import experiment_api
-
 from granulado.core import Granulado
 from granulado import Messages
-from bolinho_handler import app_handler
+from app_handler import bolinho_app
 
 parser = ArgumentParser()
 parser.add_argument(
@@ -69,16 +65,6 @@ def start_eel():
         raise
 
 
-def wait_for_connection():
-    """
-    Will stay in a infinite loop until connected to the front end
-    """
-    while True:
-        try:
-            if core_api.ping():
-                break
-        except:
-            eel.sleep(1)
 
 
 def main():
@@ -86,11 +72,11 @@ def main():
     eel.spawn(start_eel)  # Inicializando eel em outro thread
 
     # You can only use front end functions after the connection
-    wait_for_connection()
+    bolinho_app.wait_for_connection()
 
     # infinite loop so it doesn't close the socket
     while True:
-        app_handler.app.process()
+        bolinho_app.process()
         
 
 

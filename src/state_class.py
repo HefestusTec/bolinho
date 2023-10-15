@@ -20,7 +20,7 @@ class StateE(Enum):
     """
     Possibles states of the state machine
     """
-    INSPECTING = 1
+    INSPECTING = 1 # For non critical states, allows the CPU to not be blocking at 100% usage 
     RUNNING_EXPERIMENT = 2
 
 class AppState:
