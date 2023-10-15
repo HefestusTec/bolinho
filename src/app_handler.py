@@ -23,7 +23,7 @@ import eel
 from state_class import StateE
 from state_class import app_state
 import time
-
+from DBHandler import Reading
 
 
 class AppHandler:
@@ -33,7 +33,10 @@ class AppHandler:
     def __init__(self):
         self.gran = Granulado()
         self.__experiment_id: int = -1 # Id of the active experiment -1 means no selected experiment
+        self.__experiment: list[Reading] = []
         self.__time_since_last_refresh = 0.0
+        self.__current_readings: b_classes.Readings = b_classes.Readings()
+
     
     def wait_for_connection(self):
         """
@@ -48,41 +51,55 @@ class AppHandler:
 
     def process(self):
         print(f"current state: {app_state.state}")
+        self.__update_current_readings()
+
         match app_state.state:
             case StateE.INSPECTING:
-                self.__update_ui_readings()
+                experiment_api.set_readings(self.__current_readings)
+
                 eel.sleep(0.1) # 10 FPS refresh rate
             case StateE.RUNNING_EXPERIMENT:
-                self.gran.loop()
-                
                 current_time = time.time() * 1000.0
+
+                self.gran.loop()
+                self.__experiment.append({
+                    "x": current_time,
+                    "experiment_id": self.__experiment_id,
+                    "load": self.__current_readings.current_load,
+                    "z_pos": self.__current_readings.z_axis_pos,
+                })
+
                 if(current_time + 100 > self.__time_since_last_refresh): # ~10 FPS refresh rate
                     self.__time_since_last_refresh = current_time
-                    self.__update_ui_readings()
-                    core_api.refresh_data()
+                    experiment_api.set_readings(self.__current_readings)
 
+                    core_api.refresh_data() # Asks the UI to fetch new data
                 eel.sleep(0) # allows Eel to gracefully shutdown the process when the WebUi is disconnected
 
 
 
-    def __update_ui_readings(self):
+    def __update_current_readings(self):
         """
         Updates the UI with the latest readings
         """
-        new_readings = b_classes.Readings(status="Desconectado")
+        self.__current_readings = b_classes.Readings()
         if(self.gran.is_connected()):
             [current_load, current_pos] = self.gran.get_readings()
-            new_readings.current_load = current_load
-            new_readings.z_axis_pos = current_pos
-            new_readings.status = "Conectado"
+            self.__current_readings.current_load = current_load
+            self.__current_readings.z_axis_pos = current_pos
+            self.__current_readings.status = "Conectado"
 
-        experiment_api.set_readings(new_readings)
 
     def start_experiment(self, experiment_id: int):
         self.__experiment_id = experiment_id
         app_state.change_state(StateE.RUNNING_EXPERIMENT)
     
     def end_experiment(self):
+        """
+        Handles writing the new experiment to persistent memory
+
+        TODO write data
+        """
         self.__experiment_id = -1
         app_state.change_state(StateE.INSPECTING)
 
