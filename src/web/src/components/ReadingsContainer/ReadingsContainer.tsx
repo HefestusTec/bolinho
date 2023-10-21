@@ -50,10 +50,6 @@ const ReadingsContainer: FunctionComponent<ReadingsContainerProps> = ({
                     value={`${readingsContext.current_load} N`}
                 />
                 <CustomText
-                    title="Carga máxima"
-                    value={`${readingsContext.max_load} N`}
-                />
-                <CustomText
                     title="Status"
                     value={`${readingsContext.status}`}
                 />

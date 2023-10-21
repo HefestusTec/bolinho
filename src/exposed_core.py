@@ -28,12 +28,13 @@ from bolinho_api.core import core_api
 
 from granulado.core import Granulado
 from DBHandler import db_handler
+from app_handler import bolinho_app
+import realTimeR
 
 _CONFIG_PARAMS_PATH = "persist/configParams.json"
 
 
 granulado = None
-realtime_readings: Queue = Queue()
 
 @eel.expose
 def get_realtime_readings(start):
@@ -92,6 +93,7 @@ def start_experiment_routine(experiment_id: int):
     Returns 1 if succeeded.
     """
     core_api.go_to_experiment_page()
+    bolinho_app.start_experiment(experiment_id)
 
     return 1
     experiment = db_handler.get_experiment_by_id(experiment_id)
@@ -133,9 +135,27 @@ def start_experiment_routine(experiment_id: int):
             "Não foi possível iniciar o experimento. O eixo Z não foi movido para a base. O Granulado está conectado?",
         )
 
+    realtime_readings = []
+
+    realTimeR.load_over_time_realtime_readings = Queue()
+    realTimeR.load_over_position_realtime_readings = Queue()
+
     start_time = int(time() * 1000)
     while granulado.get_is_moving():
         reading = granulado.get_readings()
+
+        lop = {
+            "load": reading[0],
+            "z_pos": reading[1],
+        }
+        realTimeR.load_over_position_realtime_readings.put_nowait(lop)
+
+        lot = {
+            "load": reading[0],
+            "time": int(time() * 1000) - start_time,
+        }
+        realTimeR.load_over_time_realtime_readings.put_nowait(lot)
+
         data = {
             "x": int(time() * 1000) - start_time,
             "experiment": experiment_id,
@@ -143,15 +163,13 @@ def start_experiment_routine(experiment_id: int):
             "z_pos": reading[1],
         }
         realtime_readings.append(data)
+
         eel.sleep(0.01)
 
-    reading_ids = db_handler.batch_post_reading(list(realtime_readings))
+    reading_ids = db_handler.batch_post_reading(realtime_readings)
 
     # Do not remove
     core_api.go_to_experiment_page()
-
-    # maybe remove
-    realtime_readings.clear()
 
     # do not remove
     return 1
@@ -166,9 +184,10 @@ def end_experiment_routine():
 
     Returns 1 if succeeded.
     """
-
-    # TODO Add implementation
     core_api.go_to_home_page()
+    bolinho_app.end_experiment()
+    stop_z_axis()
+
     return 1
 
 
@@ -245,10 +264,11 @@ def get_available_ports_list():
     ```
     """
     ports = serial.tools.list_ports.comports()
-    ports_dict = []
-    for port, desc, _ in sorted(ports):
-        ports_dict.append({"port": port, "desc": desc})
-    return ports_dict
+    ports_list = []
+    # get port and description
+    for port in ports:
+        ports_list.append({"port": port.device, "desc": port.description})
+    return ports_list
 
 
 @eel.expose

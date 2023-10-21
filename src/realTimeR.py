@@ -1,4 +1,4 @@
 from queue import Queue
 
-realtime_readings: Queue = Queue()
-is_running_experiment: bool = False
+load_over_time_realtime_readings: Queue = Queue()
+load_over_position_realtime_readings: Queue = Queue()
