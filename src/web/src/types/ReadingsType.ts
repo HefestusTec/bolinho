@@ -18,13 +18,11 @@
 export type ReadingsType = {
     z_axis_pos: number; // Position of the z-axis in mm
     current_load: number; // Load reading from the load cell in Newtons
-    max_load: number; // Load reading from the load cell in Newtons
     status: string; // Arbitrary status string
 };
 
 export const defaultReadingsType: ReadingsType = {
     z_axis_pos: 0,
     current_load: 0,
-    max_load: 0,
     status: "",
 };
