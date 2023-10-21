@@ -21,6 +21,7 @@ import serial
 import json
 import serial.tools.list_ports
 from time import time
+from queue import Queue
 
 from bolinho_api.ui import ui_api
 from bolinho_api.core import core_api
@@ -32,7 +33,14 @@ _CONFIG_PARAMS_PATH = "persist/configParams.json"
 
 
 granulado = None
+realtime_readings: Queue = Queue()
 
+@eel.expose
+def get_realtime_readings(start):
+    """
+    Returns a copy of the realtime readings queue
+    """
+    return realtime_readings
 
 @eel.expose
 def load_config_params():
@@ -125,26 +133,27 @@ def start_experiment_routine(experiment_id: int):
             "Não foi possível iniciar o experimento. O eixo Z não foi movido para a base. O Granulado está conectado?",
         )
 
-    readings = []
-
+    start_time = int(time() * 1000)
     while granulado.get_is_moving():
-        readings.append(granulado.get_readings())
+        reading = granulado.get_readings()
+        data = {
+            "x": int(time() * 1000) - start_time,
+            "experiment": experiment_id,
+            "load": reading[0],
+            "z_pos": reading[1],
+        }
+        realtime_readings.append(data)
         eel.sleep(0.01)
 
-    data = [
-        {
-            "x": x,
-            "experiment": experiment_id,
-            "load": reading[x][0],
-            "z_pos": reading[x][1],
-        }
-        for x, reading in enumerate(readings)
-    ]
-
-    reading_ids = [db_handler.post_reading(reading) for reading in data]
+    reading_ids = db_handler.batch_post_reading(list(realtime_readings))
 
     # Do not remove
     core_api.go_to_experiment_page()
+
+    # maybe remove
+    realtime_readings.clear()
+
+    # do not remove
     return 1
 
 

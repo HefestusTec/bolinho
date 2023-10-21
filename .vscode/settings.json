@@ -9,5 +9,9 @@
     "[python]": {
         "editor.defaultFormatter": "mikoz.black-py"
     },
-    "cSpell.words": ["baudrate", "microcontroller"]
+    "cSpell.words": [
+        "baudrate",
+        "microcontroller"
+    ],
+    "sqltools.useNodeRuntime": true
 }
