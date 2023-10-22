@@ -32,18 +32,26 @@ class Granulado:
         self.__instant_load = 0
         self.__instant_position = 0
         self.__ping = 0
-        self.__last_read = 0
-        self.__timeout = timeout
         self.__z_axis_length = 0
+        self.__time_since_last_refresh = 0
 
     def __del__(self):
         self.__end()
 
+    def __refresh_ping(self):
+        current_time = time.time() * 1000.0
+
+        if(current_time + 100 > self.__time_since_last_refresh): # ~10 FPS refresh rate
+            self.__time_since_last_refresh = current_time
+
+            self.__send_serial_message("p")
+
     def loop(self):
         if not self.is_connected():
-            eel.sleep(1)
-            return
-        self.__send_serial_message("p")
+            return False
+
+        self.__refresh_ping()
+
 
         # Check if there is a message to be read
         """
@@ -58,23 +66,24 @@ class Granulado:
                 )
                 return
                 """
+
         # Read message from usb
         received = self.__hardware.readline()
-        self.__last_read = time.time()
         # decode to utf-8
         decodedMessage = received.decode()
         response = decodedMessage[0]
+        value = decodedMessage[1:].replace("\r", "").replace("\n", "")
 
         if response == "p":
             self.__ping = time.time()
         elif response == "e":
-            self.__error(decodedMessage[1:])
+            self.__error(value)
         elif response == "r":
-            self.__instant_load = int(decodedMessage[1:])
+            self.__instant_load = float(value)
         elif response == "g":
-            self.__instant_position = int(decodedMessage[1:])
+            self.__instant_position = int(value)
         elif response == "j":
-            self.__z_axis_length = int(decodedMessage[1:])
+            self.__z_axis_length = int(value)
         if response == "t":
             self.__top = True
             self.__bottom = False
@@ -88,8 +97,8 @@ class Granulado:
             self.__moving = True
         elif response == "s":
             self.__moving = False
-        
-        eel.sleep(1)
+
+        return True
 
     def start_experiment(self, compress: bool):
         pass
@@ -133,25 +142,16 @@ class Granulado:
         return 0
 
     def check_granulado_is_connected(self):
-        if self.__send_serial_message("p"):
-            eel.sleep(1)
-            if time.time() - self.__ping > 1000:
-                ui_api.prompt_user(
-                    description="A máquina parece estar desconectada. Verifique a conexão e tente novamente.",
-                    options=["Tentar novamente"],
-                    callback_func=lambda x: ui_api.set_focus("connection-component"),
-                )
-                core_api.set_is_connected(False)
-                return False
-            core_api.set_is_connected(True)
-            return True
-        ui_api.prompt_user(
-            description="A máquina parece estar desconectada. Verifique a conexão e tente novamente.",
-            options=["Tentar novamente"],
-            callback_func=lambda x: ui_api.set_focus("connection-component"),
-        )
-        core_api.set_is_connected(False)
-        return False
+        if time.time() - self.__ping > 1000:
+            ui_api.prompt_user(
+                description=f"A máquina parece estar desconectada ({time.time() - self.__ping }s). Verifique a conexão e tente novamente.",
+                options=["Tentar novamente"],
+                callback_func=lambda x: ui_api.set_focus("connection-component"),
+            )
+            core_api.set_is_connected(False)
+            return False
+        core_api.set_is_connected(True)
+        return True
 
     def get_readings(self):
         """
@@ -261,23 +261,26 @@ class Granulado:
         try:
             from exposed_core import load_config_params, save_config_params
 
-            self.__hardware = serial.Serial(
-                port=port, baudrate=baudrate
-            )
+            self.__hardware = serial.Serial(port=port, baudrate=baudrate)
             print(self.__hardware)
             config = load_config_params()
             config["port"] = port
             save_config_params(config)
             return 1
         except:
+            print("deu ruim na hora de instanciar o granulado")
             return 0
 
     def __send_serial_message(self, message: str):
         if not self.is_connected():
             return False
-        print(message)
-        self.__hardware.write(bytes(message, 'utf-8'))
-        return True
+        try:
+            self.__hardware.write(bytes(message, "utf-8"))
+            eel.sleep(0.001)
+            return True
+        except Exception as e:
+            print(e)
+            return False
 
     def __end(self):
         if not self.is_connected():
