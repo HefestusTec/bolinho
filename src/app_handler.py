@@ -37,6 +37,7 @@ class AppHandler:
         self.__time_since_last_refresh = 0.0
         self.__current_readings: b_classes.Readings = b_classes.Readings()
 
+
     
     def wait_for_connection(self):
         """
@@ -50,9 +51,9 @@ class AppHandler:
                 eel.sleep(1)
 
     def process(self):
-        print(f"current state: {app_state.state}")
         self.__update_current_readings()
-
+        self.gran.loop()
+        
         match app_state.state:
             case StateE.INSPECTING:
                 experiment_api.set_readings(self.__current_readings)
@@ -61,7 +62,6 @@ class AppHandler:
             case StateE.RUNNING_EXPERIMENT:
                 current_time = time.time() * 1000.0
 
-                self.gran.loop()
                 self.__experiment.append({
                     "x": current_time,
                     "experiment_id": self.__experiment_id,

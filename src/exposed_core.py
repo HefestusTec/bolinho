@@ -26,22 +26,12 @@ from queue import Queue
 from bolinho_api.ui import ui_api
 from bolinho_api.core import core_api
 
-from granulado.core import Granulado
 from DBHandler import db_handler
 from app_handler import bolinho_app
 import realTimeR
 
 _CONFIG_PARAMS_PATH = "persist/configParams.json"
 
-
-granulado = None
-
-@eel.expose
-def get_realtime_readings(start):
-    """
-    Returns a copy of the realtime readings queue
-    """
-    return realtime_readings
 
 @eel.expose
 def load_config_params():
@@ -73,12 +63,12 @@ def check_can_start_experiment():
 
     In case something is wrong the backend also displays an error to the user telling what went wrong
     """
-    if granulado is None:
+    if bolinho_app.gran is None:
         ui_api.error_alert(
-            "Não foi possível iniciar o experimento. O Granulado não está conectado.",
+            "Não foi possível iniciar o experimento. O bolinho_app.gran não está conectado.",
         )
         return 0
-    return granulado.check_experiment_routine()
+    return bolinho_app.gran.check_experiment_routine()
 
 
 @eel.expose
@@ -117,22 +107,21 @@ def start_experiment_routine(experiment_id: int):
             "Não foi possível iniciar o experimento. O material não possui parâmetro de compressão/tração definida.",
         )
 
-    global granulado
-    if not granulado.stop_z_axis():
+    if not bolinho_app.gran.stop_z_axis():
         ui_api.error_alert(
-            "Não foi possível iniciar o experimento. O eixo Z não foi parado. O Granulado está conectado?",
+            "Não foi possível iniciar o experimento. O eixo Z não foi parado. O bolinho_app.gran está conectado?",
         )
-    if not (granulado.return_z_axis() if compress else granulado.bottom_z_axis()):
+    if not (bolinho_app.gran.return_z_axis() if compress else bolinho_app.gran.bottom_z_axis()):
         ui_api.error_alert(
-            "Não foi possível iniciar o experimento. O eixo Z não foi retornado ao topo. O Granulado está conectado?",
+            "Não foi possível iniciar o experimento. O eixo Z não foi retornado ao topo. O bolinho_app.gran está conectado?",
         )
 
-    while granulado.get_is_moving():
+    while bolinho_app.gran.get_is_moving():
         eel.sleep(1)
 
-    if not (granulado.bottom_z_axis() if compress else granulado.return_z_axis()):
+    if not (bolinho_app.gran.bottom_z_axis() if compress else bolinho_app.gran.return_z_axis()):
         ui_api.error_alert(
-            "Não foi possível iniciar o experimento. O eixo Z não foi movido para a base. O Granulado está conectado?",
+            "Não foi possível iniciar o experimento. O eixo Z não foi movido para a base. O bolinho_app.gran está conectado?",
         )
 
     realtime_readings = []
@@ -141,8 +130,8 @@ def start_experiment_routine(experiment_id: int):
     realTimeR.load_over_position_realtime_readings = Queue()
 
     start_time = int(time() * 1000)
-    while granulado.get_is_moving():
-        reading = granulado.get_readings()
+    while bolinho_app.gran.get_is_moving():
+        reading = bolinho_app.gran.get_readings()
 
         lop = {
             "load": reading[0],
@@ -224,8 +213,7 @@ def return_z_axis():
 
     Returns 1 if succeeded (if the function was acknowledged).
     """
-    global granulado
-    return granulado.return_z_axis()
+    return bolinho_app.gran.return_z_axis()
 
 
 @eel.expose
@@ -235,8 +223,7 @@ def stop_z_axis():
 
     Returns 1 if succeeded (if the function was acknowledged).
     """
-    global granulado
-    return granulado.stop_z_axis()
+    return bolinho_app.gran.stop_z_axis()
 
 
 @eel.expose
@@ -248,8 +235,7 @@ def move_z_axis_millimeters(distance):
 
     Returns 1 if succeeded (if the function was acknowledged).
     """
-    global granulado
-    return granulado.move_z_axis_millimeters(distance)
+    return bolinho_app.gran.move_z_axis_millimeters(distance)
 
 
 @eel.expose
@@ -276,10 +262,8 @@ def connect_to_port(port: str):
     """
     Connects to a port. The port argument is a string like `COM4` or `/dev/ttyUSB0`
     """
-    global granulado
-    granulado = Granulado(port)
     retries: int = 0
-    while not granulado.connect(port, 115200):
+    while not bolinho_app.gran.connect(port, 115200):
         print(f"Connecting to {port}@115200...")
         eel.sleep(1)
         if retries > 5:
@@ -287,7 +271,7 @@ def connect_to_port(port: str):
         retries += 1
 
     eel.sleep(1)
-    return granulado.check_granulado_is_connected()
+    return bolinho_app.gran.check_granulado_is_connected()
 
 
 @eel.expose
@@ -297,8 +281,7 @@ def tare_load():
 
     Returns 1 if succeeded (if the function was acknowledged).
     """
-    global granulado
-    return granulado.tare_load()
+    return bolinho_app.gran.tare_load()
 
 
 @eel.expose

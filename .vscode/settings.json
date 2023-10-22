@@ -7,11 +7,8 @@
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "prettier.tabWidth": 4,
     "[python]": {
-        "editor.defaultFormatter": "mikoz.black-py"
+        "editor.defaultFormatter": "ms-vsliveshare.vsliveshare"
     },
-    "cSpell.words": [
-        "baudrate",
-        "microcontroller"
-    ],
+    "cSpell.words": ["baudrate", "microcontroller"],
     "sqltools.useNodeRuntime": true
 }
