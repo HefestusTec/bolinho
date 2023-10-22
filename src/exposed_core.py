@@ -275,6 +275,14 @@ def connect_to_port(port: str):
 
 
 @eel.expose
+def disconnect_granulado():
+    """
+    Disconnects from the granulado
+    """
+    return bolinho_app.gran.disconnect()
+
+
+@eel.expose
 def tare_load():
     """
     Tares the load cell

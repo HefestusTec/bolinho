@@ -26,7 +26,11 @@ import ContainerComponent from "components/containerComponent/containerComponent
 import CustomButton from "components/customSubComponents/customButton/customButton";
 import CustomListSelector from "components/customSubComponents/customListSelector/customListSelector";
 import { PortType } from "types/PortType";
-import { connectToPortJS, getAvailablePortsListJS } from "api/backend-api";
+import {
+    connectToPortJS,
+    disconnectGranuladoJS,
+    getAvailablePortsListJS,
+} from "api/backend-api";
 import { toast } from "react-toastify";
 import { IsConnectedContext } from "api/contexts/IsConnectedContext";
 
@@ -64,6 +68,10 @@ const ConnectionComponent: FunctionComponent<ConnectionComponentProps> = () => {
         connectToPortJS(selectedPort);
     };
 
+    const disconnect = () => {
+        disconnectGranuladoJS();
+    };
+
     const getFormattedPorts = (): string[] => {
         return availablePorts.map(
             (element) => `${element.port} | ${element.desc}`
@@ -96,7 +104,7 @@ const ConnectionComponent: FunctionComponent<ConnectionComponentProps> = () => {
                     className={styleModule.connect_button}
                     bgColor="var(--negative_button_color)"
                     fontColor="var(--font_color_inverted)"
-                    clickCallBack={connectToPort}
+                    clickCallBack={disconnect}
                 >
                     DESCONECTAR
                 </CustomButton>

@@ -170,6 +170,16 @@ export const connectToPortJS = async (port: string): Promise<number> => {
     }
 };
 
+export const disconnectGranuladoJS = async (): Promise<number> => {
+    try {
+        return await eel.disconnect_granulado()();
+    } catch (error) {
+        console.error(error);
+        toast.error("Não foi possível desconectar o Granulado");
+        return 0;
+    }
+};
+
 export const tareLoadJs = async (): Promise<number> => {
     try {
         return await eel.tare_load()();
