@@ -766,6 +766,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#disconnectgranuladojs" class="md-nav__link">
+    disconnectGranuladoJS()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#tareloadjs" class="md-nav__link">
     tareLoadJS()
   </a>
@@ -1068,6 +1075,13 @@
           <li class="md-nav__item">
   <a href="#connecttoportjs" class="md-nav__link">
     connectToPortJS()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#disconnectgranuladojs" class="md-nav__link">
+    disconnectGranuladoJS()
   </a>
   
 </li>
@@ -1408,6 +1422,7 @@ Returns a JSON object containing the available COM ports:
 <a id="__codelineno-20-7" name="__codelineno-20-7" href="#__codelineno-20-7"></a><span class="p">};)</span>
 </code></pre></div>
 </div>
+<hr />
 <h3 id="connecttoportjs">connectToPortJS()<a class="headerlink" href="#connecttoportjs" title="Permanent link">&para;</a></h3>
 <div class="admonition quote">
 <p class="admonition-title">connectToPortJS()</p>
@@ -1422,17 +1437,32 @@ Connects to a port. The port argument is a string like <code>COM4</code></p>
 </code></pre></div>
 </div>
 <hr />
+<h3 id="disconnectgranuladojs">disconnectGranuladoJS()<a class="headerlink" href="#disconnectgranuladojs" title="Permanent link">&para;</a></h3>
+<p>!!! quote "### disconnectGranuladoJS()
+()"
+    This function calls the <code>disconnect_granulado()</code> on the backend.</p>
+<div class="highlight"><span class="filename">Text Only</span><pre><span></span><code>Returns 1 connection was successful
+
+``` javaScript title=&quot;React usage example&quot;
+import { disconnectGranuladoJS } from &quot;./api/backend-api&quot;;
+
+onClick(()=&gt;{
+    disconnectGranuladoJS(&quot;COM3&quot;);
+};)
+```
+</code></pre></div>
+<hr />
 <h3 id="tareloadjs">tareLoadJS()<a class="headerlink" href="#tareloadjs" title="Permanent link">&para;</a></h3>
 <div class="admonition quote">
 <p class="admonition-title">tareLoadJS()</p>
 <p>This function calls the <code>tare_load()</code> on the backend.
 Tares the load cell
 Returns 1 if succeeded (if the function was acknowledged).</p>
-<div class="highlight"><span class="filename">React usage example</span><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">tareLoadJS</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">&quot;./api/backend-api&quot;</span><span class="p">;</span>
-<a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a>
-<a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a><span class="nx">onClick</span><span class="p">(()=&gt;{</span>
-<a id="__codelineno-22-4" name="__codelineno-22-4" href="#__codelineno-22-4"></a><span class="w">    </span><span class="nx">tareLoadJS</span><span class="p">();</span>
-<a id="__codelineno-22-5" name="__codelineno-22-5" href="#__codelineno-22-5"></a><span class="p">};)</span>
+<div class="highlight"><span class="filename">React usage example</span><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">tareLoadJS</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">&quot;./api/backend-api&quot;</span><span class="p">;</span>
+<a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a>
+<a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a><span class="nx">onClick</span><span class="p">(()=&gt;{</span>
+<a id="__codelineno-23-4" name="__codelineno-23-4" href="#__codelineno-23-4"></a><span class="w">    </span><span class="nx">tareLoadJS</span><span class="p">();</span>
+<a id="__codelineno-23-5" name="__codelineno-23-5" href="#__codelineno-23-5"></a><span class="p">};)</span>
 </code></pre></div>
 </div>
 <hr />
@@ -1442,11 +1472,11 @@ Returns 1 if succeeded (if the function was acknowledged).</p>
 <p>This function calls the <code>calibrate_known_weight()</code> on the backend.
 Calibrates the load cell to the known weight
 Returns 1 if succeeded (if the function was acknowledged).</p>
-<div class="highlight"><span class="filename">React usage example</span><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">calibrateKnownWeightJS</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">&quot;./api/backend-api&quot;</span><span class="p">;</span>
-<a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a>
-<a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a><span class="nx">onClick</span><span class="p">(()=&gt;{</span>
-<a id="__codelineno-23-4" name="__codelineno-23-4" href="#__codelineno-23-4"></a><span class="w">    </span><span class="nx">calibrateKnownWeightJS</span><span class="p">();</span>
-<a id="__codelineno-23-5" name="__codelineno-23-5" href="#__codelineno-23-5"></a><span class="p">};)</span>
+<div class="highlight"><span class="filename">React usage example</span><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">calibrateKnownWeightJS</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">&quot;./api/backend-api&quot;</span><span class="p">;</span>
+<a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a>
+<a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a><span class="nx">onClick</span><span class="p">(()=&gt;{</span>
+<a id="__codelineno-24-4" name="__codelineno-24-4" href="#__codelineno-24-4"></a><span class="w">    </span><span class="nx">calibrateKnownWeightJS</span><span class="p">();</span>
+<a id="__codelineno-24-5" name="__codelineno-24-5" href="#__codelineno-24-5"></a><span class="p">};)</span>
 </code></pre></div>
 </div>
 <hr />
@@ -1456,11 +1486,11 @@ Returns 1 if succeeded (if the function was acknowledged).</p>
 <p>This function calls the <code>calibrate_z_axis()</code> on the backend.
 Calibrates z axis of the machine
 Returns 1 if succeeded (if the function was acknowledged).</p>
-<div class="highlight"><span class="filename">React usage example</span><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">calibrateZAxisJS</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">&quot;./api/backend-api&quot;</span><span class="p">;</span>
-<a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a>
-<a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a><span class="nx">onClick</span><span class="p">(()=&gt;{</span>
-<a id="__codelineno-24-4" name="__codelineno-24-4" href="#__codelineno-24-4"></a><span class="w">    </span><span class="nx">calibrateZAxisJS</span><span class="p">();</span>
-<a id="__codelineno-24-5" name="__codelineno-24-5" href="#__codelineno-24-5"></a><span class="p">};)</span>
+<div class="highlight"><span class="filename">React usage example</span><pre><span></span><code><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">calibrateZAxisJS</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">&quot;./api/backend-api&quot;</span><span class="p">;</span>
+<a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a>
+<a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a><span class="nx">onClick</span><span class="p">(()=&gt;{</span>
+<a id="__codelineno-25-4" name="__codelineno-25-4" href="#__codelineno-25-4"></a><span class="w">    </span><span class="nx">calibrateZAxisJS</span><span class="p">();</span>
+<a id="__codelineno-25-5" name="__codelineno-25-5" href="#__codelineno-25-5"></a><span class="p">};)</span>
 </code></pre></div>
 </div>
 
