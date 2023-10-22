@@ -100,7 +100,7 @@ const MainPage: FunctionComponent<MainPageProps> = () => {
                         buttonText="ENSAIO"
                         bgColor="var(--positive_button_color)"
                         height="50%"
-                        disabled={isConnected}
+                        disabled={!isConnected}
                     />
                 </div>
             </div>

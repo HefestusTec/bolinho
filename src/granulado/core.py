@@ -47,7 +47,9 @@ class Granulado:
             self.__send_serial_message("p")
 
     def loop(self):
-        if not self.is_connected():
+        is_conn = self.is_connected()
+        core_api.set_is_connected(is_conn)
+        if not is_conn:
             return False
 
         self.__refresh_ping()
@@ -270,6 +272,31 @@ class Granulado:
         except:
             print("deu ruim na hora de instanciar o granulado")
             return 0
+
+
+    def disconnect(self):
+        """
+        Disconnects from a serial device
+
+        returns 1 if SUCCEEDED
+
+        returns 0 if FAILED
+
+        Example of usage
+
+            ```
+            from granulado.core import Granulado
+
+            gr = Granulado()
+            gr.disconnect()
+            ```
+        """
+        try:
+            self.__hardware = self.__hardware.close()
+            return 1
+        except:
+            return 0
+
 
     def __send_serial_message(self, message: str):
         if not self.is_connected():

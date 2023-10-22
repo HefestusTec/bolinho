@@ -347,6 +347,8 @@ ___
     };)
     ```
 
+___
+
 ### connectToPortJS()
 !!! quote "connectToPortJS()"
     This function calls the `connect_to_port()` on the backend.
@@ -359,6 +361,23 @@ ___
     
     onClick(()=>{
         connectToPortJS("COM3");
+    };)
+    ```
+
+___
+
+### disconnectGranuladoJS()
+!!! quote "### disconnectGranuladoJS()
+()"
+    This function calls the `disconnect_granulado()` on the backend.
+
+    Returns 1 connection was successful
+
+    ``` javaScript title="React usage example"
+    import { disconnectGranuladoJS } from "./api/backend-api";
+    
+    onClick(()=>{
+        disconnectGranuladoJS("COM3");
     };)
     ```
 
