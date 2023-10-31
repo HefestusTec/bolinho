@@ -26,15 +26,15 @@ import CustomListSelector from "../../../components/customSubComponents/customLi
 export default function VfxContainer({ className, scaleOrigin }) {
     const [globalConfig, setGlobalConfig] = useContext(GlobalConfigContext);
 
-    const [backgroundBlur, setBackgroundBlur] = useState(
-        globalConfig.backgroundBlur
-    );
+    // const [backgroundBlur, setBackgroundBlur] = useState(
+    //     globalConfig.backgroundBlur
+    // );
     const [shadows, setShadows] = useState(globalConfig.shadows);
     const [enableHover, setEnableHover] = useState(globalConfig.enableHover);
-    const toggleBackgroundBlur = () => {
-        setBackgroundBlur(!backgroundBlur);
-        setGlobalConfig({ ...globalConfig, backgroundBlur: !backgroundBlur });
-    };
+    // const toggleBackgroundBlur = () => {
+    //     setBackgroundBlur(!backgroundBlur);
+    //     setGlobalConfig({ ...globalConfig, backgroundBlur: !backgroundBlur });
+    // };
 
     const animationListCallback = (key) => {
         setGlobalConfig({ ...globalConfig, animationSpeed: key });
@@ -56,12 +56,12 @@ export default function VfxContainer({ className, scaleOrigin }) {
     return (
         <ZoomComponent className={className} scaleOrigin={scaleOrigin}>
             <ContainerComponent headerText="Efeitos visuais">
-                <CustomCheckbox
-                    clickCallBack={toggleBackgroundBlur}
-                    checked={backgroundBlur}
-                >
-                    Desfocar fundo
-                </CustomCheckbox>
+                {/* <CustomCheckbox
+                        clickCallBack={toggleBackgroundBlur}
+                        checked={backgroundBlur}
+                    >
+                        Desfocar fundo
+                    </CustomCheckbox> */}
                 <CustomCheckbox clickCallBack={toggleShadows} checked={shadows}>
                     Sombras
                 </CustomCheckbox>

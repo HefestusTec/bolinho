@@ -27,7 +27,6 @@ import CustomTextAreaInput from "components/customSubComponents/CustomTextAreaIn
 import React from "react";
 import BackgroundFader from "components/backgroundFader/backgroundFader";
 import CustomTextArea from "components/customSubComponents/CustomTextArea/CustomTextArea";
-import CustomCheckbox from "components/customSubComponents/customCheckbox/customCheckbox";
 import CustomListSelector from "components/customSubComponents/customListSelector/customListSelector";
 import CustomTextInput from "components/customSubComponents/CustomTextInput/CustomTextInput";
 import { getRandomColor } from "helpers";
@@ -39,6 +38,8 @@ import { MaterialType } from "types/DataBaseTypes";
 import { getMaterialsDB } from "api/db-api";
 import { RefreshDataContext } from "api/contexts/RefreshContext";
 import { toast } from "react-toastify";
+
+type validExperimentType = "Compressão" | "Expansão";
 
 interface NewExperimentPopupProps {
     handleExperimentCreated: (id: number) => void;
@@ -65,8 +66,9 @@ const NewExperimentPopup: FunctionComponent<NewExperimentPopupProps> = ({
     const [experimentMaxLoad, setExperimentMaxLoad] = useState<number>(1);
     const [experimentMaxTravel, setExperimentMaxTravel] = useState<number>(1);
     const [experimentMaxTime, setExperimentMaxTime] = useState<number>(1);
-    const [experimentCompress, setExperimentCompress] = useState<boolean>(true);
     const [experimentZAxisSpeed, setExperimentZAxisSpeed] = useState<number>(1);
+    const [experimentType, setExperimentType] =
+        useState<validExperimentType>("Compressão");
     const [experimentExtraInfo, setExperimentExtraInfo] = useState<string>(
         "Sem informações extras"
     );
@@ -78,10 +80,6 @@ const NewExperimentPopup: FunctionComponent<NewExperimentPopupProps> = ({
             setMaterialList(response);
         });
     }, [refreshData]);
-
-    const toggleCompress = () => {
-        setExperimentCompress((o) => !o);
-    };
 
     const [ConfirmationDialog, confirm] = useConfirm();
     const refresh = useRefresh();
@@ -105,6 +103,7 @@ const NewExperimentPopup: FunctionComponent<NewExperimentPopupProps> = ({
             toast.error("Material inválido");
             return;
         }
+        const isCompressionExperiment = experimentType === "Compressão";
         postExperimentJS({
             body: {
                 type: bodyTypeAsNumber,
@@ -120,7 +119,7 @@ const NewExperimentPopup: FunctionComponent<NewExperimentPopupProps> = ({
                 max_load: experimentMaxLoad,
                 max_travel: experimentMaxTravel,
                 max_time: experimentMaxTime,
-                compress: experimentCompress,
+                compress: isCompressionExperiment,
                 z_axis_speed: experimentZAxisSpeed,
                 extra_info: experimentExtraInfo,
                 plot_color: getRandomColor(),
@@ -137,6 +136,36 @@ const NewExperimentPopup: FunctionComponent<NewExperimentPopupProps> = ({
             key: element.id,
         }));
     };
+
+    const paramALabel: string = (() => {
+        switch (bodyType) {
+            case "Retangular":
+                return "Comprimento";
+            case "Cilíndrico":
+                return "Diam. Externo";
+            case "Tubo":
+                return "Diam. Externo";
+            case "Outro":
+                return "Parâmetro A";
+            default:
+                return "Parâmetro A";
+        }
+    })();
+
+    const paramBLabel: string = (() => {
+        switch (bodyType) {
+            case "Retangular":
+                return "Profundidade";
+            case "Cilíndrico":
+                return "N/A";
+            case "Tubo":
+                return "Diam. Interno";
+            case "Outro":
+                return "Parâmetro B";
+            default:
+                return "Parâmetro B";
+        }
+    })();
 
     return (
         <React.Fragment>
@@ -222,12 +251,23 @@ const NewExperimentPopup: FunctionComponent<NewExperimentPopupProps> = ({
                                 alert={false}
                                 alertColor="var(--positive_button_color)"
                             />
-                            <CustomCheckbox
-                                clickCallBack={toggleCompress}
-                                checked={experimentCompress}
+
+                            <CustomListSelector
+                                keys={
+                                    [
+                                        "Compressão",
+                                        "Expansão",
+                                    ] as validExperimentType[]
+                                }
+                                clickCallBack={(key) => {
+                                    setExperimentType(
+                                        key as validExperimentType
+                                    );
+                                }}
+                                selected={experimentType}
                             >
-                                Experimento de compressão
-                            </CustomCheckbox>
+                                Tipo de experimento
+                            </CustomListSelector>
                             <CustomTextAreaInput
                                 title="Extra"
                                 setValue={setExperimentExtraInfo}
@@ -259,7 +299,7 @@ const NewExperimentPopup: FunctionComponent<NewExperimentPopupProps> = ({
                                 Material
                             </CustomFilteredListSelector>
                             <CustomTextInput
-                                title="Parâmetro A"
+                                title={paramALabel}
                                 setValue={setBodyParamA}
                                 value={bodyParamA}
                                 inputType="number"
@@ -268,7 +308,7 @@ const NewExperimentPopup: FunctionComponent<NewExperimentPopupProps> = ({
                                 alertColor="var(--positive_button_color)"
                             />
                             <CustomTextInput
-                                title="Parâmetro B"
+                                title={paramBLabel}
                                 setValue={setBodyParamB}
                                 value={bodyParamB}
                                 inputType="number"

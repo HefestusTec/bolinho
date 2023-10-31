@@ -9,7 +9,7 @@ import { saveConfigParams, loadConfigParams } from "./api/backend-api";
 
 import GlobalConfigContext from "./contexts/globalConfigContext";
 import Prompter from "./components/prompter/prompter";
-import VirtualInput from "./components/virtualInput/virtualInput";
+// import VirtualInput from "./components/virtualInput/virtualInput";
 import Home from "pages/Home";
 import Experiment from "pages/Experiment/Experiment";
 import { ExperimentPageProvider } from "api/contexts/ExperimentPageContext";
@@ -36,7 +36,7 @@ function App() {
         window.eel.expose(getConfigJS, "getConfigJS");
     } catch (error) {}
 
-    const [vKeyboard, setVKeyboard] = useState(false);
+    // const [vKeyboard, setVKeyboard] = useState(false);
     const [enableHover, setEnableHover] = useState(globalConfig.enableHover);
 
     const [currentPage, setCurrentPage] = useContext(CurrentPageContext);
@@ -92,13 +92,10 @@ function App() {
         window.eel.expose(promptUserJS, "promptUserJS");
     } catch (error) {}
 
-    const toggleKeyboard = () => {
-        setVKeyboard(!vKeyboard);
-    };
-    const getVirtualKeyboard = () => {
-        if (vKeyboard) return <VirtualInput />;
-        return;
-    };
+    // const getVirtualKeyboard = () => {
+    //     if (vKeyboard) return <VirtualInput />;
+    //     return;
+    // };
     return (
         <GlobalConfigContext.Provider value={[globalConfig, setGlobalConfig]}>
             <IsConnectedProvider>
@@ -106,14 +103,14 @@ function App() {
                     <FocusProvider>
                         <ExperimentPageProvider>
                             <div className={getAppClassName()}>
-                                {getVirtualKeyboard()}
+                                {/* {getVirtualKeyboard()} */}
                                 {prompter}
                                 {currentPage === "home" ? (
                                     <Home />
                                 ) : (
                                     <Experiment />
                                 )}
-                                <div
+                                {/* <div
                                     style={{
                                         position: "absolute",
                                         zIndex: 300,
@@ -122,7 +119,7 @@ function App() {
                                     <button onClick={toggleKeyboard}>
                                         Toggle keyboard
                                     </button>
-                                </div>
+                                </div> */}
                             </div>
                             <ToastContainer
                                 className="toast_notify"
