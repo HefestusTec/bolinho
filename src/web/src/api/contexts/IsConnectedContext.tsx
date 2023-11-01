@@ -35,7 +35,7 @@ interface IsConnectedProviderProps {
 const IsConnectedProvider: FunctionComponent<IsConnectedProviderProps> = ({
     children,
 }) => {
-    const [isConnected, setIsConnected] = useState<boolean>(true);
+    const [isConnected, setIsConnected] = useState<boolean>(false);
 
     useEffect(() => {
         getGranuladoIsConnectedJS().then((isConnected) => {

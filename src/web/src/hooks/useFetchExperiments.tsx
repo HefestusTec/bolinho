@@ -27,10 +27,12 @@ const useFetchExperiments = () => {
     useEffect(() => {
         const fetchExperiments = async () => {
             let expList = [];
+
             for (let i = 0; i < selectedExperiments.length; i++) {
                 const experiment = await getExperimentById(
                     selectedExperiments[i]
                 );
+
                 if (experiment !== undefined) expList.push(experiment);
             }
             setExperiments(expList);

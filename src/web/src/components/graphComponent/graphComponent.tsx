@@ -91,6 +91,7 @@ const GraphComponent: FunctionComponent<GraphComponentProps> = () => {
 
         const generateExperimentPlotData = async () => {
             let returnPlotDataArray: ExperimentPlotData[] = [];
+
             for (let i = 0; i < experimentList.length; i++) {
                 const experiment = experimentList[i];
                 const experimentColor = experimentList[i].plot_color;

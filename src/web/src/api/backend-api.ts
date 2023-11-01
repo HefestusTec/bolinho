@@ -21,6 +21,8 @@ import { toast } from "react-toastify";
 import { GlobalConfigContextProps } from "./apiTypes";
 import { PortType } from "types/PortType";
 
+export let isFakeEel = false;
+
 // Setting up eel and fakeEel
 export let eel = window.eel;
 try {
@@ -31,6 +33,7 @@ try {
     toast.error("Não foi possível conectar com o backend");
     eel = new fakeEel(); // Loading a fake db
     toast.info("Iniciando base de dados de testes");
+    isFakeEel = true;
 }
 
 export const saveConfigParams = (configParams: GlobalConfigContextProps) => {
