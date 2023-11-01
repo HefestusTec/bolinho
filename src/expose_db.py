@@ -25,6 +25,7 @@ import realTimeR
 from state_class import app_state
 from state_class import StateE
 
+
 # --- Material --- #
 @eel.expose
 def post_material(data: dict):
@@ -271,6 +272,7 @@ def get_load_over_position_by_experiment_id(experiment_id):
     for reading in readings_dict:
         reading["x"] = reading.pop("z_pos")
         reading["y"] = reading.pop("load")
+    print(readings_dict)
     return json.dumps(readings_dict, default=lambda x: x.__dict__)
 
 

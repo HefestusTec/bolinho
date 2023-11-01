@@ -82,16 +82,18 @@ def start_experiment_routine(experiment_id: int):
 
     Returns 1 if succeeded.
     """
-    core_api.go_to_experiment_page()
-    bolinho_app.start_experiment(experiment_id)
-
-    return 1
     experiment = db_handler.get_experiment_by_id(experiment_id)
     if experiment is None:
         ui_api.error_alert(
             "Não foi possível iniciar o experimento. O experimento não foi encontrado.",
         )
-    material_id = experiment.get("material_id")
+    exp_body_id = experiment.body
+    body = db_handler.get_body_by_id(exp_body_id)
+    if body is None:
+        ui_api.error_alert(
+            "Não foi possível iniciar o experimento. O corpo não foi encontrado.",
+        )
+    material_id = body.material
     if material_id is None:
         ui_api.error_alert(
             "Não foi possível iniciar o experimento. O experimento não possui material associado.",
@@ -101,7 +103,7 @@ def start_experiment_routine(experiment_id: int):
         ui_api.error_alert(
             "Não foi possível iniciar o experimento. O material não foi encontrado.",
         )
-    compress = material.get("compress")
+    compress = experiment.compress
     if compress is None:
         ui_api.error_alert(
             "Não foi possível iniciar o experimento. O material não possui parâmetro de compressão/tração definida.",
@@ -111,7 +113,11 @@ def start_experiment_routine(experiment_id: int):
         ui_api.error_alert(
             "Não foi possível iniciar o experimento. O eixo Z não foi parado. O bolinho_app.gran está conectado?",
         )
-    if not (bolinho_app.gran.return_z_axis() if compress else bolinho_app.gran.bottom_z_axis()):
+    if not (
+        bolinho_app.gran.return_z_axis()
+        if compress
+        else bolinho_app.gran.bottom_z_axis()
+    ):
         ui_api.error_alert(
             "Não foi possível iniciar o experimento. O eixo Z não foi retornado ao topo. O bolinho_app.gran está conectado?",
         )
@@ -119,48 +125,17 @@ def start_experiment_routine(experiment_id: int):
     while bolinho_app.gran.get_is_moving():
         eel.sleep(1)
 
-    if not (bolinho_app.gran.bottom_z_axis() if compress else bolinho_app.gran.return_z_axis()):
+    if not (
+        bolinho_app.gran.bottom_z_axis()
+        if compress
+        else bolinho_app.gran.return_z_axis()
+    ):
         ui_api.error_alert(
             "Não foi possível iniciar o experimento. O eixo Z não foi movido para a base. O bolinho_app.gran está conectado?",
         )
-
-    realtime_readings = []
-
-    realTimeR.load_over_time_realtime_readings = Queue()
-    realTimeR.load_over_position_realtime_readings = Queue()
-
-    start_time = int(time() * 1000)
-    while bolinho_app.gran.get_is_moving():
-        reading = bolinho_app.gran.get_readings()
-
-        lop = {
-            "load": reading[0],
-            "z_pos": reading[1],
-        }
-        realTimeR.load_over_position_realtime_readings.put_nowait(lop)
-
-        lot = {
-            "load": reading[0],
-            "time": int(time() * 1000) - start_time,
-        }
-        realTimeR.load_over_time_realtime_readings.put_nowait(lot)
-
-        data = {
-            "x": int(time() * 1000) - start_time,
-            "experiment": experiment_id,
-            "load": reading[0],
-            "z_pos": reading[1],
-        }
-        realtime_readings.append(data)
-
-        eel.sleep(0.01)
-
-    reading_ids = db_handler.batch_post_reading(realtime_readings)
-
-    # Do not remove
     core_api.go_to_experiment_page()
+    bolinho_app.start_experiment(experiment_id)
 
-    # do not remove
     return 1
 
 

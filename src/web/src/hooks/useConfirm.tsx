@@ -24,19 +24,24 @@ import { toast } from "react-toastify";
 
 const useConfirm = (
     title: string = "Confirme sua escolha",
-    message: string = "ATENÇÃO essa ação não poderá ser revertida"
+    message: string = "ATENÇÃO essa ação não poderá ser revertida",
+    confirmLabel: string = "Confirmar",
+    cancelLabel: string = "Cancelar"
 ) => {
     const [promise, setPromise] = useState<{
         resolve: (value: boolean) => void;
     } | null>(null);
     const [isOpen, setIsOpen] = useState<boolean>(false);
-    const confirm = (onTrueFunc: () => void) =>
+    const confirm = (onTrueFunc: () => void, onFalseFunc?: () => void) =>
         new Promise<boolean>((resolve, reject) => {
             setIsOpen(true);
             setPromise({ resolve });
         })
             .then((response) => {
                 if (response) onTrueFunc();
+                else {
+                    if(onFalseFunc) onFalseFunc();
+                };
             })
             .catch((err) => {
                 toast.error("Algo deu errado.");
@@ -87,7 +92,7 @@ const useConfirm = (
                                 clickCallBack={handleCancel}
                                 width="50%"
                             >
-                                Cancelar
+                                {cancelLabel}
                             </CustomButton>
                             <CustomButton
                                 bgColor="var(--positive_button_color)"
@@ -95,7 +100,7 @@ const useConfirm = (
                                 clickCallBack={handleConfirm}
                                 width="50%"
                             >
-                                Confirmar
+                                {confirmLabel}
                             </CustomButton>
                         </CustomButtonArray>
                     </ContainerComponent>

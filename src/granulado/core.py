@@ -41,7 +41,7 @@ class Granulado:
     def __refresh_ping(self):
         current_time = time.time() * 1000.0
 
-        if(current_time + 100 > self.__time_since_last_refresh): # ~10 FPS refresh rate
+        if current_time + 100 > self.__time_since_last_refresh:  # ~10 FPS refresh rate
             self.__time_since_last_refresh = current_time
 
             self.__send_serial_message("p")
@@ -53,7 +53,6 @@ class Granulado:
             return False
 
         self.__refresh_ping()
-
 
         # Check if there is a message to be read
         """
@@ -119,32 +118,16 @@ class Granulado:
             callback_func=core_api.go_to_home_page,
         )
 
-    def __run_experiment(self, experiment_id, compress):
-        pass
-
     def check_experiment_routine(self):
-        ui_api.prompt_user(
-            description="A máquina está calibrada?",
-            options=["Sim", "Não"],
-            callback_func=self.__machine_calibrated_callback,
-        )
-
-    def __machine_calibrated_callback(self, response):
-        if response == "Não":
-            ui_api.set_focus("calib-page")
-        elif response == "Sim":
-            checks = [
-                self.check_granulado_is_connected(),
-                self.check_global_limits(),
-                self.check_current_load(),
-            ]
-            if all(checks):
-                self.__run_experiment()
-                return 1
-        return 0
+        checks = [
+            self.check_granulado_is_connected(),
+            self.check_global_limits(),
+            self.check_current_load(),
+        ]
+        return all(checks)
 
     def check_granulado_is_connected(self):
-        if time.time() - self.__ping > 1000:
+        if time.time() - self.__ping > 1000 and self.__ping != 0:
             ui_api.prompt_user(
                 description=f"A máquina parece estar desconectada ({time.time() - self.__ping }s). Verifique a conexão e tente novamente.",
                 options=["Tentar novamente"],
@@ -159,6 +142,10 @@ class Granulado:
         """
         Sends messages to Granulado to get the current load and position, waits for the response and returns the values
         """
+        import random
+
+        self.__instant_position += 1
+        return random.randrange(0, 100), self.__instant_position
         if self.__send_serial_message("r"):
             if self.__send_serial_message("g"):
                 eel.sleep(0.1)
@@ -269,10 +256,9 @@ class Granulado:
             config["port"] = port
             save_config_params(config)
             return 1
-        except:
-            print("deu ruim na hora de instanciar o granulado")
+        except Exception as e:
+            print(e)
             return 0
-
 
     def disconnect(self):
         """
@@ -296,7 +282,6 @@ class Granulado:
             return 1
         except:
             return 0
-
 
     def __send_serial_message(self, message: str):
         if not self.is_connected():
