@@ -49,7 +49,11 @@ const MainMonitor: FunctionComponent<MainMonitorProps> = ({
                 </div>
                 <BigButton
                     clickCallBack={() => {
-                        confirm(endExperimentRoutineJS);
+                        alert("before");
+                        confirm(() => {
+                            alert("inside");
+                            endExperimentRoutineJS();
+                        });
                     }}
                     buttonText="ENCERRAR"
                     bgColor="var(--negative_button_color)"

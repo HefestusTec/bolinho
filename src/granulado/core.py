@@ -34,6 +34,7 @@ class Granulado:
         self.__ping = 0
         self.__z_axis_length = 0
         self.__time_since_last_refresh = 0
+        self.__last_is_connected = None
 
     def __del__(self):
         self.__end()
@@ -48,7 +49,9 @@ class Granulado:
 
     def loop(self):
         is_conn = self.is_connected()
-        core_api.set_is_connected(is_conn)
+        if is_conn != self.__last_is_connected:
+            self.__last_is_connected = is_conn
+            core_api.set_is_connected(is_conn)
         if not is_conn:
             return False
 

@@ -245,15 +245,13 @@ def get_load_over_time_by_experiment_id(experiment_id):
     Returns a list of load over time data points for the experiment with the given id
     """
     if app_state.state == StateE.RUNNING_EXPERIMENT:
-        readings_dict = list(realTimeR.load_over_time_realtime_readings)
+        readings_dict = list(realTimeR.load_over_time_realtime_readings.queue)
     else:
         readings = db_handler.get_load_over_time_by_experiment_id(experiment_id)
         readings_dict = [model_to_dict(reading) for reading in readings]
-
-    # rename the "load" key to "y"
-    for reading in readings_dict:
-        reading["y"] = reading.pop("load")
-
+        # rename the "load" key to "y"
+        for reading in readings_dict:
+            reading["y"] = reading.pop("load")
     return json.dumps(readings_dict, default=lambda x: x.__dict__)
 
 
@@ -263,16 +261,15 @@ def get_load_over_position_by_experiment_id(experiment_id):
     Returns a list of load over position data points for the experiment with the given id
     """
     if app_state.state == StateE.RUNNING_EXPERIMENT:
-        readings_dict = list(realTimeR.load_over_position_realtime_readings)
+        readings_dict = list(realTimeR.load_over_position_realtime_readings.queue)
     else:
         readings = db_handler.get_load_over_position_by_experiment_id(experiment_id)
         readings_dict = [model_to_dict(reading) for reading in readings]
-    # rename the "z_pos" key to "x"
-    # rename the "load" key to "y"
-    for reading in readings_dict:
-        reading["x"] = reading.pop("z_pos")
-        reading["y"] = reading.pop("load")
-    print(readings_dict)
+        # rename the "z_pos" key to "x"
+        # rename the "load" key to "y"
+        for reading in readings_dict:
+            reading["x"] = reading.pop("z_pos")
+            reading["y"] = reading.pop("load")
     return json.dumps(readings_dict, default=lambda x: x.__dict__)
 
 

@@ -148,9 +148,20 @@ def end_experiment_routine():
 
     Returns 1 if succeeded.
     """
-    core_api.go_to_home_page()
+    print("end exp")
+    stopped = stop_z_axis()
+    if not stopped:
+        ui_api.error_alert(
+            "Não foi possível parar o eixo Z. O bolinho_app.gran está conectado?",
+        )
+    print("end exp2")
+
     bolinho_app.end_experiment()
-    stop_z_axis()
+    print("end exp3")
+
+    core_api.go_to_home_page()
+
+    print("SAI DA PAGINAAAAA")
 
     return 1
 
