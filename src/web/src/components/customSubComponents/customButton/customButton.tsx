@@ -28,6 +28,7 @@ interface CustomButtonProps {
     maxWidth?: string;
     width?: string;
     padding?: string;
+    outlined?: boolean;
 }
 
 const CustomButton: FunctionComponent<CustomButtonProps> = ({
@@ -40,6 +41,7 @@ const CustomButton: FunctionComponent<CustomButtonProps> = ({
     maxWidth = "100%",
     width,
     padding,
+    outlined,
 }) => {
     const getClassName = () => {
         return [className, styleModule.custom_button].join(" ");
@@ -58,6 +60,7 @@ const CustomButton: FunctionComponent<CustomButtonProps> = ({
                 color: fontColor,
                 fontSize: fontSize,
                 maxWidth: maxWidth,
+                borderStyle: outlined ? "solid" : "none",
                 width: width,
                 padding: padding,
             }}

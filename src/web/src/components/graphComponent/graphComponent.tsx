@@ -71,6 +71,7 @@ const GraphComponent: FunctionComponent<GraphComponentProps> = () => {
     const [rightHandlePos, setRightHandlePos] = useState(100);
 
     const [showSideBar, setShowSideBar] = useState(true);
+    const [autoZoom, setAutoZoom] = useState(true);
 
     const [experimentList] = useFetchExperiments();
 
@@ -118,8 +119,12 @@ const GraphComponent: FunctionComponent<GraphComponentProps> = () => {
                 plotDataArray: generatedPlotData,
                 maxValues: maxVals,
             });
+            if (autoZoom) {
+                setLeftHandlePos(0);
+                setRightHandlePos(maxVals.x);
+            }
         });
-    }, [experimentList, plotType, refreshData]);
+    }, [experimentList, plotType, refreshData, autoZoom]);
 
     const getOpenSideBarButtonClassName = () => {
         return showSideBar
@@ -178,6 +183,9 @@ const GraphComponent: FunctionComponent<GraphComponentProps> = () => {
                     <SliderComponent
                         setChartMinMax={setChartMinMax}
                         dataRightMax={experimentArray.maxValues.x}
+                        setAutoZoom={setAutoZoom}
+                        leftHandlePos={leftHandlePos}
+                        rightHandlePos={rightHandlePos}
                     />
                 </div>
             </div>
@@ -187,7 +195,12 @@ const GraphComponent: FunctionComponent<GraphComponentProps> = () => {
                     width: sideBarWidth,
                 }}
             >
-                <GraphSideBar setPlotType={setPlotType} />
+                <GraphSideBar
+                    setPlotType={setPlotType}
+                    plotType={plotType}
+                    autoZoom={autoZoom}
+                    setAutoZoom={setAutoZoom}
+                />
             </div>
         </div>
     );

@@ -16,18 +16,25 @@
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
 import Slider from "rc-slider";
 import styleModule from "./sliderComponent.module.css";
-import { FunctionComponent } from "react";
+import { Dispatch, FunctionComponent, SetStateAction } from "react";
 
 interface SliderComponentProps {
     setChartMinMax: (min: number, max: number) => void;
     dataRightMax: number;
+    leftHandlePos: number;
+    rightHandlePos: number;
+    setAutoZoom: Dispatch<SetStateAction<boolean>>;
 }
 
 const SliderComponent: FunctionComponent<SliderComponentProps> = ({
     setChartMinMax,
     dataRightMax = 100,
+    setAutoZoom,
+    leftHandlePos,
+    rightHandlePos,
 }) => {
     function handleChange(event: number | number[]) {
+        setAutoZoom(false);
         if (Array.isArray(event)) {
             setChartMinMax(event[0], event[1]);
         }
@@ -42,6 +49,7 @@ const SliderComponent: FunctionComponent<SliderComponentProps> = ({
             max={dataRightMax}
             defaultValue={[0, 100]}
             onChange={handleChange}
+            value={[leftHandlePos, rightHandlePos]}
             trackStyle={{
                 backgroundColor: "#6d6d6d",
                 cursor: "e-resize",

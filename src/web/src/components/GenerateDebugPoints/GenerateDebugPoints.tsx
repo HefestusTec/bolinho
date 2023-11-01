@@ -67,6 +67,20 @@ const GenerateDebugPoints: FunctionComponent<GenerateDebugPointsProps> = () => {
             >
                 +500
             </button>
+            <button
+                onClick={() => {
+                    addXPoints(1000);
+                }}
+            >
+                +1000
+            </button>
+            <button
+                onClick={() => {
+                    addXPoints(5000);
+                }}
+            >
+                +5000
+            </button>
         </div>
     );
 };

@@ -22,10 +22,17 @@ import styleModule from "./graphSideBar.module.css";
 
 interface GraphSideBarProps {
     setPlotType: Dispatch<SetStateAction<PlotTypeType>>;
+    plotType: PlotTypeType;
+
+    setAutoZoom: Dispatch<SetStateAction<boolean>>;
+    autoZoom: boolean;
 }
 
 const GraphSideBar: FunctionComponent<GraphSideBarProps> = ({
     setPlotType,
+    plotType,
+    setAutoZoom,
+    autoZoom,
 }) => {
     return (
         <div className={styleModule.side_bar_span}>
@@ -37,6 +44,7 @@ const GraphSideBar: FunctionComponent<GraphSideBarProps> = ({
                         setPlotType("loadOverTime");
                     }}
                     width="100%"
+                    outlined={plotType === "loadOverTime"}
                 >
                     Carga x Tempo
                 </CustomButton>
@@ -46,8 +54,19 @@ const GraphSideBar: FunctionComponent<GraphSideBarProps> = ({
                         setPlotType("loadOverPosition");
                     }}
                     width="100%"
+                    outlined={plotType === "loadOverPosition"}
                 >
                     Carga x Posição
+                </CustomButton>
+                <CustomButton
+                    padding="5px"
+                    clickCallBack={() => {
+                        setAutoZoom(true);
+                    }}
+                    width="100%"
+                    outlined={autoZoom}
+                >
+                    Zoom automático
                 </CustomButton>
             </div>
         </div>
