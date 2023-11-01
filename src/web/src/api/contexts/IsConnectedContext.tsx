@@ -14,11 +14,13 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
+import { getGranuladoIsConnectedJS } from "api/backend-api";
 import {
     Dispatch,
     FunctionComponent,
     SetStateAction,
     createContext,
+    useEffect,
     useState,
 } from "react";
 
@@ -33,7 +35,13 @@ interface IsConnectedProviderProps {
 const IsConnectedProvider: FunctionComponent<IsConnectedProviderProps> = ({
     children,
 }) => {
-    const [isConnected, setIsConnected] = useState<boolean>(false);
+    const [isConnected, setIsConnected] = useState<boolean>(true);
+
+    useEffect(() => {
+        getGranuladoIsConnectedJS().then((isConnected) => {
+            setIsConnected(isConnected);
+        });
+    }, []);
 
     function setIsConnectedJS(isConnected: boolean) {
         setIsConnected(isConnected);

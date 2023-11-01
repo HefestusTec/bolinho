@@ -210,6 +210,18 @@ export const calibrateZAxisJS = async (): Promise<number> => {
     }
 };
 
+export const getGranuladoIsConnectedJS = async (): Promise<boolean> => {
+    try {
+        return await eel.get_granulado_is_connected()();
+    } catch (error) {
+        console.error(error);
+        toast.error(
+            "Não foi possível verificar se o granulado está conectado."
+        );
+        return false;
+    }
+};
+
 export type PostMaterialType = {
     name: string;
     batch: string;

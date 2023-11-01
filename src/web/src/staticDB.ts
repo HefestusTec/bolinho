@@ -242,8 +242,12 @@ export class fakeEel {
     end_experiment_routine() {
         goToHomePageJS();
     }
+    get_granulado_is_connected() {
+        return async function get_granulado_is_connected() {
+            return true;
+        };
+    }
 }
-
 function goToExperimentPageJS() {
     // Routs to the experiment page, returns 1 if it was successful
     if (setCurrentPage == null) return;

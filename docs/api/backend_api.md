@@ -426,3 +426,20 @@ ___
         calibrateZAxisJS();
     };)
     ```
+
+___
+
+### getGranuladoIsConnectedJS()
+!!! quote "getGranuladoIsConnectedJS()"
+    This function calls the `get_granulado_is_connected()` on the backend.
+    Checks if granulado is connected
+
+    Returns a `boolean`
+
+    ``` javaScript title="React usage example"
+    import { getGranuladoIsConnectedJS } from "./api/backend-api";
+    
+    onClick(()=>{
+        alert(getGranuladoIsConnectedJS());
+    };)
+    ```
