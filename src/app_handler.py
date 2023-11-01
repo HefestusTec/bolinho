@@ -18,6 +18,7 @@
 from granulado.core import Granulado
 from bolinho_api.experiment import experiment_api
 from bolinho_api.core import core_api
+from bolinho_api.ui import ui_api
 import bolinho_api.classes as b_classes
 import eel
 from state_class import StateE
@@ -27,6 +28,7 @@ from DBHandler import Reading
 from DBHandler import db_handler
 import realTimeR
 from queue import Queue
+from serial import SerialException
 
 
 class AppHandler:
@@ -58,7 +60,12 @@ class AppHandler:
 
     def process(self):
         self.__update_current_readings()
-        self.gran.loop()
+        try:
+            self.gran.loop()
+        except SerialException:
+            ui_api.error_alert(f"Erro de conexão com o Granulado")
+            self.gran = Granulado()
+            app_state.change_state(StateE.INSPECTING)
 
         match app_state.state:
             case StateE.INSPECTING:
@@ -70,14 +77,12 @@ class AppHandler:
 
                 if (
                     current_time - 500 > self.__time_since_last_refresh
-                ):  # ~10 FPS refresh rate
+                ):  # ~2 FPS refresh rate
                     self.__time_since_last_refresh = current_time
                     experiment_api.set_readings(self.__current_readings)
 
                     core_api.refresh_data()  # Asks the UI to fetch new data
-                    print(
-                        f"{(self.__n_readings / (current_time - self.__started_experiment_time)) * 1000 } readings per second"
-                    )
+                    # print(f"{(self.__n_readings / (current_time - self.__started_experiment_time)) * 1000 } readings per second")
                 eel.sleep(
                     0
                 )  # allows Eel to gracefully shutdown the process when the WebUi is disconnected
@@ -86,51 +91,62 @@ class AppHandler:
         """
         Updates the UI with the latest readings
         """
+        if not self.gran.is_connected():
+            self.__current_readings.status = "Desconectado"
+            return
+
         self.__current_readings = b_classes.Readings()
-        if self.gran.is_connected():
-            [current_load, current_pos] = self.gran.get_readings()
 
-            current_time = int(time.time() * 1000) - \
-                self.__started_experiment_time
+        [current_load, current_pos] = self.gran.get_readings()
 
-            self.__current_readings.current_load = current_load
-            self.__current_readings.z_axis_pos = current_pos
-            self.__current_readings.status = "Conectado"
+        current_time = int(time.time() * 1000) - self.__started_experiment_time
 
-            # check if is running experiment
-            if self.__experiment_id == -1:
-                return
+        self.__current_readings.current_load = current_load
+        self.__current_readings.z_axis_pos = current_pos
+        self.__current_readings.status = "Conectado"
 
-            realTimeR.load_over_time_realtime_readings.put_nowait(
-                {
-                    "y": current_load,
-                    "x": current_time,
-                }
-            )
-            realTimeR.load_over_position_realtime_readings.put_nowait(
-                {
-                    "y": current_load,
-                    "x": current_pos,
-                }
-            )
-            self.__experiment.append(
-                {
-                    "x": current_time,
-                    "experiment_id": self.__experiment_id,
-                    "load": current_load,
-                    "z_pos": current_pos,
-                }
-            )
-            self.__n_readings += 1
+        # check if is running experiment
+        if self.__experiment_id == -1:
+            return
+
+        realTimeR.load_over_time_realtime_readings.put_nowait(
+            {
+                "y": current_load,
+                "x": current_time,
+            }
+        )
+        realTimeR.load_over_position_realtime_readings.put_nowait(
+            {
+                "y": current_load,
+                "x": current_pos,
+            }
+        )
+        self.__experiment.append(
+            {
+                "x": current_time,
+                "experiment_id": self.__experiment_id,
+                "load": current_load,
+                "z_pos": current_pos,
+            }
+        )
+        self.__n_readings += 1
 
     def start_experiment(self, experiment_id: int):
-        self.__experiment_id = experiment_id
+        """
+        Changes the app state to running experiment, resets the experiment data and starts a new experiment
+
+        Args:
+            experiment_id (int): The id of the experiment to be started
+        """
         app_state.change_state(StateE.RUNNING_EXPERIMENT)
+
+        self.__experiment_id = experiment_id
         self.__started_experiment_time = int(time.time() * 1000)
         self.__experiment = []
+        self.__n_readings = 0
+
         realTimeR.load_over_time_realtime_readings = Queue()
         realTimeR.load_over_position_realtime_readings = Queue()
-        self.__n_readings = 0
 
     def end_experiment(self):
         """

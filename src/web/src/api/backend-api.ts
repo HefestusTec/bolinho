@@ -91,7 +91,6 @@ export const startExperimentRoutineJS = async (
 
 export const endExperimentRoutineJS = async (): Promise<number> => {
     try {
-        alert("Called backend");
         return await eel.end_experiment_routine()();
     } catch (error) {
         console.error(error);

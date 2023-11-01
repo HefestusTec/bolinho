@@ -49,9 +49,7 @@ const MainMonitor: FunctionComponent<MainMonitorProps> = ({
                 </div>
                 <BigButton
                     clickCallBack={() => {
-                        alert("before");
                         confirm(() => {
-                            alert("inside");
                             endExperimentRoutineJS();
                         });
                     }}

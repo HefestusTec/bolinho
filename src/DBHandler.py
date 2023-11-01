@@ -198,8 +198,7 @@ class DBHandler:
         return reading.id
 
     def batch_post_reading(self, data: list):
-        readings = Reading.insert_many(data).execute()
-        return [reading.id for reading in readings]
+        Reading.insert_many(data).execute()
 
     def get_load_over_time_by_experiment_id(self, experiment_id: int):
         # return x and load

@@ -65,7 +65,7 @@ def check_can_start_experiment():
     """
     if bolinho_app.gran is None:
         ui_api.error_alert(
-            "Não foi possível iniciar o experimento. O bolinho_app.gran não está conectado.",
+            "Não foi possível iniciar o experimento. O Granulado não está conectado.",
         )
         return 0
     return bolinho_app.gran.check_experiment_routine()
@@ -113,17 +113,21 @@ def start_experiment_routine(experiment_id: int):
         ui_api.error_alert(
             "Não foi possível iniciar o experimento. O eixo Z não foi parado. O bolinho_app.gran está conectado?",
         )
+
     if not (
         bolinho_app.gran.return_z_axis()
         if compress
         else bolinho_app.gran.bottom_z_axis()
     ):
         ui_api.error_alert(
-            "Não foi possível iniciar o experimento. O eixo Z não foi retornado ao topo. O bolinho_app.gran está conectado?",
+            "Não foi possível iniciar o experimento. O eixo Z não foi retornado ao topo. O Granulado está conectado?",
         )
 
     while bolinho_app.gran.get_is_moving():
         eel.sleep(1)
+        # remove this line when the granulado is properly implemented
+        # when testing the granulado is not connected to the end-of-course sensors
+        bolinho_app.gran.stop_z_axis()
 
     if not (
         bolinho_app.gran.bottom_z_axis()
@@ -131,11 +135,12 @@ def start_experiment_routine(experiment_id: int):
         else bolinho_app.gran.return_z_axis()
     ):
         ui_api.error_alert(
-            "Não foi possível iniciar o experimento. O eixo Z não foi movido para a base. O bolinho_app.gran está conectado?",
+            "Não foi possível iniciar o experimento. O eixo Z não foi movido para a base. O Granulado está conectado?",
         )
+        return 0
+
     core_api.go_to_experiment_page()
     bolinho_app.start_experiment(experiment_id)
-
     return 1
 
 
@@ -148,21 +153,13 @@ def end_experiment_routine():
 
     Returns 1 if succeeded.
     """
-    print("end exp")
     stopped = stop_z_axis()
     if not stopped:
         ui_api.error_alert(
-            "Não foi possível parar o eixo Z. O bolinho_app.gran está conectado?",
+            "Não foi possível parar o eixo Z. O Granulado está conectado?",
         )
-    print("end exp2")
-
     bolinho_app.end_experiment()
-    print("end exp3")
-
     core_api.go_to_home_page()
-
-    print("SAI DA PAGINAAAAA")
-
     return 1
 
 
@@ -174,22 +171,6 @@ def prompt_return(
     Passes the "return_value" to the stored prompt function
     """
     ui_api.return_prompt_function(return_value)
-
-
-@eel.expose
-def set_custom_movement_distance(new_movement_distance):
-    """
-    # DEPRECATED
-
-    Sets the movement distance that the z-axis moves when the user is controlling the machine manually.
-
-    This distance is set in MILLIMETERS
-
-    Returns 1 if succeeded.
-
-    """
-    print("movement distance set to " + str(new_movement_distance))
-    return 1
 
 
 @eel.expose
@@ -248,6 +229,9 @@ def connect_to_port(port: str):
     """
     Connects to a port. The port argument is a string like `COM4` or `/dev/ttyUSB0`
     """
+    if port == "":
+        ui_api.error_alert("Nenhuma porta foi selecionada.")
+        return False
     retries: int = 0
     while not bolinho_app.gran.connect(port, 115200):
         print(f"Connecting to {port}@115200...")
