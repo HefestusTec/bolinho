@@ -18,22 +18,40 @@
 import eel
 import time
 import serial
+from enum import Enum
 
 from bolinho_api.ui import ui_api
 from bolinho_api.core import core_api
 
 
+class MotorState(Enum):
+    """
+    Represents the state of the motor
+    """
+
+    STOPPED = 0
+    MOVING = 1
+    TOP = 2
+    BOTTOM = 3
+
+
 class Granulado:
     def __init__(self, timeout: float = 2):
         self.__hardware: serial.Serial | None = None
-        self.__top = False
-        self.__bottom = False
-        self.__moving = False
+        # VERIFICAR SE ISSO NÃO VAI PERMITIR MOVIMENTAR O MOTOR MESMO ESTANDO NO TOPO OU NA BASE
+        # VERIFICAR SE ISSO NÃO VAI PERMITIR MOVIMENTAR O MOTOR MESMO ESTANDO NO TOPO OU NA BASE
+        # VERIFICAR SE ISSO NÃO VAI PERMITIR MOVIMENTAR O MOTOR MESMO ESTANDO NO TOPO OU NA BASE
+        self.__state = MotorState.STOPPED
+        # VERIFICAR SE ISSO NÃO VAI PERMITIR MOVIMENTAR O MOTOR MESMO ESTANDO NO TOPO OU NA BASE
+        # VERIFICAR SE ISSO NÃO VAI PERMITIR MOVIMENTAR O MOTOR MESMO ESTANDO NO TOPO OU NA BASE
+        # VERIFICAR SE ISSO NÃO VAI PERMITIR MOVIMENTAR O MOTOR MESMO ESTANDO NO TOPO OU NA BASE
         self.__instant_load = 0
         self.__instant_position = 0
         self.__ping = 0
         self.__z_axis_length = 0
         self.__time_since_last_refresh = 0
+        self.__last_is_connected = None
+        self.__was_read = [True, True]
 
     def __del__(self):
         self.__end()
@@ -41,115 +59,100 @@ class Granulado:
     def __refresh_ping(self):
         current_time = time.time() * 1000.0
 
-        if(current_time + 100 > self.__time_since_last_refresh): # ~10 FPS refresh rate
+        if current_time + 100 > self.__time_since_last_refresh:  # ~10 FPS refresh rate
             self.__time_since_last_refresh = current_time
 
             self.__send_serial_message("p")
 
     def loop(self):
         is_conn = self.is_connected()
-        core_api.set_is_connected(is_conn)
+        if is_conn != self.__last_is_connected:
+            self.__last_is_connected = is_conn
+            core_api.set_is_connected(is_conn)
         if not is_conn:
             return False
 
         self.__refresh_ping()
 
-
         # Check if there is a message to be read
-        """
         if self.__hardware.in_waiting <= 0:
-        
-            now = time.time()
-            if now - self.__last_read > self.__timeout:
-                ui_api.prompt_user(
-                    description="A máquina parece estar desconectada. Verifique a conexão e tente novamente.",
-                    options=["Tentar novamente"],
-                    callback_func=lambda x: ui_api.set_focus("connection-component"),
-                )
-                return
-                """
+            return
 
-        # Read message from usb
-        received = self.__hardware.readline()
-        # decode to utf-8
-        decodedMessage = received.decode()
-        response = decodedMessage[0]
-        value = decodedMessage[1:].replace("\r", "").replace("\n", "")
+        try:
+            # Read message from usb
+            received = self.__hardware.readline()
+            # decode to utf-8
+            decodedMessage = received.decode()
+            response = decodedMessage[0]
+            value = decodedMessage[1:].replace("\r", "").replace("\n", "")
 
-        if response == "p":
-            self.__ping = time.time()
-        elif response == "e":
-            self.__error(value)
-        elif response == "r":
-            self.__instant_load = float(value)
-        elif response == "g":
-            self.__instant_position = int(value)
-        elif response == "j":
-            self.__z_axis_length = int(value)
-        if response == "t":
-            self.__top = True
-            self.__bottom = False
-            self.__moving = False
-        elif response == "b":
-            self.__top = False
-            self.__bottom = True
-            self.__moving = False
-        elif response == "m":
-            self.__top = self.__bottom = False
-            self.__moving = True
-        elif response == "s":
-            self.__moving = False
+            if response == "p":
+                self.__ping = time.time()
+            elif response == "e":
+                self.__error(value)
+            elif response == "r":
+                self.__instant_load = float(value)
+                self.__was_read[0] = False
+            elif response == "g":
+                self.__instant_position = int(value)
+                self.__was_read[1] = False
+            elif response == "j":
+                self.__z_axis_length = int(value)
+            elif response == "t":
+                self.__state = MotorState.TOP
+            elif response == "b":
+                self.__state = MotorState.BOTTOM
+            elif response == "m":
+                self.__state = MotorState.MOVING
+            elif response == "s":
+                self.__state = MotorState.STOPPED
+            else:
+                ui_api.error_alert(f"Resposta inesperada do Granulado: ''{response}''")
 
-        return True
+            return True
+        except serial.SerialException as e:
+            ui_api.error_alert(f"Erro de conexão com o Granulado: {str(e)}")
+            return False
+        except Exception as e:
+            return False
 
     def start_experiment(self, compress: bool):
         pass
 
     def get_is_moving(self):
-        return self.__moving
+        return self.__state == MotorState.MOVING
 
     def get_end_of_axis(self):
-        return self.__top, self.__bottom
+        return self.__state == MotorState.TOP, self.__state == MotorState.BOTTOM
 
     def __error(self, error_message):
-        self.__send_serial_message("s")
+        if not self.__send_serial_message("s"):
+            ui_api.error_alert(
+                "Não foi possível parar o eixo Z. O Granulado está conectado?",
+            )
         ui_api.prompt_user(
             description=f"Erro: {error_message}",
             options=["Voltar para a página inicial"],
             callback_func=core_api.go_to_home_page,
         )
 
-    def __run_experiment(self, experiment_id, compress):
-        pass
-
     def check_experiment_routine(self):
-        ui_api.prompt_user(
-            description="A máquina está calibrada?",
-            options=["Sim", "Não"],
-            callback_func=self.__machine_calibrated_callback,
-        )
-
-    def __machine_calibrated_callback(self, response):
-        if response == "Não":
-            ui_api.set_focus("calib-page")
-        elif response == "Sim":
-            checks = [
-                self.check_granulado_is_connected(),
-                self.check_global_limits(),
-                self.check_current_load(),
-            ]
-            if all(checks):
-                self.__run_experiment()
-                return 1
-        return 0
+        checks = [
+            self.check_granulado_is_connected(),
+            not self.get_is_moving(),
+            self.check_global_limits(),
+            self.check_current_load(),
+        ]
+        return all(checks)
 
     def check_granulado_is_connected(self):
-        if time.time() - self.__ping > 1000:
+        if time.time() - self.__ping > 10 and self.__ping != 0:
             ui_api.prompt_user(
-                description=f"A máquina parece estar desconectada ({time.time() - self.__ping }s). Verifique a conexão e tente novamente.",
+                description=f"A máquina parece estar desconectada ({(time.time() - self.__ping):2 }s). Verifique a conexão e tente novamente.",
                 options=["Tentar novamente"],
                 callback_func=lambda x: ui_api.set_focus("connection-component"),
             )
+            self.__end()
             core_api.set_is_connected(False)
             return False
         core_api.set_is_connected(True)
@@ -159,9 +162,16 @@ class Granulado:
         """
         Sends messages to Granulado to get the current load and position, waits for the response and returns the values
         """
+        import random
+
+        self.__instant_position += 1
+        return random.randrange(0, 100), self.__instant_position
+
         if self.__send_serial_message("r"):
             if self.__send_serial_message("g"):
-                eel.sleep(0.1)
+                while self.__was_read[0] or self.__was_read[1]:
+                    eel.sleep(1 / 160)
+                self.__was_read = [True, True]
                 return self.__instant_load, self.__instant_position
 
     def check_global_limits(self):
@@ -214,34 +224,75 @@ class Granulado:
         return True
 
     def return_z_axis(self):
-        if not self.__top:
-            self.__top = self.__bottom = False
-            return self.__send_serial_message("t")
+        if self.__state != MotorState.TOP:
+            if self.__send_serial_message("t"):
+                self.__state = MotorState.MOVING
+                return True
         return False
 
     def bottom_z_axis(self):
-        if not self.__bottom:
-            self.__top = self.__bottom = False
-            return self.__send_serial_message("b")
+        if self.__state != MotorState.BOTTOM:
+            if self.__send_serial_message("b"):
+                self.__state = MotorState.MOVING
+                return True
         return False
 
     def stop_z_axis(self):
-        return self.__send_serial_message("s")
+        match self.__state:
+            case MotorState.MOVING:
+                if self.__send_serial_message("s"):
+                    self.__state = MotorState.STOPPED
+                    return True
+                return False
+        return True
 
     def move_z_axis_millimeters(self, millimeters: int):
-        self.__moving = True
-        return self.__send_serial_message(f"m{int(millimeters)}")
+        match self.__state:
+            case MotorState.MOVING:
+                ui_api.error_alert(
+                    "O eixo está em movimento, aguarde até que o movimento termine."
+                )
+                return False
+            case MotorState.TOP:
+                if millimeters > 0:
+                    ui_api.error_alert(
+                        "Não foi possível mover o eixo Z. O eixo está no topo."
+                    )
+                    return False
+                if self.__send_serial_message(f"m{millimeters}"):
+                    self.__state = MotorState.MOVING
+                    return True
+                return False
+
+            case MotorState.BOTTOM:
+                if millimeters < 0:
+                    ui_api.error_alert(
+                        "Não foi possível mover o eixo Z. O eixo está na base."
+                    )
+                    return False
+                if self.__send_serial_message(f"m{millimeters}"):
+                    self.__state = MotorState.MOVING
+                    return True
+                return False
+            case MotorState.STOPPED:
+                if self.__send_serial_message(f"m{millimeters}"):
+                    self.__state = MotorState.MOVING
+                    return True
+                return False
 
     def tare_load(self):
         """
         Send serial message to Granulado to tare the load cell
         """
-        self.__moving = False
-        return self.__send_serial_message("@")
+        if self.__send_serial_message("@"):
+            if self.__state == MotorState.MOVING:
+                self.__state = MotorState.STOPPED
+            return True
+        return False
 
     def is_connected(self):
         """Is the backend connected to the embedded hardware, returns a boolean"""
-        return self.__hardware is not None
+        return (self.__hardware is not None) and self.__hardware.isOpen()
 
     def connect(self, port: str, baudrate: int):
         """
@@ -268,11 +319,12 @@ class Granulado:
             config = load_config_params()
             config["port"] = port
             save_config_params(config)
-            return 1
-        except:
-            print("deu ruim na hora de instanciar o granulado")
+            core_api.set_is_connected(True)
+        except Exception as e:
+            ui_api.error_alert(f"Não foi possível conectar ao Granulado: {str(e)}")
+            self.__end()
             return 0
-
+        return 1
 
     def disconnect(self):
         """
@@ -292,25 +344,32 @@ class Granulado:
             ```
         """
         try:
-            self.__hardware = self.__hardware.close()
-            return 1
+            self.__end()
         except:
             return 0
-
+        return 1
 
     def __send_serial_message(self, message: str):
         if not self.is_connected():
+            ui_api.error_alert("O Granulado não está conectado")
+            self.__end()
             return False
         try:
-            self.__hardware.write(bytes(message, "utf-8"))
-            eel.sleep(0.001)
-            return True
+            if self.__hardware.write(bytes(message, "utf-8")) > 0:
+                return True
         except Exception as e:
-            print(e)
+            ui_api.error_alert(f"Não foi possível escrever no Granulado: {str(e)}")
+            self.__end()
             return False
 
     def __end(self):
-        if not self.is_connected():
-            return
-        self.__hardware.close()
-        self.__hardware = None
+        if self.__hardware:
+            if self.__hardware.isOpen():
+                self.__hardware.close()
+            self.__hardware = None
+        if self.__state == MotorState.MOVING:
+            self.__state = MotorState.STOPPED
+        self.__instant_load = 0
+        self.__instant_position = 0
+        self.__ping = 0
+        core_api.set_is_connected(False)

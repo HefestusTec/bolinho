@@ -32,23 +32,27 @@ import {
 import BigButton from "components/customSubComponents/BigButton/BigButton";
 import { SelectedExperimentsContext } from "contexts/SelectedExperimentsContext";
 import { IsConnectedContext } from "api/contexts/IsConnectedContext";
-import { CurrentPageContext } from "api/contexts/CurrentPageContext";
 import NewExperimentPopup from "components/NewExperimentPopup/NewExperimentPopup";
+import useConfirm from "hooks/useConfirm";
+import { FocusContext } from "api/contexts/FocusContex";
 
 interface MainPageProps {}
 
 const MainPage: FunctionComponent<MainPageProps> = () => {
-    const [selectedExperiments, setSelectedExperiments] = useState<number[]>(
-        []
-    );
     const [isConnected] = useContext(IsConnectedContext);
-    const [, setCurrentPage] = useContext(CurrentPageContext);
+    const [, setFocus] = useContext(FocusContext);
     const [isCreateExperimentOpen, setIsCreateExperimentOpen] =
         useState<boolean>(false);
-
+    const [ConfirmationDialog, confirm] = useConfirm(
+        "A máquina está calibrada?",
+        "Por favor confirme que a máquina está calibrada para continuar!"
+    );
+    const [, setSelectedExperiments] = useContext(SelectedExperimentsContext);
     const experimentWasCreated = (id: number) => {
         startExperimentRoutineJS(id).then((res) => {
-            if (res === 1) setCurrentPage("experiment");
+            if (res === 1) {
+                setSelectedExperiments([id]);
+            }
         });
     };
 
@@ -57,15 +61,20 @@ const MainPage: FunctionComponent<MainPageProps> = () => {
     };
 
     const startExperiment = async () => {
-        const canStart = await checkCanStartExperimentJS();
-        if (!canStart) return;
-        setIsCreateExperimentOpen(true);
+        confirm(
+            async () => {
+                const canStart = await checkCanStartExperimentJS();
+                if (!canStart) return;
+                setIsCreateExperimentOpen(true);
+            },
+            () => {
+                setFocus("calib-page");
+            }
+        );
     };
 
     return (
-        <SelectedExperimentsContext.Provider
-            value={[selectedExperiments, setSelectedExperiments]}
-        >
+        <>
             <div className={styleModule.content}>
                 <ZoomComponent
                     className={styleModule.graph_component}
@@ -112,7 +121,8 @@ const MainPage: FunctionComponent<MainPageProps> = () => {
             ) : (
                 <></>
             )}
-        </SelectedExperimentsContext.Provider>
+            <ConfirmationDialog />
+        </>
     );
 };
 

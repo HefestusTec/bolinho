@@ -19,6 +19,8 @@ import { globalConfigDefault } from "api/apiTypes";
 import IsConnectedProvider from "api/contexts/IsConnectedContext";
 import { setCurrentPageCallBack } from "staticDB";
 import { CurrentPageContext } from "api/contexts/CurrentPageContext";
+import { SelectedExperimentsContext } from "contexts/SelectedExperimentsContext";
+import RefreshDataProvider from "api/contexts/RefreshContext";
 
 import("./api/linker");
 
@@ -28,7 +30,9 @@ function App() {
         undefined
     );
     const [initialized, setInitialized] = useState(false);
-
+    const [selectedExperiments, setSelectedExperiments] = useState<number[]>(
+        []
+    );
     try {
         const getConfigJS = () => {
             return globalConfig;
@@ -98,19 +102,23 @@ function App() {
     // };
     return (
         <GlobalConfigContext.Provider value={[globalConfig, setGlobalConfig]}>
-            <IsConnectedProvider>
-                <ReadingsProvider>
-                    <FocusProvider>
-                        <ExperimentPageProvider>
-                            <div className={getAppClassName()}>
-                                {/* {getVirtualKeyboard()} */}
-                                {prompter}
-                                {currentPage === "home" ? (
-                                    <Home />
-                                ) : (
-                                    <Experiment />
-                                )}
-                                {/* <div
+            <SelectedExperimentsContext.Provider
+                value={[selectedExperiments, setSelectedExperiments]}
+            >
+                <RefreshDataProvider>
+                    <IsConnectedProvider>
+                        <ReadingsProvider>
+                            <FocusProvider>
+                                <ExperimentPageProvider>
+                                    <div className={getAppClassName()}>
+                                        {/* {getVirtualKeyboard()} */}
+                                        {prompter}
+                                        {currentPage === "home" ? (
+                                            <Home />
+                                        ) : (
+                                            <Experiment />
+                                        )}
+                                        {/* <div
                                     style={{
                                         position: "absolute",
                                         zIndex: 300,
@@ -120,15 +128,17 @@ function App() {
                                         Toggle keyboard
                                     </button>
                                 </div> */}
-                            </div>
-                            <ToastContainer
-                                className="toast_notify"
-                                transition={Zoom}
-                            />
-                        </ExperimentPageProvider>
-                    </FocusProvider>
-                </ReadingsProvider>
-            </IsConnectedProvider>
+                                    </div>
+                                    <ToastContainer
+                                        className="toast_notify"
+                                        transition={Zoom}
+                                    />
+                                </ExperimentPageProvider>
+                            </FocusProvider>
+                        </ReadingsProvider>
+                    </IsConnectedProvider>
+                </RefreshDataProvider>
+            </SelectedExperimentsContext.Provider>
         </GlobalConfigContext.Provider>
     );
 }

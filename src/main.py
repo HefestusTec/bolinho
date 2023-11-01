@@ -65,8 +65,6 @@ def start_eel():
         raise
 
 
-
-
 def main():
     # system("taskkill /im chrome.exe /f") # Podemos colocar isso para fechar o chrome antes de rodar o eel
     eel.spawn(start_eel)  # Inicializando eel em outro thread
@@ -77,8 +75,6 @@ def main():
     # infinite loop so it doesn't close the socket
     while True:
         bolinho_app.process()
-        
-
 
 
 if __name__ == "__main__":
