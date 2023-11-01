@@ -24,7 +24,6 @@ import {
     defaultExperimentType,
     defaultMaterialType,
 } from "types/DataBaseTypes";
-import { DataPointType } from "types/DataPointTypes";
 import { PageType } from "types/PageType";
 let setCurrentPage: Dispatch<SetStateAction<PageType>> | null = null;
 export function setCurrentPageCallBack(
@@ -65,22 +64,6 @@ _pj = {};
 
 _pj_snippets(_pj);
 
-function randInt(min: number, max: number) {
-    return Math.floor(Math.random() * (max - min)) + min;
-}
-
-function get_random_data_points(dataSize: number, xOffset: number = 0) {
-    var return_array: DataPointType[] = [];
-
-    for (var i = 0, _pj_a = dataSize; i < _pj_a; i += 1) {
-        return_array.push({
-            x: xOffset + i,
-            y: randInt(0, 100),
-        });
-    }
-
-    return return_array;
-}
 body_data_base = [
     {
         height: 2,
@@ -231,8 +214,6 @@ export class fakeEel {
     }
     isOnExperiment = false;
 
-    nOfNewPoints = 50;
-
     pointsArray = [
         { x: 1, y: 2 },
         { x: 2, y: 4 },
@@ -242,28 +223,12 @@ export class fakeEel {
 
     get_load_over_time_by_experiment_id() {
         return (id: number) => {
-            if (this.isOnExperiment) {
-                const newPoints = get_random_data_points(
-                    this.nOfNewPoints,
-                    this.pointsArray.length
-                );
-
-                this.pointsArray = this.pointsArray.concat(newPoints);
-            }
             return JSON.stringify(this.pointsArray);
         };
     }
 
     get_load_over_position_by_experiment_id() {
         return (id: number) => {
-            if (this.isOnExperiment) {
-                const newPoints = get_random_data_points(
-                    this.nOfNewPoints,
-                    this.pointsArray.length
-                );
-
-                this.pointsArray = this.pointsArray.concat(newPoints);
-            }
             return JSON.stringify(this.pointsArray);
         };
     }

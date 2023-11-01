@@ -18,6 +18,24 @@
 import { eel } from "api/backend-api";
 import useRefresh from "hooks/useRefresh";
 import { FunctionComponent } from "react";
+import { DataPointType } from "types/DataPointTypes";
+
+function randInt(min: number, max: number) {
+    return Math.floor(Math.random() * (max - min)) + min;
+}
+
+function get_random_data_points(dataSize: number, xOffset: number = 0) {
+    var return_array: DataPointType[] = [];
+
+    for (var i = 0, _pj_a = dataSize; i < _pj_a; i += 1) {
+        return_array.push({
+            x: xOffset + i,
+            y: randInt(0, 100),
+        });
+    }
+
+    return return_array;
+}
 
 interface GenerateDebugPointsProps {}
 
@@ -26,7 +44,11 @@ const GenerateDebugPoints: FunctionComponent<GenerateDebugPointsProps> = () => {
 
     const addXPoints = (nOfPoints: number = 50) => {
         try {
-            eel.nOfNewPoints = nOfPoints;
+            const newPoints = get_random_data_points(
+                nOfPoints,
+                eel.pointsArray.length
+            );
+            eel.pointsArray = eel.pointsArray.concat(newPoints);
         } catch (error) {}
         refresh();
     };
