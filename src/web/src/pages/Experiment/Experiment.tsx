@@ -25,6 +25,7 @@ import MainMonitor from "./MainMonitor/MainMonitor";
 import { ExperimentPageContext } from "api/contexts/ExperimentPageContext";
 import { ReadingsContext } from "api/contexts/ReadingsContext";
 import ReadingsContainer from "components/ReadingsContainer/ReadingsContainer";
+import GenerateDebugPoints from "components/GenerateDebugPoints/GenerateDebugPoints";
 
 interface ExperimentProps {}
 
@@ -34,6 +35,7 @@ const Experiment: FunctionComponent<ExperimentProps> = () => {
 
     return (
         <div className={styleModule.experiment_div}>
+            <GenerateDebugPoints />
             <ExperimentSideBar />
             <div className={styleModule.experiment_content}>
                 <MainMonitor

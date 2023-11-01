@@ -231,6 +231,8 @@ export class fakeEel {
     }
     isOnExperiment = false;
 
+    nOfNewPoints = 50;
+
     pointsArray = [
         { x: 1, y: 2 },
         { x: 2, y: 4 },
@@ -242,7 +244,7 @@ export class fakeEel {
         return (id: number) => {
             if (this.isOnExperiment) {
                 const newPoints = get_random_data_points(
-                    20,
+                    this.nOfNewPoints,
                     this.pointsArray.length
                 );
 
@@ -256,7 +258,7 @@ export class fakeEel {
         return (id: number) => {
             if (this.isOnExperiment) {
                 const newPoints = get_random_data_points(
-                    20,
+                    this.nOfNewPoints,
                     this.pointsArray.length
                 );
 

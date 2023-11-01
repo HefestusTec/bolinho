@@ -24,7 +24,6 @@ import IsConnectedProvider from "api/contexts/IsConnectedContext";
 import { setCurrentPageCallBack } from "staticDB";
 import { CurrentPageContext } from "api/contexts/CurrentPageContext";
 import { SelectedExperimentsContext } from "contexts/SelectedExperimentsContext";
-import useFakeEel from "hooks/useFakeEel";
 
 import("./api/linker");
 
@@ -37,7 +36,6 @@ function App() {
     const [selectedExperiments, setSelectedExperiments] = useState<number[]>(
         isFakeEel ? [-1] : []
     );
-    useFakeEel();
     try {
         const getConfigJS = () => {
             return globalConfig;
@@ -49,6 +47,7 @@ function App() {
     const [enableHover, setEnableHover] = useState(globalConfig.enableHover);
 
     const [currentPage, setCurrentPage] = useContext(CurrentPageContext);
+
     useEffect(() => {
         setCurrentPageCallBack(setCurrentPage);
     }, [setCurrentPage]);
