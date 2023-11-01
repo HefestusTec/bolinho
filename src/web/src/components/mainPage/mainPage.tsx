@@ -45,7 +45,7 @@ const MainPage: FunctionComponent<MainPageProps> = () => {
         useState<boolean>(false);
     const [ConfirmationDialog, confirm] = useConfirm(
         "A máquina está calibrada?",
-        "Por favor confirme que a máquina está calibrada para continuar!"
+        "Confirme que a máquina está calibrada!"
     );
     const [, setSelectedExperiments] = useContext(SelectedExperimentsContext);
     const experimentWasCreated = (id: number) => {

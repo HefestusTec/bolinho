@@ -51,9 +51,16 @@ export class ExperimentPlotData {
         };
     }
     getMaxDataValues(): DataPointType {
-        if (this.dataArray.length <= 0) return { x: 0, y: 0 };
-        const maxX = this.dataArray[this.dataArray.length - 1].x;
-        const maxY = Math.max(...this.dataArray.map((object) => object.y));
+        if (this.dataArray.length === 0) return { x: 0, y: 0 };
+
+        let maxX = this.dataArray[0].x;
+        let maxY = this.dataArray[0].y;
+
+        for (const { x, y } of this.dataArray) {
+            maxX = Math.max(maxX, x);
+            maxY = Math.max(maxY, y);
+        }
+
         return { x: maxX, y: maxY };
     }
 }

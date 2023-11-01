@@ -80,6 +80,12 @@ const ChartComponent: FunctionComponent<ChartComponentProps> = ({
                 normalized: true,
                 animation: false,
                 parsing: false,
+                spanGaps: true,
+                datasets: {
+                    line: {
+                        pointRadius: 0, // disable for all `'line'` datasets
+                    },
+                },
                 /*
 				parsing: {
 					xAxisKey: "x",
