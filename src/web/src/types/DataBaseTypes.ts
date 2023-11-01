@@ -77,5 +77,5 @@ export const defaultExperimentType: ExperimentType = {
     z_axis_speed: 0,
     compress: false,
     extra_info: "NONE",
-    plot_color: "#ffffff",
+    plot_color: "#0000FF",
 };

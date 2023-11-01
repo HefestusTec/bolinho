@@ -21,6 +21,8 @@ import { toast } from "react-toastify";
 import { GlobalConfigContextProps } from "./apiTypes";
 import { PortType } from "types/PortType";
 
+export let isFakeEel = false;
+
 // Setting up eel and fakeEel
 export let eel = window.eel;
 try {
@@ -31,6 +33,7 @@ try {
     toast.error("Não foi possível conectar com o backend");
     eel = new fakeEel(); // Loading a fake db
     toast.info("Iniciando base de dados de testes");
+    isFakeEel = true;
 }
 
 export const saveConfigParams = (configParams: GlobalConfigContextProps) => {
@@ -207,6 +210,18 @@ export const calibrateZAxisJS = async (): Promise<number> => {
         console.error(error);
         toast.error("Não foi possível calibrar o eixo-z.");
         return 0;
+    }
+};
+
+export const getGranuladoIsConnectedJS = async (): Promise<boolean> => {
+    try {
+        return await eel.get_granulado_is_connected()();
+    } catch (error) {
+        console.error(error);
+        toast.error(
+            "Não foi possível verificar se o granulado está conectado."
+        );
+        return false;
     }
 };
 

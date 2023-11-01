@@ -5,7 +5,11 @@ import { useState, useEffect, useContext } from "react";
 import { ToastContainer, Zoom } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-import { saveConfigParams, loadConfigParams } from "./api/backend-api";
+import {
+    saveConfigParams,
+    loadConfigParams,
+    isFakeEel,
+} from "./api/backend-api";
 
 import GlobalConfigContext from "./contexts/globalConfigContext";
 import Prompter from "./components/prompter/prompter";
@@ -20,7 +24,6 @@ import IsConnectedProvider from "api/contexts/IsConnectedContext";
 import { setCurrentPageCallBack } from "staticDB";
 import { CurrentPageContext } from "api/contexts/CurrentPageContext";
 import { SelectedExperimentsContext } from "contexts/SelectedExperimentsContext";
-import RefreshDataProvider from "api/contexts/RefreshContext";
 
 import("./api/linker");
 
@@ -31,7 +34,7 @@ function App() {
     );
     const [initialized, setInitialized] = useState(false);
     const [selectedExperiments, setSelectedExperiments] = useState<number[]>(
-        []
+        isFakeEel ? [-1] : []
     );
     try {
         const getConfigJS = () => {
@@ -44,6 +47,7 @@ function App() {
     const [enableHover, setEnableHover] = useState(globalConfig.enableHover);
 
     const [currentPage, setCurrentPage] = useContext(CurrentPageContext);
+
     useEffect(() => {
         setCurrentPageCallBack(setCurrentPage);
     }, [setCurrentPage]);
@@ -105,20 +109,19 @@ function App() {
             <SelectedExperimentsContext.Provider
                 value={[selectedExperiments, setSelectedExperiments]}
             >
-                <RefreshDataProvider>
-                    <IsConnectedProvider>
-                        <ReadingsProvider>
-                            <FocusProvider>
-                                <ExperimentPageProvider>
-                                    <div className={getAppClassName()}>
-                                        {/* {getVirtualKeyboard()} */}
-                                        {prompter}
-                                        {currentPage === "home" ? (
-                                            <Home />
-                                        ) : (
-                                            <Experiment />
-                                        )}
-                                        {/* <div
+                <IsConnectedProvider>
+                    <ReadingsProvider>
+                        <FocusProvider>
+                            <ExperimentPageProvider>
+                                <div className={getAppClassName()}>
+                                    {/* {getVirtualKeyboard()} */}
+                                    {prompter}
+                                    {currentPage === "home" ? (
+                                        <Home />
+                                    ) : (
+                                        <Experiment />
+                                    )}
+                                    {/* <div
                                     style={{
                                         position: "absolute",
                                         zIndex: 300,
@@ -128,16 +131,15 @@ function App() {
                                         Toggle keyboard
                                     </button>
                                 </div> */}
-                                    </div>
-                                    <ToastContainer
-                                        className="toast_notify"
-                                        transition={Zoom}
-                                    />
-                                </ExperimentPageProvider>
-                            </FocusProvider>
-                        </ReadingsProvider>
-                    </IsConnectedProvider>
-                </RefreshDataProvider>
+                                </div>
+                                <ToastContainer
+                                    className="toast_notify"
+                                    transition={Zoom}
+                                />
+                            </ExperimentPageProvider>
+                        </FocusProvider>
+                    </ReadingsProvider>
+                </IsConnectedProvider>
             </SelectedExperimentsContext.Provider>
         </GlobalConfigContext.Provider>
     );

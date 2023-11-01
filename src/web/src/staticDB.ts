@@ -21,6 +21,7 @@ import {
     ExperimentType,
     MaterialType,
     defaultBodyType,
+    defaultExperimentType,
     defaultMaterialType,
 } from "types/DataBaseTypes";
 import { DataPointType } from "types/DataPointTypes";
@@ -35,7 +36,7 @@ var _pj: any;
 
 var experiment_data_base: ExperimentType[],
     material_data_base: MaterialType[],
-    data_point_array_data_base: DataPointType[][],
+    // data_point_array_data_base: DataPointType[][],
     body_data_base: BodyType[];
 
 function _pj_snippets(container: any) {
@@ -68,12 +69,12 @@ function randInt(min: number, max: number) {
     return Math.floor(Math.random() * (max - min)) + min;
 }
 
-function get_random_data_points(dataSize: number) {
+function get_random_data_points(dataSize: number, xOffset: number = 0) {
     var return_array: DataPointType[] = [];
 
     for (var i = 0, _pj_a = dataSize; i < _pj_a; i += 1) {
         return_array.push({
-            x: i,
+            x: xOffset + i,
             y: randInt(0, 100),
         });
     }
@@ -109,12 +110,12 @@ body_data_base = [
         type: 1,
     },
 ];
-data_point_array_data_base = [
-    get_random_data_points(23),
-    get_random_data_points(15),
-    get_random_data_points(46),
-    get_random_data_points(60),
-];
+// data_point_array_data_base = [
+//     get_random_data_points(23),
+//     get_random_data_points(15),
+//     get_random_data_points(46),
+//     get_random_data_points(60),
+// ];
 experiment_data_base = [
     {
         id: 0,
@@ -201,17 +202,17 @@ export class fakeEel {
     }
     get_material_by_id(id: number) {
         return function get_material_by_id(id: number) {
-            return JSON.stringify(material_data_base[id]);
+            return JSON.stringify(defaultMaterialType);
         };
     }
     get_body_by_id(id: number) {
         return function get_body_by_id(id: number) {
-            return JSON.stringify(body_data_base[id]);
+            return JSON.stringify(defaultBodyType);
         };
     }
     get_experiment_by_id(id: number) {
         return function get_experiment_by_id(id: number) {
-            return JSON.stringify(experiment_data_base[id]);
+            return JSON.stringify(defaultExperimentType);
         };
     }
 
@@ -228,36 +229,89 @@ export class fakeEel {
             return JSON.stringify(experimentsList);
         };
     }
+    isOnExperiment = false;
+
+    nOfNewPoints = 50;
+
+    pointsArray = [
+        { x: 1, y: 2 },
+        { x: 2, y: 4 },
+        { x: 3, y: 52 },
+        { x: 4, y: 1 },
+    ];
 
     get_load_over_time_by_experiment_id() {
-        return function get_load_over_time_by_experiment_id(id: number) {
-            // TODO fix me
-            return JSON.stringify(data_point_array_data_base[id]);
+        return (id: number) => {
+            if (this.isOnExperiment) {
+                const newPoints = get_random_data_points(
+                    this.nOfNewPoints,
+                    this.pointsArray.length
+                );
+
+                this.pointsArray = this.pointsArray.concat(newPoints);
+            }
+            return JSON.stringify(this.pointsArray);
+        };
+    }
+
+    get_load_over_position_by_experiment_id() {
+        return (id: number) => {
+            if (this.isOnExperiment) {
+                const newPoints = get_random_data_points(
+                    this.nOfNewPoints,
+                    this.pointsArray.length
+                );
+
+                this.pointsArray = this.pointsArray.concat(newPoints);
+            }
+            return JSON.stringify(this.pointsArray);
         };
     }
 
     start_experiment_routine() {
-        goToExperimentPageJS();
+        return () => {
+            if (setCurrentPage == null) return;
+            setCurrentPage("experiment");
+            this.isOnExperiment = true;
+        };
     }
     end_experiment_routine() {
-        goToHomePageJS();
+        return () => {
+            // Routs to the experiment page, returns 1 if it was successful
+            if (setCurrentPage == null) return;
+            setCurrentPage("home");
+            this.isOnExperiment = false;
+        };
+    }
+    get_granulado_is_connected() {
+        return async function get_granulado_is_connected() {
+            return true;
+        };
+    }
+    check_can_start_experiment() {
+        return async function check_can_start_experiment() {
+            return true;
+        };
+    }
+    get_available_ports_list() {
+        return function get_available_ports_list() {
+            return [];
+        };
+    }
+    save_config_params() {
+        return function save_config_params() {
+            return 1;
+        };
+    }
+    load_config_params() {
+        return function get_available_ports_list() {
+            return 1;
+        };
+    }
+
+    post_experiment() {
+        return function post_experiment() {
+            return -2;
+        };
     }
 }
-
-function goToExperimentPageJS() {
-    // Routs to the experiment page, returns 1 if it was successful
-    if (setCurrentPage == null) return;
-    setCurrentPage("experiment");
-}
-try {
-    window.eel.expose(goToExperimentPageJS, "goToExperimentPageJS");
-} catch (error) {}
-
-function goToHomePageJS() {
-    // Routs to the experiment page, returns 1 if it was successful
-    if (setCurrentPage == null) return;
-    setCurrentPage("home");
-}
-try {
-    window.eel.expose(goToHomePageJS, "goToHomePageJS");
-} catch (error) {}
