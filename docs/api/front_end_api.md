@@ -103,30 +103,6 @@ ___
         core_api.go_to_home_page()
     ```
 
-___
-
-### show_connect_prompt()
-!!! quote "show_connect_prompt()"
-    
-    !!! warning
-        DEPRECATED    
-
-    Asks the front end to show the connection prompt.
-
-    The connection prompt is used to select the serial port.
-
-    Returns 1 if succeeded.
-
-    ``` python title="Python usage example"
-    from bolinho_api.core import core_api
-    
-    config = core_api.get_config_params()
-    device_port = config["port"]
-
-    while not device_port:
-        core_api.show_connect_prompt()
-        device_port = config["port"]
-    ```
 
 ___
 

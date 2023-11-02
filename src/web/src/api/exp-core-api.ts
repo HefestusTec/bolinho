@@ -21,12 +21,3 @@ export function pingJS() {
 try {
     window.eel.expose(pingJS, "pingJS");
 } catch (error) {}
-
-// TODO implement the function
-export function showConnectPromptJS() {
-    // Shows the connect prompt, returns 1 if it was successful
-    alert("Show connect prompt");
-}
-try {
-    window.eel.expose(showConnectPromptJS, "showConnectPromptJS");
-} catch (error) {}
