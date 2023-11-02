@@ -219,8 +219,8 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../howToUse/" class="md-tabs__link">
-        How to use
+      <a href="../../manual_do_usuario/" class="md-tabs__link">
+        Manual do usuário
       </a>
     </li>
   
@@ -411,22 +411,106 @@
             
           
         
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
       
       
         
         
         <div class="md-nav__link md-nav__link--index ">
-          <a href="../../howToUse/">How to use</a>
+          <a href="../../manual_do_usuario/">Manual do usuário</a>
+          
+            <label for="__nav_2">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
           
         </div>
       
       <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
         <label class="md-nav__title" for="__nav_2">
           <span class="md-nav__icon md-icon"></span>
-          How to use
+          Manual do usuário
         </label>
         <ul class="md-nav__list" data-md-scrollfix>
           
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../manual_do_usuario/inspecionando/" class="md-nav__link">
+        Inspecionando
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../manual_do_usuario/configuracao/" class="md-nav__link">
+        Configuração
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../manual_do_usuario/calibracao/" class="md-nav__link">
+        Calibração
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../manual_do_usuario/controle_manual/" class="md-nav__link">
+        Controle manual
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../manual_do_usuario/novo_experimento/" class="md-nav__link">
+        Novo experimento
+      </a>
+    </li>
+  
+
             
           
         </ul>
@@ -602,13 +686,6 @@
           <li class="md-nav__item">
   <a href="#go_to_home_page" class="md-nav__link">
     go_to_home_page()
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#show_connect_prompt" class="md-nav__link">
-    show_connect_prompt()
   </a>
   
 </li>
@@ -949,13 +1026,6 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#show_connect_prompt" class="md-nav__link">
-    show_connect_prompt()
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#set_is_connected" class="md-nav__link">
     set_is_connected()
   </a>
@@ -1252,34 +1322,13 @@
 </code></pre></div>
 </div>
 <hr />
-<h3 id="show_connect_prompt">show_connect_prompt()<a class="headerlink" href="#show_connect_prompt" title="Permanent link">&para;</a></h3>
-<div class="admonition quote">
-<p class="admonition-title">show_connect_prompt()</p>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>DEPRECATED    </p>
-</div>
-<p>Asks the front end to show the connection prompt.</p>
-<p>The connection prompt is used to select the serial port.</p>
-<p>Returns 1 if succeeded.</p>
-<div class="highlight"><span class="filename">Python usage example</span><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="kn">from</span> <span class="nn">bolinho_api.core</span> <span class="kn">import</span> <span class="n">core_api</span>
-<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>
-<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="n">config</span> <span class="o">=</span> <span class="n">core_api</span><span class="o">.</span><span class="n">get_config_params</span><span class="p">()</span>
-<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="n">device_port</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="s2">&quot;port&quot;</span><span class="p">]</span>
-<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>
-<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="k">while</span> <span class="ow">not</span> <span class="n">device_port</span><span class="p">:</span>
-<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>    <span class="n">core_api</span><span class="o">.</span><span class="n">show_connect_prompt</span><span class="p">()</span>
-<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>    <span class="n">device_port</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="s2">&quot;port&quot;</span><span class="p">]</span>
-</code></pre></div>
-</div>
-<hr />
 <h3 id="set_is_connected">set_is_connected()<a class="headerlink" href="#set_is_connected" title="Permanent link">&para;</a></h3>
 <div class="admonition quote">
 <p class="admonition-title">set_is_connected()</p>
 <p>Sets the variable "isConnected" on the front-end.</p>
-<div class="highlight"><span class="filename">Python usage example</span><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="kn">from</span> <span class="nn">bolinho_api.core</span> <span class="kn">import</span> <span class="n">core_api</span>
-<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>
-<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="n">core_api</span><span class="o">.</span><span class="n">set_is_connected</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<div class="highlight"><span class="filename">Python usage example</span><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="kn">from</span> <span class="nn">bolinho_api.core</span> <span class="kn">import</span> <span class="n">core_api</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="n">core_api</span><span class="o">.</span><span class="n">set_is_connected</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
 </code></pre></div>
 </div>
 <hr />
@@ -1287,11 +1336,11 @@
 <div class="admonition quote">
 <p class="admonition-title">refresh_data()</p>
 <p>Sets the variable "isConnected" on the front-end.</p>
-<div class="highlight"><span class="filename">Python usage example</span><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="kn">from</span> <span class="nn">bolinho_api.core</span> <span class="kn">import</span> <span class="n">core_api</span>
-<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>
-<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="n">add_material_to_db</span><span class="p">()</span> <span class="c1">#Arbitrary function that adds a material to the DB   </span>
-<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>
-<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="n">core_api</span><span class="o">.</span><span class="n">refresh_data</span><span class="p">()</span>
+<div class="highlight"><span class="filename">Python usage example</span><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="kn">from</span> <span class="nn">bolinho_api.core</span> <span class="kn">import</span> <span class="n">core_api</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="n">add_material_to_db</span><span class="p">()</span> <span class="c1">#Arbitrary function that adds a material to the DB   </span>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="n">core_api</span><span class="o">.</span><span class="n">refresh_data</span><span class="p">()</span>
 </code></pre></div>
 </div>
 <hr />
@@ -1303,9 +1352,9 @@
 <div class="admonition quote">
 <p class="admonition-title">success_alert(text)</p>
 <p>Uses <a href="https://github.com/fkhadra/react-toastify">React-Toastify</a> to create an success alert.</p>
-<div class="highlight"><span class="filename">Python usage example</span><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="kn">from</span> <span class="nn">bolinho_api.ui</span> <span class="kn">import</span> <span class="n">ui_api</span>
-<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>
-<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="n">ui_api</span><span class="o">.</span><span class="n">success_alert</span><span class="p">(</span><span class="s2">&quot;Success!&quot;</span><span class="p">)</span>
+<div class="highlight"><span class="filename">Python usage example</span><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="kn">from</span> <span class="nn">bolinho_api.ui</span> <span class="kn">import</span> <span class="n">ui_api</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="n">ui_api</span><span class="o">.</span><span class="n">success_alert</span><span class="p">(</span><span class="s2">&quot;Success!&quot;</span><span class="p">)</span>
 </code></pre></div>
 </div>
 <hr />
@@ -1313,9 +1362,9 @@
 <div class="admonition quote">
 <p class="admonition-title">error_alert(text)</p>
 <p>Uses <a href="https://github.com/fkhadra/react-toastify">React-Toastify</a> to create an error alert.</p>
-<div class="highlight"><span class="filename">Python usage example</span><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="kn">from</span> <span class="nn">bolinho_api.ui</span> <span class="kn">import</span> <span class="n">ui_api</span>
-<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>
-<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="n">ui_api</span><span class="o">.</span><span class="n">error_alert</span><span class="p">(</span><span class="s2">&quot;Error!&quot;</span><span class="p">)</span>
+<div class="highlight"><span class="filename">Python usage example</span><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="kn">from</span> <span class="nn">bolinho_api.ui</span> <span class="kn">import</span> <span class="n">ui_api</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="n">ui_api</span><span class="o">.</span><span class="n">error_alert</span><span class="p">(</span><span class="s2">&quot;Error!&quot;</span><span class="p">)</span>
 </code></pre></div>
 </div>
 <hr />
@@ -1324,18 +1373,18 @@
 <p class="admonition-title">prompt_user(description, options, callback_func)</p>
 <p>Prompts the user with a 'description', and shows the 'options' to the user.</p>
 <p>The result is passed to the callback_function</p>
-<div class="highlight"><span class="filename">Python usage example</span><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="kn">from</span> <span class="nn">bolinho_api.ui</span> <span class="kn">import</span> <span class="n">ui_api</span>
-<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>
-<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="k">def</span> <span class="nf">get_result</span><span class="p">(</span><span class="n">result</span><span class="p">):</span>
-<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>    <span class="k">if</span> <span class="n">result</span> <span class="o">==</span> <span class="s2">&quot;yes&quot;</span><span class="p">:</span>
-<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The user chose yes&quot;</span><span class="p">)</span>
-<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The user chose no&quot;</span><span class="p">)</span>
-<a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a>
-<a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a><span class="n">ui_api</span><span class="o">.</span><span class="n">prompt_user</span><span class="p">(</span>
-<a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a>    <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Do you want to pay 1000?&quot;</span><span class="p">,</span> 
-<a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a>    <span class="n">options</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;yes&quot;</span><span class="p">,</span> <span class="s2">&quot;no&quot;</span><span class="p">],</span> 
-<a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a>    <span class="n">callback_func</span><span class="o">=</span> <span class="n">get_result</span><span class="p">,</span>
-<a id="__codelineno-9-12" name="__codelineno-9-12" href="#__codelineno-9-12"></a>    <span class="p">)</span>
+<div class="highlight"><span class="filename">Python usage example</span><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="kn">from</span> <span class="nn">bolinho_api.ui</span> <span class="kn">import</span> <span class="n">ui_api</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="k">def</span> <span class="nf">get_result</span><span class="p">(</span><span class="n">result</span><span class="p">):</span>
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>    <span class="k">if</span> <span class="n">result</span> <span class="o">==</span> <span class="s2">&quot;yes&quot;</span><span class="p">:</span>
+<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The user chose yes&quot;</span><span class="p">)</span>
+<a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The user chose no&quot;</span><span class="p">)</span>
+<a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a>
+<a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a><span class="n">ui_api</span><span class="o">.</span><span class="n">prompt_user</span><span class="p">(</span>
+<a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a>    <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Do you want to pay 1000?&quot;</span><span class="p">,</span> 
+<a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a>    <span class="n">options</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;yes&quot;</span><span class="p">,</span> <span class="s2">&quot;no&quot;</span><span class="p">],</span> 
+<a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a>    <span class="n">callback_func</span><span class="o">=</span> <span class="n">get_result</span><span class="p">,</span>
+<a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a>    <span class="p">)</span>
 </code></pre></div>
 </div>
 <hr />
@@ -1345,9 +1394,9 @@
 <p>Focus in an specific element on the frontend.</p>
 <p>WARNING Pay attention to the name of the element you are trying to focus</p>
 <p>You can find them at <a href="https://github.com/HefestusTec/bolinho/blob/main/src/web/src/api/apiTypes.ts">https://github.com/HefestusTec/bolinho/blob/main/src/web/src/api/apiTypes.ts</a></p>
-<div class="highlight"><span class="filename">Python usage example</span><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="kn">from</span> <span class="nn">bolinho_api.ui</span> <span class="kn">import</span> <span class="n">ui_api</span>
-<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>
-<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="n">ui_api</span><span class="o">.</span><span class="n">set_focus</span><span class="p">(</span><span class="s2">&quot;connection-component&quot;</span><span class="p">)</span>
+<div class="highlight"><span class="filename">Python usage example</span><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="kn">from</span> <span class="nn">bolinho_api.ui</span> <span class="kn">import</span> <span class="n">ui_api</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="n">ui_api</span><span class="o">.</span><span class="n">set_focus</span><span class="p">(</span><span class="s2">&quot;connection-component&quot;</span><span class="p">)</span>
 </code></pre></div>
 </div>
 <hr />
@@ -1361,9 +1410,9 @@
 <p>Asks the front for the current load percentage.</p>
 <p>This variable is shown to the user in a progress bar. And is usually between 0-100.</p>
 <p>Returns the load percentage value</p>
-<div class="highlight"><span class="filename">Python usage example</span><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="kn">from</span> <span class="nn">bolinho_api.experiment</span> <span class="kn">import</span> <span class="n">experiment_api</span>
-<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>
-<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="nb">print</span><span class="p">(</span><span class="n">experiment_api</span><span class="o">.</span><span class="n">get_load_percentage</span><span class="p">())</span>
+<div class="highlight"><span class="filename">Python usage example</span><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="kn">from</span> <span class="nn">bolinho_api.experiment</span> <span class="kn">import</span> <span class="n">experiment_api</span>
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="nb">print</span><span class="p">(</span><span class="n">experiment_api</span><span class="o">.</span><span class="n">get_load_percentage</span><span class="p">())</span>
 </code></pre></div>
 </div>
 <hr />
@@ -1372,11 +1421,11 @@
 <p class="admonition-title">set_load_percentage(newValue)</p>
 <p>Sets the current load percentage.</p>
 <p>This variable is shown to the user in a progress bar. And is usually between 0-100.</p>
-<div class="highlight"><span class="filename">Python usage example</span><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="kn">from</span> <span class="nn">bolinho_api.experiment</span> <span class="kn">import</span> <span class="n">experiment_api</span>
-<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>
-<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="k">for</span> <span class="n">number</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">):</span>
-<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>    <span class="n">experiment_api</span><span class="o">.</span><span class="n">set_load_percentage</span><span class="p">(</span><span class="n">number</span><span class="p">)</span>
-<a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a>    <span class="n">eel</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
+<div class="highlight"><span class="filename">Python usage example</span><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="kn">from</span> <span class="nn">bolinho_api.experiment</span> <span class="kn">import</span> <span class="n">experiment_api</span>
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>
+<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="k">for</span> <span class="n">number</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">):</span>
+<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>    <span class="n">experiment_api</span><span class="o">.</span><span class="n">set_load_percentage</span><span class="p">(</span><span class="n">number</span><span class="p">)</span>
+<a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a>    <span class="n">eel</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
 </code></pre></div>
 </div>
 <hr />
@@ -1386,9 +1435,9 @@
 <p>Asks the front for the current time percentage.</p>
 <p>This variable is shown to the user in a progress bar. And is usually between 0-100.</p>
 <p>Returns the load percentage value</p>
-<div class="highlight"><span class="filename">Python usage example</span><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="kn">from</span> <span class="nn">bolinho_api.experiment</span> <span class="kn">import</span> <span class="n">experiment_api</span>
-<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>
-<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a><span class="nb">print</span><span class="p">(</span><span class="n">experiment_api</span><span class="o">.</span><span class="n">get_time_percentage</span><span class="p">())</span>
+<div class="highlight"><span class="filename">Python usage example</span><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="kn">from</span> <span class="nn">bolinho_api.experiment</span> <span class="kn">import</span> <span class="n">experiment_api</span>
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="nb">print</span><span class="p">(</span><span class="n">experiment_api</span><span class="o">.</span><span class="n">get_time_percentage</span><span class="p">())</span>
 </code></pre></div>
 </div>
 <hr />
@@ -1397,9 +1446,9 @@
 <p class="admonition-title">set_time_percentage(newValue)</p>
 <p>Sets the current time percentage.</p>
 <p>This variable is shown to the user in a progress bar. And is usually between 0-100.</p>
-<div class="highlight"><span class="filename">Python usage example</span><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="kn">from</span> <span class="nn">bolinho_api.experiment</span> <span class="kn">import</span> <span class="n">experiment_api</span>
-<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>
-<a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a><span class="n">experiment_api</span><span class="o">.</span><span class="n">set_time_percentage</span><span class="p">(</span><span class="mi">22</span><span class="p">)</span>
+<div class="highlight"><span class="filename">Python usage example</span><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="kn">from</span> <span class="nn">bolinho_api.experiment</span> <span class="kn">import</span> <span class="n">experiment_api</span>
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>
+<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a><span class="n">experiment_api</span><span class="o">.</span><span class="n">set_time_percentage</span><span class="p">(</span><span class="mi">22</span><span class="p">)</span>
 </code></pre></div>
 </div>
 <hr />
@@ -1409,9 +1458,9 @@
 <p>Asks the front for the current distance percentage.</p>
 <p>This variable is shown to the user in a progress bar. And is usually between 0-100.</p>
 <p>Returns the load percentage value</p>
-<div class="highlight"><span class="filename">Python usage example</span><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="kn">from</span> <span class="nn">bolinho_api.experiment</span> <span class="kn">import</span> <span class="n">experiment_api</span>
-<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>
-<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a><span class="nb">print</span><span class="p">(</span><span class="n">experiment_api</span><span class="o">.</span><span class="n">get_distance_percentage</span><span class="p">())</span>
+<div class="highlight"><span class="filename">Python usage example</span><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="kn">from</span> <span class="nn">bolinho_api.experiment</span> <span class="kn">import</span> <span class="n">experiment_api</span>
+<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>
+<a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a><span class="nb">print</span><span class="p">(</span><span class="n">experiment_api</span><span class="o">.</span><span class="n">get_distance_percentage</span><span class="p">())</span>
 </code></pre></div>
 </div>
 <hr />
@@ -1420,9 +1469,9 @@
 <p class="admonition-title">set_distance_percentage(newValue)</p>
 <p>Sets the current distance percentage.</p>
 <p>This variable is shown to the user in a progress bar. And is usually between 0-100.</p>
-<div class="highlight"><span class="filename">Python usage example</span><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="kn">from</span> <span class="nn">bolinho_api.experiment</span> <span class="kn">import</span> <span class="n">experiment_api</span>
-<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>
-<a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a><span class="n">experiment_api</span><span class="o">.</span><span class="n">set_distance_percentage</span><span class="p">(</span><span class="mi">22</span><span class="p">)</span>
+<div class="highlight"><span class="filename">Python usage example</span><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="kn">from</span> <span class="nn">bolinho_api.experiment</span> <span class="kn">import</span> <span class="n">experiment_api</span>
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>
+<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a><span class="n">experiment_api</span><span class="o">.</span><span class="n">set_distance_percentage</span><span class="p">(</span><span class="mi">22</span><span class="p">)</span>
 </code></pre></div>
 </div>
 <hr />
@@ -1432,9 +1481,9 @@
 <p>Asks the front for the current delta load percentage.</p>
 <p>This variable is shown to the user in a progress bar. And is usually between 0-100.</p>
 <p>Returns the load percentage value</p>
-<div class="highlight"><span class="filename">Python usage example</span><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="kn">from</span> <span class="nn">bolinho_api.experiment</span> <span class="kn">import</span> <span class="n">experiment_api</span>
-<a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>
-<a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a><span class="nb">print</span><span class="p">(</span><span class="n">experiment_api</span><span class="o">.</span><span class="n">get_delta_load_percentage</span><span class="p">())</span>
+<div class="highlight"><span class="filename">Python usage example</span><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="kn">from</span> <span class="nn">bolinho_api.experiment</span> <span class="kn">import</span> <span class="n">experiment_api</span>
+<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>
+<a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a><span class="nb">print</span><span class="p">(</span><span class="n">experiment_api</span><span class="o">.</span><span class="n">get_delta_load_percentage</span><span class="p">())</span>
 </code></pre></div>
 </div>
 <hr />
@@ -1443,9 +1492,9 @@
 <p class="admonition-title">set_delta_load_percentage(newValue)</p>
 <p>Sets the current delta load percentage.</p>
 <p>This variable is shown to the user in a progress bar. And is usually between 0-100.</p>
-<div class="highlight"><span class="filename">Python usage example</span><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="kn">from</span> <span class="nn">bolinho_api.experiment</span> <span class="kn">import</span> <span class="n">experiment_api</span>
-<a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>
-<a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a><span class="n">experiment_api</span><span class="o">.</span><span class="n">set_delta_load_percentage</span><span class="p">(</span><span class="mi">22</span><span class="p">)</span>
+<div class="highlight"><span class="filename">Python usage example</span><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="kn">from</span> <span class="nn">bolinho_api.experiment</span> <span class="kn">import</span> <span class="n">experiment_api</span>
+<a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>
+<a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a><span class="n">experiment_api</span><span class="o">.</span><span class="n">set_delta_load_percentage</span><span class="p">(</span><span class="mi">22</span><span class="p">)</span>
 </code></pre></div>
 </div>
 <hr />
@@ -1454,9 +1503,9 @@
 <p class="admonition-title">get_experiment_parameters()</p>
 <p>Asks the front for the current experiment parameters.</p>
 <p>Returns a formatted string</p>
-<div class="highlight"><span class="filename">Python usage example</span><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="kn">from</span> <span class="nn">bolinho_api.experiment</span> <span class="kn">import</span> <span class="n">experiment_api</span>
-<a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>
-<a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a><span class="nb">print</span><span class="p">(</span><span class="n">experiment_api</span><span class="o">.</span><span class="n">get_experiment_parameters</span><span class="p">())</span>
+<div class="highlight"><span class="filename">Python usage example</span><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="kn">from</span> <span class="nn">bolinho_api.experiment</span> <span class="kn">import</span> <span class="n">experiment_api</span>
+<a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>
+<a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a><span class="nb">print</span><span class="p">(</span><span class="n">experiment_api</span><span class="o">.</span><span class="n">get_experiment_parameters</span><span class="p">())</span>
 </code></pre></div>
 </div>
 <hr />
@@ -1465,9 +1514,9 @@
 <p class="admonition-title">set_experiment_parameters(newValue)</p>
 <p>Sets the current experiment parameters.</p>
 <p>Receives a formatted string.</p>
-<div class="highlight"><span class="filename">Python usage example</span><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="kn">from</span> <span class="nn">bolinho_api.experiment</span> <span class="kn">import</span> <span class="n">experiment_api</span>
-<a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a>
-<a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a><span class="n">experiment_api</span><span class="o">.</span><span class="n">set_experiment_parameters</span><span class="p">(</span><span class="s2">&quot;Experiment 202 &lt;br/&gt; Load cell: lxi92&quot;</span><span class="p">)</span>
+<div class="highlight"><span class="filename">Python usage example</span><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="kn">from</span> <span class="nn">bolinho_api.experiment</span> <span class="kn">import</span> <span class="n">experiment_api</span>
+<a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>
+<a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a><span class="n">experiment_api</span><span class="o">.</span><span class="n">set_experiment_parameters</span><span class="p">(</span><span class="s2">&quot;Experiment 202 &lt;br/&gt; Load cell: lxi92&quot;</span><span class="p">)</span>
 </code></pre></div>
 </div>
 <hr />
@@ -1477,11 +1526,11 @@
 <p>Asks the front for the current Readings.</p>
 <p>Returns an object of type Readings, this object gathers all the current readings of the machine.
 Such as Current z axis position, current load, and status</p>
-<div class="highlight"><span class="filename">Python usage example</span><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="kn">from</span> <span class="nn">bolinho_api.experiment</span> <span class="kn">import</span> <span class="n">experiment_api</span>
-<a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a>
-<a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a><span class="n">reading_obj</span> <span class="o">=</span> <span class="n">experiment_api</span><span class="o">.</span><span class="n">get_readings</span><span class="p">()</span>
-<a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a>
-<a id="__codelineno-21-5" name="__codelineno-21-5" href="#__codelineno-21-5"></a><span class="nb">print</span><span class="p">(</span><span class="n">reading_obj</span><span class="o">.</span><span class="n">status</span><span class="p">)</span>
+<div class="highlight"><span class="filename">Python usage example</span><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="kn">from</span> <span class="nn">bolinho_api.experiment</span> <span class="kn">import</span> <span class="n">experiment_api</span>
+<a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a>
+<a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a><span class="n">reading_obj</span> <span class="o">=</span> <span class="n">experiment_api</span><span class="o">.</span><span class="n">get_readings</span><span class="p">()</span>
+<a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a>
+<a id="__codelineno-20-5" name="__codelineno-20-5" href="#__codelineno-20-5"></a><span class="nb">print</span><span class="p">(</span><span class="n">reading_obj</span><span class="o">.</span><span class="n">status</span><span class="p">)</span>
 </code></pre></div>
 </div>
 <hr />
@@ -1492,12 +1541,12 @@ Such as Current z axis position, current load, and status</p>
 <p>Receives an object of type Readings, this object gathers all the current readings of the machine.
 Such as Current z axis position, current load, and status.</p>
 <p>This function dumps the object to a JSON and sends it to the front end</p>
-<div class="highlight"><span class="filename">Python usage example</span><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a><span class="kn">from</span> <span class="nn">bolinho_api.experiment</span> <span class="kn">import</span> <span class="n">experiment_api</span>
-<a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a><span class="kn">from</span> <span class="nn">bolinho_api.classes</span> <span class="kn">import</span> <span class="n">Readings</span>
-<a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a>
-<a id="__codelineno-22-4" name="__codelineno-22-4" href="#__codelineno-22-4"></a><span class="n">new_machine_readings</span> <span class="o">=</span> <span class="n">Readings</span><span class="p">(</span><span class="mi">299</span><span class="p">,</span> <span class="mi">87</span><span class="p">,</span> <span class="mi">300</span><span class="p">,</span> <span class="s2">&quot;not good&quot;</span><span class="p">)</span>
-<a id="__codelineno-22-5" name="__codelineno-22-5" href="#__codelineno-22-5"></a>
-<a id="__codelineno-22-6" name="__codelineno-22-6" href="#__codelineno-22-6"></a><span class="n">experiment_api</span><span class="o">.</span><span class="n">set_readings</span><span class="p">(</span><span class="n">new_machine_readings</span><span class="p">)</span>
+<div class="highlight"><span class="filename">Python usage example</span><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="kn">from</span> <span class="nn">bolinho_api.experiment</span> <span class="kn">import</span> <span class="n">experiment_api</span>
+<a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a><span class="kn">from</span> <span class="nn">bolinho_api.classes</span> <span class="kn">import</span> <span class="n">Readings</span>
+<a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a>
+<a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a><span class="n">new_machine_readings</span> <span class="o">=</span> <span class="n">Readings</span><span class="p">(</span><span class="mi">299</span><span class="p">,</span> <span class="mi">87</span><span class="p">,</span> <span class="mi">300</span><span class="p">,</span> <span class="s2">&quot;not good&quot;</span><span class="p">)</span>
+<a id="__codelineno-21-5" name="__codelineno-21-5" href="#__codelineno-21-5"></a>
+<a id="__codelineno-21-6" name="__codelineno-21-6" href="#__codelineno-21-6"></a><span class="n">experiment_api</span><span class="o">.</span><span class="n">set_readings</span><span class="p">(</span><span class="n">new_machine_readings</span><span class="p">)</span>
 </code></pre></div>
 </div>
 <hr />
@@ -1506,9 +1555,9 @@ Such as Current z axis position, current load, and status.</p>
 <p class="admonition-title">get_description()</p>
 <p>Asks the front for the current description.</p>
 <p>Returns a formatted string</p>
-<div class="highlight"><span class="filename">Python usage example</span><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a><span class="kn">from</span> <span class="nn">bolinho_api.experiment</span> <span class="kn">import</span> <span class="n">experiment_api</span>
-<a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a>
-<a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a><span class="nb">print</span><span class="p">(</span><span class="n">experiment_api</span><span class="o">.</span><span class="n">get_description</span><span class="p">())</span>
+<div class="highlight"><span class="filename">Python usage example</span><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a><span class="kn">from</span> <span class="nn">bolinho_api.experiment</span> <span class="kn">import</span> <span class="n">experiment_api</span>
+<a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a>
+<a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a><span class="nb">print</span><span class="p">(</span><span class="n">experiment_api</span><span class="o">.</span><span class="n">get_description</span><span class="p">())</span>
 </code></pre></div>
 </div>
 <hr />
@@ -1517,9 +1566,9 @@ Such as Current z axis position, current load, and status.</p>
 <p class="admonition-title">set_description(newValue)</p>
 <p>Sets the current description.</p>
 <p>Receives a formatted string.</p>
-<div class="highlight"><span class="filename">Python usage example</span><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a><span class="kn">from</span> <span class="nn">bolinho_api.experiment</span> <span class="kn">import</span> <span class="n">experiment_api</span>
-<a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a>
-<a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a><span class="n">experiment_api</span><span class="o">.</span><span class="n">set_description</span><span class="p">(</span><span class="s2">&quot;New Experiment description&quot;</span><span class="p">)</span>
+<div class="highlight"><span class="filename">Python usage example</span><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a><span class="kn">from</span> <span class="nn">bolinho_api.experiment</span> <span class="kn">import</span> <span class="n">experiment_api</span>
+<a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a>
+<a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a><span class="n">experiment_api</span><span class="o">.</span><span class="n">set_description</span><span class="p">(</span><span class="s2">&quot;New Experiment description&quot;</span><span class="p">)</span>
 </code></pre></div>
 </div>
 <hr />
@@ -1528,11 +1577,11 @@ Such as Current z axis position, current load, and status.</p>
 <p class="admonition-title">get_material()</p>
 <p>Asks the front for the current Material.</p>
 <p>Returns an object of type Material.</p>
-<div class="highlight"><span class="filename">Python usage example</span><pre><span></span><code><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a><span class="kn">from</span> <span class="nn">bolinho_api.experiment</span> <span class="kn">import</span> <span class="n">experiment_api</span>
-<a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a>
-<a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a><span class="n">material_obj</span> <span class="o">=</span> <span class="n">experiment_api</span><span class="o">.</span><span class="n">get_material</span><span class="p">()</span>
-<a id="__codelineno-25-4" name="__codelineno-25-4" href="#__codelineno-25-4"></a>
-<a id="__codelineno-25-5" name="__codelineno-25-5" href="#__codelineno-25-5"></a><span class="nb">print</span><span class="p">(</span><span class="n">material_obj</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+<div class="highlight"><span class="filename">Python usage example</span><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a><span class="kn">from</span> <span class="nn">bolinho_api.experiment</span> <span class="kn">import</span> <span class="n">experiment_api</span>
+<a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a>
+<a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a><span class="n">material_obj</span> <span class="o">=</span> <span class="n">experiment_api</span><span class="o">.</span><span class="n">get_material</span><span class="p">()</span>
+<a id="__codelineno-24-4" name="__codelineno-24-4" href="#__codelineno-24-4"></a>
+<a id="__codelineno-24-5" name="__codelineno-24-5" href="#__codelineno-24-5"></a><span class="nb">print</span><span class="p">(</span><span class="n">material_obj</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
 </code></pre></div>
 </div>
 <hr />
@@ -1542,19 +1591,19 @@ Such as Current z axis position, current load, and status.</p>
 <p>Sets the current Material.</p>
 <p>Receives an object of type Material</p>
 <p>This function dumps the object to a JSON and sends it to the front end</p>
-<div class="highlight"><span class="filename">Python usage example</span><pre><span></span><code><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a><span class="kn">from</span> <span class="nn">bolinho_api.experiment</span> <span class="kn">import</span> <span class="n">experiment_api</span>
-<a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a><span class="kn">from</span> <span class="nn">bolinho_api.classes</span> <span class="kn">import</span> <span class="n">Material</span>
-<a id="__codelineno-26-3" name="__codelineno-26-3" href="#__codelineno-26-3"></a>
-<a id="__codelineno-26-4" name="__codelineno-26-4" href="#__codelineno-26-4"></a><span class="n">current_material</span> <span class="o">=</span> <span class="n">Material</span><span class="p">(</span>
-<a id="__codelineno-26-5" name="__codelineno-26-5" href="#__codelineno-26-5"></a>    <span class="nb">id</span><span class="o">=</span><span class="mi">23</span><span class="p">,</span>
-<a id="__codelineno-26-6" name="__codelineno-26-6" href="#__codelineno-26-6"></a>    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;aço 22&quot;</span><span class="p">,</span>
-<a id="__codelineno-26-7" name="__codelineno-26-7" href="#__codelineno-26-7"></a>    <span class="n">batch</span><span class="o">=</span><span class="s2">&quot;1&quot;</span><span class="p">,</span>
-<a id="__codelineno-26-8" name="__codelineno-26-8" href="#__codelineno-26-8"></a>    <span class="n">experimentArray</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span>
-<a id="__codelineno-26-9" name="__codelineno-26-9" href="#__codelineno-26-9"></a>    <span class="n">supplier</span><span class="o">=</span><span class="s2">&quot;Metalúrgica JOSÉ&quot;</span><span class="p">,</span>
-<a id="__codelineno-26-10" name="__codelineno-26-10" href="#__codelineno-26-10"></a>    <span class="n">extraInfo</span><span class="o">=</span><span class="s2">&quot;Cilindro&quot;</span><span class="p">,</span>
-<a id="__codelineno-26-11" name="__codelineno-26-11" href="#__codelineno-26-11"></a><span class="p">)</span>
-<a id="__codelineno-26-12" name="__codelineno-26-12" href="#__codelineno-26-12"></a>
-<a id="__codelineno-26-13" name="__codelineno-26-13" href="#__codelineno-26-13"></a><span class="n">experiment_api</span><span class="o">.</span><span class="n">set_material</span><span class="p">(</span><span class="n">current_material</span><span class="p">)</span>
+<div class="highlight"><span class="filename">Python usage example</span><pre><span></span><code><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a><span class="kn">from</span> <span class="nn">bolinho_api.experiment</span> <span class="kn">import</span> <span class="n">experiment_api</span>
+<a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a><span class="kn">from</span> <span class="nn">bolinho_api.classes</span> <span class="kn">import</span> <span class="n">Material</span>
+<a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a>
+<a id="__codelineno-25-4" name="__codelineno-25-4" href="#__codelineno-25-4"></a><span class="n">current_material</span> <span class="o">=</span> <span class="n">Material</span><span class="p">(</span>
+<a id="__codelineno-25-5" name="__codelineno-25-5" href="#__codelineno-25-5"></a>    <span class="nb">id</span><span class="o">=</span><span class="mi">23</span><span class="p">,</span>
+<a id="__codelineno-25-6" name="__codelineno-25-6" href="#__codelineno-25-6"></a>    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;aço 22&quot;</span><span class="p">,</span>
+<a id="__codelineno-25-7" name="__codelineno-25-7" href="#__codelineno-25-7"></a>    <span class="n">batch</span><span class="o">=</span><span class="s2">&quot;1&quot;</span><span class="p">,</span>
+<a id="__codelineno-25-8" name="__codelineno-25-8" href="#__codelineno-25-8"></a>    <span class="n">experimentArray</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span>
+<a id="__codelineno-25-9" name="__codelineno-25-9" href="#__codelineno-25-9"></a>    <span class="n">supplier</span><span class="o">=</span><span class="s2">&quot;Metalúrgica JOSÉ&quot;</span><span class="p">,</span>
+<a id="__codelineno-25-10" name="__codelineno-25-10" href="#__codelineno-25-10"></a>    <span class="n">extraInfo</span><span class="o">=</span><span class="s2">&quot;Cilindro&quot;</span><span class="p">,</span>
+<a id="__codelineno-25-11" name="__codelineno-25-11" href="#__codelineno-25-11"></a><span class="p">)</span>
+<a id="__codelineno-25-12" name="__codelineno-25-12" href="#__codelineno-25-12"></a>
+<a id="__codelineno-25-13" name="__codelineno-25-13" href="#__codelineno-25-13"></a><span class="n">experiment_api</span><span class="o">.</span><span class="n">set_material</span><span class="p">(</span><span class="n">current_material</span><span class="p">)</span>
 </code></pre></div>
 </div>
 
