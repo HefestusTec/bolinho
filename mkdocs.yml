@@ -124,8 +124,13 @@ nav:
 #           - Contexts: frontEnd/contexts.md
 #           - Alerts: frontEnd/alerts.md
 #           - Styling: frontEnd/styling.md
-    - How to use:
-          - How to use: howToUse/index.md
+    - Manual do usuário:
+          - Manual do usuário: manual_do_usuario/index.md
+          - Inspecionando: manual_do_usuario/inspecionando.md
+          - Configuração: manual_do_usuario/configuracao.md
+          - Calibração: manual_do_usuario/calibracao.md
+          - Controle manual: manual_do_usuario/controle_manual.md
+          - Novo experimento: manual_do_usuario/novo_experimento.md
 
     - Embedded:
           - Embedded: embedded/index.md

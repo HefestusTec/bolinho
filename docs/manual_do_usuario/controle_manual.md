@@ -17,6 +17,6 @@
  along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
 -->
 
-# How to use
+# Controle manual
 
-This chapter will expose the principal use cases of this application.
+Como controlar o maquinário manualmente.
