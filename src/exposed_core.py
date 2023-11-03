@@ -287,6 +287,7 @@ def calibrate_z_axis():
     print("Calibrate z axis")
     return 1
 
+
 @eel.expose
 def get_granulado_is_connected():
     """
@@ -294,5 +295,5 @@ def get_granulado_is_connected():
 
     Returns a boolean
     """
-    
+
     return bolinho_app.gran.is_connected()
