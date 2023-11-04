@@ -61,8 +61,43 @@ class Granulado:
 
         if current_time + 100 > self.__time_since_last_refresh:  # ~10 FPS refresh rate
             self.__time_since_last_refresh = current_time
-
             self.__send_serial_message("p")
+
+    def __send_serial_message(self, message: str):
+        if not self.is_connected():
+            ui_api.error_alert("O Granulado não está conectado")
+            self.__end()
+            return False
+        try:
+            if self.__hardware.write(bytes(message, "utf-8")) > 0:
+                return True
+        except Exception as e:
+            ui_api.error_alert(f"Não foi possível escrever no Granulado: {str(e)}")
+            self.__end()
+            return False
+
+    def __error(self, error_message):
+        if not self.__send_serial_message("s"):
+            ui_api.error_alert(
+                "Não foi possível parar o eixo Z. O Granulado está conectado?",
+            )
+        ui_api.prompt_user(
+            description=f"Erro: {error_message}",
+            options=["Voltar para a página inicial"],
+            callback_func=core_api.go_to_home_page,
+        )
+
+    def __end(self):
+        if self.__hardware:
+            if self.__hardware.isOpen():
+                self.__hardware.close()
+            self.__hardware = None
+        if self.__state == MotorState.MOVING:
+            self.__state = MotorState.STOPPED
+        self.__instant_load = 0
+        self.__instant_position = 0
+        self.__ping = 0
+        core_api.set_is_connected(False)
 
     def loop(self):
         is_conn = self.is_connected()
@@ -125,16 +160,33 @@ class Granulado:
     def get_end_of_axis(self):
         return self.__state == MotorState.TOP, self.__state == MotorState.BOTTOM
 
-    def __error(self, error_message):
-        if not self.__send_serial_message("s"):
-            ui_api.error_alert(
-                "Não foi possível parar o eixo Z. O Granulado está conectado?",
-            )
-        ui_api.prompt_user(
-            description=f"Erro: {error_message}",
-            options=["Voltar para a página inicial"],
-            callback_func=core_api.go_to_home_page,
-        )
+    def get_readings(self):
+        """
+        Sends messages to Granulado to get the current load and position, waits for the response and returns the values
+        """
+        import random
+
+        self.__instant_position += 1
+        return random.randrange(0, 100), self.__instant_position
+
+        if self.__send_serial_message("r"):
+            if self.__send_serial_message("g"):
+                while self.__was_read[0] or self.__was_read[1]:
+                    eel.sleep(1 / 160)
+                self.__was_read = [True, True]
+                return self.__instant_load, self.__instant_position
+
+    def get_position(self):
+        """
+        Send serial message to Granulado to get the current position
+        """
+        return self.__send_serial_message("g")
+
+    def get_load(self):
+        """
+        Send serial message to Granulado to get the current load
+        """
+        return self.__send_serial_message("r")
 
     def check_experiment_routine(self):
         checks = [
@@ -157,22 +209,6 @@ class Granulado:
             return False
         core_api.set_is_connected(True)
         return True
-
-    def get_readings(self):
-        """
-        Sends messages to Granulado to get the current load and position, waits for the response and returns the values
-        """
-        import random
-
-        self.__instant_position += 1
-        return random.randrange(0, 100), self.__instant_position
-
-        if self.__send_serial_message("r"):
-            if self.__send_serial_message("g"):
-                while self.__was_read[0] or self.__was_read[1]:
-                    eel.sleep(1 / 160)
-                self.__was_read = [True, True]
-                return self.__instant_load, self.__instant_position
 
     def check_global_limits(self):
         """
@@ -290,6 +326,36 @@ class Granulado:
             return True
         return False
 
+    def calibrate_z_axis(self):
+        """
+        Send serial message to Granulado to calibrate the z axis
+        """
+        if self.__send_serial_message(f"z"):
+            if self.__state == MotorState.MOVING:
+                self.__state = MotorState.STOPPED
+            return True
+        return False
+
+    def calibrate_known_weight(self):
+        """
+        Send serial message to Granulado to calibrate the load cell
+        """
+        if self.__send_serial_message(f"w"):
+            if self.__state == MotorState.MOVING:
+                self.__state = MotorState.STOPPED
+            return True
+        return False
+
+    def set_known_weight(self, known_weight: int):
+        """
+        Send serial message to Granulado to set the known weight
+        """
+        if self.__send_serial_message(f"x{known_weight}"):
+            if self.__state == MotorState.MOVING:
+                self.__state = MotorState.STOPPED
+            return True
+        return False
+
     def is_connected(self):
         """Is the backend connected to the embedded hardware, returns a boolean"""
         return (self.__hardware is not None) and self.__hardware.isOpen()
@@ -348,28 +414,3 @@ class Granulado:
         except:
             return 0
         return 1
-
-    def __send_serial_message(self, message: str):
-        if not self.is_connected():
-            ui_api.error_alert("O Granulado não está conectado")
-            self.__end()
-            return False
-        try:
-            if self.__hardware.write(bytes(message, "utf-8")) > 0:
-                return True
-        except Exception as e:
-            ui_api.error_alert(f"Não foi possível escrever no Granulado: {str(e)}")
-            self.__end()
-            return False
-
-    def __end(self):
-        if self.__hardware:
-            if self.__hardware.isOpen():
-                self.__hardware.close()
-            self.__hardware = None
-        if self.__state == MotorState.MOVING:
-            self.__state = MotorState.STOPPED
-        self.__instant_load = 0
-        self.__instant_position = 0
-        self.__ping = 0
-        core_api.set_is_connected(False)

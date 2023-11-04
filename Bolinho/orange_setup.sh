@@ -3,9 +3,9 @@
 # or here https://drive.google.com/drive/folders/1i5zQOg1GIA4_VNGikFl2nPM0Y2MBw2M0 
 
 # install dependencies
-sudo apt-get update
-sudo apt-get upgrade
-sudo apt install python3-pip
+sudo apt-get update -y
+sudo apt-get upgrade -y
+sudo apt install python3-pip -y
 
 # Install pip Packages
 pip install -r requirements.txt

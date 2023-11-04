@@ -218,7 +218,6 @@ def get_available_ports_list():
     """
     ports = serial.tools.list_ports.comports()
     ports_list = []
-    # get port and description
     for port in ports:
         ports_list.append({"port": port.device, "desc": port.description})
     return ports_list
@@ -268,11 +267,18 @@ def calibrate_known_weight():
     Calibrates the load cell to the known weight
 
     Returns 1 if succeeded (if the function was acknowledged).
-
-    TODO IMPLEMENT THIS FUNCTION
     """
-    print("Calibrate to the known weight")
-    return 1
+    return bolinho_app.gran.calibrate_known_weight()
+
+
+@eel.expose
+def set_known_weight(weight):
+    """
+    Sets the known weight
+
+    Returns 1 if succeeded (if the function was acknowledged).
+    """
+    return bolinho_app.gran.set_known_weight(weight)
 
 
 @eel.expose
@@ -281,11 +287,9 @@ def calibrate_z_axis():
     Calibrates z axis of the machine
 
     Returns 1 if succeeded (if the function was acknowledged).
-
-    TODO IMPLEMENT THIS FUNCTION
     """
-    print("Calibrate z axis")
-    return 1
+    return bolinho_app.gran.calibrate_z_axis()
+
 
 @eel.expose
 def get_granulado_is_connected():
@@ -294,5 +298,4 @@ def get_granulado_is_connected():
 
     Returns a boolean
     """
-    
     return bolinho_app.gran.is_connected()
