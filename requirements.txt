@@ -7,3 +7,4 @@ eel==0.15.1
 pyserial==3.5
 peewee==3.16.2
 black==23.7.0
+numpy==1.26.1
