@@ -15,29 +15,22 @@
 // You should have received a copy of the GNU General Public License
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
 
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 
 import ZoomComponent from "../../../components/zoomComponent/zoomComponent";
 import ContainerComponent from "../../../components/containerComponent/containerComponent";
 import GlobalConfigContext from "../../../contexts/globalConfigContext";
-import CustomCheckbox from "../../../components/customSubComponents/customCheckbox/customCheckbox";
 import CustomListSelector from "../../../components/customSubComponents/customListSelector/customListSelector";
 
 export default function OtherSelector({ className, scaleOrigin }) {
     const [globalConfig, setGlobalConfig] = useContext(GlobalConfigContext);
-    const [virtualKeyboard, setVirtualKeyboard] = useState(
-        globalConfig.forceVirtualKeyboard
-    );
+
     const fontSizeCallback = (key) => {
         setGlobalConfig({ ...globalConfig, fontSize: key });
     };
 
-    const toggleVirtualKeyboard = () => {
-        setVirtualKeyboard(!virtualKeyboard);
-        setGlobalConfig({
-            ...globalConfig,
-            forceVirtualKeyboard: !virtualKeyboard,
-        });
+    const setNumOfDataPoints = (key) => {
+        setGlobalConfig({ ...globalConfig, numOfDataPointsPerExp: key });
     };
     return (
         <ZoomComponent className={className} scaleOrigin={scaleOrigin}>
@@ -49,12 +42,14 @@ export default function OtherSelector({ className, scaleOrigin }) {
                 >
                     Texto
                 </CustomListSelector>
-                <CustomCheckbox
-                    clickCallBack={toggleVirtualKeyboard}
-                    checked={virtualKeyboard}
+
+                <CustomListSelector
+                    keys={["1k", "10k", "50k", "200k", "500k", "ilimitado"]}
+                    clickCallBack={setNumOfDataPoints}
+                    selected={globalConfig.numOfDataPointsPerExp}
                 >
-                    Teclado virtual
-                </CustomCheckbox>
+                    Pontos visíveis
+                </CustomListSelector>
             </ContainerComponent>
         </ZoomComponent>
     );

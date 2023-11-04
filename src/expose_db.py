@@ -247,6 +247,11 @@ def get_load_over_time_by_experiment_id(experiment_id):
     if app_state.state == StateE.RUNNING_EXPERIMENT:
         readings_dict = list(realTimeR.load_over_time_realtime_readings.queue)
     else:
+        config_params = exposed_core.load_config_params()
+        numOfDataPointsPerExp = config_params["numOfDataPointsPerExp"]
+        # TODO get at max `numOfDataPointsPerExp` points and return
+        # The valid values are the following str "1k" | "10k" | "50k" | "200k" | "500k" | "ilimitado"
+
         readings = db_handler.get_load_over_time_by_experiment_id(experiment_id)
         readings_dict = [model_to_dict(reading) for reading in readings]
         # rename the "load" key to "y"
@@ -263,6 +268,11 @@ def get_load_over_position_by_experiment_id(experiment_id):
     if app_state.state == StateE.RUNNING_EXPERIMENT:
         readings_dict = list(realTimeR.load_over_position_realtime_readings.queue)
     else:
+        config_params = exposed_core.load_config_params()
+        numOfDataPointsPerExp = config_params["numOfDataPointsPerExp"]
+        # TODO get at max `numOfDataPointsPerExp` points and return
+        # The valid values are the following str "1k" | "10k" | "50k" | "200k" | "500k" | "ilimitado"
+
         readings = db_handler.get_load_over_position_by_experiment_id(experiment_id)
         readings_dict = [model_to_dict(reading) for reading in readings]
         # rename the "z_pos" key to "x"

@@ -33,6 +33,7 @@ export interface GlobalConfigContextProps {
     animateGraph: boolean;
     zAxisLength: number; // Z axis length in millimeters
     knownWeight: number; // Known weight for calibration
+    numOfDataPointsPerExp: "1k" | "10k" | "50k" | "200k" | "500k" | "ilimitado"; // Number of data points that are shown to the user per experiment
 }
 
 export const globalConfigDefault: GlobalConfigContextProps = {
@@ -53,6 +54,7 @@ export const globalConfigDefault: GlobalConfigContextProps = {
     animateGraph: true,
     zAxisLength: 1000,
     knownWeight: 1000,
+    numOfDataPointsPerExp: "ilimitado",
 };
 
 export type FocusKeyType =
