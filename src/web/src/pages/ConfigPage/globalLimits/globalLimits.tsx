@@ -39,8 +39,8 @@ const GlobalLimits: FunctionComponent<GlobalLimitsProps> = ({
     scaleOrigin,
 }) => {
     const [globalConfig, setGlobalConfig] = useContext(GlobalConfigContext);
-    const [maxForce, setMaxForce] = useState<number>(
-        globalConfig.absoluteMaximumForce
+    const [maxLoad, setMaxLoad] = useState<number>(
+        globalConfig.absoluteMaximumLoad
     );
     const [maxTime, setMaxTime] = useState<number>(
         globalConfig.absoluteMaximumTime
@@ -49,29 +49,39 @@ const GlobalLimits: FunctionComponent<GlobalLimitsProps> = ({
         globalConfig.absoluteMaximumTravel
     );
 
+    const [maxDeltaLoad, setMaxDeltaLoad] = useState<number>(
+        globalConfig.absoluteMaximumDeltaLoad
+    );
+
     const [maxForceAlert, setMaxForceAlert] = useState<boolean>(false);
     const [maxTimeAlert, setMaxTimeAlert] = useState<boolean>(false);
     const [maxTravelAlert, setMaxTravelAlert] = useState<boolean>(false);
+    const [maxDeltaLoadAlert, setMaxDeltaLoadAlert] = useState<boolean>(false);
 
     const refreshValues = () => {
-        setMaxForce(globalConfig.absoluteMaximumForce);
+        setMaxLoad(globalConfig.absoluteMaximumLoad);
         setMaxTime(globalConfig.absoluteMaximumTime);
         setMaxTravel(globalConfig.absoluteMaximumTravel);
+        setMaxDeltaLoad(globalConfig.absoluteMaximumDeltaLoad);
     };
     const saveValues = () => {
         setGlobalConfig({
             ...globalConfig,
-            absoluteMaximumForce: maxForce,
+            absoluteMaximumLoad: maxLoad,
             absoluteMaximumTime: maxTime,
             absoluteMaximumTravel: maxTravel,
+            absoluteMaximumDeltaLoad: maxDeltaLoad,
         });
     };
 
     useEffect(() => {
-        setMaxForceAlert(maxForce !== globalConfig.absoluteMaximumForce);
+        setMaxForceAlert(maxLoad !== globalConfig.absoluteMaximumLoad);
         setMaxTimeAlert(maxTime !== globalConfig.absoluteMaximumTime);
         setMaxTravelAlert(maxTravel !== globalConfig.absoluteMaximumTravel);
-    }, [globalConfig, maxForce, maxTime, maxTravel]);
+        setMaxDeltaLoadAlert(
+            maxDeltaLoad !== globalConfig.absoluteMaximumDeltaLoad
+        );
+    }, [globalConfig, maxLoad, maxTime, maxTravel, maxDeltaLoad]);
 
     return (
         <ZoomComponent className={className} scaleOrigin={scaleOrigin}>
@@ -95,11 +105,11 @@ const GlobalLimits: FunctionComponent<GlobalLimitsProps> = ({
                     </CustomButton>
                 </CustomButtonArray>
                 <CustomTextInput
-                    title="Força máxima"
-                    setValue={setMaxForce}
-                    value={maxForce}
+                    title="Carga máxima"
+                    setValue={setMaxLoad}
+                    value={maxLoad}
                     inputType="number"
-                    suffix="N"
+                    suffix="g"
                     alert={maxForceAlert}
                     alertColor="var(--positive_button_color)"
                 />
@@ -119,6 +129,15 @@ const GlobalLimits: FunctionComponent<GlobalLimitsProps> = ({
                     inputType="number"
                     suffix="mm"
                     alert={maxTravelAlert}
+                    alertColor="var(--positive_button_color)"
+                />
+                <CustomTextInput
+                    title="Δ Carga máxima"
+                    setValue={setMaxDeltaLoad}
+                    value={maxDeltaLoad}
+                    inputType="number"
+                    suffix="g/s"
+                    alert={maxDeltaLoadAlert}
                     alertColor="var(--positive_button_color)"
                 />
             </ContainerComponent>

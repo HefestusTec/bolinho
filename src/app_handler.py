@@ -41,10 +41,13 @@ class AppHandler:
         self.__experiment_id: int = (
             -1
         )  # Id of the active experiment -1 means no selected experiment
-        self.__started_experiment_time: int = 0
+        self.__started_experiment_time = 0.0
         self.__experiment: list[dict] = []
         self.__time_since_last_refresh = 0.0
+        self.__current_time = 0.0
         self.__current_readings: b_classes.Readings = b_classes.Readings()
+        self.__starting_z_axis_pos: int = 0
+        self.__delta_load = 0
         self.__n_readings = 0
 
     def wait_for_connection(self):
@@ -70,22 +73,24 @@ class AppHandler:
         match app_state.state:
             case StateE.INSPECTING:
                 experiment_api.set_readings(self.__current_readings)
-
                 eel.sleep(0.1)  # 10 FPS refresh rate
             case StateE.RUNNING_EXPERIMENT:
-                current_time = time.time() * 1000.0
-
                 if (
-                    current_time - 500 > self.__time_since_last_refresh
+                    self.__current_time - 500 > self.__time_since_last_refresh
                 ):  # ~2 FPS refresh rate
-                    self.__time_since_last_refresh = current_time
+                    self.__time_since_last_refresh = self.__current_time
                     experiment_api.set_readings(self.__current_readings)
+                    experiment_api.set_delta_load(self.__delta_load)
+                    experiment_api.set_time(self.__current_time - self.__started_experiment_time)
 
                     core_api.refresh_data()  # Asks the UI to fetch new data
                     # print(f"{(self.__n_readings / (current_time - self.__started_experiment_time)) * 1000 } readings per second")
                 eel.sleep(
                     0
                 )  # allows Eel to gracefully shutdown the process when the WebUi is disconnected
+
+    # def __check_experiment_limits(self):
+    #     if self.__current_readings.current_load >= 
 
     def __update_current_readings(self):
         """
@@ -98,8 +103,9 @@ class AppHandler:
         self.__current_readings = b_classes.Readings()
 
         [current_load, current_pos] = self.gran.get_readings()
-
-        current_time = int(time.time() * 1000) - self.__started_experiment_time
+        
+        current_pos = current_pos - self.__starting_z_axis_pos
+        self.__current_time = (time.time() * 1000) - self.__started_experiment_time
 
         self.__current_readings.current_load = current_load
         self.__current_readings.z_axis_pos = current_pos
@@ -112,7 +118,7 @@ class AppHandler:
         realTimeR.load_over_time_realtime_readings.put_nowait(
             {
                 "y": current_load,
-                "x": current_time,
+                "x": (int)(self.__current_time),
             }
         )
         realTimeR.load_over_position_realtime_readings.put_nowait(
@@ -123,13 +129,16 @@ class AppHandler:
         )
         self.__experiment.append(
             {
-                "x": current_time,
+                "x": (int)(self.__current_time),
                 "experiment_id": self.__experiment_id,
                 "load": current_load,
                 "z_pos": current_pos,
             }
         )
         self.__n_readings += 1
+
+        self.__delta_load = self.gran.get_delta_load()
+
 
     def start_experiment(self, experiment_id: int):
         """
@@ -140,11 +149,14 @@ class AppHandler:
         """
         app_state.change_state(StateE.RUNNING_EXPERIMENT)
 
+        [_, current_pos] = self.gran.get_readings()
+
+
         self.__experiment_id = experiment_id
         self.__started_experiment_time = int(time.time() * 1000)
         self.__experiment = []
         self.__n_readings = 0
-
+        self.__starting_z_axis_pos = current_pos
         realTimeR.load_over_time_realtime_readings = Queue()
         realTimeR.load_over_position_realtime_readings = Queue()
 

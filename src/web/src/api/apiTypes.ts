@@ -26,9 +26,10 @@ export interface GlobalConfigContextProps {
     shadows: boolean; // Should it render shadows
     forceVirtualKeyboard: boolean; // Should it use the virtual keyboard as input
     enableHover: "enable" | "disable";
-    absoluteMaximumForce: number;
+    absoluteMaximumLoad: number;
     absoluteMaximumTime: number;
     absoluteMaximumTravel: number;
+    absoluteMaximumDeltaLoad: number;
     port: string;
     animateGraph: boolean;
     zAxisLength: number; // Z axis length in millimeters
@@ -47,9 +48,10 @@ export const globalConfigDefault: GlobalConfigContextProps = {
     shadows: true, // Should it render shadows
     forceVirtualKeyboard: false, // Should it use the virtual keyboard as input
     enableHover: "enable", // enable | disable
-    absoluteMaximumForce: 10000, // Global limit in Newtons
+    absoluteMaximumLoad: 10000, // Global limit in grams
     absoluteMaximumTime: 6000, // Global limit in seconds
     absoluteMaximumTravel: 1000, // Global limit in mm
+    absoluteMaximumDeltaLoad: 1000, // Global limit in grams / second
     port: "",
     animateGraph: true,
     zAxisLength: 1000,

@@ -216,156 +216,32 @@ The JavaScript file can be found at `web/src/api/contexts/ExperimentPageContext.
 
 ___
 
-### get_load_percentage()
-!!! quote "get_load_percentage()"
-    Asks the front for the current load percentage.
 
-    This variable is shown to the user in a progress bar. And is usually between 0-100.
+### set_time(newValue)
+!!! quote "set_time(newValue)"
+    Sets the current time of the experiment.
 
-    Returns the load percentage value
-
-    ``` python title="Python usage example"
-    from bolinho_api.experiment import experiment_api
-
-    print(experiment_api.get_load_percentage())
-    ```
-
-___
-
-### set_load_percentage(newValue)
-!!! quote "set_load_percentage(newValue)"
-    Sets the current load percentage.
-
-    This variable is shown to the user in a progress bar. And is usually between 0-100.
+    This variable is shown to the user as value and progress bar.
 
     ``` python title="Python usage example"
     from bolinho_api.experiment import experiment_api
 
-    for number in range(100):
-        experiment_api.set_load_percentage(number)
-        eel.sleep(0.1)
+    experiment_api.set_time(22)
 
     ```
 
 ___
 
-### get_time_percentage()
-!!! quote "get_time_percentage()"
-    Asks the front for the current time percentage.
+### set_delta_load(newValue)
+!!! quote "set_delta_load(newValue)"
+    Sets the current delta load.
 
-    This variable is shown to the user in a progress bar. And is usually between 0-100.
-
-    Returns the load percentage value
+    This variable is shown to the user as value and progress bar.
 
     ``` python title="Python usage example"
     from bolinho_api.experiment import experiment_api
 
-    print(experiment_api.get_time_percentage())
-    ```
-
-___
-
-### set_time_percentage(newValue)
-!!! quote "set_time_percentage(newValue)"
-    Sets the current time percentage.
-
-    This variable is shown to the user in a progress bar. And is usually between 0-100.
-
-    ``` python title="Python usage example"
-    from bolinho_api.experiment import experiment_api
-
-    experiment_api.set_time_percentage(22)
-
-    ```
-
-___
-
-### get_distance_percentage()
-!!! quote "get_distance_percentage()"
-    Asks the front for the current distance percentage.
-
-    This variable is shown to the user in a progress bar. And is usually between 0-100.
-
-    Returns the load percentage value
-
-    ``` python title="Python usage example"
-    from bolinho_api.experiment import experiment_api
-
-    print(experiment_api.get_distance_percentage())
-    ```
-
-___
-
-### set_distance_percentage(newValue)
-!!! quote "set_distance_percentage(newValue)"
-    Sets the current distance percentage.
-
-    This variable is shown to the user in a progress bar. And is usually between 0-100.
-
-    ``` python title="Python usage example"
-    from bolinho_api.experiment import experiment_api
-
-    experiment_api.set_distance_percentage(22)
-
-    ```
-
-___
-
-### get_delta_load_percentage()
-!!! quote "get_delta_load_percentage()"
-    Asks the front for the current delta load percentage.
-
-    This variable is shown to the user in a progress bar. And is usually between 0-100.
-
-    Returns the load percentage value
-
-    ``` python title="Python usage example"
-    from bolinho_api.experiment import experiment_api
-
-    print(experiment_api.get_delta_load_percentage())
-    ```
-
-___
-
-### set_delta_load_percentage(newValue)
-!!! quote "set_delta_load_percentage(newValue)"
-    Sets the current delta load percentage.
-
-    This variable is shown to the user in a progress bar. And is usually between 0-100.
-
-    ``` python title="Python usage example"
-    from bolinho_api.experiment import experiment_api
-
-    experiment_api.set_delta_load_percentage(22)
-
-    ```
-
-___
-
-### get_experiment_parameters()
-!!! quote "get_experiment_parameters()"
-    Asks the front for the current experiment parameters.
-
-    Returns a formatted string
-
-    ``` python title="Python usage example"
-    from bolinho_api.experiment import experiment_api
-
-    print(experiment_api.get_experiment_parameters())
-    ```
-
-___
-
-### set_experiment_parameters(newValue)
-!!! quote "set_experiment_parameters(newValue)"
-    Sets the current experiment parameters.
-
-    Receives a formatted string.
-
-    ``` python title="Python usage example"
-    from bolinho_api.experiment import experiment_api
-
-    experiment_api.set_experiment_parameters("Experiment 202 <br/> Load cell: lxi92")
+    experiment_api.set_delta_load(22)
 
     ```
 
@@ -404,74 +280,4 @@ ___
     new_machine_readings = Readings(299, 87, 300, "not good")
 
     experiment_api.set_readings(new_machine_readings)
-    ```
-
-___
-
-### get_description()
-!!! quote "get_description()"
-    Asks the front for the current description.
-
-    Returns a formatted string
-
-    ``` python title="Python usage example"
-    from bolinho_api.experiment import experiment_api
-
-    print(experiment_api.get_description())
-    ```
-
-___
-
-### set_description(newValue)
-!!! quote "set_description(newValue)"
-    Sets the current description.
-
-    Receives a formatted string.
-
-    ``` python title="Python usage example"
-    from bolinho_api.experiment import experiment_api
-
-    experiment_api.set_description("New Experiment description")
-    ```
-
-___
-
-### get_material()
-!!! quote "get_material()"
-    Asks the front for the current Material.
-
-    Returns an object of type Material.
-
-    ``` python title="Python usage example"
-    from bolinho_api.experiment import experiment_api
-    
-    material_obj = experiment_api.get_material()
-
-    print(material_obj.name)
-    ```
-
-___
-
-### set_material(newValue)
-!!! quote "set_material(newValue)"
-    Sets the current Material.
-
-    Receives an object of type Material
-
-    This function dumps the object to a JSON and sends it to the front end
-
-    ``` python title="Python usage example"
-    from bolinho_api.experiment import experiment_api
-    from bolinho_api.classes import Material
-
-    current_material = Material(
-        id=23,
-        name="aço 22",
-        batch="1",
-        experimentArray=[1, 3, 2],
-        supplier="Metalúrgica JOSÉ",
-        extraInfo="Cilindro",
-    )
-
-    experiment_api.set_material(current_material)
     ```
