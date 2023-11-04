@@ -72,3 +72,13 @@ export const getFormattedBodyParams = (bodyParams: BodyType) => {
 
 export const getRandomColor = () =>
     "#" + Math.floor(Math.random() * 16777215).toString(16);
+
+export function calculatePercentage(part: number, whole: number): number {
+    if (whole === 0) {
+        const percentage = (part / part) * 100;
+        return percentage;
+    }
+
+    const percentage = (part / whole) * 100;
+    return percentage;
+}

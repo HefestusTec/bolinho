@@ -124,7 +124,7 @@ def get_body_by_id(body_id):
 @eel.expose
 def post_experiment(data: dict = {}):
     config_params = exposed_core.load_config_params()
-    globalMaxLoad = config_params["absoluteMaximumForce"]
+    globalMaxLoad = config_params["absoluteMaximumLoad"]
     globalMaxTravel = config_params["absoluteMaximumTravel"]
     globalMaxTime = config_params["absoluteMaximumTime"]
     body = data.get("body", {})
