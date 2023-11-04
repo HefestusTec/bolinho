@@ -114,31 +114,6 @@ def start_experiment_routine(experiment_id: int):
             "Não foi possível iniciar o experimento. O eixo Z não foi parado. O bolinho_app.gran está conectado?",
         )
 
-    if not (
-        bolinho_app.gran.return_z_axis()
-        if compress
-        else bolinho_app.gran.bottom_z_axis()
-    ):
-        ui_api.error_alert(
-            "Não foi possível iniciar o experimento. O eixo Z não foi retornado ao topo. O Granulado está conectado?",
-        )
-
-    while bolinho_app.gran.get_is_moving():
-        eel.sleep(1)
-        # remove this line when the granulado is properly implemented
-        # when testing the granulado is not connected to the end-of-course sensors
-        bolinho_app.gran.stop_z_axis()
-
-    if not (
-        bolinho_app.gran.bottom_z_axis()
-        if compress
-        else bolinho_app.gran.return_z_axis()
-    ):
-        ui_api.error_alert(
-            "Não foi possível iniciar o experimento. O eixo Z não foi movido para a base. O Granulado está conectado?",
-        )
-        return 0
-
     core_api.go_to_experiment_page()
     bolinho_app.start_experiment(experiment_id)
     return 1

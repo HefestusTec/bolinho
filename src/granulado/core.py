@@ -24,27 +24,10 @@ from bolinho_api.ui import ui_api
 from bolinho_api.core import core_api
 
 
-class MotorState(Enum):
-    """
-    Represents the state of the motor
-    """
-
-    STOPPED = 0
-    MOVING = 1
-    TOP = 2
-    BOTTOM = 3
-
 
 class Granulado:
     def __init__(self, timeout: float = 2):
         self.__hardware: serial.Serial | None = None
-        # VERIFICAR SE ISSO NÃO VAI PERMITIR MOVIMENTAR O MOTOR MESMO ESTANDO NO TOPO OU NA BASE
-        # VERIFICAR SE ISSO NÃO VAI PERMITIR MOVIMENTAR O MOTOR MESMO ESTANDO NO TOPO OU NA BASE
-        # VERIFICAR SE ISSO NÃO VAI PERMITIR MOVIMENTAR O MOTOR MESMO ESTANDO NO TOPO OU NA BASE
-        self.__state = MotorState.STOPPED
-        # VERIFICAR SE ISSO NÃO VAI PERMITIR MOVIMENTAR O MOTOR MESMO ESTANDO NO TOPO OU NA BASE
-        # VERIFICAR SE ISSO NÃO VAI PERMITIR MOVIMENTAR O MOTOR MESMO ESTANDO NO TOPO OU NA BASE
-        # VERIFICAR SE ISSO NÃO VAI PERMITIR MOVIMENTAR O MOTOR MESMO ESTANDO NO TOPO OU NA BASE
         self.__instant_load = 0
         self.__instant_position = 0
         self.__ping = 0
@@ -93,8 +76,6 @@ class Granulado:
             if self.__hardware.isOpen():
                 self.__hardware.close()
             self.__hardware = None
-        if self.__state == MotorState.MOVING:
-            self.__state = MotorState.STOPPED
         self.__instant_load = 0
         self.__instant_position = 0
         self.__ping = 0
@@ -136,14 +117,6 @@ class Granulado:
                 self.__z_axis_length = int(value)
             elif response == "d":
                 self.__delta_load = int(value)
-            elif response == "t":
-                self.__state = MotorState.TOP
-            elif response == "b":
-                self.__state = MotorState.BOTTOM
-            elif response == "m":
-                self.__state = MotorState.MOVING
-            elif response == "s":
-                self.__state = MotorState.STOPPED
             else:
                 ui_api.error_alert(f"Resposta inesperada do Granulado: ''{response}''")
 
@@ -156,12 +129,6 @@ class Granulado:
 
     def start_experiment(self, compress: bool):
         pass
-
-    def get_is_moving(self):
-        return self.__state == MotorState.MOVING
-
-    def get_end_of_axis(self):
-        return self.__state == MotorState.TOP, self.__state == MotorState.BOTTOM
 
     def get_readings(self):
         """
@@ -207,7 +174,6 @@ class Granulado:
     def check_experiment_routine(self):
         checks = [
             self.check_granulado_is_connected(),
-            not self.get_is_moving(),
             self.check_global_limits(),
             self.check_current_load(),
         ]
@@ -276,101 +242,37 @@ class Granulado:
         return True
 
     def return_z_axis(self):
-        if self.__state != MotorState.TOP:
-            if self.__send_serial_message("t"):
-                self.__state = MotorState.MOVING
-                return True
-        return False
+        return self.__send_serial_message("t")
 
     def bottom_z_axis(self):
-        if self.__state != MotorState.BOTTOM:
-            if self.__send_serial_message("b"):
-                self.__state = MotorState.MOVING
-                return True
-        return False
+        return self.__send_serial_message("b")
 
     def stop_z_axis(self):
-        match self.__state:
-            case MotorState.MOVING:
-                if self.__send_serial_message("s"):
-                    self.__state = MotorState.STOPPED
-                    return True
-                return False
-        return True
+        return self.__send_serial_message("s")
 
     def move_z_axis_millimeters(self, millimeters: int):
-        match self.__state:
-            case MotorState.MOVING:
-                ui_api.error_alert(
-                    "O eixo está em movimento, aguarde até que o movimento termine."
-                )
-                return False
-            case MotorState.TOP:
-                if millimeters > 0:
-                    ui_api.error_alert(
-                        "Não foi possível mover o eixo Z. O eixo está no topo."
-                    )
-                    return False
-                if self.__send_serial_message(f"m{millimeters}"):
-                    self.__state = MotorState.MOVING
-                    return True
-                return False
-
-            case MotorState.BOTTOM:
-                if millimeters < 0:
-                    ui_api.error_alert(
-                        "Não foi possível mover o eixo Z. O eixo está na base."
-                    )
-                    return False
-                if self.__send_serial_message(f"m{millimeters}"):
-                    self.__state = MotorState.MOVING
-                    return True
-                return False
-            case MotorState.STOPPED:
-                if self.__send_serial_message(f"m{millimeters}"):
-                    self.__state = MotorState.MOVING
-                    return True
-                return False
+        return self.__send_serial_message(f"m{millimeters}")
 
     def tare_load(self):
-        """
-        Send serial message to Granulado to tare the load cell
-        """
-        if self.__send_serial_message("@"):
-            if self.__state == MotorState.MOVING:
-                self.__state = MotorState.STOPPED
-            return True
-        return False
+        return delf.__send_serial_message("@")
 
     def calibrate_z_axis(self):
         """
         Send serial message to Granulado to calibrate the z axis
         """
-        if self.__send_serial_message(f"z"):
-            if self.__state == MotorState.MOVING:
-                self.__state = MotorState.STOPPED
-            return True
-        return False
+        return self.__send_serial_message(f"z")
 
     def calibrate_known_weight(self):
         """
         Send serial message to Granulado to calibrate the load cell
         """
-        if self.__send_serial_message(f"w"):
-            if self.__state == MotorState.MOVING:
-                self.__state = MotorState.STOPPED
-            return True
-        return False
+        return self.__send_serial_message(f"w")
 
     def set_known_weight(self, known_weight: int):
         """
         Send serial message to Granulado to set the known weight
         """
-        if self.__send_serial_message(f"x{known_weight}"):
-            if self.__state == MotorState.MOVING:
-                self.__state = MotorState.STOPPED
-            return True
-        return False
+        return self.__send_serial_message(f"x{known_weight}")
 
     def is_connected(self):
         """Is the backend connected to the embedded hardware, returns a boolean"""
