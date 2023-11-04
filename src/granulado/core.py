@@ -49,6 +49,7 @@ class Granulado:
         self.__instant_position = 0
         self.__ping = 0
         self.__z_axis_length = 0
+        self.__delta_load = 0 # variation of the load measured in grams/second
         self.__time_since_last_refresh = 0
         self.__last_is_connected = None
         self.__was_read = [True, True]
@@ -108,7 +109,7 @@ class Granulado:
             return False
 
         self.__refresh_ping()
-
+        self.__update_delta_load()
         # Check if there is a message to be read
         if self.__hardware.in_waiting <= 0:
             return
@@ -133,6 +134,8 @@ class Granulado:
                 self.__was_read[1] = False
             elif response == "j":
                 self.__z_axis_length = int(value)
+            elif response == "d":
+                self.__delta_load = int(value)
             elif response == "t":
                 self.__state = MotorState.TOP
             elif response == "b":
@@ -188,6 +191,19 @@ class Granulado:
         """
         return self.__send_serial_message("r")
 
+    def get_delta_load(self):
+        """
+        Returns the latest delta load
+        """
+        return self.__delta_load
+
+    def __update_delta_load(self):
+        """
+        Send serial message to Granulado to get the latest current load
+        """
+        return self.__send_serial_message("d")
+
+
     def check_experiment_routine(self):
         checks = [
             self.check_granulado_is_connected(),
@@ -222,7 +238,7 @@ class Granulado:
 
         config = load_config_params()
         checks = [
-            config.get("absoluteMaximumForce", 0) > 0,
+            config.get("absoluteMaximumLoad", 0) > 0,
             config.get("absoluteMaximumTravel", 0) > 0,
             config.get("absoluteMaximumTime", 0) > 0,
             config.get("zAxisLength", 0) > 0,

@@ -48,7 +48,10 @@ const Experiment: FunctionComponent<ExperimentProps> = () => {
     return (
         <div className={styleModule.experiment_div}>
             <GenerateDebugPoints />
-            <ExperimentSideBar />
+            <ExperimentSideBar
+                experiment={experiment}
+                readings={readingsContext}
+            />
             <div className={styleModule.experiment_content}>
                 <MainMonitor
                     className={styleModule.main_monitor}

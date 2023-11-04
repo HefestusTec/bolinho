@@ -31,7 +31,7 @@ This page contains all the [contexts](https://reactjs.org/docs/context.html) use
         enableZoom: true, // Should zooming be enable?
         zoomDelay: 300, // How long [ms] should I press to zoom
         blurOnZoom: true, // Should it blur when zooming?
-        absoluteMaximumForce: 10000,
+        absoluteMaximumLoad: 10000,
     }
     ```
 

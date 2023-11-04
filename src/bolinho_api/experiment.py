@@ -25,35 +25,7 @@ from bolinho_api.helper import DictToObject
 
 
 class ExperimentAPI:
-    def get_load_percentage(self) -> float:
-        """
-        Asks the front for the current load percentage.
-
-        This variable is shown to the user in a progress bar. And is usually between 0-100.
-
-        Returns the load percentage value
-        """
-        return eel.getLoadPercentageJS()()
-
-    def set_load_percentage(self, newPercentage: float):
-        """
-        Sets the current load percentage.
-
-        This variable is shown to the user in a progress bar. And is usually between 0-100.
-        """
-        return eel.setLoadPercentageJS(newPercentage)
-
-    def get_time_percentage(self) -> float:
-        """
-        Asks the front for the current time percentage.
-
-        This variable is shown to the user in a progress bar. And is usually between 0-100.
-
-        Returns the load percentage value
-        """
-        return eel.getTimePercentageJS()()
-
-    def set_time_percentage(self, newPercentage: float):
+    def set_time(self, newPercentage: float):
         """
         Sets the current time percentage.
 
@@ -61,35 +33,10 @@ class ExperimentAPI:
         """
         return eel.setLoadPercentageJS(newPercentage)
 
-    def get_distance_percentage(self) -> float:
-        """
-        Asks the front for the current distance percentage.
 
-        This variable is shown to the user in a progress bar. And is usually between 0-100.
 
-        Returns the load percentage value
-        """
-        return eel.getDistancePercentageJS()()
 
-    def set_distance_percentage(self, newPercentage: float):
-        """
-        Sets the current distance percentage.
-
-        This variable is shown to the user in a progress bar. And is usually between 0-100.
-        """
-        return eel.setDistancePercentageJS(newPercentage)
-
-    def get_delta_load_percentage(self) -> float:
-        """
-        Asks the front for the current delta load percentage.
-
-        This variable is shown to the user in a progress bar. And is usually between 0-100.
-
-        Returns the load percentage value
-        """
-        return eel.getDeltaLoadPercentageJS()()
-
-    def set_delta_load_percentage(self, newPercentage: float):
+    def set_delta_load(self, newPercentage: float):
         """
         Sets the current delta load percentage.
 
@@ -97,21 +44,7 @@ class ExperimentAPI:
         """
         return eel.setDeltaLoadPercentageJS(newPercentage)
 
-    def get_experiment_parameters(self) -> str:
-        """
-        Asks the front for the current experiment parameters.
 
-        Returns a formatted string
-        """
-        return eel.getExperimentParametersJS()()
-
-    def set_experiment_parameters(self, newValue: str):
-        """
-        Sets the current experiment parameters.
-
-        Receives a formatted string.
-        """
-        return eel.setExperimentParametersJS(newValue)
 
     def get_readings(self) -> Readings:
         """
@@ -135,41 +68,7 @@ class ExperimentAPI:
 
         return eel.setReadingsJS(formatted_json)
 
-    def get_description(self) -> str:
-        """
-        Asks the front for the current description.
 
-        Returns a formatted string
-        """
-        return eel.getDescriptionJS()()
-
-    def set_description(self, newValue: str):
-        """
-        Sets the current description.
-
-        Receives a formatted string.
-        """
-        return eel.setDescriptionJS(newValue)
-
-    def get_material(self) -> Material:
-        """
-        Asks the front for the current Material.
-
-        Returns an object of type Material.
-        """
-        return DictToObject(eel.getMaterialJS()())
-
-    def set_material(self, newValue: Material):
-        """
-        Sets the current Material.
-
-        Receives an object of type Material
-
-        This function dumps the object to a JSON and sends it to the front end
-        """
-        formatted_json = json.dumps(newValue, default=lambda x: x.__dict__)
-
-        return eel.setMaterialJS(formatted_json)
 
 
 experiment_api = ExperimentAPI()

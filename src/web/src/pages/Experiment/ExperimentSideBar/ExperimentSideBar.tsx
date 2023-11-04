@@ -19,30 +19,53 @@ import { FunctionComponent, useContext } from "react";
 import styleModule from "./ExperimentSideBar.module.css";
 import ProgressWidget from "./ProgressWidget/ProgressWidget";
 import { ExperimentPageContext } from "api/contexts/ExperimentPageContext";
+import { ExperimentType } from "types/DataBaseTypes";
+import { calculatePercentage } from "helpers";
+import { ReadingsType } from "types/ReadingsType";
 
-interface ExperimentSideBarProps {}
+interface ExperimentSideBarProps {
+    experiment: ExperimentType | undefined;
+    readings: ReadingsType;
+}
 
-const ExperimentSideBar: FunctionComponent<ExperimentSideBarProps> = () => {
+const ExperimentSideBar: FunctionComponent<ExperimentSideBarProps> = ({
+    experiment,
+    readings,
+}) => {
     const [experimentPageContext] = useContext(ExperimentPageContext);
+
+    if (experiment === undefined) return <></>;
 
     return (
         <div className={styleModule.experiment_side_bar_div}>
             <span className={styleModule.widgets_span}>
                 <div className={styleModule.bolinho_logo} />
                 <ProgressWidget
-                    value={experimentPageContext.loadPercentage}
+                    value={calculatePercentage(
+                        readings.current_load,
+                        experiment.max_load
+                    )}
                     title="Carga"
                 />
                 <ProgressWidget
-                    value={experimentPageContext.timePercentage}
+                    value={calculatePercentage(
+                        experimentPageContext.time,
+                        experiment.max_time
+                    )}
                     title="Tempo"
                 />
                 <ProgressWidget
-                    value={experimentPageContext.distancePercentage}
+                    value={calculatePercentage(
+                        readings.z_axis_pos,
+                        experiment.max_travel
+                    )}
                     title="Distância"
                 />
                 <ProgressWidget
-                    value={experimentPageContext.deltaLoadPercentage}
+                    value={calculatePercentage(
+                        experimentPageContext.deltaLoad,
+                        experiment.load_loss_limit
+                    )}
                     title="Δ Carga"
                 />
                 <footer className={styleModule.side_bar_footer} />

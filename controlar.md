@@ -59,6 +59,17 @@ temp_ens
 
 * `z` -> Calibrate z-axis
 
+* `d` -> Get delta load
+
+* `l[str]` -> Set max load
+> str is an `int` with the maximum experiment load in `grams` in `string` format.
+
+* `v[str]` -> Set max travel
+> str is an `int` with the maximum experiment travel in `mm` in `string` format.
+
+* `a[str]` -> Set max delta load
+> str is an `int` with the maximum experiment delta load in `grams / second` in `string` format.
+
 
 ## Granulado -> Bolinho
 
@@ -80,4 +91,7 @@ temp_ens
 
 * `t` -> Top interrupt was triggered
 
+* `d[str]` -> Returns delta load
+> str is an `int` in `string` format.
 
+* `s` -> Response to the stop command

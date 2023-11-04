@@ -25,24 +25,14 @@ import {
 import { defaultMaterialType, MaterialType } from "types/DataBaseTypes";
 
 export type ExperimentPageType = {
-    loadPercentage: number; // Number between 0 - 100
-    timePercentage: number; // Number between 0 - 100
-    distancePercentage: number; // Number between 0 - 100
-    deltaLoadPercentage: number; // Number between 0 - 100
-
-    experimentParameters: string;
-    description: string;
+    time: number; // Time since starting of experiment
+    deltaLoad: number; // Current variation of load
     material: MaterialType;
 };
 
 const experimentPageContextDefault: ExperimentPageType = {
-    loadPercentage: 0,
-    timePercentage: 0,
-    distancePercentage: 0,
-    deltaLoadPercentage: 0,
-
-    experimentParameters: "",
-    description: "",
+    time: 0,
+    deltaLoad: 0,
     material: defaultMaterialType,
 };
 
@@ -61,104 +51,24 @@ export const ExperimentPageProvider: FunctionComponent<
         experimentPageContextDefault
     );
 
-    function getLoadPercentageJS() {
-        return experimentPageContext.loadPercentage;
-    }
-    function setLoadPercentageJS(newValue: number) {
-        setExperimentPageContext((old) => ({
-            ...old,
-            loadPercentage: newValue,
-        }));
-    }
-
-    function getTimePercentageJS() {
-        return experimentPageContext.timePercentage;
-    }
-    function setTimePercentageJS(newValue: number) {
+    function setTimeJS(newValue: number) {
         setExperimentPageContext((old) => ({
             ...old,
             timePercentage: newValue,
         }));
     }
 
-    function getDistancePercentageJS() {
-        return experimentPageContext.distancePercentage;
-    }
-    function setDistancePercentageJS(newValue: number) {
-        setExperimentPageContext((old) => ({
-            ...old,
-            distancePercentage: newValue,
-        }));
-    }
-
-    function getDeltaLoadPercentageJS() {
-        return experimentPageContext.deltaLoadPercentage;
-    }
-    function setDeltaLoadPercentageJS(newValue: number) {
+    function setDeltaLoadJS(newValue: number) {
         setExperimentPageContext((old) => ({
             ...old,
             deltaLoadPercentage: newValue,
         }));
     }
-    function getExperimentParametersJS() {
-        return experimentPageContext.experimentParameters;
-    }
-    function setExperimentParametersJS(newValue: string) {
-        setExperimentPageContext((old) => ({
-            ...old,
-            experimentParameters: newValue,
-        }));
-    }
-
-    function getDescriptionJS() {
-        return experimentPageContext.description;
-    }
-    function setDescriptionJS(newValue: string) {
-        setExperimentPageContext((old) => ({
-            ...old,
-            description: newValue,
-        }));
-    }
-
-    function getMaterialJS() {
-        return experimentPageContext.material;
-    }
-    function setMaterialJS(newValue: string) {
-        const parsedMaterial: MaterialType = JSON.parse(newValue);
-
-        setExperimentPageContext((old) => ({
-            ...old,
-            material: parsedMaterial,
-        }));
-    }
 
     try {
-        window.eel.expose(getLoadPercentageJS, "getLoadPercentageJS");
-        window.eel.expose(setLoadPercentageJS, "setLoadPercentageJS");
+        window.eel.expose(setTimeJS, "setTimeJS");
 
-        window.eel.expose(getTimePercentageJS, "getTimePercentageJS");
-        window.eel.expose(setTimePercentageJS, "setTimePercentageJS");
-
-        window.eel.expose(getDistancePercentageJS, "getDistancePercentageJS");
-        window.eel.expose(setDistancePercentageJS, "setDistancePercentageJS");
-
-        window.eel.expose(getDeltaLoadPercentageJS, "getDeltaLoadPercentageJS");
-        window.eel.expose(setDeltaLoadPercentageJS, "setDeltaLoadPercentageJS");
-
-        window.eel.expose(
-            getExperimentParametersJS,
-            "getExperimentParametersJS"
-        );
-        window.eel.expose(
-            setExperimentParametersJS,
-            "setExperimentParametersJS"
-        );
-
-        window.eel.expose(getDescriptionJS, "getDescriptionJS");
-        window.eel.expose(setDescriptionJS, "setDescriptionJS");
-
-        window.eel.expose(getMaterialJS, "getMaterialJS");
-        window.eel.expose(setMaterialJS, "setMaterialJS");
+        window.eel.expose(setDeltaLoadJS, "setDeltaLoadJS");
     } catch (error) {}
 
     return (
