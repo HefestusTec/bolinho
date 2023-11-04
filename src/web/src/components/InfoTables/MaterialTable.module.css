@@ -1,0 +1,51 @@
+/**
+ * Copyright (C) 2023 Hefestus
+ * 
+ * This file is part of Bolinho.
+ * 
+ * Bolinho is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * Bolinho is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
+ */
+@import url(../../variables.css);
+
+.content h1 {
+    font-size: var(--font_s);
+    margin: 0;
+    margin-bottom: 0.5em;
+    margin-top: 0.5em;
+    text-align: center;
+}
+
+/* Im overwriting the p tag so it doesn't overflow */
+.content p {
+    margin: 0;
+    display: inline;
+    word-wrap: break-word;
+    white-space: break-spaces;
+}
+
+.content td,
+th {
+    text-align: left;
+    padding: 2px;
+}
+
+.content table {
+    border: 1px solid var(--font_color);
+    width: 100%;
+    overflow: hidden;
+}
+
+.content tr:nth-child(odd) {
+    background-color: var(--background2_color);
+}
