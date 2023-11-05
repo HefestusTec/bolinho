@@ -169,7 +169,6 @@ class DBHandler:
     # --- Experiment --- #
 
     def post_experiment(self, data: dict) -> int:
-        data["num_of_data_points"] = 0
         new_experiment = Experiment.create(**data)
         return new_experiment.id
 
