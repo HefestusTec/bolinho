@@ -29,6 +29,10 @@ from state_class import StateE
 from math import ceil
 
 
+load_over_time_buffer = {}
+load_over_position_buffer = {}
+
+
 # --- Material --- #
 @eel.expose
 def post_material(data: dict):
@@ -243,9 +247,12 @@ def delete_experiment_by_id(experiment_id):
 
 
 @eel.expose
-def get_load_over_time_by_experiment_id(experiment_id):
+def get_load_over_time_by_experiment_id(experiment_id, start_idx: int, end_idx: int):
     """
-    Returns a list of load over time data points for the experiment with the given id
+    Returns a list of load over time data points for the experiment with the given id, the number of points is allways clamped to a max size
+
+
+    If start_idx == -1 or end_idx == -1 then return the whole data
     """
     start = time()
     if app_state.state == StateE.RUNNING_EXPERIMENT:
@@ -255,28 +262,33 @@ def get_load_over_time_by_experiment_id(experiment_id):
         q_list = list(q)
         # pick 10k points evenly spaced
         if n_points > 10000:
-            readings_dict = q_list[:: n_points // 10000]
+            readings_dict = q_list[:: ceil(n_points / 10000)]
         else:
             readings_dict = q_list
     else:
         config_params = exposed_core.load_config_params()
         numOfDataPointsPerExp = config_params["numOfDataPointsPerExp"]
         # TODO get at max `numOfDataPointsPerExp` points and return
-        # The valid values are the following str "1k" | "10k" | "50k" | "200k" | "500k" | "ilimitado"
+        # The valid values are the following str "500" | "1k" | "10k" | "25k" | "50k"
         n_points = {
+            "500": 500,
             "1k": 1000,
             "10k": 10000,
+            "25k": 25000,
             "50k": 50000,
-            "200k": 200000,
-            "500k": 600000,
-            "ilimitado": 1,
         }
         if numOfDataPointsPerExp not in n_points:
             ui_api.error_alert("Número de pontos inválido.")
             return
 
-        readings = db_handler.get_load_over_time_by_experiment_id(experiment_id)
-        n_points["ilimitado"] = len(readings)
+        if experiment_id not in load_over_time_buffer:
+            load_over_time_buffer[
+                experiment_id
+            ] = db_handler.get_load_over_time_by_experiment_id(experiment_id)
+
+        readings = load_over_time_buffer[experiment_id]
+        if start_idx != -1 and end_idx != -1:
+            readings = readings[start_idx:end_idx]
 
         if len(readings) == 0:
             ui_api.error_alert("Experimento sem dados.")
@@ -285,7 +297,7 @@ def get_load_over_time_by_experiment_id(experiment_id):
         if len(readings) > n_points[numOfDataPointsPerExp]:
             # pick `numOfDataPointsPerExp` points evenly spaced
             n_data_points = n_points[numOfDataPointsPerExp]
-            readings = readings[:: int(ceil(len(readings) / n_data_points))]
+            readings = readings[:: ceil(len(readings) / n_data_points)]
 
         readings_dict = [model_to_dict(reading) for reading in readings]
 
@@ -317,7 +329,7 @@ def get_load_over_position_by_experiment_id(experiment_id):
         q_list = list(q)
         # pick 10k points evenly spaced
         if n_points > 10000:
-            readings_dict = q_list[:: n_points // 10000]
+            readings_dict = q_list[:: ceil(n_points / 10000)]
         else:
             readings_dict = q_list
 
@@ -325,21 +337,26 @@ def get_load_over_position_by_experiment_id(experiment_id):
         config_params = exposed_core.load_config_params()
         numOfDataPointsPerExp = config_params["numOfDataPointsPerExp"]
         # TODO get at max `numOfDataPointsPerExp` points and return
-        # The valid values are the following str "1k" | "10k" | "50k" | "200k" | "500k" | "ilimitado"
+        # The valid values are the following str "500" | "1k" | "10k" | "25k" | "50k"
         n_points = {
+            "500": 500,
             "1k": 1000,
             "10k": 10000,
+            "25k": 25000,
             "50k": 50000,
-            "200k": 200000,
-            "500k": 600000,
-            "ilimitado": 1,
         }
         if numOfDataPointsPerExp not in n_points:
             ui_api.error_alert("Número de pontos inválido.")
-            return {}
+            return
 
-        readings = db_handler.get_load_over_position_by_experiment_id(experiment_id)
-        n_points["ilimitado"] = len(readings)
+        if experiment_id not in load_over_position_buffer:
+            load_over_position_buffer[
+                experiment_id
+            ] = db_handler.get_load_over_time_by_experiment_id(experiment_id)
+
+        readings = load_over_position_buffer[experiment_id]
+        if start_idx != -1 and end_idx != -1:
+            readings = readings[start_idx:end_idx]
 
         if len(readings) == 0:
             ui_api.error_alert("Experimento sem dados.")
@@ -348,14 +365,12 @@ def get_load_over_position_by_experiment_id(experiment_id):
         if len(readings) > n_points[numOfDataPointsPerExp]:
             # pick `numOfDataPointsPerExp` points evenly spaced
             n_data_points = n_points[numOfDataPointsPerExp]
-            # round up len(readings) / n_data_points
-            readings = readings[:: int(ceil(len(readings) / n_data_points))]
+            readings = readings[:: ceil(len(readings) / n_data_points)]
 
         readings_dict = [model_to_dict(reading) for reading in readings]
-        # rename the "z_pos" key to "x"
+
         # rename the "load" key to "y"
         for reading in readings_dict:
-            reading["x"] = reading.pop("z_pos")
             reading["y"] = reading.pop("load")
         print(time() - start)
         print(len(readings_dict))
@@ -369,33 +384,28 @@ def get_load_over_position_by_experiment_id(experiment_id):
         return {}
 
 
-"""
-get_materials
-get_experiments
+@eel.expose
+def remove_experiment_from_visualization_buffer(experiment_id, plot_type: bool):
+    """
+    Remove an experiment from the visualization buffer
+
+    Args:
+        experiment_id (int): The id of the experiment to be removed
+        plot_type (bool): The type of the plot, 0 for load over time and 1 for load over position
+
+    Returns 1 if succeded and 0 if failed
+    """
+    if plot_type == False:
+        if experiment_id in load_over_time_buffer:
+            del load_over_time_buffer[experiment_id]
+        else:
+            return 0
+    else:
+        if experiment_id in load_over_position_buffer:
+            del load_over_position_buffer[experiment_id]
+        else:
+            return 0
+    return 1
 
 
-get_experiments_by_material_id
-
-
-get_body_by_id
-get_experiment_by_id
-get_material_by_id
-
-
-get_load_over_time_by_experiment_id -> {x, y}[]
-get_load_over_position_by_experiment_id -> {x, y}[]
-
-
-
-
-Rotina para vizu um material
->>>>>>>>>   
-
-get_materials -> material[]
-get_experiments_by_material_id -> Experiment[]
-get_body_by_id -> Body
-
-get_load_over_time_by_experiment_id -> {x, y}[]
-get_load_over_position_by_experiment_id -> {x, y}[]
-
-"""
+experiment_buffer
