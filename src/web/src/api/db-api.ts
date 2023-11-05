@@ -121,9 +121,19 @@ export const getLoadOverTimeByExperimentId = async (
     id: number
 ): Promise<DataPointType[]> => {
     try {
-        return JSON.parse(
+        alert("getLoadOverTimeByExperimentId");
+        // log how long it takes
+        let start = new Date().getTime();
+        let return_value = JSON.parse(
             await eel.get_load_over_time_by_experiment_id(id)()
         ) as DataPointType[];
+        let end = new Date().getTime();
+        alert(
+            "Call to getLoadOverTimeByExperimentId took " +
+                (end - start) +
+                " milliseconds."
+        );
+        return return_value;
     } catch (error) {
         console.error(error);
         toast.error(
@@ -138,9 +148,18 @@ export const getLoadOverPositionByExperimentId = async (
     id: number
 ): Promise<DataPointType[]> => {
     try {
-        return JSON.parse(
+        alert("getLoadOverPositionByExperimentId");
+        let start = new Date().getTime();
+        let return_value = await JSON.parse(
             await eel.get_load_over_position_by_experiment_id(id)()
         ) as DataPointType[];
+        let end = new Date().getTime();
+        alert(
+            "Call to getLoadOverPositionByExperimentId took " +
+                (end - start) +
+                " milliseconds."
+        );
+        return return_value;
     } catch (error) {
         console.error(error);
         toast.error(

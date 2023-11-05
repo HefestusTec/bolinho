@@ -81,7 +81,9 @@ class AppHandler:
                     self.__time_since_last_refresh = self.__current_time
                     experiment_api.set_readings(self.__current_readings)
                     experiment_api.set_delta_load(self.__delta_load)
-                    experiment_api.set_time(self.__current_time - self.__started_experiment_time)
+                    experiment_api.set_time(
+                        self.__current_time - self.__started_experiment_time
+                    )
 
                     core_api.refresh_data()  # Asks the UI to fetch new data
                     # print(f"{(self.__n_readings / (current_time - self.__started_experiment_time)) * 1000 } readings per second")
@@ -90,7 +92,7 @@ class AppHandler:
                 )  # allows Eel to gracefully shutdown the process when the WebUi is disconnected
 
     # def __check_experiment_limits(self):
-    #     if self.__current_readings.current_load >= 
+    #     if self.__current_readings.current_load >=
 
     def __update_current_readings(self):
         """
@@ -103,7 +105,7 @@ class AppHandler:
         self.__current_readings = b_classes.Readings()
 
         [current_load, current_pos] = self.gran.get_readings()
-        
+
         current_pos = current_pos - self.__starting_z_axis_pos
         self.__current_time = (time.time() * 1000) - self.__started_experiment_time
 
@@ -139,7 +141,6 @@ class AppHandler:
 
         self.__delta_load = self.gran.get_delta_load()
 
-
     def start_experiment(self, experiment_id: int):
         """
         Changes the app state to running experiment, resets the experiment data and starts a new experiment
@@ -150,7 +151,6 @@ class AppHandler:
         app_state.change_state(StateE.RUNNING_EXPERIMENT)
 
         [_, current_pos] = self.gran.get_readings()
-
 
         self.__experiment_id = experiment_id
         self.__started_experiment_time = int(time.time() * 1000)

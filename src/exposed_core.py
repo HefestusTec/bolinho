@@ -87,32 +87,72 @@ def start_experiment_routine(experiment_id: int):
         ui_api.error_alert(
             "Não foi possível iniciar o experimento. O experimento não foi encontrado.",
         )
+        return 0
     exp_body_id = experiment.body
     body = db_handler.get_body_by_id(exp_body_id)
     if body is None:
         ui_api.error_alert(
             "Não foi possível iniciar o experimento. O corpo não foi encontrado.",
         )
+        return 0
+
     material_id = body.material
     if material_id is None:
         ui_api.error_alert(
             "Não foi possível iniciar o experimento. O experimento não possui material associado.",
         )
+        return 0
+
     material = db_handler.get_material_by_id(material_id)
     if material is None:
         ui_api.error_alert(
             "Não foi possível iniciar o experimento. O material não foi encontrado.",
         )
+        return 0
+
     compress = experiment.compress
     if compress is None:
         ui_api.error_alert(
             "Não foi possível iniciar o experimento. O material não possui parâmetro de compressão/tração definida.",
         )
+        return 0
 
     if not bolinho_app.gran.stop_z_axis():
         ui_api.error_alert(
             "Não foi possível iniciar o experimento. O eixo Z não foi parado. O bolinho_app.gran está conectado?",
         )
+        return 0
+
+    config_params = load_config_params()
+
+    globalMaxLoad = config_params["absoluteMaximumLoad"]
+    globalMaxTravel = config_params["absoluteMaximumTravel"]
+    globalMaxTime = config_params["absoluteMaximumTime"]
+    globalMaximumDeltaLoad = config_params["absoluteMaximumDeltaLoad"]
+
+    if experiment.max_load > globalMaxLoad:
+        ui_api.error_alert(
+            f"Não foi possível iniciar o experimento. O LIMITE DE CARGA do experimento é maior que o limite global. Por favor verifique os valores!",
+        )
+        return 0
+
+    if experiment.max_travel > globalMaxTravel:
+        ui_api.error_alert(
+            f"Não foi possível iniciar o experimento. O LIMITE DE DESLOCAMENTO do experimento é maior que o limite global. Por favor verifique os valores!",
+        )
+        return 0
+
+    if experiment.max_time > globalMaxTime:
+        ui_api.error_alert(
+            f"Não foi possível iniciar o experimento. O LIMITE DE TEMPO do experimento é maior que o limite global. Por favor verifique os valores!",
+        )
+        return 0
+
+    if experiment.load_loss_limit > globalMaximumDeltaLoad:
+        ui_api.error_alert(
+            f"Não foi possível iniciar o experimento. O Δ DE CARGA do experimento é maior que o limite global. Por favor verifique os valores!",
+        )
+        return 0
 
     core_api.go_to_experiment_page()
     bolinho_app.start_experiment(experiment_id)

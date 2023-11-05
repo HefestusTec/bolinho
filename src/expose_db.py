@@ -17,6 +17,7 @@
 
 import eel
 import json
+from time import time
 from DBHandler import db_handler
 from playhouse.shortcuts import model_to_dict
 import exposed_core
@@ -25,7 +26,7 @@ import realTimeR
 from state_class import app_state
 from state_class import StateE
 
-import numpy as np
+from math import ceil
 
 
 # --- Material --- #
@@ -246,6 +247,7 @@ def get_load_over_time_by_experiment_id(experiment_id):
     """
     Returns a list of load over time data points for the experiment with the given id
     """
+    start = time()
     if app_state.state == StateE.RUNNING_EXPERIMENT:
         # TODO: truncate list on 10k points
         q = realTimeR.load_over_time_realtime_readings.queue
@@ -259,7 +261,6 @@ def get_load_over_time_by_experiment_id(experiment_id):
     else:
         config_params = exposed_core.load_config_params()
         numOfDataPointsPerExp = config_params["numOfDataPointsPerExp"]
-        print(numOfDataPointsPerExp)
         # TODO get at max `numOfDataPointsPerExp` points and return
         # The valid values are the following str "1k" | "10k" | "50k" | "200k" | "500k" | "ilimitado"
         n_points = {
@@ -267,7 +268,7 @@ def get_load_over_time_by_experiment_id(experiment_id):
             "10k": 10000,
             "50k": 50000,
             "200k": 200000,
-            "500k": 500000,
+            "500k": 600000,
             "ilimitado": 1,
         }
         if numOfDataPointsPerExp not in n_points:
@@ -276,25 +277,31 @@ def get_load_over_time_by_experiment_id(experiment_id):
 
         readings = db_handler.get_load_over_time_by_experiment_id(experiment_id)
         n_points["ilimitado"] = len(readings)
+
         if len(readings) == 0:
             ui_api.error_alert("Experimento sem dados.")
             return {}
-        
+
         if len(readings) > n_points[numOfDataPointsPerExp]:
-            readings = np.array(readings)
             # pick `numOfDataPointsPerExp` points evenly spaced
             n_data_points = n_points[numOfDataPointsPerExp]
-            # round up len(readings) / n_data_points
-            readings = readings[
-                :: int(np.ceil(len(readings) / n_data_points))
-            ].tolist()
+            readings = readings[:: int(ceil(len(readings) / n_data_points))]
 
         readings_dict = [model_to_dict(reading) for reading in readings]
+
         # rename the "load" key to "y"
         for reading in readings_dict:
             reading["y"] = reading.pop("load")
+        print(time() - start)
         print(len(readings_dict))
-    return json.dumps(readings_dict, default=lambda x: x.__dict__)
+    start = time()
+    dumped = json.dumps(readings_dict, default=lambda x: x.__dict__)
+    print(time() - start)
+    try:
+        return dumped
+    except Exception as e:
+        print(e)
+        return {}
 
 
 @eel.expose
@@ -302,6 +309,7 @@ def get_load_over_position_by_experiment_id(experiment_id):
     """
     Returns a list of load over position data points for the experiment with the given id
     """
+    start = time()
     if app_state.state == StateE.RUNNING_EXPERIMENT:
         # truncate list on 10k points
         q = realTimeR.load_over_position_realtime_readings.queue
@@ -316,7 +324,6 @@ def get_load_over_position_by_experiment_id(experiment_id):
     else:
         config_params = exposed_core.load_config_params()
         numOfDataPointsPerExp = config_params["numOfDataPointsPerExp"]
-        print(numOfDataPointsPerExp)
         # TODO get at max `numOfDataPointsPerExp` points and return
         # The valid values are the following str "1k" | "10k" | "50k" | "200k" | "500k" | "ilimitado"
         n_points = {
@@ -324,7 +331,7 @@ def get_load_over_position_by_experiment_id(experiment_id):
             "10k": 10000,
             "50k": 50000,
             "200k": 200000,
-            "500k": 500000,
+            "500k": 600000,
             "ilimitado": 1,
         }
         if numOfDataPointsPerExp not in n_points:
@@ -337,15 +344,12 @@ def get_load_over_position_by_experiment_id(experiment_id):
         if len(readings) == 0:
             ui_api.error_alert("Experimento sem dados.")
             return {}
-        
+
         if len(readings) > n_points[numOfDataPointsPerExp]:
-            readings = np.array(readings)
             # pick `numOfDataPointsPerExp` points evenly spaced
             n_data_points = n_points[numOfDataPointsPerExp]
             # round up len(readings) / n_data_points
-            readings = readings[
-                :: int(np.ceil(len(readings) / n_data_points))
-            ].tolist()
+            readings = readings[:: int(ceil(len(readings) / n_data_points))]
 
         readings_dict = [model_to_dict(reading) for reading in readings]
         # rename the "z_pos" key to "x"
@@ -353,8 +357,16 @@ def get_load_over_position_by_experiment_id(experiment_id):
         for reading in readings_dict:
             reading["x"] = reading.pop("z_pos")
             reading["y"] = reading.pop("load")
+        print(time() - start)
         print(len(readings_dict))
-    return json.dumps(readings_dict, default=lambda x: x.__dict__)
+    start = time()
+    dumped = json.dumps(readings_dict, default=lambda x: x.__dict__)
+    print(time() - start)
+    try:
+        return dumped
+    except Exception as e:
+        print(e)
+        return {}
 
 
 """

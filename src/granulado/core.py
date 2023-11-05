@@ -24,7 +24,6 @@ from bolinho_api.ui import ui_api
 from bolinho_api.core import core_api
 
 
-
 class Granulado:
     def __init__(self, timeout: float = 2):
         self.__hardware: serial.Serial | None = None
@@ -32,7 +31,7 @@ class Granulado:
         self.__instant_position = 0
         self.__ping = 0
         self.__z_axis_length = 0
-        self.__delta_load = 0 # variation of the load measured in grams/second
+        self.__delta_load = 0  # variation of the load measured in grams/second
         self.__time_since_last_refresh = 0
         self.__last_is_connected = None
         self.__was_read = [True, True]
@@ -169,7 +168,6 @@ class Granulado:
         Send serial message to Granulado to get the latest current load
         """
         return self.__send_serial_message("d")
-
 
     def check_experiment_routine(self):
         checks = [

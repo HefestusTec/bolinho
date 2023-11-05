@@ -33,9 +33,6 @@ class ExperimentAPI:
         """
         return eel.setLoadPercentageJS(newPercentage)
 
-
-
-
     def set_delta_load(self, newPercentage: float):
         """
         Sets the current delta load percentage.
@@ -43,8 +40,6 @@ class ExperimentAPI:
         This variable is shown to the user in a progress bar. And is usually between 0-100.
         """
         return eel.setDeltaLoadPercentageJS(newPercentage)
-
-
 
     def get_readings(self) -> Readings:
         """
@@ -67,8 +62,6 @@ class ExperimentAPI:
         formatted_json = json.dumps(newValue, default=lambda x: x.__dict__)
 
         return eel.setReadingsJS(formatted_json)
-
-
 
 
 experiment_api = ExperimentAPI()
