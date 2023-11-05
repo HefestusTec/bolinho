@@ -99,11 +99,17 @@ export const getMaterialById = async (
 };
 
 export const getLoadOverTimeByExperimentId = async (
-    id: number, startIdx:number, endIdx: number
+    id: number,
+    startIdx: number,
+    endIdx: number
 ): Promise<DataPointType[]> => {
     try {
         return JSON.parse(
-            await eel.get_load_over_time_by_experiment_id(id, startIdx, endIdx)()
+            await eel.get_load_over_time_by_experiment_id(
+                id,
+                startIdx,
+                endIdx
+            )()
         ) as DataPointType[];
     } catch (error) {
         console.error(error);
@@ -116,11 +122,17 @@ export const getLoadOverTimeByExperimentId = async (
 };
 
 export const getLoadOverPositionByExperimentId = async (
-    id: number, startIdx:number, endIdx: number
+    id: number,
+    startIdx: number,
+    endIdx: number
 ): Promise<DataPointType[]> => {
     try {
         return JSON.parse(
-            await eel.get_load_over_position_by_experiment_id(id, startIdx, endIdx)()
+            await eel.get_load_over_position_by_experiment_id(
+                id,
+                startIdx,
+                endIdx
+            )()
         ) as DataPointType[];
     } catch (error) {
         console.error(error);
@@ -133,14 +145,10 @@ export const getLoadOverPositionByExperimentId = async (
 };
 
 export const removeExperimentFromVisualizationBuffer = async (
-    id: number,
-    plotType: boolean
+    id: number
 ): Promise<number> => {
-    // plotType (bool): The type of the plot, 0 for load over time and 1 for load over position
-
     try {
-        return await eel.remove_experiment_from_visualization_buffer(id,plotType)();
-        
+        return await eel.remove_experiment_from_visualization_buffer(id)();
     } catch (error) {
         console.error(error);
         toast.error(

@@ -38,7 +38,10 @@ import {
     defaultExperimentType,
     defaultMaterialType,
 } from "types/DataBaseTypes";
-import { getMaterialById, removeExperimentFromVisualizationBuffer } from "api/db-api";
+import {
+    getMaterialById,
+    removeExperimentFromVisualizationBuffer,
+} from "api/db-api";
 import useFetchExperiments from "hooks/useFetchExperiments";
 
 interface ExperimentsInspectorProps {}
@@ -95,10 +98,13 @@ const ExperimentsInspector: FunctionComponent<
         const id = myMaterial.id;
         return `[${id}] ${name}`;
     };
-    const removeActiveExperiment = async() => {
+    const removeActiveExperiment = async () => {
         if (activeExperimentId < 0) return;
 
-        if(await removeExperimentFromVisualizationBuffer(myExperiment.id) == 0) return
+        const removedSuccessfully =
+            await removeExperimentFromVisualizationBuffer(myExperiment.id);
+
+        if (!removedSuccessfully) return;
 
         let objectListCopy = [...selectedExperiments];
 

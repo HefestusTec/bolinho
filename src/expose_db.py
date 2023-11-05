@@ -292,7 +292,7 @@ def get_load_over_time_by_experiment_id(experiment_id, start_idx: int, end_idx: 
 
         if len(readings) == 0:
             ui_api.error_alert("Experimento sem dados.")
-            return {}
+            return "[]"
 
         if len(readings) > n_points[numOfDataPointsPerExp]:
             # pick `numOfDataPointsPerExp` points evenly spaced
@@ -313,11 +313,11 @@ def get_load_over_time_by_experiment_id(experiment_id, start_idx: int, end_idx: 
         return dumped
     except Exception as e:
         print(e)
-        return {}
+        return "[]"
 
 
 @eel.expose
-def get_load_over_position_by_experiment_id(experiment_id):
+def get_load_over_position_by_experiment_id(experiment_id, start_idx: int, end_idx: int):
     """
     Returns a list of load over position data points for the experiment with the given id
     """
@@ -360,7 +360,7 @@ def get_load_over_position_by_experiment_id(experiment_id):
 
         if len(readings) == 0:
             ui_api.error_alert("Experimento sem dados.")
-            return {}
+            return "[]"
 
         if len(readings) > n_points[numOfDataPointsPerExp]:
             # pick `numOfDataPointsPerExp` points evenly spaced
@@ -381,11 +381,11 @@ def get_load_over_position_by_experiment_id(experiment_id):
         return dumped
     except Exception as e:
         print(e)
-        return {}
+        return "[]"
 
 
 @eel.expose
-def remove_experiment_from_visualization_buffer(experiment_id, plot_type: bool):
+def remove_experiment_from_visualization_buffer(experiment_id):
     """
     Remove an experiment from the visualization buffer
 
@@ -395,17 +395,15 @@ def remove_experiment_from_visualization_buffer(experiment_id, plot_type: bool):
 
     Returns 1 if succeded and 0 if failed
     """
-    if plot_type == False:
-        if experiment_id in load_over_time_buffer:
-            del load_over_time_buffer[experiment_id]
-        else:
-            return 0
+    if experiment_id in load_over_time_buffer:
+        del load_over_time_buffer[experiment_id]
     else:
-        if experiment_id in load_over_position_buffer:
-            del load_over_position_buffer[experiment_id]
-        else:
-            return 0
+        return 0
+
+    if experiment_id in load_over_position_buffer:
+        del load_over_position_buffer[experiment_id]
+    else:
+        return 0
     return 1
 
 
-experiment_buffer

@@ -271,7 +271,7 @@ class DBHandler:
                     "z_axis_speed": 0.1 + 4 * i / 10,
                     "extra_info": "Extra info " + str(i),
                     "plot_color": "#" + str(random.randint(0, 999999)),
-                    "num_of_data_points": 0,
+                    "num_of_data_points": 50,
                 }
             )
 

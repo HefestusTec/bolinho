@@ -28,6 +28,7 @@ const ExperimentTable: FunctionComponent<ExperimentTableProps> = ({
     hideTitle,
 }) => {
     if (experiment === undefined) return <></>;
+
     return (
         <table>
             {!hideTitle && (
@@ -76,6 +77,10 @@ const ExperimentTable: FunctionComponent<ExperimentTableProps> = ({
             <tr>
                 <th>Tipo de exp.</th>
                 <th> {experiment.compress ? "Compressão" : "Expansão"}</th>
+            </tr>
+            <tr>
+                <th>Num. de pontos</th>
+                <th> {experiment.num_of_data_points}</th>
             </tr>
             <tr>
                 <th>Extra</th>

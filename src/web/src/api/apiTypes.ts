@@ -15,11 +15,14 @@
 // You should have received a copy of the GNU General Public License
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
 
+export type FontSizeType = "50%" | "75% " | "100%" | "125%" | "150%" | "200%";
+export type NumOfDataPointsType = "500" | "1k" | "10k" | "25k" | "50k";
+
 export interface GlobalConfigContextProps {
     configVersion: number; // Version number of the config file
     theme: "Claro" | "Escuro" | "Meia Noite"; // Claro | Escuro | Meia Noite
     animationSpeed: "Rápido" | "Normal" | "Desligado"; // Rápido | Normal | Desligado
-    fontSize: "50%" | "75% " | "100%" | "125%" | "150%" | "200%"; // 50% | 75% | 100% | 125% | 150% | 200%
+    fontSize: FontSizeType; // 50% | 75% | 100% | 125% | 150% | 200%
     enableZoom: boolean; // Should zooming be enable?
     zoomDelay: number; // How long [ms] should I press to zoom
     backgroundBlur: boolean; // Should it blur when zooming?
@@ -34,7 +37,7 @@ export interface GlobalConfigContextProps {
     animateGraph: boolean;
     zAxisLength: number; // Z axis length in millimeters
     knownWeight: number; // Known weight for calibration
-    numOfDataPointsPerExp: "500" | "1k" | "10k" | "25k" | "50k"; // Number of data points that are shown to the user per experiment
+    numOfDataPointsPerExp: NumOfDataPointsType; // Number of data points that are shown to the user per experiment
 }
 
 export const globalConfigDefault: GlobalConfigContextProps = {
