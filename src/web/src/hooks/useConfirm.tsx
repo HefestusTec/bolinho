@@ -40,8 +40,8 @@ const useConfirm = (
             .then((response) => {
                 if (response) onTrueFunc();
                 else {
-                    if(onFalseFunc) onFalseFunc();
-                };
+                    if (onFalseFunc) onFalseFunc();
+                }
             })
             .catch((err) => {
                 toast.error("Algo deu errado.");

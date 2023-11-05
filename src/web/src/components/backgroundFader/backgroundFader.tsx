@@ -38,7 +38,6 @@ const BackgroundFader: FunctionComponent<BackgroundFaderProps> = ({
     invisible = false,
 }) => {
     const [globalConfig] = useContext(GlobalConfigContext);
-
     const getBackgroundStyle = useMemo(() => {
         if (!fullscreen) {
             return {

@@ -29,20 +29,9 @@
     top: 0px;
     bottom: 0px;
     z-index: var(--fader_index);
-    animation: fade-in;
-    animation-duration: var(--animation_slow);
 }
 
 .blur {
     --blur_amount: 3px;
     backdrop-filter: blur(var(--blur_amount));
-}
-
-@keyframes fade-in {
-    from {
-        opacity: 0%;
-    }
-    to {
-        opacity: 100%;
-    }
 }

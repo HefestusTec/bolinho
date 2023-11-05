@@ -59,6 +59,7 @@ const GenerateDebugPoints: FunctionComponent<GenerateDebugPointsProps> = () => {
                 position: "fixed",
                 top: 0,
                 left: 0,
+                zIndex: 99999,
             }}
         >
             <button
