@@ -728,6 +728,68 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#conhecendo-os-componentes" class="md-nav__link">
+    Conhecendo os componentes
+  </a>
+  
+    <nav class="md-nav" aria-label="Conhecendo os componentes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#bolinho" class="md-nav__link">
+    Bolinho
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#granulado" class="md-nav__link">
+    Granulado
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sobre-a-documentacao" class="md-nav__link">
+    Sobre a documentação
+  </a>
+  
+    <nav class="md-nav" aria-label="Sobre a documentação">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pagina-estatica" class="md-nav__link">
+    Página estática
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pdf" class="md-nav__link">
+    PDF
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -765,7 +827,48 @@
 -->
 
 <h1 id="manual-do-usuario">Manual do usuário<a class="headerlink" href="#manual-do-usuario" title="Permanent link">&para;</a></h1>
-<p>Aqui você encontrará o manual do usuário da aplicação <strong>Bolinho</strong>.</p>
+<p>Aqui você encontrará o manual do usuário de todo o sistema do <strong>Bolinho</strong>.</p>
+<h2 id="conhecendo-os-componentes">Conhecendo os componentes<a class="headerlink" href="#conhecendo-os-componentes" title="Permanent link">&para;</a></h2>
+<p>O sistema Bolinho é composto por dois componentes diferentes, o <strong>Bolinho</strong> e o <strong>Granulado</strong></p>
+<h3 id="bolinho">Bolinho <img alt="Logo bolinho" src="../resources/LogoBolinho32.png" /><a class="headerlink" href="#bolinho" title="Permanent link">&para;</a></h3>
+<p>Bolinho é a <strong>interface humana</strong> responsável por orquestrar todo o funcionamento do sistema Bolinho.</p>
+<p><img alt="Página inicio" src="../resources/mainPageBolinho.png" /></p>
+<p>Bolinho é uma aplicação padrão de computador, e atualmente suporta apenas Linux como seu sistema operacional.</p>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>Bolinho foi testado na distribuição <a href="http://www.orangepi.org/html/hardWare/computerAndMicrocontrollers/service-and-support/Orange-Pi-PC.html">Debian da OrangePI</a> no hardware <a href="http://www.orangepi.org/html/hardWare/computerAndMicrocontrollers/details/Orange-Pi-5.html">OrangePI 5 8Gb RAM</a></p>
+</div>
+<p>Para informações sobre a sua configuração visite a página <a href="configuracao/">Manual do usuário - configuração</a>.</p>
+<p>O repositório com o código fonte do bolinho pode ser encontrado em <a href="https://github.com/HefestusTec/bolinho">https://github.com/HefestusTec/bolinho</a> junto com sua documentação.</p>
+<h3 id="granulado">Granulado<a class="headerlink" href="#granulado" title="Permanent link">&para;</a></h3>
+<p><img alt="Granulado" src="../resources/granuladoImage.png" /></p>
+<p>Granulado é o <em>firmware</em> embarcado do sistema, este é responsável pela interface com o <em>hardware</em> e seu <em>driver</em>.</p>
+<p>O <em>firmware</em> foi escrito para atuar no <a href="https://www.espressif.com/en/products/socs/esp32-s3">ESP32-S3</a> e utiliza um USB para sua comunicação serial com o Bolinho. Mais informações especificas sobre o embarcado podem ser encontradas em <a href="../embedded/">embedded</a>.</p>
+<p>Para informações sobre a sua configuração visite a página <a href="configuracao/">Manual do usuário - configuração</a>.</p>
+<p>O repositório com o código fonte do bolinho pode ser encontrado em <a href="https://github.com/HefestusTec/granulado">https://github.com/HefestusTec/granulado</a>.</p>
+<h2 id="sobre-a-documentacao">Sobre a documentação<a class="headerlink" href="#sobre-a-documentacao" title="Permanent link">&para;</a></h2>
+<p>A documentação é uma coleção completa de todas as informações pertinentes ao sistema Bolinho. Ela está escrita predominantemente em <strong>Inglês</strong> e possui o tópico <strong>Manual do Usuário</strong> escrito em <strong>Português</strong>.</p>
+<p>Toda a documentação do Bolinho está disponível em dois formatos <code>Página estática</code> e <code>PDF</code></p>
+<div class="admonition warning">
+<p class="admonition-title">Atenção</p>
+<p>A Hefestus não se compromete em manter os arquivos relacionados a documentação acessiveis, caso deseje mantê-los você pode fazer uma cópia local de toda a documentação</p>
+</div>
+<h3 id="pagina-estatica">Página estática<a class="headerlink" href="#pagina-estatica" title="Permanent link">&para;</a></h3>
+<p><strong>O que são?</strong> Paginas estáticas são páginas que podem ser abertas diretamente sem a necessidade de um servidor para servi-las, entretanto caso você queira também pode servi-la VOCÊ MESMO! Isso garante que todo o conteúdo será somente acessível a você / empresa.</p>
+<div class="admonition warning">
+<p class="admonition-title">Atenção</p>
+<p>Algumas ferramentas como por exemplo a busca, apenas estão disponíveis se a página estiver sendo servida.</p>
+</div>
+<p><strong>Quais os benefícios?</strong> Páginas estáticas permitem diferentes funcionalidades, não ficando restringido a um formato de folha de papel, e por se tratar de uma página minimamente responsiva permite que todo o trabalho de renderizar os conteúdos sejam feitos no momento de compilação do código.</p>
+<p><strong>Onde encontro os arquivos?</strong> Os arquivos relacionados a página estática podem ser encontrados na <em>branch</em> <a href="https://github.com/HefestusTec/bolinho/tree/gh-pages">gh-pages</a> do repositório do Bolinho.</p>
+<p><strong>Como rodar?</strong> Para ver os conteúdos de uma página estática basta abrir o arquivo <code>index.html</code> encontrado na <em>root</em> do diretório com seu navegador de preferência! Ex.: <a href="https://www.google.com/intl/pt-BR/chrome/">Google Chrome</a>, <a href="https://www.microsoft.com/pt-br/edge">Microsoft Edge</a>, <a href="https://www.mozilla.org/pt-BR/firefox/browsers/">Firefox</a> etc.</p>
+<h3 id="pdf">PDF<a class="headerlink" href="#pdf" title="Permanent link">&para;</a></h3>
+<p>Esta documentação também gera automaticamente uma versão em PDF, o qual você poderá usar para compatibilidade retroativa com sua documentação já existente!</p>
+<p>O PDF pode ser encontrado <a href="https://github.com/HefestusTec/bolinho/blob/gh-pages/pdf/document.pdf">aqui</a></p>
+<div class="admonition warning">
+<p class="admonition-title">Atenção</p>
+<p>Talvez esse link não esteja mais disponível por isso mantenha uma cópia do PDF localmente.</p>
+</div>
 
 
 
