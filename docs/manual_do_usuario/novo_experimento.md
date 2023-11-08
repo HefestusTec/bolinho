@@ -20,3 +20,18 @@
 # Novo experimento
 
 Como criar um novo experimento.
+
+## Criando um material novo
+
+Pressione o botão `Novo` no componente **Seletor de experimentos**
+
+![Alt text](image-4.png){ width="500" }
+
+Ao pressionar o  você será apresentado o seguinte prompt de **Criação de Material**
+
+![Alt text](image-3.png){ width="500" }
+
+Preencha com os dados de seu material e pressione `Criar`.
+
+!!! note
+    Durante um experimento o plote de dados deve ser lido apenas como uma **sugestão** do resultado, já que enquanto um experimento está sendo executado a **quantidade de pontos apresentados no gráfico é reduzido** para poder alocar mais recursos ao experimento em si.
