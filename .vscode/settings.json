@@ -9,6 +9,6 @@
     "[python]": {
         "editor.defaultFormatter": "ms-vsliveshare.vsliveshare"
     },
-    "cSpell.words": ["baudrate", "microcontroller"],
+    "cSpell.words": ["baudrate", "Hefestus", "microcontroller"],
     "sqltools.useNodeRuntime": true
 }

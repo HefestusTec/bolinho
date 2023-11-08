@@ -1,7 +1,7 @@
 {
     "scripts": {
         "startWeb": "cd src/web && npm run start",
-        "start": "cd src/web && npm run build && cd .. && python3 main.py",
+        "start": "cd src/web && npm run build && cd .. && python main.py",
         "serve": "concurrently --kill-others \"cd src && python main.py -d\" \"npm run startWeb\"",
         "startEel": "cd src && python main.py",
         "buildWeb": "cd src/web && npm run build",
