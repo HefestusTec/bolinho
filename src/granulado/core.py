@@ -104,6 +104,7 @@ class Granulado:
 
             if response == "p":
                 self.__ping = time.time()
+
             elif response == "e":
                 self.__error(value)
             elif response == "r":
@@ -111,6 +112,7 @@ class Granulado:
                 self.__was_read[0] = False
             elif response == "g":
                 self.__instant_position = int(value)
+                print(self.__instant_position)
                 self.__was_read[1] = False
             elif response == "j":
                 self.__z_axis_length = int(value)
@@ -133,10 +135,10 @@ class Granulado:
         """
         Sends messages to Granulado to get the current load and position, waits for the response and returns the values
         """
-        import random
+        #import random
 
-        self.__instant_position += 1
-        return random.randrange(0, 100), self.__instant_position
+        #self.__instant_position += 1
+        #return random.randrange(0, 100), self.__instant_position
 
         if self.__send_serial_message("r"):
             if self.__send_serial_message("g"):
