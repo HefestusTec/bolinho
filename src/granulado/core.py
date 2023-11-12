@@ -205,6 +205,7 @@ class Granulado:
             int(config.get("absoluteMaximumLoad", 0)) > 0,
             int(config.get("absoluteMaximumTravel", 0)) > 0,
             int(config.get("absoluteMaximumTime", 0)) > 0,
+            int(config.get("absoluteMaximumDeltaLoad", 0)) > 0,
             int(config.get("zAxisLength", 0)) > 0,
             int(config.get("knownWeight", 0)) > 0,
             len(config.get("port", "")) > 0,
