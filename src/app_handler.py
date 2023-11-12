@@ -160,7 +160,7 @@ class AppHandler:
         realTimeR.load_over_time_realtime_readings = Queue()
         realTimeR.load_over_position_realtime_readings = Queue()
 
-    def end_experiment(self):
+    async def end_experiment(self):
         """
         Handles writing the new experiment to persistent memory
         """

@@ -25,21 +25,21 @@ from bolinho_api.helper import DictToObject
 
 
 class ExperimentAPI:
-    def set_time(self, newPercentage: float):
+    def set_time(self, newTime: float):
         """
         Sets the current time percentage.
 
         This variable is shown to the user in a progress bar. And is usually between 0-100.
         """
-        return eel.setLoadPercentageJS(newPercentage)
+        return eel.setTimeJS(newTime)
 
-    def set_delta_load(self, newPercentage: float):
+    def set_delta_load(self, newDeltaLoad: float):
         """
         Sets the current delta load percentage.
 
         This variable is shown to the user in a progress bar. And is usually between 0-100.
         """
-        return eel.setDeltaLoadPercentageJS(newPercentage)
+        return eel.setDeltaLoadJS(newDeltaLoad)
 
     def get_readings(self) -> Readings:
         """

@@ -33,7 +33,6 @@ const ExperimentDescription: FunctionComponent<ExperimentDescriptionProps> = ({
 }) => {
     const makeMaterialText = () => {
         if (experiment === undefined) return;
-
         return (
             <>
                 <MaterialTable material={material} />

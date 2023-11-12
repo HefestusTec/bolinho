@@ -157,6 +157,7 @@ def post_experiment(data: dict = {}):
         "extra_info": experiment.get(
             "extra_info", "Informações adicionais não informadas"
         ),
+        "num_of_data_points": int(experiment.get("num_of_data_points",0)),
     }
     return db_handler.post_experiment(clean_experiment)
 

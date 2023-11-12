@@ -217,9 +217,10 @@ class Granulado:
         {'- Força máxima absoluta' if not checks[0] else ''}
         {'- Deslocamento máximo absoluto' if not checks[1] else ''}
         {'- Tempo máximo absoluto' if not checks[2] else ''}
-        {'- Comprimento do eixo Z' if not checks[3] else ''}
-        {'- Peso conhecido' if not checks[4] else ''}
-        {'- Porta' if not checks[5] else ''}
+        {'- Delta carga máxima' if not checks[3] else ''}
+        {'- Comprimento do eixo Z' if not checks[4] else ''}
+        {'- Peso conhecido' if not checks[5] else ''}
+        {'- Porta' if not checks[6] else ''}
         """
 
         ui_api.prompt_user(

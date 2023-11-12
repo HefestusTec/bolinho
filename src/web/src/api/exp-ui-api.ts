@@ -29,3 +29,26 @@ export function toastSuccessJS(msg: any) {
 try {
     window.eel.expose(toastSuccessJS, "toastSuccessJS");
 } catch (error) {}
+
+export function toastLoadingJS(msg: any) {
+    return toast.loading(msg);
+}
+try {
+    window.eel.expose(toastLoadingJS, "toastLoadingJS");
+} catch (error) {}
+
+export function toastUpdateJS(msg: string, success: boolean, id: number) {
+    toast.update(id, {
+        render: msg,
+        type: success ? 'success' : "error",
+        isLoading: false,
+        autoClose: 5000,
+        pauseOnFocusLoss: true,
+        draggable: true,
+        pauseOnHover: true,
+        closeOnClick: true,
+    });
+}
+try {
+    window.eel.expose(toastUpdateJS, "toastUpdateJS");
+} catch (error) {}

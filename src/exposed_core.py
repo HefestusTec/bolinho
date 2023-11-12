@@ -30,6 +30,8 @@ from DBHandler import db_handler
 from app_handler import bolinho_app
 import realTimeR
 
+from asyncio import run
+
 _CONFIG_PARAMS_PATH = "persist/configParams.json"
 
 
@@ -168,13 +170,24 @@ def end_experiment_routine():
 
     Returns 1 if succeeded.
     """
+    print("here1")
     stopped = stop_z_axis()
+    
+    print("here2")
     if not stopped:
         ui_api.error_alert(
             "Não foi possível parar o eixo Z. O Granulado está conectado?",
         )
-    bolinho_app.end_experiment()
-    core_api.go_to_home_page()
+    print("here3")
+
+    def save_and_end(toast_id):
+        bolinho_app.end_experiment()
+        run(bolinho_app.end_experiment())
+        core_api.go_to_home_page()
+        ui_api.update_alert("Salvo com sucesso!", True, toast_id)
+
+    ui_api.loading_alert("AGUARDE! Salvando no banco...", save_and_end)
+
     return 1
 
 
