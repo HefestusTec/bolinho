@@ -20,25 +20,6 @@ import { eel } from "./backend-api";
 import { MaterialType, BodyType, ExperimentType } from "types/DataBaseTypes";
 import { DataPointType } from "types/DataPointTypes";
 
-/*
-get_materials
-get_experiments
-
-
-get_experiments_by_material_id
-
-
-get_body_by_id
-get_experiment_by_id
-get_material_by_id
-
-
-get_load_over_time_by_experiment_id -> {x, y}[]
-get_load_over_position_by_experiment_id -> {x, y}[]
-
-
-*/
-
 export const getMaterialsDB = async (): Promise<MaterialType[]> => {
     try {
         return JSON.parse(await eel.get_materials()()) as MaterialType[];
@@ -118,22 +99,18 @@ export const getMaterialById = async (
 };
 
 export const getLoadOverTimeByExperimentId = async (
-    id: number
+    id: number,
+    startIdx: number,
+    endIdx: number
 ): Promise<DataPointType[]> => {
     try {
-        alert("getLoadOverTimeByExperimentId");
-        // log how long it takes
-        let start = new Date().getTime();
-        let return_value = JSON.parse(
-            await eel.get_load_over_time_by_experiment_id(id)()
+        return JSON.parse(
+            await eel.get_load_over_time_by_experiment_id(
+                id,
+                startIdx,
+                endIdx
+            )()
         ) as DataPointType[];
-        let end = new Date().getTime();
-        alert(
-            "Call to getLoadOverTimeByExperimentId took " +
-                (end - start) +
-                " milliseconds."
-        );
-        return return_value;
     } catch (error) {
         console.error(error);
         toast.error(
@@ -145,21 +122,18 @@ export const getLoadOverTimeByExperimentId = async (
 };
 
 export const getLoadOverPositionByExperimentId = async (
-    id: number
+    id: number,
+    startIdx: number,
+    endIdx: number
 ): Promise<DataPointType[]> => {
     try {
-        alert("getLoadOverPositionByExperimentId");
-        let start = new Date().getTime();
-        let return_value = await JSON.parse(
-            await eel.get_load_over_position_by_experiment_id(id)()
+        return JSON.parse(
+            await eel.get_load_over_position_by_experiment_id(
+                id,
+                startIdx,
+                endIdx
+            )()
         ) as DataPointType[];
-        let end = new Date().getTime();
-        alert(
-            "Call to getLoadOverPositionByExperimentId took " +
-                (end - start) +
-                " milliseconds."
-        );
-        return return_value;
     } catch (error) {
         console.error(error);
         toast.error(
@@ -167,5 +141,20 @@ export const getLoadOverPositionByExperimentId = async (
                 id
         );
         return [];
+    }
+};
+
+export const removeExperimentFromVisualizationBuffer = async (
+    id: number
+): Promise<number> => {
+    try {
+        return await eel.remove_experiment_from_visualization_buffer(id)();
+    } catch (error) {
+        console.error(error);
+        toast.error(
+            "Não foi possível remover o seguinte experiment do buffer de visualização:  " +
+                id
+        );
+        return 0;
     }
 };

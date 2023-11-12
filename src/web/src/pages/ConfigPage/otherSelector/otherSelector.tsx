@@ -15,28 +15,49 @@
 // You should have received a copy of the GNU General Public License
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
 
-import React, { useContext } from "react";
+import React, { FunctionComponent, useContext } from "react";
 
 import ZoomComponent from "../../../components/zoomComponent/zoomComponent";
 import ContainerComponent from "../../../components/containerComponent/containerComponent";
 import GlobalConfigContext from "../../../contexts/globalConfigContext";
 import CustomListSelector from "../../../components/customSubComponents/customListSelector/customListSelector";
+import { FontSizeType, NumOfDataPointsType } from "api/apiTypes";
 
-export default function OtherSelector({ className, scaleOrigin }) {
+interface OtherSelectorProps {
+    className?: string;
+    scaleOrigin: string;
+}
+
+const OtherSelector: FunctionComponent<OtherSelectorProps> = ({
+    className,
+    scaleOrigin,
+}) => {
     const [globalConfig, setGlobalConfig] = useContext(GlobalConfigContext);
 
-    const fontSizeCallback = (key) => {
-        setGlobalConfig({ ...globalConfig, fontSize: key });
+    const fontSizeCallback = (key: string) => {
+        setGlobalConfig({ ...globalConfig, fontSize: key as FontSizeType });
     };
 
-    const setNumOfDataPoints = (key) => {
-        setGlobalConfig({ ...globalConfig, numOfDataPointsPerExp: key });
+    const setNumOfDataPoints = (key: string) => {
+        setGlobalConfig({
+            ...globalConfig,
+            numOfDataPointsPerExp: key as NumOfDataPointsType,
+        });
     };
     return (
         <ZoomComponent className={className} scaleOrigin={scaleOrigin}>
             <ContainerComponent headerText="Outros">
                 <CustomListSelector
-                    keys={["50%", "75%", "100%", "125%", "150%", "200%"]}
+                    keys={
+                        [
+                            "50%",
+                            "75%",
+                            "100%",
+                            "125%",
+                            "150%",
+                            "200%",
+                        ] as FontSizeType[]
+                    }
                     clickCallBack={fontSizeCallback}
                     selected={globalConfig.fontSize}
                 >
@@ -44,7 +65,15 @@ export default function OtherSelector({ className, scaleOrigin }) {
                 </CustomListSelector>
 
                 <CustomListSelector
-                    keys={["1k", "10k", "50k", "200k", "500k", "ilimitado"]}
+                    keys={
+                        [
+                            "500",
+                            "1k",
+                            "10k",
+                            "25k",
+                            "50k",
+                        ] as NumOfDataPointsType[]
+                    }
                     clickCallBack={setNumOfDataPoints}
                     selected={globalConfig.numOfDataPointsPerExp}
                 >
@@ -53,4 +82,6 @@ export default function OtherSelector({ className, scaleOrigin }) {
             </ContainerComponent>
         </ZoomComponent>
     );
-}
+};
+
+export default OtherSelector;

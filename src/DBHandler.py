@@ -94,10 +94,11 @@ class Experiment(BaseModel):
     max_load = FloatField()
     max_travel = FloatField()
     max_time = FloatField()
+    num_of_data_points = IntegerField()
     compress = BooleanField()
     z_axis_speed = FloatField()
-    extra_info = CharField()
     plot_color = CharField()
+    extra_info = CharField()
 
 
 class Reading(BaseModel):
@@ -199,6 +200,13 @@ class DBHandler:
 
     def batch_post_reading(self, data: list):
         chunk_size = 10000
+        data_size = len(data)
+        # update experiment num_of_data_points
+        experiment_id = data[0]["experiment_id"]
+        experiment = Experiment.get(Experiment.id == experiment_id)
+        experiment.num_of_data_points = data_size
+        experiment.save()
+        # insert data in chunks
         for i in range(0, len(data), chunk_size):
             Reading.insert_many(data[i : i + chunk_size]).execute()
 
@@ -262,6 +270,7 @@ class DBHandler:
                     "z_axis_speed": 0.1 + 4 * i / 10,
                     "extra_info": "Extra info " + str(i),
                     "plot_color": "#" + str(random.randint(0, 999999)),
+                    "num_of_data_points": 50,
                 }
             )
 

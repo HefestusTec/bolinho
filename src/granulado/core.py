@@ -202,11 +202,11 @@ class Granulado:
 
         config = load_config_params()
         checks = [
-            config.get("absoluteMaximumLoad", 0) > 0,
-            config.get("absoluteMaximumTravel", 0) > 0,
-            config.get("absoluteMaximumTime", 0) > 0,
-            config.get("zAxisLength", 0) > 0,
-            config.get("knownWeight", 0) > 0,
+            int(config.get("absoluteMaximumLoad", 0)) > 0,
+            int(config.get("absoluteMaximumTravel", 0)) > 0,
+            int(config.get("absoluteMaximumTime", 0)) > 0,
+            int(config.get("zAxisLength", 0)) > 0,
+            int(config.get("knownWeight", 0)) > 0,
             len(config.get("port", "")) > 0,
         ]
         if all(checks):
@@ -252,7 +252,7 @@ class Granulado:
         return self.__send_serial_message(f"m{millimeters}")
 
     def tare_load(self):
-        return delf.__send_serial_message("@")
+        return self.__send_serial_message("@")
 
     def calibrate_z_axis(self):
         """
