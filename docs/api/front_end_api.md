@@ -167,6 +167,48 @@ ___
 
 ___
 
+### loading_alert(text, callback_func)
+!!! quote "loading_alert(text, callback_func)"
+
+    Uses [React-Toastify](https://github.com/fkhadra/react-toastify) to create an loading alert.
+
+    Returns the Toast ID **Asynchronously** to a `callback_func`.
+
+    Must be used together with `update_alert`.
+
+    ``` python title="Python usage example"
+    def save_and_end(toast_id):
+        bolinho_app.end_experiment()
+        run(bolinho_app.end_experiment())
+        core_api.go_to_home_page()
+        ui_api.update_alert("Salvo com sucesso!", True, toast_id)
+
+    ui_api.loading_alert("AGUARDE! Salvando no banco...", save_and_end)
+    ```
+
+___
+
+### update_alert(text, success, id)
+!!! quote "update_alert(text, success, id)"
+
+    Uses [React-Toastify](https://github.com/fkhadra/react-toastify) to update an existing alert.
+
+
+    If success is set to true it displays a success other wise shows an error
+
+
+    ``` python title="Python usage example"
+    def save_and_end(toast_id):
+        bolinho_app.end_experiment()
+        run(bolinho_app.end_experiment())
+        core_api.go_to_home_page()
+        ui_api.update_alert("Salvo com sucesso!", True, toast_id)
+
+    ui_api.loading_alert("AGUARDE! Salvando no banco...", save_and_end)
+    ```
+
+___
+
 ### prompt_user(description, options, callback_func)
 !!! quote "prompt_user(description, options, callback_func)"
     Prompts the user with a 'description', and shows the 'options' to the user.
