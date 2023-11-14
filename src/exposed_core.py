@@ -30,7 +30,6 @@ from DBHandler import db_handler
 from app_handler import bolinho_app
 import realTimeR
 
-from asyncio import run
 
 _CONFIG_PARAMS_PATH = "persist/configParams.json"
 
@@ -119,18 +118,13 @@ def start_experiment_routine(experiment_id: int):
         )
         return 0
 
-    if not bolinho_app.gran.stop_z_axis():
-        ui_api.error_alert(
-            "Não foi possível iniciar o experimento. O eixo Z não foi parado. O bolinho_app.gran está conectado?",
-        )
-        return 0
-
     config_params = load_config_params()
 
     globalMaxLoad = config_params["absoluteMaximumLoad"]
     globalMaxTravel = config_params["absoluteMaximumTravel"]
     globalMaxTime = config_params["absoluteMaximumTime"]
     globalMaximumDeltaLoad = config_params["absoluteMaximumDeltaLoad"]
+    globalZAxisLength = config_params["zAxisLength"]
 
     if experiment.max_load > globalMaxLoad:
         ui_api.error_alert(
@@ -156,8 +150,15 @@ def start_experiment_routine(experiment_id: int):
         )
         return 0
 
+    if globalZAxisLength <= 0:
+        ui_api.error_alert(
+            f"Não foi possível iniciar o experimento. O tamanho do Eixo-z não pôde ser carregado. Por favor verifique os valores!",
+        )
+        return 0
+    
+    bolinho_app.set_granulado_configs(globalMaxLoad, globalMaxTravel, globalMaximumDeltaLoad, globalZAxisLength)
     core_api.go_to_experiment_page()
-    bolinho_app.start_experiment(experiment_id)
+    bolinho_app.start_experiment(experiment_id, compress, globalZAxisLength)
     return 1
 
 
@@ -182,7 +183,6 @@ def end_experiment_routine():
 
     def save_and_end(toast_id):
         bolinho_app.end_experiment()
-        run(bolinho_app.end_experiment())
         core_api.go_to_home_page()
         ui_api.update_alert("Salvo com sucesso!", True, toast_id)
 
@@ -259,17 +259,11 @@ def connect_to_port(port: str):
     if port == "":
         ui_api.error_alert("Nenhuma porta foi selecionada.")
         return False
-    retries: int = 0
-    while not bolinho_app.gran.connect(port, 115200):
-        print(f"Connecting to {port}@115200...")
+    if bolinho_app.gran.connect(port, 115200):
         eel.sleep(1)
-        if retries > 5:
-            return False
-        retries += 1
-
-    eel.sleep(1)
-    return bolinho_app.gran.check_granulado_is_connected()
-
+        return bolinho_app.gran.check_granulado_is_connected()
+    
+    return False
 
 @eel.expose
 def disconnect_granulado():

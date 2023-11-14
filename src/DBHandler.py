@@ -201,6 +201,8 @@ class DBHandler:
     def batch_post_reading(self, data: list):
         chunk_size = 10000
         data_size = len(data)
+        if data_size < 1:
+            return
         # update experiment num_of_data_points
         experiment_id = data[0]["experiment_id"]
         experiment = Experiment.get(Experiment.id == experiment_id)

@@ -32,66 +32,68 @@ temp_ens
 # Instruction Set
 ## Bolinho -> Granulado
 
-* `p` -> Ping
+* `p` -> Ping OK
 
-* `m[str]` -> Moves stepper motor x millimeters.
+* `m[str]` -> Moves stepper motor x millimeters. OK
 > str is an `int` in `string` format.
 
-* `s` -> Stop
+* `s` -> Stop OK
 
-* `t` -> Move to top
+* `t` -> Move to top OK
 
-* `g` -> Get motor position millimeters.
+* `g` -> Get motor position millimeters. OK
 
-* `r` -> Get instantaneous reading.
+* `r` -> Get instantaneous reading. OK
 
-* `@` -> Tare load cell
+* `@` -> Tare load cell OK
 
-* `w` -> Calibrate known weight
+* `w` -> Calibrate known weight OK
 
-* `x[str]` -> Set known weight
+* `x[str]` -> Set known weight OK
 > str is an `int` with the weight in `grams` in `string` format.
 
-* `y[str]` -> Set z-axis length
+* `y[str]` -> Set z-axis length OK
 > str is an `int` with the length of the z-axis in `millimeters` in `string` format.
 
-* `j` -> Get z-axis length
+* `j` -> Get z-axis length OK
 
-* `z` -> Calibrate z-axis
+* `z` -> Calibrate z-axis OK
 
-* `d` -> Get delta load
+* `d` -> Get delta load OK
 
-* `l[str]` -> Set max load
+* `l[str]` -> Set max load OK
 > str is an `int` with the maximum experiment load in `grams` in `string` format.
 
-* `v[str]` -> Set max travel
+* `v[str]` -> Set max travel OK
 > str is an `int` with the maximum experiment travel in `mm` in `string` format.
 
-* `a[str]` -> Set max delta load
+* `a[str]` -> Set max delta load OK
 > str is an `int` with the maximum experiment delta load in `grams / second` in `string` format.
+
+* `-` -> NOP OK
 
 
 ## Granulado -> Bolinho
 
-* `p` -> Ping Response
+* `p` -> Ping Response OK
 
-* `e[str]` -> Erro.
+* `e[str]` -> Erro. OK
 > str is an `string` with the description of the error.
 
-* `r[str]` -> Returns current reading
+* `r[str]` -> Returns current reading OK
 > str is an `int` in `grams` in `string` format.
 
-* `g[str]` -> Returns current position in millimeters
+* `g[str]` -> Returns current position in millimeters OK
 > str is an `int` in `string` format.
 
-* `j[str]` -> Returns z-axis length
+* `j[str]` -> Returns z-axis length OK
 > str is an `int` in `string` format.
 
-* `b` -> Bottom interrupt was triggered
+* `b` -> Bottom interrupt was triggered OK
 
-* `t` -> Top interrupt was triggered
+* `t` -> Top interrupt was triggered OK
 
-* `d[str]` -> Returns delta load
+* `d[str]` -> Returns delta load OK
 > str is an `int` in `string` format.
 
-* `s` -> Response to the stop command
+* `s` -> Response to the stop command OK

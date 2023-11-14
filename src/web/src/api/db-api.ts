@@ -100,16 +100,12 @@ export const getMaterialById = async (
 
 export const getLoadOverTimeByExperimentId = async (
     id: number,
-    startIdx: number,
-    endIdx: number
+    startX: number,
+    endX: number
 ): Promise<DataPointType[]> => {
     try {
         return JSON.parse(
-            await eel.get_load_over_time_by_experiment_id(
-                id,
-                startIdx,
-                endIdx
-            )()
+            await eel.get_load_over_time_by_experiment_id(id, startX, endX)()
         ) as DataPointType[];
     } catch (error) {
         console.error(error);

@@ -157,7 +157,7 @@ def post_experiment(data: dict = {}):
         "extra_info": experiment.get(
             "extra_info", "Informações adicionais não informadas"
         ),
-        "num_of_data_points": int(experiment.get("num_of_data_points",0)),
+        "num_of_data_points": int(experiment.get("num_of_data_points", 0)),
     }
     return db_handler.post_experiment(clean_experiment)
 
@@ -248,14 +248,13 @@ def delete_experiment_by_id(experiment_id):
 
 
 @eel.expose
-def get_load_over_time_by_experiment_id(experiment_id, start_idx: int, end_idx: int):
+def get_load_over_time_by_experiment_id(experiment_id: int, start_x: int, end_x: int):
     """
-    Returns a list of load over time data points for the experiment with the given id, the number of points is allways clamped to a max size
+    Returns a list of load over time data points for the experiment with the given id, the number of points is always clamped to a max size
 
 
     If start_idx == -1 or end_idx == -1 then return the whole data
     """
-    start = time()
     if app_state.state == StateE.RUNNING_EXPERIMENT:
         # TODO: truncate list on 10k points
         q = realTimeR.load_over_time_realtime_readings.queue
@@ -288,7 +287,16 @@ def get_load_over_time_by_experiment_id(experiment_id, start_idx: int, end_idx: 
             ] = db_handler.get_load_over_time_by_experiment_id(experiment_id)
 
         readings = load_over_time_buffer[experiment_id]
-        if start_idx != -1 and end_idx != -1:
+        if start_x != -1 and end_x != -1:
+            # get index where value x is greater than or equal to start_idx
+            start_idx = next(
+                (i for i, reading in enumerate(readings) if reading.x >= start_x),
+                None,
+            )
+            # get index where value x is greater than or equal to end_idx
+            end_idx = next(
+                (i for i, reading in enumerate(readings) if reading.x >= end_x), None
+            )
             readings = readings[start_idx:end_idx]
 
         if len(readings) == 0:
@@ -305,11 +313,7 @@ def get_load_over_time_by_experiment_id(experiment_id, start_idx: int, end_idx: 
         # rename the "load" key to "y"
         for reading in readings_dict:
             reading["y"] = reading.pop("load")
-        print(time() - start)
-        print(len(readings_dict))
-    start = time()
     dumped = json.dumps(readings_dict, default=lambda x: x.__dict__)
-    print(time() - start)
     try:
         return dumped
     except Exception as e:
@@ -318,16 +322,17 @@ def get_load_over_time_by_experiment_id(experiment_id, start_idx: int, end_idx: 
 
 
 @eel.expose
-def get_load_over_position_by_experiment_id(experiment_id, start_idx: int, end_idx: int):
+def get_load_over_position_by_experiment_id(experiment_id, start_x: int, end_x: int):
     """
     Returns a list of load over position data points for the experiment with the given id
     """
-    start = time()
+    print(app_state.state)
     if app_state.state == StateE.RUNNING_EXPERIMENT:
-        # truncate list on 10k points
+        
         q = realTimeR.load_over_position_realtime_readings.queue
         n_points = len(q)
         q_list = list(q)
+        print(n_points, len(q_list))
         # pick 10k points evenly spaced
         if n_points > 10000:
             readings_dict = q_list[:: ceil(n_points / 10000)]
@@ -337,8 +342,6 @@ def get_load_over_position_by_experiment_id(experiment_id, start_idx: int, end_i
     else:
         config_params = exposed_core.load_config_params()
         numOfDataPointsPerExp = config_params["numOfDataPointsPerExp"]
-        # TODO get at max `numOfDataPointsPerExp` points and return
-        # The valid values are the following str "500" | "1k" | "10k" | "25k" | "50k"
         n_points = {
             "500": 500,
             "1k": 1000,
@@ -356,7 +359,16 @@ def get_load_over_position_by_experiment_id(experiment_id, start_idx: int, end_i
             ] = db_handler.get_load_over_time_by_experiment_id(experiment_id)
 
         readings = load_over_position_buffer[experiment_id]
-        if start_idx != -1 and end_idx != -1:
+        if start_x != -1 and end_x != -1:
+            # get index where value x is greater than or equal to start_idx
+            start_idx = next(
+                (i for i, reading in enumerate(readings) if reading.x >= start_x),
+                None,
+            )
+            # get index where value x is greater than or equal to end_idx
+            end_idx = next(
+                (i for i, reading in enumerate(readings) if reading.x >= end_x), None
+            )
             readings = readings[start_idx:end_idx]
 
         if len(readings) == 0:
@@ -373,12 +385,10 @@ def get_load_over_position_by_experiment_id(experiment_id, start_idx: int, end_i
         # rename the "load" key to "y"
         for reading in readings_dict:
             reading["y"] = reading.pop("load")
-        print(time() - start)
-        print(len(readings_dict))
-    start = time()
-    dumped = json.dumps(readings_dict, default=lambda x: x.__dict__)
-    print(time() - start)
+    
     try:
+        dumped = json.dumps(readings_dict, default=lambda x: x.__dict__)
+
         return dumped
     except Exception as e:
         print(e)
@@ -394,17 +404,10 @@ def remove_experiment_from_visualization_buffer(experiment_id):
         experiment_id (int): The id of the experiment to be removed
         plot_type (bool): The type of the plot, 0 for load over time and 1 for load over position
 
-    Returns 1 if succeded and 0 if failed
+    Returns 1
     """
     if experiment_id in load_over_time_buffer:
         del load_over_time_buffer[experiment_id]
-    else:
-        return 0
-
     if experiment_id in load_over_position_buffer:
         del load_over_position_buffer[experiment_id]
-    else:
-        return 0
     return 1
-
-

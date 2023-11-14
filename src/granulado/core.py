@@ -34,7 +34,7 @@ class Granulado:
         self.__delta_load = 0  # variation of the load measured in grams/second
         self.__time_since_last_refresh = 0
         self.__last_is_connected = None
-        self.__was_read = [True, True]
+
 
     def __del__(self):
         self.__end()
@@ -52,8 +52,13 @@ class Granulado:
             self.__end()
             return False
         try:
-            if self.__hardware.write(bytes(message, "utf-8")) > 0:
+            if not self.__hardware.writable():
+                self.disconnect()
+                return False
+            if self.__hardware.write(bytes(message, "utf-8")) is not None:
                 return True
+            self.disconnect()
+            return False
         except Exception as e:
             ui_api.error_alert(f"Não foi possível escrever no Granulado: {str(e)}")
             self.__end()
@@ -71,14 +76,14 @@ class Granulado:
         )
 
     def __end(self):
-        if self.__hardware:
+        core_api.set_is_connected(False)
+        if self.__hardware is not None:
             if self.__hardware.isOpen():
                 self.__hardware.close()
             self.__hardware = None
         self.__instant_load = 0
         self.__instant_position = 0
         self.__ping = 0
-        core_api.set_is_connected(False)
 
     def loop(self):
         is_conn = self.is_connected()
@@ -101,25 +106,29 @@ class Granulado:
             decodedMessage = received.decode()
             response = decodedMessage[0]
             value = decodedMessage[1:].replace("\r", "").replace("\n", "")
-
-            if response == "p":
-                self.__ping = time.time()
-
-            elif response == "e":
-                self.__error(value)
-            elif response == "r":
-                self.__instant_load = float(value)
-                self.__was_read[0] = False
-            elif response == "g":
-                self.__instant_position = int(value)
-                print(self.__instant_position)
-                self.__was_read[1] = False
-            elif response == "j":
-                self.__z_axis_length = int(value)
-            elif response == "d":
-                self.__delta_load = int(value)
-            else:
-                ui_api.error_alert(f"Resposta inesperada do Granulado: ''{response}''")
+            match response:
+                case "p":
+                    self.__ping = time.time()
+                case "e":
+                    self.__error(value)
+                case "r":
+                    self.__instant_load = float(value)
+                case "g":
+                    self.__instant_position = int(value)
+                case "j":
+                    self.__z_axis_length = int(value)
+                case "b":
+                    ui_api.error_alert("Sensor de fim de curso inferior foi acionado!")
+                    self.stop_z_axis()
+                case "t":
+                    ui_api.error_alert("Sensor de fim de curso superior foi acionado!")
+                    self.stop_z_axis()
+                case "d":
+                    self.__delta_load = int(value)
+                case "s":
+                    ui_api.success_alert("O motor for interrompido")
+                case _:
+                    ui_api.error_alert(f"Resposta inesperada do Granulado: ''{response}''")
 
             return True
         except serial.SerialException as e:
@@ -128,24 +137,18 @@ class Granulado:
         except Exception as e:
             return False
 
-    def start_experiment(self, compress: bool):
-        pass
-
     def get_readings(self):
         """
         Sends messages to Granulado to get the current load and position, waits for the response and returns the values
         """
-        #import random
+        import random
 
-        #self.__instant_position += 1
-        #return random.randrange(0, 100), self.__instant_position
+        self.__instant_position += 1
+        return random.randrange(0, 100), self.__instant_position
 
-        if self.__send_serial_message("r"):
-            if self.__send_serial_message("g"):
-                while self.__was_read[0] or self.__was_read[1]:
-                    eel.sleep(1 / 160)
-                self.__was_read = [True, True]
-                return self.__instant_load, self.__instant_position
+        if self.get_load() and self.get_position():
+            return self.__instant_load, self.__instant_position
+        return -1, -1
 
     def get_position(self):
         """
@@ -246,9 +249,6 @@ class Granulado:
     def return_z_axis(self):
         return self.__send_serial_message("t")
 
-    def bottom_z_axis(self):
-        return self.__send_serial_message("b")
-
     def stop_z_axis(self):
         return self.__send_serial_message("s")
 
@@ -276,6 +276,37 @@ class Granulado:
         """
         return self.__send_serial_message(f"x{known_weight}")
 
+    def get_z_axis_length(self):
+        """
+        Send serial message to Granulado to get the z axis length
+        """
+        return self.__send_serial_message("j")
+
+    def set_z_axis_length(self, z_axis_length: int):
+        """
+        Send serial message to Granulado to set the z axis length
+        """
+        self.__z_axis_length = z_axis_length
+        return self.__send_serial_message(f"y{self.__z_axis_length}")
+
+    def set_max_load(self, max_load: int):
+        """
+        Send serial message to Granulado to set the max load
+        """
+        return self.__send_serial_message(f"l{max_load}")
+
+    def set_max_travel(self, max_travel: int):
+        """
+        Send serial message to Granulado to set the max travel
+        """
+        return self.__send_serial_message(f"v{max_travel}")
+
+    def set_max_delta_load(self, max_delta_load: int):
+        """
+        Send serial message to Granulado to set the max delta load
+        """
+        return self.__send_serial_message(f"a{max_delta_load}")
+
     def is_connected(self):
         """Is the backend connected to the embedded hardware, returns a boolean"""
         return (self.__hardware is not None) and self.__hardware.isOpen()
@@ -288,7 +319,7 @@ class Granulado:
 
         returns 0 if FAILED
 
-        Example of usage
+        Example of usage    
 
             ```
             from granulado.core import Granulado
@@ -297,14 +328,10 @@ class Granulado:
             gr.connect(port='COM4', baudrate=115200, timeout=.1)
             ```
         """
+        print(f'porta: {port}')
         try:
-            from exposed_core import load_config_params, save_config_params
-
-            self.__hardware = serial.Serial(port=port, baudrate=baudrate)
+            self.__hardware = serial.Serial(port=port, baudrate=baudrate, timeout=0.1)
             print(self.__hardware)
-            config = load_config_params()
-            config["port"] = port
-            save_config_params(config)
             core_api.set_is_connected(True)
         except Exception as e:
             ui_api.error_alert(f"Não foi possível conectar ao Granulado: {str(e)}")
@@ -329,8 +356,5 @@ class Granulado:
             gr.disconnect()
             ```
         """
-        try:
-            self.__end()
-        except:
-            return 0
-        return 1
+        print("disconnecting")
+        return self.__end()

@@ -59,12 +59,18 @@ const getMaxY = (experimentPlotArray: ExperimentPlotData[]): number => {
     return maxY;
 };
 
-const getMaxX = (experimentArray: ExperimentType[]): number => {
+const getMaxX = (
+    experimentArray: ExperimentType[],
+    experimentData: ExperimentPlotData[] | undefined
+): number => {
     if (experimentArray.length === 0) return defaultMaxValues.maxValues.x;
-    
+
     let maxX = 0;
-    experimentArray.forEach((element) => {
-        if (element.num_of_data_points > maxX) maxX = element.num_of_data_points
+    experimentArray.forEach((element, idx) => {
+        if (element.num_of_data_points === 0 && experimentData) {
+            maxX = experimentData[idx].dataset.data.length;
+        } else if (element.num_of_data_points > maxX)
+            maxX = element.num_of_data_points;
     });
     return maxX;
 };
@@ -91,11 +97,23 @@ const GraphComponent: FunctionComponent<GraphComponentProps> = () => {
         const fetchPlotData = (id: number) => {
             switch (plotType) {
                 case "loadOverTime":
-                    return getLoadOverTimeByExperimentId(id, leftHandlePos, rightHandlePos);
+                    return getLoadOverTimeByExperimentId(
+                        id,
+                        leftHandlePos,
+                        rightHandlePos
+                    );
                 case "loadOverPosition":
-                    return getLoadOverPositionByExperimentId(id, leftHandlePos, rightHandlePos);
+                    return getLoadOverPositionByExperimentId(
+                        id,
+                        leftHandlePos,
+                        rightHandlePos
+                    );
                 default:
-                    return getLoadOverTimeByExperimentId(id, leftHandlePos, rightHandlePos);
+                    return getLoadOverTimeByExperimentId(
+                        id,
+                        leftHandlePos,
+                        rightHandlePos
+                    );
             }
         };
 
@@ -123,27 +141,34 @@ const GraphComponent: FunctionComponent<GraphComponentProps> = () => {
             return returnPlotDataArray;
         };
         generateExperimentPlotData().then((generatedPlotData) => {
-            const maxX = getMaxX(experimentList);
+            const maxX = getMaxX(experimentList, generatedPlotData);
             const maxY = getMaxY(generatedPlotData);
+            // Point up to here
+
             setExperimentArray({
                 plotDataArray: generatedPlotData,
                 maxValues: {
                     x: maxX,
-                    y: maxY
+                    y: maxY,
                 },
             });
-            
         });
-    }, [experimentList, plotType, refreshData, autoZoom, leftHandlePos, rightHandlePos]);
+    }, [
+        experimentList,
+        plotType,
+        refreshData,
+        autoZoom,
+        leftHandlePos,
+        rightHandlePos,
+    ]);
 
     useEffect(() => {
         if (autoZoom) {
-            const maxX = getMaxX(experimentList);
-
+            const maxX = getMaxX(experimentList, undefined);
             setLeftHandlePos(0);
             setRightHandlePos(maxX);
         }
-        }, [experimentList, plotType, refreshData, autoZoom]);
+    }, [experimentList, plotType, refreshData, autoZoom]);
     const getOpenSideBarButtonClassName = () => {
         return showSideBar
             ? [

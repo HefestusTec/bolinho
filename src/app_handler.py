@@ -113,6 +113,7 @@ class AppHandler:
         self.__current_readings.z_axis_pos = current_pos
         self.__current_readings.status = "Conectado"
 
+
         # check if is running experiment
         if self.__experiment_id == -1:
             return
@@ -141,13 +142,25 @@ class AppHandler:
 
         self.__delta_load = self.gran.get_delta_load()
 
-    def start_experiment(self, experiment_id: int):
+    def set_granulado_configs(self, globalMaxLoad, globalMaxTravel, globalMaximumDeltaLoad, globalZAxisLength):
+        self.gran.set_max_load(globalMaxLoad)
+        eel.sleep(0.01)
+        self.gran.set_max_travel(globalMaxTravel)
+        eel.sleep(0.01)
+        self.gran.set_max_delta_load(globalMaximumDeltaLoad)
+        eel.sleep(0.01)
+        self.gran.set_z_axis_length(globalZAxisLength)
+        eel.sleep(0.01)
+
+
+    def start_experiment(self, experiment_id: int, compress: bool, z_axis_length):
         """
         Changes the app state to running experiment, resets the experiment data and starts a new experiment
 
         Args:
             experiment_id (int): The id of the experiment to be started
         """
+
         app_state.change_state(StateE.RUNNING_EXPERIMENT)
 
         [_, current_pos] = self.gran.get_readings()
@@ -160,7 +173,10 @@ class AppHandler:
         realTimeR.load_over_time_realtime_readings = Queue()
         realTimeR.load_over_position_realtime_readings = Queue()
 
-    async def end_experiment(self):
+        move_mm = z_axis_length * 2
+        self.gran.move_z_axis_millimeters(move_mm * (-1 if compress else 1))
+
+    def end_experiment(self):
         """
         Handles writing the new experiment to persistent memory
         """

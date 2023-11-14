@@ -56,8 +56,12 @@ const ChartComponent: FunctionComponent<ChartComponentProps> = ({
     allMaxDataValues = { x: 50, y: 1 },
 }) => {
     const [maxData, setMaxData] = useState<DataPointType>({ x: 50, y: 1 });
+
     const getDataSets = () => {
-        return experimentPlotDataArray.map((object) => object.dataset);
+        return experimentPlotDataArray.map((object) => {
+            const obj = object.dataset;
+            return obj;
+        });
     };
 
     const getXMaxValue = () => {
@@ -68,7 +72,6 @@ const ChartComponent: FunctionComponent<ChartComponentProps> = ({
     useEffect(() => {
         setMaxData(allMaxDataValues);
     }, [allMaxDataValues]);
-
     return (
         <Line
             data={{
@@ -80,7 +83,8 @@ const ChartComponent: FunctionComponent<ChartComponentProps> = ({
                 normalized: true,
                 animation: false,
                 parsing: false,
-                spanGaps: true,
+                spanGaps: false,
+
                 datasets: {
                     line: {
                         pointRadius: 0, // disable for all `'line'` datasets
@@ -100,7 +104,8 @@ const ChartComponent: FunctionComponent<ChartComponentProps> = ({
                     y: {
                         type: "linear",
                         min: 0,
-                        max: maxData.y,
+                        // round up maxData.y to 2 decimal places
+                        max: Math.ceil(maxData.y * 100) / 100,
                     },
                 },
                 plugins: {
