@@ -17,7 +17,7 @@
 
 import { endExperimentRoutineJS } from "api/backend-api";
 import ZoomComponent from "components/zoomComponent/zoomComponent";
-import { FunctionComponent } from "react";
+import { Dispatch, FunctionComponent, SetStateAction } from "react";
 import styleModule from "./MainMonitor.module.css";
 import BigButton from "components/customSubComponents/BigButton/BigButton";
 import useConfirm from "hooks/useConfirm";
@@ -27,12 +27,14 @@ interface MainMonitorProps {
     className: string;
     scaleOrigin: string;
     currentLoad: number;
+    setCanUpdatePlot: Dispatch<SetStateAction<boolean>>;
 }
 
 const MainMonitor: FunctionComponent<MainMonitorProps> = ({
     className,
     scaleOrigin,
     currentLoad,
+    setCanUpdatePlot,
 }) => {
     const [ConfirmationDialog, confirm] = useConfirm();
 
@@ -49,8 +51,9 @@ const MainMonitor: FunctionComponent<MainMonitorProps> = ({
                 </div>
                 <BigButton
                     clickCallBack={() => {
-                        confirm(() => {
-                            endExperimentRoutineJS();
+                        setCanUpdatePlot(false);
+                        confirm(endExperimentRoutineJS).then(() => {
+                            setCanUpdatePlot(true);
                         });
                     }}
                     buttonText="ENCERRAR"
@@ -58,8 +61,8 @@ const MainMonitor: FunctionComponent<MainMonitorProps> = ({
                     fontSize="var(--font_l)"
                     height="90%"
                 />
+                <ConfirmationDialog />
             </ZoomComponent>
-            <ConfirmationDialog />
         </React.Fragment>
     );
 };

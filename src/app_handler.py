@@ -85,7 +85,7 @@ class AppHandler:
                         self.__current_time - self.__started_experiment_time
                     )
 
-                    core_api.refresh_data()  # Asks the UI to fetch new data
+                    core_api.refresh_realtime_experiment_data()  # Asks the UI to fetch new data
                     # print(f"{(self.__n_readings / (current_time - self.__started_experiment_time)) * 1000 } readings per second")
                 eel.sleep(
                     0

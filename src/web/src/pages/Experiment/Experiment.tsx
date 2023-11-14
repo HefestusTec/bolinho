@@ -15,11 +15,10 @@
 // You should have received a copy of the GNU General Public License
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
 
-import { FunctionComponent, useContext, useMemo } from "react";
+import { FunctionComponent, useContext, useState } from "react";
 import ExperimentSideBar from "./ExperimentSideBar/ExperimentSideBar";
 import styleModule from "./Experiment.module.css";
 import ZoomComponent from "components/zoomComponent/zoomComponent";
-import GraphComponent from "components/graphComponent/graphComponent";
 import ContainerComponent from "components/containerComponent/containerComponent";
 import MainMonitor from "./MainMonitor/MainMonitor";
 import { ExperimentPageContext } from "api/contexts/ExperimentPageContext";
@@ -29,27 +28,27 @@ import GenerateDebugPoints from "components/GenerateDebugPoints/GenerateDebugPoi
 import MaterialTable from "components/InfoTables/MaterialTable";
 import tableStyleModule from "components/InfoTables/MaterialTable.module.css";
 import BodyTable from "components/InfoTables/BodyTable";
-import useFetchExperiments from "hooks/useFetchExperiments";
 import ExperimentTable from "components/InfoTables/ExperimentTable";
+import RealTimeGraph from "components/RealTimeGraph/RealTimeGraph";
 
 interface ExperimentProps {}
 
 const Experiment: FunctionComponent<ExperimentProps> = () => {
     const [experimentPageContext] = useContext(ExperimentPageContext);
     const [readingsContext] = useContext(ReadingsContext);
+    const [canUpdatePlot, setCanUpdatePlot] = useState<boolean>(true);
 
-    const [experimentList] = useFetchExperiments();
+    if (
+        experimentPageContext.experiment === null ||
+        experimentPageContext.material === null
+    )
+        return <>Carregando...</>;
 
-    const experiment = useMemo(() => {
-        if (experimentList[0]) {
-            return experimentList[0];
-        }
-    }, [experimentList]);
     return (
         <div className={styleModule.experiment_div}>
             <GenerateDebugPoints />
             <ExperimentSideBar
-                experiment={experiment}
+                experiment={experimentPageContext.experiment}
                 readings={readingsContext}
             />
             <div className={styleModule.experiment_content}>
@@ -57,12 +56,16 @@ const Experiment: FunctionComponent<ExperimentProps> = () => {
                     className={styleModule.main_monitor}
                     scaleOrigin="top left"
                     currentLoad={readingsContext.current_load}
+                    setCanUpdatePlot={setCanUpdatePlot}
                 />
                 <ZoomComponent
                     className={styleModule.graph_component}
                     scaleOrigin="top right"
                 >
-                    <GraphComponent />
+                    <RealTimeGraph
+                        experiment={experimentPageContext.experiment}
+                        canUpdatePlot={canUpdatePlot}
+                    />
                 </ZoomComponent>
                 <ZoomComponent
                     className={styleModule.parameters_component}
@@ -74,7 +77,7 @@ const Experiment: FunctionComponent<ExperimentProps> = () => {
                             style={{ marginLeft: 10, marginBottom: 10 }}
                         >
                             <ExperimentTable
-                                experiment={experiment}
+                                experiment={experimentPageContext.experiment}
                                 hideTitle
                             />
                         </div>
@@ -93,7 +96,10 @@ const Experiment: FunctionComponent<ExperimentProps> = () => {
                             className={tableStyleModule.content}
                             style={{ marginLeft: 10, marginBottom: 10 }}
                         >
-                            <BodyTable experiment={experiment} hideTitle />
+                            <BodyTable
+                                experiment={experimentPageContext.experiment}
+                                hideTitle
+                            />
                         </div>
                     </ContainerComponent>
                 </ZoomComponent>

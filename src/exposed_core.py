@@ -81,9 +81,10 @@ def start_experiment_routine(experiment_id: int):
 
     The backend **MUST** send a command to change to the experiment page.
 
-    Returns 1 if succeeded.
+    Returns the 1 if succeeded else 0.
     """
     experiment = db_handler.get_experiment_by_id(experiment_id)
+
     if experiment is None:
         ui_api.error_alert(
             "Não foi possível iniciar o experimento. O experimento não foi encontrado.",
@@ -155,7 +156,7 @@ def start_experiment_routine(experiment_id: int):
             f"Não foi possível iniciar o experimento. O tamanho do Eixo-z não pôde ser carregado. Por favor verifique os valores!",
         )
         return 0
-    
+
     bolinho_app.set_granulado_configs(globalMaxLoad, globalMaxTravel, globalMaximumDeltaLoad, globalZAxisLength)
     core_api.go_to_experiment_page()
     bolinho_app.start_experiment(experiment_id, compress, globalZAxisLength)

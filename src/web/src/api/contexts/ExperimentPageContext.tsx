@@ -22,18 +22,24 @@ import {
     SetStateAction,
     useState,
 } from "react";
-import { defaultMaterialType, MaterialType } from "types/DataBaseTypes";
+import {
+    defaultMaterialType,
+    ExperimentType,
+    MaterialType,
+} from "types/DataBaseTypes";
 
 export type ExperimentPageType = {
     time: number; // Time since starting of experiment
     deltaLoad: number; // Current variation of load
-    material: MaterialType;
+    material: MaterialType | null;
+    experiment: ExperimentType | null;
 };
 
 const experimentPageContextDefault: ExperimentPageType = {
     time: 0,
     deltaLoad: 0,
-    material: defaultMaterialType,
+    material: null,
+    experiment: null,
 };
 
 export const ExperimentPageContext = createContext<

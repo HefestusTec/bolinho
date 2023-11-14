@@ -59,6 +59,16 @@ class CoreAPI:
         A use case is to trigger a refresh to show an update on the readings
         """
         eel.refreshDataJS()
+    
+    def refresh_realtime_experiment_data(self):
+        """
+        Triggers a call to refresh the data.
+
+        It will refetch the data points of the current experiment.
+
+        A use case is to trigger a refresh to show an update on the readings
+        """
+        eel.updateRealTimeGraphJS()
 
 
 core_api = CoreAPI()

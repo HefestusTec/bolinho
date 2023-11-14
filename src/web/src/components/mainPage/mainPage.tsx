@@ -28,13 +28,13 @@ import {
     startExperimentRoutineJS,
 } from "../../api/backend-api";
 
-//import GlobalConfigContext from "../../contexts/globalConfigContext";
 import BigButton from "components/customSubComponents/BigButton/BigButton";
-import { SelectedExperimentsContext } from "contexts/SelectedExperimentsContext";
 import { IsConnectedContext } from "api/contexts/IsConnectedContext";
 import NewExperimentPopup from "components/NewExperimentPopup/NewExperimentPopup";
 import useConfirm from "hooks/useConfirm";
 import { FocusContext } from "api/contexts/FocusContex";
+import { ExperimentPageContext } from "api/contexts/ExperimentPageContext";
+import { getExperimentById } from "api/db-api";
 
 interface MainPageProps {}
 
@@ -47,11 +47,21 @@ const MainPage: FunctionComponent<MainPageProps> = () => {
         "A máquina está calibrada?",
         "Confirme que a máquina está calibrada!"
     );
-    const [, setSelectedExperiments] = useContext(SelectedExperimentsContext);
+    const [, setExperimentPageContext] = useContext(ExperimentPageContext);
+
     const experimentWasCreated = (id: number) => {
-        startExperimentRoutineJS(id).then((res) => {
+        startExperimentRoutineJS(id).then(async (res) => {
             if (res === 1) {
-                setSelectedExperiments([id]);
+                const exp = await getExperimentById(id);
+                if (exp === undefined) return;
+
+                setExperimentPageContext((o) => {
+                    return {
+                        ...o,
+                        material: exp.body.material,
+                        experiment: exp,
+                    };
+                });
             }
         });
     };
