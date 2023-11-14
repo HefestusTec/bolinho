@@ -31,37 +31,38 @@ const BodyTable: FunctionComponent<BodyTableProps> = ({
     if (experiment === undefined) return <></>;
     return (
         <table>
-            {!hideTitle && (
-                <>
-                    <th>
-                        <h1>Corpo de prova</h1>
-                    </th>
-                    <th>
-                        <br /> <br />
-                    </th>
-                </>
-            )}
-
-            <tr>
-                <th>ID</th>
-                <th>{experiment.body.id}</th>
-            </tr>
-            <tr>
-                <th>Tipo</th>
-                <th>{getBodyTypeAsText(experiment.body.type)}</th>
-            </tr>
-            <tr>
-                <th>Altura</th>
-                <th>{experiment.body.height.toFixed(2)} mm</th>
-            </tr>
-            <tr>
-                <th>Parâmetro A</th>
-                <th>{experiment.body.param_a.toFixed(2)} mm</th>
-            </tr>
-            <tr>
-                <th>Parâmetro B</th>
-                <th>{experiment.body.param_b.toFixed(2)} mm</th>
-            </tr>
+            <tbody>
+                {!hideTitle && (
+                    <tr>
+                        <th>
+                            <h1>Corpo de prova</h1>
+                        </th>
+                        <th>
+                            <br /> <br />
+                        </th>
+                    </tr>
+                )}
+                <tr>
+                    <th>ID</th>
+                    <th>{experiment.body.id}</th>
+                </tr>
+                <tr>
+                    <th>Tipo</th>
+                    <th>{getBodyTypeAsText(experiment.body.type)}</th>
+                </tr>
+                <tr>
+                    <th>Altura</th>
+                    <th>{experiment.body.height.toFixed(2)} mm</th>
+                </tr>
+                <tr>
+                    <th>Parâmetro A</th>
+                    <th>{experiment.body.param_a.toFixed(2)} mm</th>
+                </tr>
+                <tr>
+                    <th>Parâmetro B</th>
+                    <th>{experiment.body.param_b.toFixed(2)} mm</th>
+                </tr>
+            </tbody>
         </table>
     );
 };

@@ -48,12 +48,14 @@ interface ChartComponentProps {
     sliderValue: { min: number; max: number };
     experimentPlotDataArray: ExperimentPlotData[];
     allMaxDataValues: DataPointType;
+    minX: number;
 }
 
 const ChartComponent: FunctionComponent<ChartComponentProps> = ({
     sliderValue = { min: 0, max: 100 },
     experimentPlotDataArray = [],
     allMaxDataValues = { x: 50, y: 1 },
+    minX,
 }) => {
     const [maxData, setMaxData] = useState<DataPointType>({ x: 50, y: 1 });
 
@@ -90,15 +92,11 @@ const ChartComponent: FunctionComponent<ChartComponentProps> = ({
                         pointRadius: 0, // disable for all `'line'` datasets
                     },
                 },
-                /*
-				parsing: {
-					xAxisKey: "x",
-					yAxisKey: "y",
-				},*/
+
                 scales: {
                     x: {
                         type: "linear",
-                        min: sliderValue.min,
+                        min: sliderValue.min >= minX ? sliderValue.min : minX,
                         max: getXMaxValue(),
                     },
                     y: {

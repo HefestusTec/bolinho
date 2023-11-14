@@ -75,6 +75,23 @@ const getMaxX = (
     return maxX;
 };
 
+const getMinX = (
+    experimentArray: ExperimentType[],
+    experimentData: ExperimentPlotData[] | undefined
+): number => {
+    if (experimentArray.length === 0) return 0;
+    if (!experimentData) return 0;
+
+    let minX = Number.MAX_VALUE;
+    experimentArray.forEach((element, idx) => {
+        if (experimentData[idx].dataset.data[0]) {
+            const currentFirstX = experimentData[idx].dataset.data[0].x;
+            if (currentFirstX < minX) minX = currentFirstX;
+        }
+    });
+    return minX;
+};
+
 const sideBarWidth = "140px";
 
 interface GraphComponentProps {}
@@ -92,6 +109,8 @@ const GraphComponent: FunctionComponent<GraphComponentProps> = () => {
 
     const [plotType, setPlotType] = useState<PlotTypeType>("loadOverTime");
     const [refreshData] = useContext(RefreshDataContext);
+
+    const [minX, setMinX] = useState<number>(0);
 
     useEffect(() => {
         const fetchPlotData = (id: number) => {
@@ -142,6 +161,7 @@ const GraphComponent: FunctionComponent<GraphComponentProps> = () => {
         };
         generateExperimentPlotData().then((generatedPlotData) => {
             const maxX = getMaxX(experimentList, generatedPlotData);
+            setMinX(getMinX(experimentList, generatedPlotData));
             const maxY = getMaxY(generatedPlotData);
             // Point up to here
 
@@ -160,6 +180,7 @@ const GraphComponent: FunctionComponent<GraphComponentProps> = () => {
         autoZoom,
         leftHandlePos,
         rightHandlePos,
+        setMinX,
     ]);
 
     useEffect(() => {
@@ -211,6 +232,7 @@ const GraphComponent: FunctionComponent<GraphComponentProps> = () => {
                             min: leftHandlePos,
                             max: rightHandlePos,
                         }}
+                        minX={minX}
                         experimentPlotDataArray={experimentArray.plotDataArray}
                         allMaxDataValues={experimentArray.maxValues}
                     />

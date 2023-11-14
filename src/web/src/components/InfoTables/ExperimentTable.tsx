@@ -31,61 +31,62 @@ const ExperimentTable: FunctionComponent<ExperimentTableProps> = ({
 
     return (
         <table>
-            {!hideTitle && (
-                <>
-                    <th>
-                        <h1>Experimento</h1>
-                    </th>
-                    <th>
-                        <br /> <br />
-                    </th>
-                </>
-            )}
-
-            <tr>
-                <th>Nome</th>
-                <th>{experiment.name}</th>
-            </tr>
-            <tr>
-                <th>ID</th>
-                <th>{experiment.id}</th>
-            </tr>
-            <tr>
-                <th>Data</th>
-                <th>{experiment.date_time}</th>
-            </tr>
-            <tr>
-                <th>Limite de perca de carga</th>
-                <th>{experiment.load_loss_limit.toFixed(2)} N/s</th>
-            </tr>
-            <tr>
-                <th>Limite de carga</th>
-                <th>{experiment.max_load.toFixed(2)} N</th>
-            </tr>
-            <tr>
-                <th>Limite de distância</th>
-                <th>{experiment.max_travel.toFixed(2)} mm</th>
-            </tr>
-            <tr>
-                <th>Limite de tempo</th>
-                <th>{experiment.max_time.toFixed(2)} s</th>
-            </tr>
-            <tr>
-                <th>Velocidade do eixo Z</th>
-                <th>{experiment.z_axis_speed.toFixed(2)} mm/s</th>
-            </tr>
-            <tr>
-                <th>Tipo de exp.</th>
-                <th> {experiment.compress ? "Compressão" : "Expansão"}</th>
-            </tr>
-            <tr>
-                <th>Num. de pontos</th>
-                <th> {experiment.num_of_data_points}</th>
-            </tr>
-            <tr>
-                <th>Extra</th>
-                <th>{experiment.extra_info}</th>
-            </tr>
+            <tbody>
+                {!hideTitle && (
+                    <tr>
+                        <th>
+                            <h1>Experimento</h1>
+                        </th>
+                        <th>
+                            <br /> <br />
+                        </th>
+                    </tr>
+                )}
+                <tr>
+                    <th>Nome</th>
+                    <th>{experiment.name}</th>
+                </tr>
+                <tr>
+                    <th>ID</th>
+                    <th>{experiment.id}</th>
+                </tr>
+                <tr>
+                    <th>Data</th>
+                    <th>{experiment.date_time}</th>
+                </tr>
+                <tr>
+                    <th>Limite de perca de carga</th>
+                    <th>{experiment.load_loss_limit.toFixed(2)} N/s</th>
+                </tr>
+                <tr>
+                    <th>Limite de carga</th>
+                    <th>{experiment.max_load.toFixed(2)} N</th>
+                </tr>
+                <tr>
+                    <th>Limite de distância</th>
+                    <th>{experiment.max_travel.toFixed(2)} mm</th>
+                </tr>
+                <tr>
+                    <th>Limite de tempo</th>
+                    <th>{experiment.max_time.toFixed(2)} s</th>
+                </tr>
+                <tr>
+                    <th>Velocidade do eixo Z</th>
+                    <th>{experiment.z_axis_speed.toFixed(2)} mm/s</th>
+                </tr>
+                <tr>
+                    <th>Tipo de exp.</th>
+                    <th> {experiment.compress ? "Compressão" : "Expansão"}</th>
+                </tr>
+                <tr>
+                    <th>Num. de pontos</th>
+                    <th> {experiment.num_of_data_points}</th>
+                </tr>
+                <tr>
+                    <th>Extra</th>
+                    <th>{experiment.extra_info}</th>
+                </tr>
+            </tbody>
         </table>
     );
 };

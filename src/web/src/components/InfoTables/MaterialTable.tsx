@@ -29,40 +29,42 @@ const MaterialTable: FunctionComponent<MaterialTableProps> = ({
 }) => {
     return (
         <table>
-            {!hideTitle && (
-                <>
-                    <th>
-                        <h1>Material</h1>
-                    </th>
-                    <th>
-                        <br /> <br />
-                    </th>
-                </>
-            )}
-            <tr>
-                <th>Nome</th>
-                <th>{material.name}</th>
-            </tr>
-            <tr>
-                <th>ID</th>
-                <th>{material.id}</th>
-            </tr>
-            <tr>
-                <th>Fornecedor</th>
-                <th>{material.supplier_name}</th>
-            </tr>
-            <tr>
-                <th>Informações do fornecedor</th>
-                <th>{material.supplier_contact_info}</th>
-            </tr>
-            <tr>
-                <th>Lote</th>
-                <th>{material.batch}</th>
-            </tr>
-            <tr>
-                <th>Extra</th>
-                <th>{material.extra_info}</th>
-            </tr>
+            <tbody>
+                {!hideTitle && (
+                    <tr>
+                        <th>
+                            <h1>Material</h1>
+                        </th>
+                        <th>
+                            <br /> <br />
+                        </th>
+                    </tr>
+                )}
+                <tr>
+                    <th>Nome</th>
+                    <th>{material.name}</th>
+                </tr>
+                <tr>
+                    <th>ID</th>
+                    <th>{material.id}</th>
+                </tr>
+                <tr>
+                    <th>Fornecedor</th>
+                    <th>{material.supplier_name}</th>
+                </tr>
+                <tr>
+                    <th>Informações do fornecedor</th>
+                    <th>{material.supplier_contact_info}</th>
+                </tr>
+                <tr>
+                    <th>Lote</th>
+                    <th>{material.batch}</th>
+                </tr>
+                <tr>
+                    <th>Extra</th>
+                    <th>{material.extra_info}</th>
+                </tr>
+            </tbody>
         </table>
     );
 };

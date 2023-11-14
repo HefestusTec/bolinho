@@ -28,7 +28,6 @@ const useConfirm = (
     confirmLabel: string = "Confirmar",
     cancelLabel: string = "Cancelar"
 ) => {
-    console.log("up");
     const [promise, setPromise] = useState<{
         resolve: (value: boolean) => void;
     } | null>(null);

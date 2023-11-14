@@ -101,13 +101,10 @@ const ExperimentsInspector: FunctionComponent<
     const removeActiveExperiment = async () => {
         if (activeExperimentId < 0) return;
 
-        console.log("removedSuccessfully");
         const removedSuccessfully =
             await removeExperimentFromVisualizationBuffer(myExperiment.id);
-        console.log(removedSuccessfully);
 
         if (!removedSuccessfully) return;
-        console.log("after");
 
         let objectListCopy = [...selectedExperiments];
 
