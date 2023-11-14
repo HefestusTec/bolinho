@@ -29,7 +29,6 @@ import BackgroundFader from "components/backgroundFader/backgroundFader";
 import CustomTextArea from "components/customSubComponents/CustomTextArea/CustomTextArea";
 import CustomListSelector from "components/customSubComponents/customListSelector/customListSelector";
 import CustomTextInput from "components/customSubComponents/CustomTextInput/CustomTextInput";
-import { getRandomColor } from "helpers";
 import { ValidBodyTypeType, validBodyTypeArray } from "types/ValidBodyTypeType";
 import CustomFilteredListSelector, {
     CustomFilteredListKeyType,
@@ -122,7 +121,7 @@ const NewExperimentPopup: FunctionComponent<NewExperimentPopupProps> = ({
                 compress: isCompressionExperiment,
                 z_axis_speed: experimentZAxisSpeed,
                 extra_info: experimentExtraInfo,
-                plot_color: getRandomColor(),
+                plot_color: "#0072FF",
             },
         }).then((id) => {
             refresh();

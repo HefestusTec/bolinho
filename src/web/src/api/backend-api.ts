@@ -20,7 +20,6 @@ import { fakeEel } from "../staticDB";
 import { toast } from "react-toastify";
 import { GlobalConfigContextProps } from "./apiTypes";
 import { PortType } from "types/PortType";
-import { ExperimentType } from "types/DataBaseTypes";
 
 export let isFakeEel = false;
 

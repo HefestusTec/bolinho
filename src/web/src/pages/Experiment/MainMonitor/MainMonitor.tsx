@@ -15,29 +15,25 @@
 // You should have received a copy of the GNU General Public License
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
 
-import { endExperimentRoutineJS } from "api/backend-api";
 import ZoomComponent from "components/zoomComponent/zoomComponent";
 import { Dispatch, FunctionComponent, SetStateAction } from "react";
 import styleModule from "./MainMonitor.module.css";
 import BigButton from "components/customSubComponents/BigButton/BigButton";
-import useConfirm from "hooks/useConfirm";
 import React from "react";
 
 interface MainMonitorProps {
     className: string;
     scaleOrigin: string;
     currentLoad: number;
-    setCanUpdatePlot: Dispatch<SetStateAction<boolean>>;
+    setEndPromptIsActive: Dispatch<SetStateAction<boolean>>;
 }
 
 const MainMonitor: FunctionComponent<MainMonitorProps> = ({
     className,
     scaleOrigin,
     currentLoad,
-    setCanUpdatePlot,
+    setEndPromptIsActive,
 }) => {
-    const [ConfirmationDialog, confirm] = useConfirm();
-
     return (
         <React.Fragment>
             <ZoomComponent
@@ -51,17 +47,13 @@ const MainMonitor: FunctionComponent<MainMonitorProps> = ({
                 </div>
                 <BigButton
                     clickCallBack={() => {
-                        setCanUpdatePlot(false);
-                        confirm(endExperimentRoutineJS).then(() => {
-                            setCanUpdatePlot(true);
-                        });
+                        setEndPromptIsActive(true);
                     }}
                     buttonText="ENCERRAR"
                     bgColor="var(--negative_button_color)"
                     fontSize="var(--font_l)"
                     height="90%"
                 />
-                <ConfirmationDialog />
             </ZoomComponent>
         </React.Fragment>
     );

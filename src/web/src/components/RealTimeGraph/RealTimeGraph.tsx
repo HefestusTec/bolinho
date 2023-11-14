@@ -31,12 +31,10 @@ const sideBarWidth = "140px";
 
 interface RealTimeGraphProps {
     experiment: ExperimentType;
-    canUpdatePlot: boolean;
 }
 
 const RealTimeGraph: FunctionComponent<RealTimeGraphProps> = ({
     experiment,
-    canUpdatePlot,
 }) => {
     const [leftHandlePos, setLeftHandlePos] = useState(0);
     const [rightHandlePos, setRightHandlePos] = useState(100);
@@ -47,7 +45,6 @@ const RealTimeGraph: FunctionComponent<RealTimeGraphProps> = ({
     const [plotType, setPlotType] = useState<PlotTypeType>("loadOverTime");
 
     const [experimentPlotData] = useRealTimeGraph({
-        canUpdate: canUpdatePlot,
         plotType: plotType,
         experiment,
     });

@@ -22,11 +22,7 @@ import {
     SetStateAction,
     useState,
 } from "react";
-import {
-    defaultMaterialType,
-    ExperimentType,
-    MaterialType,
-} from "types/DataBaseTypes";
+import { ExperimentType, MaterialType } from "types/DataBaseTypes";
 
 export type ExperimentPageType = {
     time: number; // Time since starting of experiment

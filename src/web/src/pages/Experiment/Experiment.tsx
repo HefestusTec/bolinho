@@ -30,13 +30,14 @@ import tableStyleModule from "components/InfoTables/MaterialTable.module.css";
 import BodyTable from "components/InfoTables/BodyTable";
 import ExperimentTable from "components/InfoTables/ExperimentTable";
 import RealTimeGraph from "components/RealTimeGraph/RealTimeGraph";
+import EndExperimentPrompt from "./EndExperimentPrompt/EndExperimentPrompt";
 
 interface ExperimentProps {}
 
 const Experiment: FunctionComponent<ExperimentProps> = () => {
     const [experimentPageContext] = useContext(ExperimentPageContext);
     const [readingsContext] = useContext(ReadingsContext);
-    const [canUpdatePlot, setCanUpdatePlot] = useState<boolean>(true);
+    const [endPromptIsActive, setEndPromptIsActive] = useState<boolean>(false);
 
     if (
         experimentPageContext.experiment === null ||
@@ -56,7 +57,7 @@ const Experiment: FunctionComponent<ExperimentProps> = () => {
                     className={styleModule.main_monitor}
                     scaleOrigin="top left"
                     currentLoad={readingsContext.current_load}
-                    setCanUpdatePlot={setCanUpdatePlot}
+                    setEndPromptIsActive={setEndPromptIsActive}
                 />
                 <ZoomComponent
                     className={styleModule.graph_component}
@@ -64,7 +65,6 @@ const Experiment: FunctionComponent<ExperimentProps> = () => {
                 >
                     <RealTimeGraph
                         experiment={experimentPageContext.experiment}
-                        canUpdatePlot={canUpdatePlot}
                     />
                 </ZoomComponent>
                 <ZoomComponent
@@ -120,6 +120,10 @@ const Experiment: FunctionComponent<ExperimentProps> = () => {
                     </ContainerComponent>
                 </ZoomComponent>
             </div>
+            <EndExperimentPrompt
+                isOpen={endPromptIsActive}
+                setIsOpen={setEndPromptIsActive}
+            />
         </div>
     );
 };

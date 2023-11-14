@@ -27,21 +27,15 @@ import { DataPointType } from "types/DataPointTypes";
 import { PlotTypeType } from "types/PlotTypeType";
 
 interface useRealTimeGraphProps {
-    canUpdate: boolean;
     plotType: PlotTypeType;
     experiment: ExperimentType;
 }
 
-const useRealTimeGraph = ({
-    canUpdate,
-    plotType,
-    experiment,
-}: useRealTimeGraphProps) => {
+const useRealTimeGraph = ({ plotType, experiment }: useRealTimeGraphProps) => {
     const [experimentPlotData, setExperimentPlotData] =
         useState<ExperimentPlotData>(new ExperimentPlotData());
 
     async function updateRealTimeGraphJS() {
-        if (!canUpdate) return;
         const experimentColor = experiment.plot_color;
         const data: DataPointType[] = await fetchPlotData(experiment.id).catch(
             (err) => {
