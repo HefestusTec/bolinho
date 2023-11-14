@@ -28,6 +28,7 @@ const useConfirm = (
     confirmLabel: string = "Confirmar",
     cancelLabel: string = "Cancelar"
 ) => {
+    console.log("up");
     const [promise, setPromise] = useState<{
         resolve: (value: boolean) => void;
     } | null>(null);
@@ -64,49 +65,51 @@ const useConfirm = (
     };
 
     // You could replace the Dialog with your library's version
-    const ConfirmationDialog = () =>
-        isOpen && (
-            <React.Fragment>
-                <BackgroundFader
-                    callbackFunc={() => {
-                        handleCancel();
-                    }}
-                    faderIndex={2}
-                />
-                <div
-                    style={{
-                        position: "fixed",
-                        top: "50%",
-                        left: "50%",
-                        transform: "translate(-50%, -50%)",
-                        width: "300px",
-                        zIndex: 2,
-                    }}
-                >
-                    <ContainerComponent headerText={title}>
-                        <CustomText value={message} />
-                        <CustomButtonArray>
-                            <CustomButton
-                                bgColor="var(--button_inactive_color)"
-                                fontColor="var(--font_color)"
-                                clickCallBack={handleCancel}
-                                width="50%"
-                            >
-                                {cancelLabel}
-                            </CustomButton>
-                            <CustomButton
-                                bgColor="var(--positive_button_color)"
-                                fontColor="var(--font_color_inverted)"
-                                clickCallBack={handleConfirm}
-                                width="50%"
-                            >
-                                {confirmLabel}
-                            </CustomButton>
-                        </CustomButtonArray>
-                    </ContainerComponent>
-                </div>
-            </React.Fragment>
-        );
+    const ConfirmationDialog = React.memo(
+        () =>
+            isOpen && (
+                <React.Fragment>
+                    <BackgroundFader
+                        callbackFunc={() => {
+                            handleCancel();
+                        }}
+                        faderIndex={2}
+                    />
+                    <div
+                        style={{
+                            position: "fixed",
+                            top: "50%",
+                            left: "50%",
+                            transform: "translate(-50%, -50%)",
+                            width: "300px",
+                            zIndex: 2,
+                        }}
+                    >
+                        <ContainerComponent headerText={title}>
+                            <CustomText value={message} />
+                            <CustomButtonArray>
+                                <CustomButton
+                                    bgColor="var(--button_inactive_color)"
+                                    fontColor="var(--font_color)"
+                                    clickCallBack={handleCancel}
+                                    width="50%"
+                                >
+                                    {cancelLabel}
+                                </CustomButton>
+                                <CustomButton
+                                    bgColor="var(--positive_button_color)"
+                                    fontColor="var(--font_color_inverted)"
+                                    clickCallBack={handleConfirm}
+                                    width="50%"
+                                >
+                                    {confirmLabel}
+                                </CustomButton>
+                            </CustomButtonArray>
+                        </ContainerComponent>
+                    </div>
+                </React.Fragment>
+            )
+    );
 
     return [ConfirmationDialog, confirm] as const;
 };

@@ -130,7 +130,20 @@ ___
     ```
 ___
 
+### refresh_realtime_experiment_data()
+!!! quote "refresh_realtime_experiment_data()"
+    Triggers a call to refresh the data.
 
+    It will refetch the data points of the current experiment.
+
+    A use case is to trigger a refresh to show an update on the readings
+
+    ``` python title="Python usage example"
+    from bolinho_api.core import core_api
+
+    core_api.refresh_realtime_experiment_data()
+    ```
+___
 
 
 ## UI API

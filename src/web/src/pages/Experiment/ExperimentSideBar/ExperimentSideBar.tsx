@@ -24,7 +24,7 @@ import { calculatePercentage } from "helpers";
 import { ReadingsType } from "types/ReadingsType";
 
 interface ExperimentSideBarProps {
-    experiment: ExperimentType | undefined;
+    experiment: ExperimentType;
     readings: ReadingsType;
 }
 
@@ -33,9 +33,6 @@ const ExperimentSideBar: FunctionComponent<ExperimentSideBarProps> = ({
     readings,
 }) => {
     const [experimentPageContext] = useContext(ExperimentPageContext);
-
-    if (experiment === undefined) return <></>;
-
     return (
         <div className={styleModule.experiment_side_bar_div}>
             <span className={styleModule.widgets_span}>
