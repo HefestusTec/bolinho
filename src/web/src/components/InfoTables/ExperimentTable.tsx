@@ -79,10 +79,6 @@ const ExperimentTable: FunctionComponent<ExperimentTableProps> = ({
                     <th> {experiment.compress ? "Compressão" : "Expansão"}</th>
                 </tr>
                 <tr>
-                    <th>Num. de pontos</th>
-                    <th> {experiment.num_of_data_points}</th>
-                </tr>
-                <tr>
                     <th>Extra</th>
                     <th>{experiment.extra_info}</th>
                 </tr>

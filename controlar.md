@@ -97,3 +97,5 @@ temp_ens
 > str is an `int` in `string` format.
 
 * `s` -> Response to the stop command OK
+
+* `i` -> Debug info OK

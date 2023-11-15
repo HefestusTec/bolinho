@@ -157,7 +157,8 @@ def post_experiment(data: dict = {}):
         "extra_info": experiment.get(
             "extra_info", "Informações adicionais não informadas"
         ),
-        "num_of_data_points": int(experiment.get("num_of_data_points", 0)),
+        "max_x": 0,
+        "max_z_pos": 0,
     }
     return db_handler.post_experiment(clean_experiment)
 
@@ -260,9 +261,9 @@ def get_load_over_time_by_experiment_id(experiment_id: int, start_x: int, end_x:
         q = realTimeR.load_over_time_realtime_readings.queue
         n_points = len(q)
         q_list = list(q)
-        # pick 10k points evenly spaced
-        if n_points > 10000:
-            readings_dict = q_list[:: ceil(n_points / 10000)]
+        # pick 1k points evenly spaced
+        if n_points > 1000:
+            readings_dict = q_list[:: ceil(n_points / 1000)]
         else:
             readings_dict = q_list
     else:
@@ -327,13 +328,12 @@ def get_load_over_position_by_experiment_id(experiment_id, start_x: int, end_x: 
     Returns a list of load over position data points for the experiment with the given id
     """
     if app_state.state == StateE.RUNNING_EXPERIMENT:
-        
         q = realTimeR.load_over_position_realtime_readings.queue
         n_points = len(q)
         q_list = list(q)
-        # pick 10k points evenly spaced
-        if n_points > 10000:
-            readings_dict = q_list[:: ceil(n_points / 10000)]
+        # pick 1k points evenly spaced
+        if n_points > 1000:
+            readings_dict = q_list[:: ceil(n_points / 1000)]
         else:
             readings_dict = q_list
 
@@ -354,18 +354,19 @@ def get_load_over_position_by_experiment_id(experiment_id, start_x: int, end_x: 
         if experiment_id not in load_over_position_buffer:
             load_over_position_buffer[
                 experiment_id
-            ] = db_handler.get_load_over_time_by_experiment_id(experiment_id)
+            ] = db_handler.get_load_over_position_by_experiment_id(experiment_id)
 
         readings = load_over_position_buffer[experiment_id]
         if start_x != -1 and end_x != -1:
             # get index where value x is greater than or equal to start_idx
             start_idx = next(
-                (i for i, reading in enumerate(readings) if reading.x >= start_x),
+                (i for i, reading in enumerate(readings) if reading.z_pos >= start_x),
                 None,
             )
             # get index where value x is greater than or equal to end_idx
             end_idx = next(
-                (i for i, reading in enumerate(readings) if reading.x >= end_x), None
+                (i for i, reading in enumerate(readings) if reading.z_pos >= end_x),
+                None,
             )
             readings = readings[start_idx:end_idx]
 
@@ -380,10 +381,14 @@ def get_load_over_position_by_experiment_id(experiment_id, start_x: int, end_x: 
 
         readings_dict = [model_to_dict(reading) for reading in readings]
 
+        # rename the "z_pos" key to "x"
+        for reading in readings_dict:
+            reading["x"] = reading.pop("z_pos")
+
         # rename the "load" key to "y"
         for reading in readings_dict:
             reading["y"] = reading.pop("load")
-    
+
     try:
         dumped = json.dumps(readings_dict, default=lambda x: x.__dict__)
 

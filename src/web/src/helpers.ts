@@ -75,10 +75,9 @@ export const getRandomColor = () =>
 
 export function calculatePercentage(part: number, whole: number): number {
     if (whole === 0) {
-        const percentage = (part / part) * 100;
-        return percentage;
+        return 100;
     }
 
-    const percentage = (part / whole) * 100;
+    const percentage = Math.round((part / whole) * 10000) / 100;
     return percentage;
 }

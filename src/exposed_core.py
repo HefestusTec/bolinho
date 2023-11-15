@@ -157,7 +157,13 @@ def start_experiment_routine(experiment_id: int):
         )
         return 0
 
-    bolinho_app.set_granulado_configs(globalMaxLoad, globalMaxTravel, globalMaximumDeltaLoad, globalZAxisLength)
+    bolinho_app.set_granulado_configs(
+        globalMaxLoad,
+        globalMaxTravel,
+        globalMaximumDeltaLoad,
+        globalZAxisLength,
+        globalMaxTime,
+    )
     core_api.go_to_experiment_page()
     bolinho_app.start_experiment(experiment_id, compress, globalZAxisLength)
     return 1
@@ -174,7 +180,7 @@ def end_experiment_routine():
     """
     print("here1")
     stopped = stop_z_axis()
-    
+
     print("here2")
     if not stopped:
         ui_api.error_alert(
@@ -263,8 +269,9 @@ def connect_to_port(port: str):
     if bolinho_app.gran.connect(port, 115200):
         eel.sleep(1)
         return bolinho_app.gran.check_granulado_is_connected()
-    
+
     return False
+
 
 @eel.expose
 def disconnect_granulado():

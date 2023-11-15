@@ -36,6 +36,8 @@ const EndExperimentPrompt: FunctionComponent<EndExperimentPromptProps> = ({
 }) => {
     const [isSaving, setIsSaving] = useState<boolean>(false);
     const [savingPercentage] = useSaveProgress();
+    console.log(savingPercentage);
+
     const handleClose = () => {
         setIsOpen(false);
     };

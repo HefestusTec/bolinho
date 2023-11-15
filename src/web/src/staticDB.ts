@@ -113,7 +113,8 @@ experiment_data_base = [
         name: "Experimento de compressão 22",
         z_axis_speed: 23,
         plot_color: "#ffffff",
-        num_of_data_points: 100,
+        max_x: 100,
+        max_z_pos: 100,
     },
     {
         id: 1,
@@ -128,7 +129,8 @@ experiment_data_base = [
         name: "as 22",
         z_axis_speed: 23,
         plot_color: "#ffffff",
-        num_of_data_points: 100,
+        max_x: 100,
+        max_z_pos: 100,
     },
     {
         id: 2,
@@ -143,7 +145,8 @@ experiment_data_base = [
         name: "exp 2",
         z_axis_speed: 3023,
         plot_color: "#ffffff",
-        num_of_data_points: 100,
+        max_x: 100,
+        max_z_pos: 100,
     },
 ];
 material_data_base = [

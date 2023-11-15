@@ -60,7 +60,8 @@ export type ExperimentType = {
     max_load: number;
     max_travel: number;
     max_time: number;
-    num_of_data_points: number;
+    max_x: number;
+    max_z_pos: number;
     z_axis_speed: number;
     compress: boolean;
     extra_info: string;
@@ -75,7 +76,8 @@ export const defaultExperimentType: ExperimentType = {
     max_load: 0,
     max_travel: 0,
     max_time: 0,
-    num_of_data_points: 1,
+    max_x: 1,
+    max_z_pos: 1,
     z_axis_speed: 0,
     compress: false,
     extra_info: "NONE",

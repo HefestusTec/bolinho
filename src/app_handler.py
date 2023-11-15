@@ -44,11 +44,16 @@ class AppHandler:
         self.__started_experiment_time = 0.0
         self.__experiment: list[dict] = []
         self.__time_since_last_refresh = 0.0
+        self.__last_data_refresh = 0.0
         self.__current_time = 0.0
         self.__current_readings: b_classes.Readings = b_classes.Readings()
         self.__starting_z_axis_pos: int = 0
         self.__delta_load = 0
         self.__n_readings = 0
+        self.__max_time = 0
+        self.__max_load = 0
+        self.__max_pos = 0
+        self.__max_delta_load = 0
 
     def wait_for_connection(self):
         """
@@ -75,6 +80,10 @@ class AppHandler:
                 experiment_api.set_readings(self.__current_readings)
                 eel.sleep(0.1)  # 10 FPS refresh rate
             case StateE.RUNNING_EXPERIMENT:
+                if self.__current_time - self.__last_data_refresh < 1 / 80:
+                    return
+                self.__last_data_refresh = self.__current_time
+
                 if (
                     self.__current_time - 500 > self.__time_since_last_refresh
                 ):  # ~2 FPS refresh rate
@@ -84,6 +93,29 @@ class AppHandler:
                     experiment_api.set_time(
                         self.__current_time - self.__started_experiment_time
                     )
+
+                    # check stop conditions
+                    stop_conditions = [
+                        self.__current_time - self.__started_experiment_time
+                        > self.__max_time,
+                        self.__current_readings.current_load > self.__max_load,
+                        self.__current_readings.z_axis_pos > self.__max_pos,
+                        self.__delta_load > self.__max_delta_load,
+                    ]
+
+                    stop_message = [
+                        f"Tempo máximo de {self.__max_time}ms atingido",
+                        f"Carga máxima de {self.__max_load} atingida",
+                        f"Posição máxima de {self.__max_pos} atingida",
+                        f"Variação de carga máxima de {self.__max_delta_load} atingida",
+                    ]
+
+                    if False:  # any(stop_conditions):
+                        ui_api.error_alert(
+                            f"Experimento {self.__experiment_id} finalizado. {stop_message[stop_conditions.index(True)]}"
+                        )
+                        self.end_experiment()
+                        return
 
                     core_api.refresh_realtime_experiment_data()  # Asks the UI to fetch new data
                     # print(f"{(self.__n_readings / (current_time - self.__started_experiment_time)) * 1000 } readings per second")
@@ -142,16 +174,25 @@ class AppHandler:
         self.__delta_load = self.gran.get_delta_load()
 
     def set_granulado_configs(
-        self, globalMaxLoad, globalMaxTravel, globalMaximumDeltaLoad, globalZAxisLength
+        self,
+        globalMaxLoad,
+        globalMaxTravel,
+        globalMaximumDeltaLoad,
+        globalZAxisLength,
+        globalMaxTime,
     ):
         self.gran.set_max_load(globalMaxLoad)
+        self.__max_load = globalMaxLoad
         eel.sleep(0.01)
         self.gran.set_max_travel(globalMaxTravel)
+        self.__max_pos = globalMaxTravel
         eel.sleep(0.01)
         self.gran.set_max_delta_load(globalMaximumDeltaLoad)
+        self.__max_delta_load = globalMaximumDeltaLoad
         eel.sleep(0.01)
         self.gran.set_z_axis_length(globalZAxisLength)
         eel.sleep(0.01)
+        self.__max_time = globalMaxTime
 
     def start_experiment(self, experiment_id: int, compress: bool, z_axis_length):
         """
@@ -180,10 +221,11 @@ class AppHandler:
         """
         Handles writing the new experiment to persistent memory
         """
-        print("Experiment ending")
+        # stop motor
+        self.gran.stop_z_axis()
+
         # send to home page
         app_state.change_state(StateE.INSPECTING)
-        print(f"State changed: {app_state.state}")
 
         # Write data as batch
         db_handler.batch_post_reading(self.__experiment)
