@@ -23,7 +23,7 @@ import SliderComponent from "../graphComponent/sliderComponent/sliderComponent";
 import { DataPointType } from "types/DataPointTypes";
 import { PlotTypeType } from "types/PlotTypeType";
 import GraphSideBar from "../graphComponent/graphSideBar/graphSideBar";
-import ChartComponent from "./ChartComponent/ChartComponent";
+import ChartComponent from "./chartComponent/chartComponent";
 import useFetchExperiments from "hooks/useFetchExperiments";
 import useFetchExperimentsData from "hooks/useFetchExperimentsData";
 
