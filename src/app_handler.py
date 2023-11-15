@@ -228,4 +228,8 @@ class AppHandler:
         self.__experiment_id = -1
 
 
+
+
+
+
 bolinho_app = AppHandler()

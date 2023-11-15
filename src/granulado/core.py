@@ -66,6 +66,9 @@ class Granulado:
             return False
 
     def __error(self, error_message):
+        print(error_message)
+
+        return
         if not self.__send_serial_message("s"):
             ui_api.error_alert(
                 "Não foi possível parar o eixo Z. O Granulado está conectado?",
