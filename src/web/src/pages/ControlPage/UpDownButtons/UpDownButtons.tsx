@@ -39,8 +39,8 @@ const UpDownButtons: FunctionComponent<UpDownButtonsProps> = ({ style }) => {
         );
         moveZAxisMillimetersJS(
             direction === MovementDirection.UP
-                ? movementAmountAsNumber
-                : -movementAmountAsNumber
+                ? -movementAmountAsNumber
+                : movementAmountAsNumber
         );
     };
 
@@ -63,7 +63,7 @@ const UpDownButtons: FunctionComponent<UpDownButtonsProps> = ({ style }) => {
                             bottom: "5%",
                         }}
                     >
-                        +{distanceAmount}
+                        -{distanceAmount}
                     </div>
                 </CustomButton>
                 <CustomButton
@@ -79,7 +79,7 @@ const UpDownButtons: FunctionComponent<UpDownButtonsProps> = ({ style }) => {
                             top: "5%",
                         }}
                     >
-                        -{distanceAmount}
+                        +{distanceAmount}
                     </div>
                 </CustomButton>
             </div>

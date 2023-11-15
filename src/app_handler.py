@@ -80,10 +80,6 @@ class AppHandler:
                 experiment_api.set_readings(self.__current_readings)
                 eel.sleep(0.1)  # 10 FPS refresh rate
             case StateE.RUNNING_EXPERIMENT:
-                if self.__current_time - self.__last_data_refresh < 1 / 80:
-                    return
-                self.__last_data_refresh = self.__current_time
-
                 if (
                     self.__current_time - 500 > self.__time_since_last_refresh
                 ):  # ~2 FPS refresh rate

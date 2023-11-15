@@ -178,15 +178,12 @@ def end_experiment_routine():
 
     Returns 1 if succeeded.
     """
-    print("here1")
     stopped = stop_z_axis()
 
-    print("here2")
     if not stopped:
         ui_api.error_alert(
             "Não foi possível parar o eixo Z. O Granulado está conectado?",
         )
-    print("here3")
 
     def save_and_end(toast_id):
         bolinho_app.end_experiment()

@@ -39,9 +39,11 @@ class Granulado:
         self.__end()
 
     def __refresh_ping(self):
-        current_time = time.time() * 1000.0
+        return
+        current_time = time.time()
 
-        if current_time + 100 > self.__time_since_last_refresh:  # ~10 FPS refresh rate
+        # refresh ping every 10     second
+        if current_time - self.__time_since_last_refresh > 10:
             self.__time_since_last_refresh = current_time
             self.__send_serial_message("p")
 
@@ -54,7 +56,7 @@ class Granulado:
             if not self.__hardware.writable():
                 self.disconnect()
                 return False
-            if self.__hardware.write(bytes(message, "utf-8")) is not None:
+            if self.__hardware.write(bytes(f"{message}\n", "utf-8")) is not None:
                 return True
             self.disconnect()
             return False
@@ -68,11 +70,7 @@ class Granulado:
             ui_api.error_alert(
                 "Não foi possível parar o eixo Z. O Granulado está conectado?",
             )
-        ui_api.prompt_user(
-            description=f"Erro: {error_message}",
-            options=["Voltar para a página inicial"],
-            callback_func=core_api.go_to_home_page,
-        )
+        ui_api.error_alert(f"Mensagem de erro do Granulado: {error_message}")
 
     def __end(self):
         core_api.set_is_connected(False)
@@ -94,44 +92,48 @@ class Granulado:
 
         self.__refresh_ping()
         self.__update_delta_load()
-        # Check if there is a message to be read
-        if self.__hardware.in_waiting <= 0:
-            return
-
         try:
-            # Read message from usb
-            received = self.__hardware.readline()
-            # decode to utf-8
-            decodedMessage = received.decode()
-            response = decodedMessage[0]
-            value = decodedMessage[1:].replace("\r", "").replace("\n", "")
-            match response:
-                case "p":
-                    self.__ping = time.time()
-                case "e":
-                    self.__error(value)
-                case "r":
-                    self.__instant_load = float(value)
-                case "g":
-                    self.__instant_position = int(value)
-                case "j":
-                    self.__z_axis_length = int(value)
-                case "b":
-                    ui_api.error_alert("Sensor de fim de curso inferior foi acionado!")
-                    self.stop_z_axis()
-                case "t":
-                    ui_api.error_alert("Sensor de fim de curso superior foi acionado!")
-                    self.stop_z_axis()
-                case "d":
-                    self.__delta_load = int(value)
-                case "s":
-                    ui_api.success_alert("O motor for interrompido")
-                case "i":
-                    print(f"GRANULADO says: {value}")
-                case _:
-                    ui_api.error_alert(
-                        f"Resposta inesperada do Granulado: ''{response}''"
-                    )
+            # Check if there is a message to be read
+            if self.__hardware.in_waiting <= 0:
+                return
+            buffer = self.__hardware.read_all()
+            cmds = [x for x in buffer.split(b"\r\n") if x != b""]
+            for cmd in cmds:
+                # decode from utf-8
+                decodedMessage = cmd.decode()
+                response = decodedMessage[0]
+                value = decodedMessage[1:].replace("\r", "").replace("\n", "")
+                match response:
+                    case "p":
+                        self.__ping = time.time()
+                    case "e":
+                        self.__error(value)
+                    case "r":
+                        self.__instant_load = float(value)
+                    case "g":
+                        self.__instant_position = int(value)
+                    case "j":
+                        self.__z_axis_length = int(value)
+                    case "b":
+                        ui_api.error_alert(
+                            "Sensor de fim de curso inferior foi acionado!"
+                        )
+                        self.stop_z_axis()
+                    case "t":
+                        ui_api.error_alert(
+                            "Sensor de fim de curso superior foi acionado!"
+                        )
+                        self.stop_z_axis()
+                    case "d":
+                        self.__delta_load = int(value)
+                    case "s":
+                        ui_api.success_alert("O motor for interrompido")
+                    case "i":
+                        print(f"GRANULADO says: {value}")
+                    case _:
+                        ui_api.error_alert(
+                            f"Resposta inesperada do Granulado: ''{response}''"
+                        )
 
             return True
         except serial.SerialException as e:
@@ -144,10 +146,10 @@ class Granulado:
         """
         Sends messages to Granulado to get the current load and position, waits for the response and returns the values
         """
-        import random
+        # import random
 
-        self.__instant_position += 1
-        return random.randrange(0, 100), self.__instant_position
+        # self.__instant_position += 1
+        #   return random.randrange(0, 100), self.__instant_position
 
         if self.get_load() and self.get_position():
             return self.__instant_load, self.__instant_position
@@ -157,12 +159,14 @@ class Granulado:
         """
         Send serial message to Granulado to get the current position
         """
+
         return self.__send_serial_message("g")
 
     def get_load(self):
         """
         Send serial message to Granulado to get the current load
         """
+
         return self.__send_serial_message("r")
 
     def get_delta_load(self):
@@ -186,7 +190,7 @@ class Granulado:
         return all(checks)
 
     def check_granulado_is_connected(self):
-        if time.time() - self.__ping > 10 and self.__ping != 0:
+        if time.time() - self.__ping > 100000000000 and self.__ping != 0:
             ui_api.prompt_user(
                 description=f"A máquina parece estar desconectada ({(time.time() - self.__ping):2 }s). Verifique a conexão e tente novamente.",
                 options=["Tentar novamente"],
@@ -216,7 +220,6 @@ class Granulado:
             int(config.get("absoluteMaximumDeltaLoad", 0)) > 0,
             int(config.get("zAxisLength", 0)) > 0,
             int(config.get("knownWeight", 0)) > 0,
-            len(config.get("port", "")) > 0,
         ]
         if all(checks):
             return True
@@ -256,6 +259,7 @@ class Granulado:
         return self.__send_serial_message("s")
 
     def move_z_axis_millimeters(self, millimeters: int):
+        print(f"moving {millimeters} millimeters")
         return self.__send_serial_message(f"m{millimeters}")
 
     def tare_load(self):

@@ -104,7 +104,9 @@ const ConnectionComponent: FunctionComponent<ConnectionComponentProps> = () => {
                     className={styleModule.connect_button}
                     bgColor="var(--negative_button_color)"
                     fontColor="var(--font_color_inverted)"
-                    clickCallBack={disconnect}
+                    clickCallBack={() => {
+                        disconnect();
+                    }}
                 >
                     DESCONECTAR
                 </CustomButton>
@@ -113,7 +115,9 @@ const ConnectionComponent: FunctionComponent<ConnectionComponentProps> = () => {
                     className={styleModule.connect_button}
                     bgColor="var(--positive_button_color)"
                     fontColor="var(--font_color_inverted)"
-                    clickCallBack={connectToPort}
+                    clickCallBack={() => {
+                        connectToPort();
+                    }}
                 >
                     CONECTAR
                 </CustomButton>

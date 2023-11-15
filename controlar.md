@@ -1,6 +1,7 @@
 # Movimento
-* `+ Cima`
-* `- Baixo`
+* `- Cima`
+* `+ Baixo`
+
 
 # Granulado
 ## Funções
