@@ -48,7 +48,7 @@ class UiAPI:
     async def loading_alert(self, text: str):
         """
         Show a loading alert to the user with some 'text'
-        
+
         Returns a async ID that should be handled
         """
         return await eel.toastLoadingJS(text)()
@@ -60,7 +60,6 @@ class UiAPI:
         If success is set to true it displays a success other wise shows an error
         """
         return eel.toastUpdateJS(text, success, id)()
-
 
     def loading_alert(self, text: str, callback_func):
         """Show an error alert to the user with some 'text'"""
@@ -79,12 +78,13 @@ class UiAPI:
         """
 
         eel.setFocusJS(focus_element)
-        
+
     def set_save_experiment_progress(self, total: int, amount: int):
         """
         Set the progress bar experiment save.
         """
 
         eel.setSaveExperimentProgressJS(total, amount)
+
 
 ui_api = UiAPI()

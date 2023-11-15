@@ -14,7 +14,7 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
-import React, { useState, useEffect, FunctionComponent } from "react";
+import React, { FunctionComponent } from "react";
 
 import { Line } from "react-chartjs-2";
 
@@ -46,38 +46,21 @@ ChartJS.register(
 
 interface ChartComponentProps {
     sliderValue: { min: number; max: number };
-    experimentPlotDataArray: ExperimentPlotData[];
-    allMaxDataValues: DataPointType;
-    minX: number;
+    experimentPlotDataList: ExperimentPlotData[];
+    maxData: DataPointType;
+    minData: DataPointType;
 }
 
 const ChartComponent: FunctionComponent<ChartComponentProps> = ({
-    sliderValue = { min: 0, max: 100 },
-    experimentPlotDataArray = [],
-    allMaxDataValues = { x: 50, y: 1 },
-    minX,
+    sliderValue,
+    experimentPlotDataList,
+    maxData,
+    minData,
 }) => {
-    const [maxData, setMaxData] = useState<DataPointType>({ x: 50, y: 1 });
-
-    const getDataSets = () => {
-        return experimentPlotDataArray.map((object) => {
-            const obj = object.dataset;
-            return obj;
-        });
-    };
-
-    const getXMaxValue = () => {
-        if (sliderValue.max <= allMaxDataValues.x) return sliderValue.max;
-        return allMaxDataValues.x;
-    };
-
-    useEffect(() => {
-        setMaxData(allMaxDataValues);
-    }, [allMaxDataValues]);
     return (
         <Line
             data={{
-                datasets: getDataSets(),
+                datasets: experimentPlotDataList.map((e) => e.dataset),
             }}
             options={{
                 responsive: true,
@@ -96,12 +79,18 @@ const ChartComponent: FunctionComponent<ChartComponentProps> = ({
                 scales: {
                     x: {
                         type: "linear",
-                        min: sliderValue.min >= minX ? sliderValue.min : minX,
-                        max: getXMaxValue(),
+                        min:
+                            sliderValue.min >= minData.x
+                                ? sliderValue.min
+                                : minData.x,
+                        max:
+                            sliderValue.max <= maxData.x
+                                ? sliderValue.max
+                                : maxData.x,
                     },
                     y: {
                         type: "linear",
-                        min: 0,
+                        min: Math.ceil(minData.y * 100) / 100,
                         // round up maxData.y to 2 decimal places
                         max: Math.ceil(maxData.y * 100) / 100,
                     },

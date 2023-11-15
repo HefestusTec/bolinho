@@ -35,7 +35,6 @@ class Granulado:
         self.__time_since_last_refresh = 0
         self.__last_is_connected = None
 
-
     def __del__(self):
         self.__end()
 
@@ -127,8 +126,12 @@ class Granulado:
                     self.__delta_load = int(value)
                 case "s":
                     ui_api.success_alert("O motor for interrompido")
+                case "i":
+                    print(f"GRANULADO says: {value}")
                 case _:
-                    ui_api.error_alert(f"Resposta inesperada do Granulado: ''{response}''")
+                    ui_api.error_alert(
+                        f"Resposta inesperada do Granulado: ''{response}''"
+                    )
 
             return True
         except serial.SerialException as e:
@@ -319,7 +322,7 @@ class Granulado:
 
         returns 0 if FAILED
 
-        Example of usage    
+        Example of usage
 
             ```
             from granulado.core import Granulado
@@ -328,7 +331,7 @@ class Granulado:
             gr.connect(port='COM4', baudrate=115200, timeout=.1)
             ```
         """
-        print(f'porta: {port}')
+        print(f"porta: {port}")
         try:
             self.__hardware = serial.Serial(port=port, baudrate=baudrate, timeout=0.1)
             print(self.__hardware)

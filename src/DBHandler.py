@@ -95,7 +95,8 @@ class Experiment(BaseModel):
     max_load = FloatField()
     max_travel = FloatField()
     max_time = FloatField()
-    num_of_data_points = IntegerField()
+    max_x = IntegerField()
+    max_z_pos = FloatField()
     compress = BooleanField()
     z_axis_speed = FloatField()
     plot_color = CharField()
@@ -204,11 +205,17 @@ class DBHandler:
         data_size = len(data)
         if data_size < 1:
             return
-        # update experiment num_of_data_points
+
+        max_x = max([reading["x"] for reading in data])
+        max_z_pos = max([reading["z_pos"] for reading in data])
+
+        # update experiment data
         experiment_id = data[0]["experiment_id"]
         experiment = Experiment.get(Experiment.id == experiment_id)
-        experiment.num_of_data_points = data_size
+        experiment.max_x = max_x
+        experiment.max_z_pos = max_z_pos
         experiment.save()
+
         # insert data in chunks
         for i in range(0, len(data), chunk_size):
             ui_api.set_save_experiment_progress(
@@ -276,7 +283,8 @@ class DBHandler:
                     "z_axis_speed": 0.1 + 4 * i / 10,
                     "extra_info": "Extra info " + str(i),
                     "plot_color": "#" + str(random.randint(0, 999999)),
-                    "num_of_data_points": 50,
+                    "max_x": 49,
+                    "max_z_pos": 48,
                 }
             )
 

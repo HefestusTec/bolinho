@@ -15,14 +15,14 @@
 // You should have received a copy of the GNU General Public License
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
 
+import { calculatePercentage } from "helpers";
 import { useState } from "react";
 
 const useSaveProgress = () => {
     const [progress, setProgress] = useState<number>(0);
 
     function setSaveExperimentProgressJS(total: number, amount: number) {
-        const percentage = (amount / total) * 100;
-        setProgress(percentage);
+        setProgress(calculatePercentage(amount, total));
     }
     try {
         window.eel.expose(
