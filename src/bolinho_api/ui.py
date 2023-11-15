@@ -79,6 +79,12 @@ class UiAPI:
         """
 
         eel.setFocusJS(focus_element)
+        
+    def set_save_experiment_progress(self, total: int, amount: int):
+        """
+        Set the progress bar experiment save.
+        """
 
+        eel.setSaveExperimentProgressJS(total, amount)
 
 ui_api = UiAPI()

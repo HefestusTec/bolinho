@@ -16,12 +16,14 @@
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
 
 import { endExperimentRoutineJS } from "api/backend-api";
+import useSaveProgress from "api/hooks/useSaveProgress";
 import BackgroundFader from "components/backgroundFader/backgroundFader";
 import ContainerComponent from "components/containerComponent/containerComponent";
 import CustomButtonArray from "components/customSubComponents/CustomButtonArray/CustomButtonArray";
 import CustomText from "components/customSubComponents/CustomText/CustomText";
 import CustomButton from "components/customSubComponents/customButton/customButton";
 import { Dispatch, FunctionComponent, SetStateAction, useState } from "react";
+import { CircularProgressbar } from "react-circular-progressbar";
 
 interface EndExperimentPromptProps {
     isOpen: boolean;
@@ -33,6 +35,7 @@ const EndExperimentPrompt: FunctionComponent<EndExperimentPromptProps> = ({
     setIsOpen,
 }) => {
     const [isSaving, setIsSaving] = useState<boolean>(false);
+    const [savingPercentage] = useSaveProgress();
     const handleClose = () => {
         setIsOpen(false);
     };
@@ -69,6 +72,10 @@ const EndExperimentPrompt: FunctionComponent<EndExperimentPromptProps> = ({
                     <ContainerComponent headerText={"Guardando experimento..."}>
                         <CustomText
                             value={"Gravando dados ao banco de dados aguarde!"}
+                        />
+                        <CircularProgressbar
+                            value={savingPercentage}
+                            text={`${savingPercentage}%`}
                         />
                     </ContainerComponent>
                 ) : (

@@ -326,13 +326,11 @@ def get_load_over_position_by_experiment_id(experiment_id, start_x: int, end_x: 
     """
     Returns a list of load over position data points for the experiment with the given id
     """
-    print(app_state.state)
     if app_state.state == StateE.RUNNING_EXPERIMENT:
         
         q = realTimeR.load_over_position_realtime_readings.queue
         n_points = len(q)
         q_list = list(q)
-        print(n_points, len(q_list))
         # pick 10k points evenly spaced
         if n_points > 10000:
             readings_dict = q_list[:: ceil(n_points / 10000)]

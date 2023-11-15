@@ -113,7 +113,6 @@ class AppHandler:
         self.__current_readings.z_axis_pos = current_pos
         self.__current_readings.status = "Conectado"
 
-
         # check if is running experiment
         if self.__experiment_id == -1:
             return
@@ -142,7 +141,9 @@ class AppHandler:
 
         self.__delta_load = self.gran.get_delta_load()
 
-    def set_granulado_configs(self, globalMaxLoad, globalMaxTravel, globalMaximumDeltaLoad, globalZAxisLength):
+    def set_granulado_configs(
+        self, globalMaxLoad, globalMaxTravel, globalMaximumDeltaLoad, globalZAxisLength
+    ):
         self.gran.set_max_load(globalMaxLoad)
         eel.sleep(0.01)
         self.gran.set_max_travel(globalMaxTravel)
@@ -151,7 +152,6 @@ class AppHandler:
         eel.sleep(0.01)
         self.gran.set_z_axis_length(globalZAxisLength)
         eel.sleep(0.01)
-
 
     def start_experiment(self, experiment_id: int, compress: bool, z_axis_length):
         """
@@ -180,12 +180,14 @@ class AppHandler:
         """
         Handles writing the new experiment to persistent memory
         """
-        self.__experiment_id = -1
+        print("Experiment ending")
         # send to home page
         app_state.change_state(StateE.INSPECTING)
+        print(f"State changed: {app_state.state}")
 
         # Write data as batch
         db_handler.batch_post_reading(self.__experiment)
+        self.__experiment_id = -1
 
 
 bolinho_app = AppHandler()

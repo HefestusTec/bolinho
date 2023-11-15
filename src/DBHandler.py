@@ -20,6 +20,7 @@ import datetime
 from os.path import exists as path_exists
 from os import makedirs
 import random
+from bolinho_api.ui import ui_api
 
 
 db_path = "persist/bolinho.db"
@@ -199,7 +200,7 @@ class DBHandler:
         return reading.id
 
     def batch_post_reading(self, data: list):
-        chunk_size = 10000
+        chunk_size = 5000
         data_size = len(data)
         if data_size < 1:
             return
@@ -210,6 +211,9 @@ class DBHandler:
         experiment.save()
         # insert data in chunks
         for i in range(0, len(data), chunk_size):
+            ui_api.set_save_experiment_progress(
+                len(data) // chunk_size, i // chunk_size
+            )
             Reading.insert_many(data[i : i + chunk_size]).execute()
 
     def get_load_over_time_by_experiment_id(self, experiment_id: int):

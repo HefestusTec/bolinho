@@ -263,6 +263,20 @@ ___
 
 ___
 
+### set_save_experiment_progress(total: int, amount: int)
+!!! quote "set_save_experiment_progress(total: int, amount: int)"
+
+    Set the progress bar experiment save.
+
+    ``` python title="Python usage example"
+    from bolinho_api.ui import ui_api
+    
+    # Sets the progress to 2%
+    ui_api.set_save_experiment_progress(100, 2)
+
+    ```
+___
+
 
 ## Experiment page API
 Collection of all functions/API calls available to the backend for the **experiment** routine. You can find them in the `bolinho_api/experiment.py` file.

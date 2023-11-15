@@ -75,6 +75,27 @@ const getMaxX = (
     return maxX;
 };
 
+/*
+const getMaxX = (
+    experimentArray: ExperimentType[],
+    experimentData: ExperimentPlotData[] | undefined
+): number => {
+    if (experimentArray.length === 0) return 0;
+    if (!experimentData) return 0;
+
+    let maxX = Number.MIN_VALUE;
+    experimentArray.forEach((element, idx) => {
+        const dataLen = experimentData[idx].dataset.data.length;
+        if (experimentData[idx].dataset.data[dataLen - 1]) {
+            const currentLastX =
+                experimentData[idx].dataset.data[dataLen - 1].x;
+            if (currentLastX > maxX) maxX = currentLastX;
+        }
+    });
+    return maxX;
+};
+*/
+
 const getMinX = (
     experimentArray: ExperimentType[],
     experimentData: ExperimentPlotData[] | undefined
