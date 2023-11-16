@@ -126,8 +126,8 @@ nav:
 #           - Styling: frontEnd/styling.md
     - Manual do usuário:
           - Manual do usuário: manual_do_usuario/index.md
-          - Inspecionando: manual_do_usuario/inspecionando.md
           - Configuração: manual_do_usuario/configuracao.md
+          - Inspecionando: manual_do_usuario/inspecionando.md
           - Calibração: manual_do_usuario/calibracao.md
           - Controle manual: manual_do_usuario/controle_manual.md
           - Novo experimento: manual_do_usuario/novo_experimento.md

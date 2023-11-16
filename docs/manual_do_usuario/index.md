@@ -26,25 +26,27 @@ Aqui você encontrará o manual do usuário de todo o sistema do **Bolinho**.
 
 O sistema Bolinho é composto por dois componentes diferentes, o **Bolinho** e o **Granulado**
 
+Para informações sobre a configuração visite a página [Manual do usuário - configuração](configuracao.md).
+
 ### Bolinho ![Logo bolinho](../resources/LogoBolinho32.png)
 
 
 Bolinho é a **interface humana** responsável por orquestrar todo o funcionamento do sistema Bolinho.
 
-![Página inicio](../resources/mainPageBolinho.png)
+![Página inicio](../resources/mainPageBolinho.png){ width="500" }
 
-Bolinho é uma aplicação padrão de computador, e atualmente suporta apenas Linux como seu sistema operacional.
+Bolinho é uma aplicação padrão de computador, e atualmente suporta Linux ou Windows como seu sistema operacional.
 
 !!! info
     Bolinho foi testado na distribuição [Debian da OrangePI](http://www.orangepi.org/html/hardWare/computerAndMicrocontrollers/service-and-support/Orange-Pi-PC.html) no hardware [OrangePI 5 8Gb RAM](http://www.orangepi.org/html/hardWare/computerAndMicrocontrollers/details/Orange-Pi-5.html)
 
-Para informações sobre a sua configuração visite a página [Manual do usuário - configuração](configuracao.md).
+Ao longo desse manual o nome `host` irá se referir ao **computador no qual o Bolinho está instalado**.
 
 O repositório com o código fonte do bolinho pode ser encontrado em <https://github.com/HefestusTec/bolinho> junto com sua documentação.
 
 ### Granulado 
 
-![Granulado](../resources/granuladoImage.png)
+![Granulado](../resources/granuladoImage.png){ width="500" }
 
 Granulado é o *firmware* embarcado do sistema, este é responsável pela interface com o *hardware* e seu *driver*.
 
@@ -54,6 +56,7 @@ Para informações sobre a sua configuração visite a página [Manual do usuár
 
 O repositório com o código fonte do bolinho pode ser encontrado em <https://github.com/HefestusTec/granulado>.
 
+
 ## Sobre a documentação
 
 A documentação é uma coleção completa de todas as informações pertinentes ao sistema Bolinho. Ela está escrita predominantemente em **Inglês** e possui o tópico **Manual do Usuário** escrito em **Português**.
@@ -61,7 +64,7 @@ A documentação é uma coleção completa de todas as informações pertinentes
 Toda a documentação do Bolinho está disponível em dois formatos `Página estática` e `PDF`
 
 !!! warning "Atenção"
-    A Hefestus não se compromete em manter os arquivos relacionados a documentação acessiveis, caso deseje mantê-los você pode fazer uma cópia local de toda a documentação
+    A Hefestus não se compromete em manter os arquivos relacionados a documentação acessíveis, caso deseje mantê-los você pode fazer uma cópia local de toda a documentação
 
 ### Página estática
 

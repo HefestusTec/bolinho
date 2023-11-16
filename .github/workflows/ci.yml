@@ -44,7 +44,7 @@ jobs:
           rm -f ./Bolinho/src/*.spec
           mkdir Bolinho/src/web
           cp -r ./src/web/build ./Bolinho/src/web/build
-          cp requirements.txt ./Bolinho/          
+          cp requirements.txt ./Bolinho/src      
           zip -r Bolinho_${{ github.run_number }}.zip ./Bolinho/*
       - uses: "marvinpinto/action-automatic-releases@latest"
         with:
