@@ -9,10 +9,10 @@
       
       
       
-        <link rel="prev" href="../inspecionando/">
+        <link rel="prev" href="../">
       
       
-        <link rel="next" href="../calibracao/">
+        <link rel="next" href="../inspecionando/">
       
       <link rel="icon" href="../../resources/LogoBolinho512.png">
       <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.0.8">
@@ -449,20 +449,6 @@
               
   
   
-  
-    <li class="md-nav__item">
-      <a href="../inspecionando/" class="md-nav__link">
-        Inspecionando
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
     
   
   
@@ -474,10 +460,83 @@
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Configuração
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         Configuração
       </a>
       
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#estrutura-do-programa" class="md-nav__link">
+    Estrutura do programa
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#instalando-o-bolinho-pela-primeira-vez" class="md-nav__link">
+    Instalando o Bolinho pela primeira vez
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#executando-o-bolinho" class="md-nav__link">
+    Executando o Bolinho
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conectando-o-granulado" class="md-nav__link">
+    Conectando o Granulado
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#como-atualizar-o-bolinho" class="md-nav__link">
+    Como atualizar o bolinho
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../inspecionando/" class="md-nav__link">
+        Inspecionando
+      </a>
     </li>
   
 
@@ -738,6 +797,49 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#estrutura-do-programa" class="md-nav__link">
+    Estrutura do programa
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#instalando-o-bolinho-pela-primeira-vez" class="md-nav__link">
+    Instalando o Bolinho pela primeira vez
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#executando-o-bolinho" class="md-nav__link">
+    Executando o Bolinho
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conectando-o-granulado" class="md-nav__link">
+    Conectando o Granulado
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#como-atualizar-o-bolinho" class="md-nav__link">
+    Como atualizar o bolinho
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -775,7 +877,49 @@
 -->
 
 <h1 id="configuracao">Configuração<a class="headerlink" href="#configuracao" title="Permanent link">&para;</a></h1>
-<p>Como configurar.</p>
+<p>Este capitulo apresentará as informações de como configurar esse software.</p>
+<h2 id="estrutura-do-programa">Estrutura do programa<a class="headerlink" href="#estrutura-do-programa" title="Permanent link">&para;</a></h2>
+<p>A imagem a seguir apresenta a estrutura de arquivos do programa:
+<img alt="Alt text" src="../image-9.png" width="500" /></p>
+<ul>
+<li><code>src</code>: Contém os arquivos da aplicação, esse não deve ser alterado diretamente pelo usuário.</li>
+<li><code>persist</code>: Contém os dados gerados pelo uso<ul>
+<li><code>configParams.json</code>: Contém os parâmetros de configuração globais da aplicação, não é recomendado que o usuário os modifique manualmente.</li>
+<li><code>bolinho.db</code>: É o <strong>banco de dados</strong> da aplicação, aqui são guardados todos os dados gerados por experimentos, materiais etc. É de suma importância que o usuário mantenha uma cópia desse arquivo para proteger contra percas.</li>
+</ul>
+</li>
+<li><code>start.sh</code>: É o script de inicialização da aplicação. Esse arquivo deve ser executado para iniciar a aplicação.</li>
+<li><code>orange_setup.sh</code>: Baixa todas as dependências e realiza o setup da aplicação. Esse script deve ser executado ao instalar uma versão nova do Bolinho.</li>
+</ul>
+<h2 id="instalando-o-bolinho-pela-primeira-vez">Instalando o Bolinho pela primeira vez<a class="headerlink" href="#instalando-o-bolinho-pela-primeira-vez" title="Permanent link">&para;</a></h2>
+<p>O software Bolinho é distribuído através de um arquivo <code>.zip</code>. Com o seguinte nome <code>Bolinho_[versão].zip</code> por exemplo <code>Bolinho_178.zip</code>.</p>
+<ol>
+<li>Extraia o arquivo.</li>
+<li>Copie o arquivo <code>Bolinho</code> para sua <code>Área de trabalho</code>.</li>
+<li>Execute o script <code>orange_setup.sh</code>.</li>
+</ol>
+<p>Com isso seu programa deve estar instalado com todas suas dependências.</p>
+<h2 id="executando-o-bolinho">Executando o Bolinho<a class="headerlink" href="#executando-o-bolinho" title="Permanent link">&para;</a></h2>
+<p>Para utilizar o Bolinho execute o script <code>start.sh</code>.</p>
+<p>Você deve ser recebido com uma tela como essa:</p>
+<p><img alt="Página inicio" src="../../resources/mainPageBolinho.png" width="500" /></p>
+<h2 id="conectando-o-granulado">Conectando o Granulado<a class="headerlink" href="#conectando-o-granulado" title="Permanent link">&para;</a></h2>
+<p>O primeiro passo para configurar o granulado é ligar seus periféricos de acordo com a seguinte sequência:</p>
+<p><img alt="Alt text" src="../image-11.png" width="500" /></p>
+<p>Após isso conecte o <strong>USB</strong> e os <strong>Sensores de Fim de Curso</strong>.</p>
+<p><img alt="Alt text" src="../image-12.png" /></p>
+<div class="admonition warning">
+<p class="admonition-title">Atenção</p>
+<p>Preste atenção à ordem dos sensores de fim de curso, sendo 
+* <code>T</code>: Sensor <strong>superior</strong>.
+* <code>B</code>: Sensor <strong>inferior</strong>.</p>
+</div>
+<p>A comunicação do Granulado com o Bolinho é feita via USB, portanto conecte-o a uma das portas USB do <code>host</code>.</p>
+<h2 id="como-atualizar-o-bolinho">Como atualizar o bolinho<a class="headerlink" href="#como-atualizar-o-bolinho" title="Permanent link">&para;</a></h2>
+<p>Antes de atualizar o Bolinho é de suma importância que seja criado <strong>uma CÓPIA do <code>persist</code></strong> para prevenir que a atualização corrompa seus dados.  </p>
+<p><img alt="Alt text" src="../image-10.png" /></p>
+<p>Note que a versão mais nova não possui o diretório <code>persist</code>.</p>
+<p>Para atualizar o Bolinho basta copiar <strong>todos</strong> os arquivos da <code>nova</code> versão para os da <code>atual</code>.</p>
 
 
 
@@ -802,7 +946,7 @@
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="../inspecionando/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Inspecionando" rel="prev">
+          <a href="../" class="md-footer__link md-footer__link--prev" aria-label="Previous: Manual do usuário" rel="prev">
             <div class="md-footer__button md-icon">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
             </div>
@@ -811,20 +955,20 @@
                 <span class="md-footer__direction">
                   Previous
                 </span>
-                Inspecionando
+                Manual do usuário
               </div>
             </div>
           </a>
         
         
           
-          <a href="../calibracao/" class="md-footer__link md-footer__link--next" aria-label="Next: Calibração" rel="next">
+          <a href="../inspecionando/" class="md-footer__link md-footer__link--next" aria-label="Next: Inspecionando" rel="next">
             <div class="md-footer__title">
               <div class="md-ellipsis">
                 <span class="md-footer__direction">
                   Next
                 </span>
-                Calibração
+                Inspecionando
               </div>
             </div>
             <div class="md-footer__button md-icon">
