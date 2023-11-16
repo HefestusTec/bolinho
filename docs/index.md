@@ -16,6 +16,10 @@ Use the **Tabs** above to navigate through the documentation.
 
 ___
 
+## Known bugs
+The full list of known bugs can be seen at <https://github.com/HefestusTec/bolinho/issues?q=is%3Aopen+is%3Aissue+label%3Abug>
+___
+
 ## Running
 
 As for running the program we have a few options:
