@@ -728,6 +728,54 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#serial-communication" class="md-nav__link">
+    Serial communication
+  </a>
+  
+    <nav class="md-nav" aria-label="Serial communication">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#protocol" class="md-nav__link">
+    Protocol:
+  </a>
+  
+    <nav class="md-nav" aria-label="Protocol:">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#bolinho-granulado" class="md-nav__link">
+    Bolinho -&gt; Granulado
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#granulado-bolinho" class="md-nav__link">
+    Granulado -&gt; Bolinho
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -766,7 +814,142 @@
 
 <h1 id="embedded">Embedded<a class="headerlink" href="#embedded" title="Permanent link">&para;</a></h1>
 <p>Bolinho uses a microcontroller <a href="https://www.espressif.com/en/products/socs/esp32-s3">esp32-s3</a> for controlling the hardware.</p>
+<p>For more info check the <a href="https://github.com/HefestusTec/granulado">Granulado repository</a>.</p>
+<h2 id="serial-communication">Serial communication<a class="headerlink" href="#serial-communication" title="Permanent link">&para;</a></h2>
 <p>The microcontroller communicates via serial to the host, and is responsible for reading the load cell and controlling the stepper motor.</p>
+<p>This communication is done via interrogation, so that the host <strong>prompts</strong> the peripheral for data and it complies.</p>
+<h3 id="protocol">Protocol:<a class="headerlink" href="#protocol" title="Permanent link">&para;</a></h3>
+<p>These are the available commands for the communication between the host and the peripheral.</p>
+<p>A instruction is divided in three parts:</p>
+<p><code>command</code> <code>data</code> <code>\n</code></p>
+<ul>
+<li><code>command</code> is a <strong>1 byte</strong> <code>character</code>.</li>
+<li><code>data</code> is the payload as a <code>string</code> it can be also empty.</li>
+<li><code>\n</code> is the <strong>line terminator</strong> to identify the end of an instruction.</li>
+</ul>
+<h4 id="bolinho-granulado">Bolinho -&gt; Granulado<a class="headerlink" href="#bolinho-granulado" title="Permanent link">&para;</a></h4>
+<ul>
+<li>
+<p><code>p</code> -&gt; Ping </p>
+</li>
+<li>
+<p><code>m[str]</code> -&gt; Moves stepper motor x millimeters. </p>
+<blockquote>
+<p>str is an <code>int</code> in <code>string</code> format.</p>
+</blockquote>
+</li>
+<li>
+<p><code>s</code> -&gt; Stop </p>
+</li>
+<li>
+<p><code>t</code> -&gt; Move to top </p>
+</li>
+<li>
+<p><code>g</code> -&gt; Get motor position millimeters. </p>
+</li>
+<li>
+<p><code>r</code> -&gt; Get instantaneous reading. </p>
+</li>
+<li>
+<p><code>@</code> -&gt; Tare load cell </p>
+</li>
+<li>
+<p><code>w</code> -&gt; Calibrate known weight </p>
+</li>
+<li>
+<p><code>x[str]</code> -&gt; Set known weight </p>
+<blockquote>
+<p>str is an <code>int</code> with the weight in <code>grams</code> in <code>string</code> format.</p>
+</blockquote>
+</li>
+<li>
+<p><code>y[str]</code> -&gt; Set z-axis length </p>
+<blockquote>
+<p>str is an <code>int</code> with the length of the z-axis in <code>millimeters</code> in <code>string</code> format.</p>
+</blockquote>
+</li>
+<li>
+<p><code>j</code> -&gt; Get z-axis length </p>
+</li>
+<li>
+<p><code>z</code> -&gt; Calibrate z-axis </p>
+</li>
+<li>
+<p><code>d</code> -&gt; Get delta load </p>
+</li>
+<li>
+<p><code>l[str]</code> -&gt; Set max load </p>
+<blockquote>
+<p>str is an <code>int</code> with the maximum experiment load in <code>grams</code> in <code>string</code> format.</p>
+</blockquote>
+</li>
+<li>
+<p><code>v[str]</code> -&gt; Set max travel </p>
+<blockquote>
+<p>str is an <code>int</code> with the maximum experiment travel in <code>mm</code> in <code>string</code> format.</p>
+</blockquote>
+</li>
+<li>
+<p><code>a[str]</code> -&gt; Set max delta load </p>
+<blockquote>
+<p>str is an <code>int</code> with the maximum experiment delta load in <code>grams / second</code> in <code>string</code> format.</p>
+</blockquote>
+</li>
+<li>
+<p><code>-</code> -&gt; Nothing</p>
+</li>
+</ul>
+<h4 id="granulado-bolinho">Granulado -&gt; Bolinho<a class="headerlink" href="#granulado-bolinho" title="Permanent link">&para;</a></h4>
+<ul>
+<li>
+<p><code>p</code> -&gt; Ping Response</p>
+</li>
+<li>
+<p><code>e[str]</code> -&gt; Erro.</p>
+<blockquote>
+<p>str is an <code>string</code> with the description of the error.</p>
+</blockquote>
+</li>
+<li>
+<p><code>r[str]</code> -&gt; Returns current reading</p>
+<blockquote>
+<p>str is an <code>int</code> in <code>grams</code> in <code>string</code> format.</p>
+</blockquote>
+</li>
+<li>
+<p><code>g[str]</code> -&gt; Returns current position in millimeters</p>
+<blockquote>
+<p>str is an <code>int</code> in <code>string</code> format.</p>
+</blockquote>
+</li>
+<li>
+<p><code>j[str]</code> -&gt; Returns z-axis length</p>
+<blockquote>
+<p>str is an <code>int</code> in <code>string</code> format.</p>
+</blockquote>
+</li>
+<li>
+<p><code>b</code> -&gt; Bottom interrupt was triggered</p>
+</li>
+<li>
+<p><code>t</code> -&gt; Top interrupt was triggered</p>
+</li>
+<li>
+<p><code>d[str]</code> -&gt; Returns delta load</p>
+<blockquote>
+<p>str is an <code>int</code> in <code>string</code> format.</p>
+</blockquote>
+</li>
+<li>
+<p><code>s</code> -&gt; Response to the stop command</p>
+</li>
+<li>
+<p><code>i[str]</code> -&gt; Debug info</p>
+<blockquote>
+<p>str is any <code>string</code> to be shown on the terminal.</p>
+</blockquote>
+</li>
+</ul>
 
 
 
