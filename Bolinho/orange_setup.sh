@@ -9,9 +9,3 @@ sudo apt install python3-pip -y
 
 # Install pip Packages
 pip install -r requirements.txt
-
-# Build an executable
-python -m eel src/main.py src/web/build --onefile --name Bolinho --icon ./src/web/build/favicon.ico
-
-# make the application autostart
-sudo cp bolinho.desktop /etc/xdg/autostart/bolinho.desktop

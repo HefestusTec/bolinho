@@ -34,6 +34,7 @@ class Granulado:
         self.__delta_load = 0  # variation of the load measured in grams/second
         self.__time_since_last_refresh = 0
         self.__last_is_connected = None
+        self.__serial_buffer = ""
 
     def __del__(self):
         self.__end()
@@ -48,22 +49,13 @@ class Granulado:
             self.__send_serial_message("p")
 
     def __send_serial_message(self, message: str):
+        self.__serial_buffer += message + '\n'
+
         if not self.is_connected():
             ui_api.error_alert("O Granulado não está conectado")
             self.__end()
             return False
-        try:
-            if not self.__hardware.writable():
-                self.disconnect()
-                return False
-            if self.__hardware.write(bytes(f"{message}\n", "utf-8")) is not None:
-                return True
-            self.disconnect()
-            return False
-        except Exception as e:
-            ui_api.error_alert(f"Não foi possível escrever no Granulado: {str(e)}")
-            self.__end()
-            return False
+        return True
 
     def __error(self, error_message):
         print(error_message)
@@ -74,7 +66,23 @@ class Granulado:
                 "Não foi possível parar o eixo Z. O Granulado está conectado?",
             )
         ui_api.error_alert(f"Mensagem de erro do Granulado: {error_message}")
+    
+    def __send_buffer(self):
+        try:
+            if not self.__hardware.writable():
+                self.disconnect()
+                return False
+            if self.__hardware.write(bytes(f"{self.__serial_buffer}", "utf-8")) is not None:
+                self.__serial_buffer = ""
+                return True
+            self.disconnect()
+            return False
+        except Exception as e:
+            ui_api.error_alert(f"Não foi possível escrever no Granulado: {str(e)}")
+            self.__end()
+            return False
 
+    
     def __end(self):
         core_api.set_is_connected(False)
         if self.__hardware is not None:
@@ -84,6 +92,7 @@ class Granulado:
         self.__instant_load = 0
         self.__instant_position = 0
         self.__ping = 0
+        self.__serial_buffer = ""
 
     def loop(self):
         is_conn = self.is_connected()
@@ -95,12 +104,13 @@ class Granulado:
 
         self.__refresh_ping()
         self.__update_delta_load()
+        self.__send_buffer()
         try:
             # Check if there is a message to be read
             if self.__hardware.in_waiting <= 0:
                 return
             buffer = self.__hardware.read_all()
-            cmds = [x for x in buffer.split(b"\r\n") if x != b""]
+            cmds = [x for x in buffer.split(b"\n") if x != b""]
             for cmd in cmds:
                 # decode from utf-8
                 decodedMessage = cmd.decode()

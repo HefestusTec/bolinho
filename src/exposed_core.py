@@ -54,6 +54,24 @@ def save_config_params(new_params):
     with open(_CONFIG_PARAMS_PATH, "w") as outfile:
         outfile.write(json_object)
 
+    # write all config params to granulado if connected
+    if bolinho_app.gran.is_connected():
+        globalMaxLoad = new_params["absoluteMaximumLoad"]
+        globalMaxTravel = new_params["absoluteMaximumTravel"]
+        globalMaxTime = new_params["absoluteMaximumTime"]
+        globalMaximumDeltaLoad = new_params["absoluteMaximumDeltaLoad"]
+        globalZAxisLength = new_params["zAxisLength"]
+        globalKnownWeight = new_params["knownWeight"]
+
+        bolinho_app.set_granulado_configs(
+            globalMaxLoad,
+            globalMaxTravel,
+            globalMaximumDeltaLoad,
+            globalZAxisLength,
+            globalMaxTime,
+            globalKnownWeight
+        )
+
 
 @eel.expose
 def check_can_start_experiment():
@@ -121,11 +139,12 @@ def start_experiment_routine(experiment_id: int):
 
     config_params = load_config_params()
 
-    globalMaxLoad = config_params["absoluteMaximumLoad"]
-    globalMaxTravel = config_params["absoluteMaximumTravel"]
-    globalMaxTime = config_params["absoluteMaximumTime"]
-    globalMaximumDeltaLoad = config_params["absoluteMaximumDeltaLoad"]
-    globalZAxisLength = config_params["zAxisLength"]
+    globalMaxLoad = float(config_params["absoluteMaximumLoad"])
+    globalMaxTravel = float(config_params["absoluteMaximumTravel"])
+    globalMaxTime = float(config_params["absoluteMaximumTime"])
+    globalMaximumDeltaLoad = float(config_params["absoluteMaximumDeltaLoad"])
+    globalZAxisLength = float(config_params["zAxisLength"])
+    globalKnownWeight = float(config_params["knownWeight"])
 
     if experiment.max_load > globalMaxLoad:
         ui_api.error_alert(
@@ -163,6 +182,7 @@ def start_experiment_routine(experiment_id: int):
         globalMaximumDeltaLoad,
         globalZAxisLength,
         globalMaxTime,
+        globalKnownWeight
     )
     core_api.go_to_experiment_page()
     bolinho_app.start_experiment(experiment_id, compress, globalZAxisLength)

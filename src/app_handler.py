@@ -176,6 +176,7 @@ class AppHandler:
         globalMaximumDeltaLoad,
         globalZAxisLength,
         globalMaxTime,
+        globalKnownWeight,
     ):
         self.gran.set_max_load(globalMaxLoad)
         self.__max_load = globalMaxLoad
@@ -187,6 +188,8 @@ class AppHandler:
         self.__max_delta_load = globalMaximumDeltaLoad
         eel.sleep(0.01)
         self.gran.set_z_axis_length(globalZAxisLength)
+        eel.sleep(0.01)
+        self.gran.set_known_weight(globalKnownWeight)
         eel.sleep(0.01)
         self.__max_time = globalMaxTime
 
