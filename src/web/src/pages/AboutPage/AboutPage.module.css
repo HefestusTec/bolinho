@@ -20,10 +20,14 @@
 
 .about_content {
     grid-column: span var(--num_columns_sub_page);
-    grid-row: span var(--num_columns_sub_page);
+    grid-row: span var(--num_rows_sub_page);
 }
 .about_content h1 {
     font-size: var(--font_l);
+    margin: 0;
+}
+.about_content h2 {
+    margin-bottom: 0;
 }
 .about_content p {
     font-size: var(--font_xs);
