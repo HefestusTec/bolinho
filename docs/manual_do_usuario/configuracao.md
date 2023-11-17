@@ -1,4 +1,4 @@
-<!--
+¹<!--
  Copyright (C) 2023 Hefestus
  
  This file is part of Bolinho.

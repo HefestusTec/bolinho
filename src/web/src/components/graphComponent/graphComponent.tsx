@@ -25,7 +25,9 @@ import { PlotTypeType } from "types/PlotTypeType";
 import GraphSideBar from "../graphComponent/graphSideBar/graphSideBar";
 import ChartComponent from "./chartComponent/chartComponent";
 import useFetchExperiments from "hooks/useFetchExperiments";
-import useFetchExperimentsData from "hooks/useFetchExperimentsData";
+import { useDebouncedCallback } from "use-debounce";
+import { ExperimentPlotData } from "classes";
+import { fetchPrunedExperimentPlotDataList } from "helpers/DbHelper";
 
 const sideBarWidth = "140px";
 
@@ -59,12 +61,34 @@ const RealTimeGraph: FunctionComponent<RealTimeGraphProps> = () => {
         return newLargest;
     }, [experimentList, plotType]);
 
-    const [experimentPlotDataList] = useFetchExperimentsData(
+    const [experimentPlotDataList, setExperimentPlotDataList] = useState<
+        ExperimentPlotData[]
+    >([]);
+
+    const updateReadingsDebounce = useDebouncedCallback(
+        async () => {
+            const newExperimentPlotDataList =
+                await fetchPrunedExperimentPlotDataList(
+                    experimentList,
+                    plotType,
+                    leftHandlePos,
+                    rightHandlePos
+                );
+            setExperimentPlotDataList(newExperimentPlotDataList);
+        },
+        // delay in ms
+        150
+    );
+
+    useEffect(() => {
+        updateReadingsDebounce();
+    }, [
         experimentList,
         plotType,
         leftHandlePos,
-        rightHandlePos
-    );
+        rightHandlePos,
+        updateReadingsDebounce,
+    ]);
 
     const maxData = useMemo<DataPointType>(() => {
         if (experimentPlotDataList.length === 0) return { x: 1, y: 1 };
