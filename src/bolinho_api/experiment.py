@@ -33,14 +33,6 @@ class ExperimentAPI:
         """
         return eel.setTimeJS(newTime)
 
-    def set_delta_load(self, newDeltaLoad: float):
-        """
-        Sets the current delta load percentage.
-
-        This variable is shown to the user in a progress bar. And is usually between 0-100.
-        """
-        return eel.setDeltaLoadJS(newDeltaLoad)
-
     def get_readings(self) -> Readings:
         """
         Asks the front for the current Readings.

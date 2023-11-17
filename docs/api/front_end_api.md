@@ -301,20 +301,6 @@ ___
 
 ___
 
-### set_delta_load(newValue)
-!!! quote "set_delta_load(newValue)"
-    Sets the current delta load.
-
-    This variable is shown to the user as value and progress bar.
-
-    ``` python title="Python usage example"
-    from bolinho_api.experiment import experiment_api
-
-    experiment_api.set_delta_load(22)
-
-    ```
-
-___
 
 ### get_readings()
 !!! quote "get_readings()"

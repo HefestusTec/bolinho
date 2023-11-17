@@ -26,14 +26,12 @@ import { ExperimentType, MaterialType } from "types/DataBaseTypes";
 
 export type ExperimentPageType = {
     time: number; // Time since starting of experiment
-    deltaLoad: number; // Current variation of load
     material: MaterialType | null;
     experiment: ExperimentType | null;
 };
 
 const experimentPageContextDefault: ExperimentPageType = {
     time: 0,
-    deltaLoad: 0,
     material: null,
     experiment: null,
 };
@@ -60,17 +58,8 @@ export const ExperimentPageProvider: FunctionComponent<
         }));
     }
 
-    function setDeltaLoadJS(newValue: number) {
-        setExperimentPageContext((old) => ({
-            ...old,
-            deltaLoadPercentage: newValue,
-        }));
-    }
-
     try {
         window.eel.expose(setTimeJS, "setTimeJS");
-
-        window.eel.expose(setDeltaLoadJS, "setDeltaLoadJS");
     } catch (error) {}
 
     return (

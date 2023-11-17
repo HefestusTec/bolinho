@@ -356,7 +356,7 @@ class Granulado:
         self.__z_axis_length = z_axis_length
         return self.__send_serial_message(f"y{self.__z_axis_length}")
 
-    def set_max_load(self, max_load: int):
+    def set_max_load(self, max_load: float):
         """
         Send serial message to Granulado to set the max load, receives a value in Newtons and converts to kilograms (1N = 0.101971621kg)
         """
@@ -368,7 +368,7 @@ class Granulado:
         """
         return self.__send_serial_message(f"v{max_travel}")
 
-    def set_max_delta_load(self, max_delta_load: int):
+    def set_max_delta_load(self, max_delta_load: float):
         """
         Send serial message to Granulado to set the max delta load, receives a value in Newtons/second and converts to kilograms/second (1N = 0.101971621kg)
         """

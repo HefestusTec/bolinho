@@ -60,7 +60,7 @@ const ExperimentSideBar: FunctionComponent<ExperimentSideBarProps> = ({
                 />
                 <ProgressWidget
                     value={calculatePercentage(
-                        experimentPageContext.deltaLoad,
+                        readings.current_delta_load,
                         experiment.load_loss_limit
                     )}
                     title="Δ Carga"

@@ -56,12 +56,12 @@ def save_config_params(new_params):
 
     # write all config params to granulado if connected
     if bolinho_app.gran.is_connected():
-        globalMaxLoad = new_params["absoluteMaximumLoad"]
-        globalMaxTravel = new_params["absoluteMaximumTravel"]
-        globalMaxTime = new_params["absoluteMaximumTime"]
-        globalMaximumDeltaLoad = new_params["absoluteMaximumDeltaLoad"]
-        globalZAxisLength = new_params["zAxisLength"]
-        globalKnownWeight = new_params["knownWeight"]
+        globalMaxLoad = float(new_params["absoluteMaximumLoad"])
+        globalMaxTravel = int(new_params["absoluteMaximumTravel"])
+        globalMaxTime = float(new_params["absoluteMaximumTime"])
+        globalMaximumDeltaLoad = float(new_params["absoluteMaximumDeltaLoad"])
+        globalZAxisLength = int(new_params["zAxisLength"])
+        globalKnownWeight = int(new_params["knownWeight"])
 
         bolinho_app.set_granulado_configs(
             globalMaxLoad,
@@ -69,7 +69,7 @@ def save_config_params(new_params):
             globalMaximumDeltaLoad,
             globalZAxisLength,
             globalMaxTime,
-            globalKnownWeight
+            globalKnownWeight,
         )
 
 
@@ -140,11 +140,11 @@ def start_experiment_routine(experiment_id: int):
     config_params = load_config_params()
 
     globalMaxLoad = float(config_params["absoluteMaximumLoad"])
-    globalMaxTravel = float(config_params["absoluteMaximumTravel"])
+    globalMaxTravel = int(config_params["absoluteMaximumTravel"])
     globalMaxTime = float(config_params["absoluteMaximumTime"])
     globalMaximumDeltaLoad = float(config_params["absoluteMaximumDeltaLoad"])
-    globalZAxisLength = float(config_params["zAxisLength"])
-    globalKnownWeight = float(config_params["knownWeight"])
+    globalZAxisLength = int(config_params["zAxisLength"])
+    globalKnownWeight = int(config_params["knownWeight"])
 
     if experiment.max_load > globalMaxLoad:
         ui_api.error_alert(
@@ -182,7 +182,7 @@ def start_experiment_routine(experiment_id: int):
         globalMaximumDeltaLoad,
         globalZAxisLength,
         globalMaxTime,
-        globalKnownWeight
+        globalKnownWeight,
     )
     core_api.go_to_experiment_page()
     bolinho_app.start_experiment(experiment_id, compress, globalZAxisLength)
@@ -198,20 +198,9 @@ def end_experiment_routine():
 
     Returns 1 if succeeded.
     """
-    stopped = stop_z_axis()
 
-    if not stopped:
-        ui_api.error_alert(
-            "Não foi possível parar o eixo Z. O Granulado está conectado?",
-        )
 
-    def save_and_end(toast_id):
-        bolinho_app.end_experiment()
-        core_api.go_to_home_page()
-        ui_api.update_alert("Salvo com sucesso!", True, toast_id)
-
-    ui_api.loading_alert("AGUARDE! Salvando no banco...", save_and_end)
-
+    bolinho_app.end_experiment()
     return 1
 
 

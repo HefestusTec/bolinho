@@ -54,6 +54,7 @@ class AppHandler:
         self.__max_load = 0
         self.__max_pos = 0
         self.__max_delta_load = 0
+        self.__db_experiment = None
 
     def wait_for_connection(self):
         """
@@ -86,7 +87,6 @@ class AppHandler:
                     self.__time_since_last_refresh = self.__current_time
 
                     experiment_api.set_readings(self.__current_readings)
-                    experiment_api.set_delta_load(self.__delta_load)
                     experiment_api.set_time(
                         self.__current_time - self.__started_experiment_time
                     )
@@ -107,11 +107,13 @@ class AppHandler:
                         f"Variação de carga máxima de {self.__max_delta_load} atingida",
                     ]
 
-                    true_conditions = stop_conditions.index(True)
+                    true_conditions = [
+                        i for i in range(len(stop_conditions)) if stop_conditions[i]
+                    ]
 
-                    if False:  # any(stop_conditions):
+                    if any(stop_conditions):
                         ui_api.error_alert(
-                            f"Experimento {self.__experiment_id} finalizado. {stop_message[true_conditions]}"
+                            f"Experimento {self.__experiment_id} finalizado. {' '.join([stop_message[i] for i in true_conditions])}"
                         )
                         self.end_experiment()
                         return
@@ -199,7 +201,23 @@ class AppHandler:
         eel.sleep(0.01)
         self.__max_time = globalMaxTime
 
-    def start_experiment(self, experiment_id: int, compress: bool, z_axis_length):
+    def set_granulado_experiment_configs(
+        self,
+        globalMaxLoad,
+        globalMaxTravel,
+        globalMaximumDeltaLoad,
+    ):
+        self.gran.set_max_load(globalMaxLoad)
+        self.__max_load = globalMaxLoad
+        eel.sleep(0.01)
+        self.gran.set_max_travel(globalMaxTravel)
+        self.__max_pos = globalMaxTravel
+        eel.sleep(0.01)
+        self.gran.set_max_delta_load(globalMaximumDeltaLoad)
+        self.__max_delta_load = globalMaximumDeltaLoad
+        eel.sleep(0.01)
+
+    def start_experiment(self, experiment_id: int, compress: bool, z_axis_length: int):
         """
         Changes the app state to running experiment, resets the experiment data and starts a new experiment
 
@@ -218,6 +236,12 @@ class AppHandler:
         self.__starting_z_axis_pos = current_pos
         realTimeR.load_over_time_realtime_readings = Queue()
         realTimeR.load_over_position_realtime_readings = Queue()
+        self.__db_experiment = db_handler.get_experiment_by_id(self.__experiment_id)
+        self.set_granulado_experiment_configs(
+            self.__db_experiment.max_load,
+            self.__db_experiment.max_travel,
+            self.__db_experiment.load_loss_limit,
+        )
 
         move_mm = z_axis_length * 2
         self.gran.move_z_axis_millimeters(move_mm * (-1 if compress else 1))
@@ -227,14 +251,25 @@ class AppHandler:
         Handles writing the new experiment to persistent memory
         """
         # stop motor
-        self.gran.stop_z_axis()
+        stopped = self.gran.stop_z_axis()
 
-        # send to home page
-        app_state.change_state(StateE.INSPECTING)
+        if not stopped:
+            ui_api.error_alert(
+                "Não foi possível parar o eixo Z. O Granulado está conectado?",
+            )
 
-        # Write data as batch
-        db_handler.batch_post_reading(self.__experiment)
-        self.__experiment_id = -1
+        def save_and_end(toast_id):
+            app_state.change_state(StateE.INSPECTING)
+
+            # Write data as batch
+            db_handler.batch_post_reading(self.__experiment)
+
+            core_api.go_to_home_page()
+            # send to home page
+            self.__experiment_id = -1
+            ui_api.update_alert("Salvo com sucesso!", True, toast_id)
+
+        ui_api.loading_alert("AGUARDE! Salvando no banco...", save_and_end)
 
 
 bolinho_app = AppHandler()
