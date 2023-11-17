@@ -87,22 +87,19 @@ class AppHandler:
                     self.__time_since_last_refresh = self.__current_time
 
                     experiment_api.set_readings(self.__current_readings)
-                    experiment_api.set_time(
-                        self.__current_time - self.__started_experiment_time
-                    )
-                    print(self.__current_time)
+                    experiment_api.set_time(self.__current_time / 1000)
+                    print(self.__current_time / 1000)
 
                     # check stop conditions
                     stop_conditions = [
-                        self.__current_time - self.__started_experiment_time
-                        > self.__max_time,
+                        self.__current_time / 1000 > self.__max_time,
                         self.__current_readings.current_load > self.__max_load,
                         self.__current_readings.z_axis_pos > self.__max_pos,
                         self.__delta_load > self.__max_delta_load,
                     ]
 
                     stop_message = [
-                        f"Tempo máximo de {self.__max_time}ms atingido",
+                        f"Tempo máximo de {self.__max_time}s atingido",
                         f"Carga máxima de {self.__max_load}N atingida",
                         f"Posição máxima de {self.__max_pos}mm atingida",
                         f"Variação de carga máxima de {self.__max_delta_load}N/s atingida",
@@ -143,7 +140,7 @@ class AppHandler:
         self.__delta_load = self.gran.get_delta_load()
 
         current_pos = current_pos - self.__starting_z_axis_pos
-        self.__current_time = (time.time() * 1000) - self.__started_experiment_time
+        self.__current_time = int(time.time() * 1000) - self.__started_experiment_time
 
         self.__current_readings.current_load = round(current_load, 2)
         self.__current_readings.z_axis_pos = current_pos
@@ -157,7 +154,7 @@ class AppHandler:
         realTimeR.load_over_time_realtime_readings.put_nowait(
             {
                 "y": current_load,
-                "x": (int)(self.__current_time),
+                "x": self.__current_time,
             }
         )
         realTimeR.load_over_position_realtime_readings.put_nowait(
@@ -168,7 +165,7 @@ class AppHandler:
         )
         self.__experiment.append(
             {
-                "x": (int)(self.__current_time),
+                "x": self.__current_time,
                 "experiment_id": self.__experiment_id,
                 "load": current_load,
                 "z_pos": current_pos,
@@ -201,10 +198,7 @@ class AppHandler:
         self.__max_time = globalMaxTime
 
     def set_granulado_experiment_configs(
-        self,
-        globalMaxLoad,
-        globalMaxTravel,
-        globalMaximumDeltaLoad,
+        self, globalMaxLoad, globalMaxTravel, globalMaximumDeltaLoad, globalMaxTime
     ):
         self.gran.set_max_load(globalMaxLoad)
         self.__max_load = globalMaxLoad
@@ -215,6 +209,7 @@ class AppHandler:
         self.gran.set_max_delta_load(globalMaximumDeltaLoad)
         self.__max_delta_load = globalMaximumDeltaLoad
         eel.sleep(0.01)
+        self.__max_time = globalMaxTime
 
     def start_experiment(self, experiment_id: int, compress: bool, z_axis_length: int):
         """
@@ -240,6 +235,7 @@ class AppHandler:
             self.__db_experiment.max_load,
             self.__db_experiment.max_travel,
             self.__db_experiment.load_loss_limit,
+            self.__db_experiment.max_time,
         )
 
         move_mm = z_axis_length * 2

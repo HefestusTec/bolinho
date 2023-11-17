@@ -109,12 +109,12 @@ const GlobalLimits: FunctionComponent<GlobalLimitsProps> = ({
                     setValue={setMaxLoad}
                     value={maxLoad}
                     inputType="number"
-                    suffix="g"
+                    suffix="N"
                     alert={maxForceAlert}
                     alertColor="var(--positive_button_color)"
                 />
                 <CustomTextInput
-                    title="Tempo máxima"
+                    title="Tempo máximo"
                     setValue={setMaxTime}
                     value={maxTime}
                     inputType="number"
@@ -136,7 +136,7 @@ const GlobalLimits: FunctionComponent<GlobalLimitsProps> = ({
                     setValue={setMaxDeltaLoad}
                     value={maxDeltaLoad}
                     inputType="number"
-                    suffix="g/s"
+                    suffix="N/s"
                     alert={maxDeltaLoadAlert}
                     alertColor="var(--positive_button_color)"
                 />
