@@ -54,7 +54,7 @@ export const ExperimentPageProvider: FunctionComponent<
     function setTimeJS(newValue: number) {
         setExperimentPageContext((old) => ({
             ...old,
-            timePercentage: newValue,
+            time: newValue,
         }));
     }
 

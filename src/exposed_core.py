@@ -199,7 +199,6 @@ def end_experiment_routine():
     Returns 1 if succeeded.
     """
 
-
     bolinho_app.end_experiment()
     return 1
 
