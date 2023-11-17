@@ -33,6 +33,9 @@ const ExperimentSideBar: FunctionComponent<ExperimentSideBarProps> = ({
     readings,
 }) => {
     const [experimentPageContext] = useContext(ExperimentPageContext);
+
+    console.log(experimentPageContext);
+
     return (
         <div className={styleModule.experiment_side_bar_div}>
             <span className={styleModule.widgets_span}>

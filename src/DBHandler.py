@@ -216,12 +216,15 @@ class DBHandler:
         experiment.max_z_pos = max_z_pos
         experiment.save()
 
+        i = 0
         # insert data in chunks
-        for i in range(0, len(data), chunk_size):
-            ui_api.set_save_experiment_progress(
-                len(data) // chunk_size, i // chunk_size
-            )
-            Reading.insert_many(data[i : i + chunk_size]).execute()
+        with self.db.atomic():
+            for batch in chunked(data, chunk_size):
+                ui_api.set_save_experiment_progress(
+                    len(data) // chunk_size, i // chunk_size
+                )
+                Reading.insert_many(batch).execute()
+                i += chunk_size
 
     def get_load_over_time_by_experiment_id(self, experiment_id: int):
         # return x and load

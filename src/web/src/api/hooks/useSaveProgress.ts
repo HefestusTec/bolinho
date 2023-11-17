@@ -16,13 +16,14 @@
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
 
 import { calculatePercentage } from "helpers";
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 
-const useSaveProgress = () => {
+const useSaveProgress = (setIsSaving: Dispatch<SetStateAction<boolean>>) => {
     const [progress, setProgress] = useState<number>(0);
 
     function setSaveExperimentProgressJS(total: number, amount: number) {
         setProgress(calculatePercentage(amount, total));
+        setIsSaving(true);
     }
     try {
         window.eel.expose(

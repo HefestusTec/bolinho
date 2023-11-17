@@ -90,6 +90,7 @@ class AppHandler:
                     experiment_api.set_time(
                         self.__current_time - self.__started_experiment_time
                     )
+                    print(self.__current_time)
 
                     # check stop conditions
                     stop_conditions = [
@@ -102,9 +103,9 @@ class AppHandler:
 
                     stop_message = [
                         f"Tempo máximo de {self.__max_time}ms atingido",
-                        f"Carga máxima de {self.__max_load} atingida",
-                        f"Posição máxima de {self.__max_pos} atingida",
-                        f"Variação de carga máxima de {self.__max_delta_load} atingida",
+                        f"Carga máxima de {self.__max_load}N atingida",
+                        f"Posição máxima de {self.__max_pos}mm atingida",
+                        f"Variação de carga máxima de {self.__max_delta_load}N/s atingida",
                     ]
 
                     true_conditions = [
@@ -139,14 +140,14 @@ class AppHandler:
 
         [current_load, current_pos] = self.gran.get_readings()
 
-        current_delta_load = self.gran.get_delta_load()
+        self.__delta_load = self.gran.get_delta_load()
 
         current_pos = current_pos - self.__starting_z_axis_pos
         self.__current_time = (time.time() * 1000) - self.__started_experiment_time
 
         self.__current_readings.current_load = round(current_load, 2)
         self.__current_readings.z_axis_pos = current_pos
-        self.__current_readings.current_delta_load = round(current_delta_load, 2)
+        self.__current_readings.current_delta_load = round(self.__delta_load, 2)
         self.__current_readings.status = "Conectado"
 
         # check if is running experiment
@@ -174,8 +175,6 @@ class AppHandler:
             }
         )
         self.__n_readings += 1
-
-        self.__delta_load = self.gran.get_delta_load()
 
     def set_granulado_configs(
         self,

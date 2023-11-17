@@ -35,8 +35,7 @@ const EndExperimentPrompt: FunctionComponent<EndExperimentPromptProps> = ({
     setIsOpen,
 }) => {
     const [isSaving, setIsSaving] = useState<boolean>(false);
-    const [savingPercentage] = useSaveProgress();
-    console.log(savingPercentage);
+    const [savingPercentage] = useSaveProgress(setIsSaving);
 
     const handleClose = () => {
         setIsOpen(false);
@@ -51,7 +50,7 @@ const EndExperimentPrompt: FunctionComponent<EndExperimentPromptProps> = ({
         handleClose();
     };
 
-    if (!isOpen) return <></>;
+    if (!isOpen && !isSaving) return <></>;
     return (
         <>
             <BackgroundFader
