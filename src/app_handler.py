@@ -84,6 +84,7 @@ class AppHandler:
                     self.__current_time - 500 > self.__time_since_last_refresh
                 ):  # ~2 FPS refresh rate
                     self.__time_since_last_refresh = self.__current_time
+
                     experiment_api.set_readings(self.__current_readings)
                     experiment_api.set_delta_load(self.__delta_load)
                     experiment_api.set_time(
@@ -106,9 +107,11 @@ class AppHandler:
                         f"Variação de carga máxima de {self.__max_delta_load} atingida",
                     ]
 
+                    true_conditions = stop_conditions.index(True)
+
                     if False:  # any(stop_conditions):
                         ui_api.error_alert(
-                            f"Experimento {self.__experiment_id} finalizado. {stop_message[stop_conditions.index(True)]}"
+                            f"Experimento {self.__experiment_id} finalizado. {stop_message[true_conditions]}"
                         )
                         self.end_experiment()
                         return
@@ -134,11 +137,14 @@ class AppHandler:
 
         [current_load, current_pos] = self.gran.get_readings()
 
+        current_delta_load = self.gran.get_delta_load()
+
         current_pos = current_pos - self.__starting_z_axis_pos
         self.__current_time = (time.time() * 1000) - self.__started_experiment_time
 
-        self.__current_readings.current_load = current_load
+        self.__current_readings.current_load = round(current_load, 2)
         self.__current_readings.z_axis_pos = current_pos
+        self.__current_readings.current_delta_load = round(current_delta_load, 2)
         self.__current_readings.status = "Conectado"
 
         # check if is running experiment
@@ -229,10 +235,6 @@ class AppHandler:
         # Write data as batch
         db_handler.batch_post_reading(self.__experiment)
         self.__experiment_id = -1
-
-
-
-
 
 
 bolinho_app = AppHandler()

@@ -23,6 +23,9 @@ from enum import Enum
 from bolinho_api.ui import ui_api
 from bolinho_api.core import core_api
 
+KG_TO_NEWTONS = 9.80665
+NEWTONS_TO_KG = 0.101971621
+
 
 class Granulado:
     def __init__(self, timeout: float = 2):
@@ -43,13 +46,16 @@ class Granulado:
         return
         current_time = time.time()
 
-        # refresh ping every 10     second
+        # refresh ping every 10 second
         if current_time - self.__time_since_last_refresh > 10:
             self.__time_since_last_refresh = current_time
             self.__send_serial_message("p")
 
     def __send_serial_message(self, message: str):
-        self.__serial_buffer += message + '\n'
+        """
+        Concatenates the message + "\n" to the serial buffer, checks if Granulado is connected then sends it to the serial device
+        """
+        self.__serial_buffer += message + "\n"
 
         if not self.is_connected():
             ui_api.error_alert("O Granulado não está conectado")
@@ -58,6 +64,9 @@ class Granulado:
         return True
 
     def __error(self, error_message):
+        """
+        Sends a message to Granulado to stop the z axis and prompts the user with the error message
+        """
         print(error_message)
 
         return
@@ -66,13 +75,19 @@ class Granulado:
                 "Não foi possível parar o eixo Z. O Granulado está conectado?",
             )
         ui_api.error_alert(f"Mensagem de erro do Granulado: {error_message}")
-    
+
     def __send_buffer(self):
+        """
+        Sends the serial buffer to the serial device encoded in utf-8 then clears the buffer
+        """
         try:
             if not self.__hardware.writable():
                 self.disconnect()
                 return False
-            if self.__hardware.write(bytes(f"{self.__serial_buffer}", "utf-8")) is not None:
+            if (
+                self.__hardware.write(bytes(f"{self.__serial_buffer}", "utf-8"))
+                is not None
+            ):
                 self.__serial_buffer = ""
                 return True
             self.disconnect()
@@ -82,9 +97,10 @@ class Granulado:
             self.__end()
             return False
 
-    
     def __end(self):
-        core_api.set_is_connected(False)
+        """
+        Closes the serial connection, sets the connection status to False and resets the variables
+        """
         if self.__hardware is not None:
             if self.__hardware.isOpen():
                 self.__hardware.close()
@@ -93,6 +109,7 @@ class Granulado:
         self.__instant_position = 0
         self.__ping = 0
         self.__serial_buffer = ""
+        core_api.set_is_connected(False)
 
     def loop(self):
         is_conn = self.is_connected()
@@ -122,7 +139,9 @@ class Granulado:
                     case "e":
                         self.__error(value)
                     case "r":
-                        self.__instant_load = float(value)
+                        load = float(value)
+                        # convert kg to Newtons 1kg = 9.80665N
+                        self.__instant_load = load * KG_TO_NEWTONS
                     case "g":
                         self.__instant_position = int(value)
                     case "j":
@@ -138,7 +157,9 @@ class Granulado:
                         )
                         self.stop_z_axis()
                     case "d":
-                        self.__delta_load = int(value)
+                        kg_s = float(value)
+                        # convert kg/s to Newtons/s 1kg = 9.80665N
+                        self.__delta_load = kg_s * KG_TO_NEWTONS
                     case "s":
                         ui_api.success_alert("O motor for interrompido")
                     case "i":
@@ -203,7 +224,11 @@ class Granulado:
         return all(checks)
 
     def check_granulado_is_connected(self):
-        if time.time() - self.__ping > 100000000000 and self.__ping != 0:
+        """
+        Checks if the time since the last ping is greater than a threshold (10 seconds),
+        if it is, the user is prompted to check the connection, if not, the connection is set to True
+        """
+        if time.time() - self.__ping > 10 and self.__ping != 0:
             ui_api.prompt_user(
                 description=f"A máquina parece estar desconectada ({(time.time() - self.__ping):2 }s). Verifique a conexão e tente novamente.",
                 options=["Tentar novamente"],
@@ -217,11 +242,14 @@ class Granulado:
 
     def check_global_limits(self):
         """
-        Check if:
-            max force, max travel and max time are greater than 0,
-            Z axis length is greater than 0,
-            known weight is greater than 0, and
-            port is set.
+        Checks if:
+        - absoluteMaximumLoad is greater than 0
+        - absoluteMaximumTravel is greater than 0
+        - absoluteMaximumTime is greater than 0
+        - absoluteMaximumDeltaLoad is greater than 0
+        - zAxisLength is greater than 0
+        - knownWeight is greater than 0
+        Else, the user is prompted to set the parameters
         """
         from exposed_core import load_config_params
 
@@ -256,7 +284,8 @@ class Granulado:
 
     def check_current_load(self):
         """
-        Check if the current load is lesser than a threshold (10N)
+        Check if the current load is lesser than a threshold
+        TODO: Set the threshold in the config file
         """
         if self.__instant_load > 10:
             ui_api.error_alert(
@@ -265,17 +294,35 @@ class Granulado:
             return False
         return True
 
-    def return_z_axis(self):
+    def z_axis_top(self):
+        """
+        Send serial message to Granulado to return the z axis to top
+        """
         return self.__send_serial_message("t")
 
+    def z_axis_bottom(self):
+        """
+        Send serial message to Granulado to return the z axis to bottom
+        """
+        return self.__send_serial_message("b")
+
     def stop_z_axis(self):
+        """
+        Send serial message to Granulado to stop the z axis
+        """
         return self.__send_serial_message("s")
 
     def move_z_axis_millimeters(self, millimeters: int):
+        """
+        Send serial message to Granulado to move the z axis in millimeters
+        """
         print(f"moving {millimeters} millimeters")
         return self.__send_serial_message(f"m{millimeters}")
 
     def tare_load(self):
+        """
+        Send serial message to Granulado to tare the load cell
+        """
         return self.__send_serial_message("@")
 
     def calibrate_z_axis(self):
@@ -286,46 +333,46 @@ class Granulado:
 
     def calibrate_known_weight(self):
         """
-        Send serial message to Granulado to calibrate the load cell
+        Send serial message to Granulado to calibrate the load cell with the known weight
         """
         return self.__send_serial_message(f"w")
 
     def set_known_weight(self, known_weight: int):
         """
-        Send serial message to Granulado to set the known weight
+        Send serial message to Granulado to set the known weight in grams
         """
         return self.__send_serial_message(f"x{known_weight}")
 
     def get_z_axis_length(self):
         """
-        Send serial message to Granulado to get the z axis length
+        Send serial message to Granulado to get the z axis length in millimeters
         """
         return self.__send_serial_message("j")
 
     def set_z_axis_length(self, z_axis_length: int):
         """
-        Send serial message to Granulado to set the z axis length
+        Send serial message to Granulado to set the z axis length in millimeters
         """
         self.__z_axis_length = z_axis_length
         return self.__send_serial_message(f"y{self.__z_axis_length}")
 
     def set_max_load(self, max_load: int):
         """
-        Send serial message to Granulado to set the max load
+        Send serial message to Granulado to set the max load, receives a value in Newtons and converts to kilograms (1N = 0.101971621kg)
         """
-        return self.__send_serial_message(f"l{max_load}")
+        return self.__send_serial_message(f"l{max_load * NEWTONS_TO_KG}")
 
     def set_max_travel(self, max_travel: int):
         """
-        Send serial message to Granulado to set the max travel
+        Send serial message to Granulado to set the max travel in millimeters
         """
         return self.__send_serial_message(f"v{max_travel}")
 
     def set_max_delta_load(self, max_delta_load: int):
         """
-        Send serial message to Granulado to set the max delta load
+        Send serial message to Granulado to set the max delta load, receives a value in Newtons/second and converts to kilograms/second (1N = 0.101971621kg)
         """
-        return self.__send_serial_message(f"a{max_delta_load}")
+        return self.__send_serial_message(f"a{max_delta_load * NEWTONS_TO_KG}")
 
     def is_connected(self):
         """Is the backend connected to the embedded hardware, returns a boolean"""

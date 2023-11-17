@@ -14,11 +14,9 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
-import {
-    getLoadOverPositionByExperimentId,
-    getLoadOverTimeByExperimentId,
-} from "api/db-api";
+
 import { ExperimentPlotData } from "classes";
+import { fetchPrunedExperimentPlotDataList } from "helpers/DbHelper";
 import { useEffect, useState } from "react";
 import { ExperimentType } from "types/DataBaseTypes";
 import { PlotTypeType } from "types/PlotTypeType";
@@ -34,42 +32,16 @@ const useFetchExperimentsData = (
     >([]);
 
     useEffect(() => {
-        const fetchPlotData = async (id: number) => {
-            switch (plotType) {
-                case "loadOverTime":
-                    return getLoadOverTimeByExperimentId(
-                        id,
-                        leftHandlePos,
-                        rightHandlePos
-                    );
-                case "loadOverPosition":
-                    return getLoadOverPositionByExperimentId(
-                        id,
-                        leftHandlePos,
-                        rightHandlePos
-                    );
-                default:
-                    return getLoadOverPositionByExperimentId(
-                        id,
-                        leftHandlePos,
-                        rightHandlePos
-                    );
-            }
-        };
         const updatePlotData = async () => {
-            let newDataList: ExperimentPlotData[] = [];
-            for (let i = 0; i < experiments.length; i++) {
-                const currentExp = experiments[i];
-                const data = await fetchPlotData(currentExp.id);
-                newDataList.push(
-                    new ExperimentPlotData(
-                        currentExp.name,
-                        data,
-                        currentExp.plot_color
-                    )
+            const newExperimentPlotDataList =
+                await fetchPrunedExperimentPlotDataList(
+                    experiments,
+                    plotType,
+                    leftHandlePos,
+                    rightHandlePos
                 );
-            }
-            setExperimentPlotDataList(newDataList);
+
+            setExperimentPlotDataList(newExperimentPlotDataList);
         };
 
         updatePlotData();

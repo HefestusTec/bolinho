@@ -42,6 +42,10 @@ const ReadingsContainer: FunctionComponent<ReadingsContainerProps> = ({
         >
             <ContainerComponent headerText="Leituras">
                 <CustomText
+                    title="Status"
+                    value={`${readingsContext.status}`}
+                />
+                <CustomText
                     title="Eixo Z"
                     value={`${readingsContext.z_axis_pos} mm`}
                 />
@@ -50,8 +54,8 @@ const ReadingsContainer: FunctionComponent<ReadingsContainerProps> = ({
                     value={`${readingsContext.current_load} N`}
                 />
                 <CustomText
-                    title="Status"
-                    value={`${readingsContext.status}`}
+                    title="Δ Carga atual"
+                    value={`${readingsContext.current_delta_load} N/s`}
                 />
             </ContainerComponent>
         </ZoomComponent>

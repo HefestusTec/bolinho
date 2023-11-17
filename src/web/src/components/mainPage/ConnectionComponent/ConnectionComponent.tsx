@@ -82,23 +82,19 @@ const ConnectionComponent: FunctionComponent<ConnectionComponentProps> = () => {
         <ContainerComponent
             headerText="Conexão"
             headerButton={
-                <CustomButton
-                    fontSize="var(--font_s)"
-                    bgColor="var(--warning_button_color)"
-                    clickCallBack={updateAvailablePorts}
-                >
-                    Atualizar
-                </CustomButton>
+                isConnected ? (
+                    <></>
+                ) : (
+                    <CustomButton
+                        fontSize="var(--font_s)"
+                        bgColor="var(--warning_button_color)"
+                        clickCallBack={updateAvailablePorts}
+                    >
+                        Atualizar
+                    </CustomButton>
+                )
             }
         >
-            <CustomListSelector
-                keys={getFormattedPorts()}
-                clickCallBack={portSelectCallback}
-                selected={selectedPort}
-            >
-                Porta
-            </CustomListSelector>
-
             {isConnected ? (
                 <CustomButton
                     className={styleModule.connect_button}
@@ -111,16 +107,25 @@ const ConnectionComponent: FunctionComponent<ConnectionComponentProps> = () => {
                     DESCONECTAR
                 </CustomButton>
             ) : (
-                <CustomButton
-                    className={styleModule.connect_button}
-                    bgColor="var(--positive_button_color)"
-                    fontColor="var(--font_color_inverted)"
-                    clickCallBack={() => {
-                        connectToPort();
-                    }}
-                >
-                    CONECTAR
-                </CustomButton>
+                <>
+                    <CustomListSelector
+                        keys={getFormattedPorts()}
+                        clickCallBack={portSelectCallback}
+                        selected={selectedPort}
+                    >
+                        Porta
+                    </CustomListSelector>
+                    <CustomButton
+                        className={styleModule.connect_button}
+                        bgColor="var(--positive_button_color)"
+                        fontColor="var(--font_color_inverted)"
+                        clickCallBack={() => {
+                            connectToPort();
+                        }}
+                    >
+                        CONECTAR
+                    </CustomButton>
+                </>
             )}
         </ContainerComponent>
     );

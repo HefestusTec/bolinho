@@ -3,6 +3,6 @@ site/
 .prettierignore
 *.spec
 node_modules/
-src/persist
+persist/
 src/build
 *.db
