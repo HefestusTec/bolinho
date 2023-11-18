@@ -198,7 +198,7 @@ class AppHandler:
         self.__max_time = globalMaxTime
 
     def set_granulado_experiment_configs(
-        self, globalMaxLoad, globalMaxTravel, globalMaximumDeltaLoad, globalMaxTime
+        self, globalMaxLoad, globalMaxTravel, globalMaximumDeltaLoad, globalMaxTime, experimentMotorRPM
     ):
         self.gran.set_max_load(globalMaxLoad)
         self.__max_load = globalMaxLoad
@@ -209,7 +209,10 @@ class AppHandler:
         self.gran.set_max_delta_load(globalMaximumDeltaLoad)
         self.__max_delta_load = globalMaximumDeltaLoad
         eel.sleep(0.01)
+        self.gran.set_motor_rpm(experimentMotorRPM)
+        eel.sleep(0.01)
         self.__max_time = globalMaxTime
+
 
     def start_experiment(self, experiment_id: int, compress: bool, z_axis_length: int):
         """
@@ -236,6 +239,7 @@ class AppHandler:
             self.__db_experiment.max_travel,
             self.__db_experiment.load_loss_limit,
             self.__db_experiment.max_time,
+            self.__db_experiment.z_axis_speed,
         )
 
         move_mm = z_axis_length * 2

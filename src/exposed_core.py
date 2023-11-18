@@ -145,13 +145,19 @@ def start_experiment_routine(experiment_id: int):
     globalMaximumDeltaLoad = float(config_params["absoluteMaximumDeltaLoad"])
     globalZAxisLength = int(config_params["zAxisLength"])
     globalKnownWeight = int(config_params["knownWeight"])
+    
+    experiment_motor_rpm = experiment.z_axis_speed
 
     if experiment.max_load > globalMaxLoad:
         ui_api.error_alert(
             f"Não foi possível iniciar o experimento. O LIMITE DE CARGA do experimento é maior que o limite global. Por favor verifique os valores!",
         )
         return 0
-
+    if experiment_motor_rpm < 0 or experiment_motor_rpm > 600 :
+        ui_api.error_alert(
+            f"Não foi possível iniciar o experimento. A VELOCIDADE DO MOTOR deve estar entre 1 e 600 RPM. Por favor verifique os valores!",
+        )
+        return 0
     if experiment.max_travel > globalMaxTravel:
         ui_api.error_alert(
             f"Não foi possível iniciar o experimento. O LIMITE DE DESLOCAMENTO do experimento é maior que o limite global. Por favor verifique os valores!",
@@ -184,6 +190,7 @@ def start_experiment_routine(experiment_id: int):
         globalMaxTime,
         globalKnownWeight,
     )
+
     core_api.go_to_experiment_page()
     bolinho_app.start_experiment(experiment_id, compress, globalZAxisLength)
     return 1

@@ -25,6 +25,9 @@ from bolinho_api.core import core_api
 
 KG_TO_NEWTONS = 9.80665
 NEWTONS_TO_KG = 0.101971621
+MOTOR_STEPS = 200
+MILLIMETERS_PER_REVOLUTION = 235.62
+MILLIMETERS_PER_STEP = MILLIMETERS_PER_REVOLUTION / MOTOR_STEPS
 
 
 class Granulado:
@@ -311,13 +314,13 @@ class Granulado:
         Send serial message to Granulado to stop the z axis
         """
         return self.__send_serial_message("s")
-
     def move_z_axis_millimeters(self, millimeters: int):
         """
         Send serial message to Granulado to move the z axis in millimeters
         """
-        print(f"moving {millimeters} millimeters")
-        return self.__send_serial_message(f"m{millimeters}")
+        # convert millimeters to steps
+        steps = millimeters // MILLIMETERS_PER_STEP
+        return self.__send_serial_message(f"m{steps}")
 
     def tare_load(self):
         """
@@ -373,6 +376,12 @@ class Granulado:
         Send serial message to Granulado to set the max delta load, receives a value in Newtons/second and converts to kilograms/second (1N = 0.101971621kg)
         """
         return self.__send_serial_message(f"a{max_delta_load * NEWTONS_TO_KG}")
+
+    def set_motor_rpm(self, rpm: int):
+        """
+        Send serial message to Granulado to set the motor RPM
+        """
+        return self.__send_serial_message(f"e{rpm}")
 
     def is_connected(self):
         """Is the backend connected to the embedded hardware, returns a boolean"""

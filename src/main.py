@@ -39,7 +39,7 @@ run_as_development = parser.parse_args().development
 
 
 def start_eel():
-    app = "chromium"
+    app = "chrome"
 
     eel.init("src/web/build", [".tsx", ".ts", ".jsx", ".js", ".html"])
 

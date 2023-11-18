@@ -242,11 +242,11 @@ const NewExperimentPopup: FunctionComponent<NewExperimentPopupProps> = ({
                                 alertColor="var(--positive_button_color)"
                             />
                             <CustomTextInput
-                                title="Velocidade do eixo Z"
+                                title="Velocidade do eixo-Z"
                                 setValue={setExperimentZAxisSpeed}
                                 value={experimentZAxisSpeed}
                                 inputType="number"
-                                suffix="mm/s"
+                                suffix="RPM"
                                 alert={false}
                                 alertColor="var(--positive_button_color)"
                             />

@@ -81,6 +81,9 @@ A instruction is divided in three parts:
 * `a[str]` -> Set max delta load 
 > str is an `int` with the maximum experiment delta load in `grams / second` in `string` format.
 
+* `e[str]` -> Set motor speed 
+> str is an `int` with the maximum experiment travel in `RPM` in `string` format.
+
 * `-` -> Nothing
 
 ####  Granulado -> Bolinho
