@@ -19,4 +19,50 @@
 
 # Controle manual
 
-Como controlar o maquinário manualmente.
+Este capitulo discutirá como controlar o maquinário manualmente. Essa função é importante para posicionar a célula de carga na posição correta para iniciar um experimento.
+
+## Ativando o motor
+Primeiro conecte o Granulado ao Bolinho, vide: [Instalando o Granulado](./instalacao.md#instalando-o-granulado) e [Conectando ao Granulado](./calibracao.md#conectando-ao-granulado).
+
+!!! danger "PERIGO"
+    Garanta que você seguiu os passos de [Precauções com o motor de passo](./instalacao.md#precaucoes-com-o-motor-de-passo).
+
+Após garantir que o Granulado está conectado e que as **precauções de segurança** foram tomadas **Ative o motor de carga**.
+
+Nesse momento o motor **Não deve estar fazendo um ruído continuo**.
+
+## Página `Controlar`
+
+Através do **menu lateral** acesse a página `Controlar`. Você deve ser recebido com uma tela similar a:
+
+![Alt text](image-17.png){ width="500" }
+
+Conhecendo os componentes:
+
+### Componente `Comandos`
+
+* `Distância de Movimento`: Modifica a distância de movimento. Esse é setado ou em `mm` (Milímetros) ou em `REV` (Revoluções).
+    
+!!! tip "Dica"
+        Utilize o `REV` para encontrar a quantidade de **mm por revolução** necessário para calibração do eixo-z.
+
+* `Retornar Eixo-Z`: Retorna o eixo-z ao ponto superior.
+
+### Componente `Leituras`
+
+Esse componente apresenta as **leituras atuais** em tempo real que recebeu do Granulado.
+
+Ver [Componente `Leituras`](./calibracao.md#componente-leituras)
+
+
+### Componente `Controle`
+
+Envia o comando para o motor mover em `Distância de Movimento`.
+
+
+### Componente `Botão de parada`
+
+Esse componente envia um comando de **parar o motor imediatamente** ao Granulado.
+
+!!! warning "Atenção"
+    Não deve ser usado como parada de emergência, sempre esteja pronto para acionar o **Botão de emergência FÍSICO**

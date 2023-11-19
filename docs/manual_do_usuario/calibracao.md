@@ -19,4 +19,94 @@
 
 # Calibração
 
-Como calibrar.
+Neste capitulo vamos aprender como conectar ao Granulado pela primeira vez.
+
+Para iniciar garanta que o **Motor de passo** está **DESLIGADO** isso é de suma importância para sua segurança, como apontado no item [Alimentação](./instalacao.md#alimentacao) o motor de passo pode ser acionado independentemente do resto do Granulado.
+
+
+## Conectando ao Granulado
+
+Na tela inicial no componente `Conexão` expanda o campo `Porta` e selecione o seu **dispositivo correto**.
+
+![Alt text](image-15.png){ width="500" }
+
+!!! tip "Dica"
+    Caso seu dispositivo não apareça na lista você pode tentar `Atualizar` a lista de portas
+
+Ao pressionar `Conectar` o componente de `Conexão` e o `Botão de ensaio` devem ser atualizados.
+
+![Alt text](image-16.png){ width="500" }
+
+Nesse momento o Bolinho está conectado ao Granulado.
+
+## Página `Calibrar`
+
+Através do **menu lateral** acesse a página `Calibrar`. Você deve ser recebido com uma tela similar a:
+
+![Alt text](image-18.png){ width="500" }
+
+Conhecendo os componentes:
+
+### Componente `Comandos`
+
+Esse componente envia alguns comandos para o Granulado executar.
+
+* `Tarar carga`: Tara a carga para um peso especifico
+    
+* `Calibrar peso padrão`: Calibra a célula de carga para um peso conhecido.
+
+* `Calibrar eixo-z`: Calibra o eixo-z, o motor travessa todo o eixo-z e conta a quantidade de passos.
+
+### Componente `Leituras`
+
+Esse componente apresenta as **leituras atuais** em tempo real que recebeu do Granulado.
+
+* `Status`: Status do Granulado `Desconectado` ou `Conectado`.
+    
+* `Eixo-z`: Posição atual do eixo-z.
+
+* `Carga atual`: Carga atual na célula de carga.
+
+* `Δ Carga atual`: Variação da carga em tempo real.
+
+### Componente `Parâmetros de calibração`
+
+Esse componente permite que o usuário configure os **Parâmetros de calibração** do equipamento.
+
+
+### Componente `Botão de parada`
+
+Esse componente envia um comando de **parar o motor imediatamente** ao Granulado.
+
+!!! warning "Atenção"
+    Não deve ser usado como parada de emergência, sempre esteja pronto para acionar o **Botão de emergência FÍSICO**
+
+
+## Fluxos de trabalho
+
+A seguir é apresentado um simples fluxo de trabalho de como calibrar os diferentes componentes:
+
+### Calibrar a Célula de carga
+
+1. Garanta que o motor de passo **Não está ativo**.
+1. Instale o aparato de ensaio à célula de carga.
+1. Conecte o Granulado ao Bolinho.
+1. Vá a página de calibração
+1. Pressione **Tarar carga**.
+1. Verifique a configuração do **Peso padrão**
+1. Instale o peso padrão
+1. Pressione **Calibrar peso padrão**.
+1. !!! success "Sucesso!"
+    Sua célula de carga deve estar calibrada!
+
+### Calibrar o Eixo-z
+
+1. !!! danger "PERIGO"
+    Garanta que você seguiu os passos de [Precauções com o motor de passo](./instalacao.md#precaucoes-com-o-motor-de-passo).
+1. Conecte o Granulado ao Bolinho.
+1. Ligue o motor de passo.
+1. Vá a página de calibração
+1. Verifique a configuração do **Tamanho do eixo Z** e **mm por revolução**
+1. Pressione **Calibrar Eixo-z**
+1. !!! success "Sucesso!"
+    Seu eixo-z deve estar calibrado!
