@@ -32,26 +32,36 @@ const CalibrationParams: FunctionComponent<CalibrationParamsProps> = () => {
     const [knownWeight, setKnownWeight] = useState<number>(
         globalConfig.knownWeight
     );
+    const [mmPerRevolution, setMmPerRevolution] = useState<number>(
+        globalConfig.mmPerRevolution
+    );
 
     const [zAxisLengthAlert, setZAxisLengthAlert] = useState<boolean>(false);
     const [knownWeightAlert, setKnownWeightAlert] = useState<boolean>(false);
+    const [mmPerRevolutionAlert, setMmPerRevolutionAlert] =
+        useState<boolean>(false);
 
     const refreshValues = () => {
         setZAxisLength(globalConfig.zAxisLength);
         setKnownWeight(globalConfig.knownWeight);
+        setMmPerRevolution(globalConfig.mmPerRevolution);
     };
     const saveValues = () => {
         setGlobalConfig({
             ...globalConfig,
             zAxisLength: zAxisLength,
             knownWeight: knownWeight,
+            mmPerRevolution: mmPerRevolution,
         });
     };
 
     useEffect(() => {
         setZAxisLengthAlert(zAxisLength !== globalConfig.zAxisLength);
         setKnownWeightAlert(knownWeight !== globalConfig.knownWeight);
-    }, [globalConfig, zAxisLength, knownWeight]);
+        setMmPerRevolutionAlert(
+            mmPerRevolution !== globalConfig.mmPerRevolution
+        );
+    }, [globalConfig, zAxisLength, knownWeight, mmPerRevolution]);
 
     return (
         <ContainerComponent headerText="Parâmetros de calibração">
@@ -74,6 +84,15 @@ const CalibrationParams: FunctionComponent<CalibrationParamsProps> = () => {
                 </CustomButton>
             </CustomButtonArray>
             <CustomTextInput
+                title="Peso padrão"
+                setValue={setKnownWeight}
+                value={knownWeight}
+                inputType="number"
+                suffix="g"
+                alert={knownWeightAlert}
+                alertColor="var(--positive_button_color)"
+            />
+            <CustomTextInput
                 title="Tamanho do eixo Z"
                 setValue={setZAxisLength}
                 value={zAxisLength}
@@ -82,13 +101,13 @@ const CalibrationParams: FunctionComponent<CalibrationParamsProps> = () => {
                 alert={zAxisLengthAlert}
                 alertColor="var(--positive_button_color)"
             />
+
             <CustomTextInput
-                title="Peso padrão"
-                setValue={setKnownWeight}
-                value={knownWeight}
+                title="mm por revolução"
+                setValue={setMmPerRevolution}
+                value={mmPerRevolution}
                 inputType="number"
-                suffix="g"
-                alert={knownWeightAlert}
+                alert={mmPerRevolutionAlert}
                 alertColor="var(--positive_button_color)"
             />
         </ContainerComponent>

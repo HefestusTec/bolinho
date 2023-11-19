@@ -38,6 +38,7 @@ export interface GlobalConfigContextProps {
     zAxisLength: number; // Z axis length in millimeters
     knownWeight: number; // Known weight for calibration
     numOfDataPointsPerExp: NumOfDataPointsType; // Number of data points that are shown to the user per experiment
+    mmPerRevolution: number; // How many mm does the z-axis move after 1 revolution?
 }
 
 export const globalConfigDefault: GlobalConfigContextProps = {
@@ -60,6 +61,7 @@ export const globalConfigDefault: GlobalConfigContextProps = {
     zAxisLength: 1000,
     knownWeight: 1000,
     numOfDataPointsPerExp: "1k",
+    mmPerRevolution: 235.62,
 };
 
 export type FocusKeyType =

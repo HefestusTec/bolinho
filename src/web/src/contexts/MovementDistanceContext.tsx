@@ -24,12 +24,22 @@ import {
 
 export type ValidDistancesType =
     | "1 mm"
-    | "5 mm"
     | "10 mm"
-    | "50 mm"
     | "100 mm"
-    | "500 mm"
-    | "1000 mm";
+    | "1000 mm"
+    | "0.25 REV"
+    | "0.5 REV"
+    | "1 REV";
+
+export const ValidDistancesTypeArray: ValidDistancesType[] = [
+    "1 mm",
+    "10 mm",
+    "100 mm",
+    "1000 mm",
+    "0.25 REV",
+    "0.5 REV",
+    "1 REV",
+];
 
 export const MovementDistanceContext = createContext<
     [ValidDistancesType, Dispatch<SetStateAction<ValidDistancesType>>]

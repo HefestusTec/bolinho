@@ -23,6 +23,7 @@ import CustomListSelector from "components/customSubComponents/customListSelecto
 import {
     MovementDistanceContext,
     ValidDistancesType,
+    ValidDistancesTypeArray,
 } from "contexts/MovementDistanceContext";
 import { FunctionComponent, useContext } from "react";
 
@@ -40,15 +41,7 @@ const CommandsComponent: FunctionComponent<CommandsComponentProps> = () => {
     return (
         <ContainerComponent headerText="Comandos">
             <CustomListSelector
-                keys={[
-                    "1 mm",
-                    "5 mm",
-                    "10 mm",
-                    "50 mm",
-                    "100 mm",
-                    "500 mm",
-                    "1000 mm",
-                ]}
+                keys={ValidDistancesTypeArray}
                 clickCallBack={distanceCallback}
                 selected={distanceAmount}
             >

@@ -249,7 +249,24 @@ def move_z_axis_millimeters(distance):
 
     Returns 1 if succeeded (if the function was acknowledged).
     """
+    print(f'{distance} mm')
+
     return bolinho_app.gran.move_z_axis_millimeters(distance)
+
+@eel.expose
+def move_z_axis_revolutions(revolutions):
+    """
+    Moves the z-axis [revolutions].
+
+    This distance is set in revolutions
+
+    Returns 1 if succeeded (if the function was acknowledged).
+    """
+
+    print(f'{revolutions} revolutions')
+
+    return bolinho_app.gran.move_z_axis_revolutions(revolutions)
+
 
 
 @eel.expose
