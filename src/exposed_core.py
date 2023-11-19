@@ -26,6 +26,8 @@ from queue import Queue
 from bolinho_api.ui import ui_api
 from bolinho_api.core import core_api
 
+import granulado.core
+
 from DBHandler import db_handler
 from app_handler import bolinho_app
 import realTimeR
@@ -250,6 +252,11 @@ def move_z_axis_millimeters(distance):
 
     Returns 1 if succeeded (if the function was acknowledged).
     """
+    # set motor rpm
+    bolinho_app.gran.set_motor_rpm(granulado.core.DEFAULT_RPM)
+
+    eel.sleep(0.1)
+
     return bolinho_app.gran.move_z_axis_millimeters(distance)
 
 
@@ -262,6 +269,10 @@ def move_z_axis_revolutions(revolutions):
 
     Returns 1 if succeeded (if the function was acknowledged).
     """
+    bolinho_app.gran.set_motor_rpm(granulado.core.DEFAULT_RPM)
+
+    eel.sleep(0.1)
+
     return bolinho_app.gran.move_z_axis_revolutions(revolutions)
 
 

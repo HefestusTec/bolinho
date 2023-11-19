@@ -28,6 +28,7 @@ KG_TO_NEWTONS = 9.80665
 NEWTONS_TO_KG = 0.101971621
 MOTOR_STEPS = 200
 MOTOR_MICRO_STEPS = 64
+DEFAULT_RPM = 15
 
 
 class Granulado:
@@ -201,14 +202,12 @@ class Granulado:
         """
         Send serial message to Granulado to get the current position
         """
-
         return self.__send_serial_message("g")
 
     def get_load(self):
         """
         Send serial message to Granulado to get the current load
         """
-
         return self.__send_serial_message("r")
 
     def get_delta_load(self):
@@ -305,12 +304,16 @@ class Granulado:
         """
         Send serial message to Granulado to return the z axis to top
         """
+        self.set_motor_rpm(DEFAULT_RPM)
+        eel.sleep(0.1)
         return self.__send_serial_message("t")
 
     def z_axis_bottom(self):
         """
         Send serial message to Granulado to return the z axis to bottom
         """
+        self.set_motor_rpm(DEFAULT_RPM)
+        eel.sleep(0.1)
         return self.__send_serial_message("b")
 
     def stop_z_axis(self):
@@ -358,6 +361,7 @@ class Granulado:
         """
         Send serial message to Granulado to calibrate the z axis
         """
+        self.set_motor_rpm(DEFAULT_RPM)
         return self.__send_serial_message(f"z")
 
     def calibrate_known_weight(self):

@@ -29,6 +29,7 @@ from DBHandler import db_handler
 import realTimeR
 from queue import Queue
 from serial import SerialException
+import granulado.core
 
 
 class AppHandler:
@@ -43,7 +44,7 @@ class AppHandler:
         self.__started_experiment_time = 0.0
         self.__experiment: list[dict] = []
         self.__time_since_last_refresh = 0.0
-        self.__last_data_refresh = 0.0
+        self.__time_since_last_data_refresh = 0.0
         self.__current_time = 0.0
         self.__current_readings: b_classes.Readings = b_classes.Readings()
         self.__starting_z_axis_pos: int = 0
@@ -57,11 +58,8 @@ class AppHandler:
         self.gran = Granulado(self.forced_stop)
 
     def forced_stop(self):
-        print("Forced stop")
         if app_state.state == StateE.RUNNING_EXPERIMENT:
-            print("Forced stop experiment")
             self.end_experiment()
-            print("Forced stop experiment done")
 
     def wait_for_connection(self):
         """
@@ -95,7 +93,10 @@ class AppHandler:
 
                     experiment_api.set_readings(self.__current_readings)
                     experiment_api.set_time(self.__current_time / 1000)
-                    print(self.__current_time / 1000)
+                if (
+                    self.__current_time - 12.5 > self.__time_since_last_data_refresh
+                ):  # ~80Hz refresh rate
+                    self.__time_since_last_data_refresh = self.__current_time
 
                     # check stop conditions
                     stop_conditions = [
@@ -245,6 +246,7 @@ class AppHandler:
         realTimeR.load_over_time_realtime_readings = Queue()
         realTimeR.load_over_position_realtime_readings = Queue()
         self.__db_experiment = db_handler.get_experiment_by_id(self.__experiment_id)
+        print(f"Z axis speed {self.__db_experiment.z_axis_speed}")
         self.set_granulado_experiment_configs(
             self.__db_experiment.max_load,
             self.__db_experiment.max_travel,
@@ -252,21 +254,45 @@ class AppHandler:
             self.__db_experiment.max_time,
             self.__db_experiment.z_axis_speed,
         )
-        print(z_axis_length)
-        move_mm = z_axis_length * 2
-        self.gran.move_z_axis_millimeters(move_mm * (-1 if compress else 1))
+        print(f"Z axis speed db: {self.__db_experiment.z_axis_speed}")
+
+        if compress:
+            print("Compress: moving to bottom")
+            self.gran.z_axis_bottom()
+        else:
+            print("Expand: moving to top")
+            self.gran.z_axis_top()
+
+    def reset_granulado_configs(self):
+        import exposed_core
+
+        config = exposed_core.load_config_params()
+        """
+        globalMaxLoad,
+        globalMaxTravel,
+        globalMaximumDeltaLoad,
+        globalMaxTime,
+        experimentMotorRPM,
+        """
+        self.set_granulado_experiment_configs(
+            int(config.get("absoluteMaximumLoad", 1000)),
+            int(config.get("absoluteMaximumTravel", 1000)),
+            int(config.get("absoluteMaximumDeltaLoad", 1000)),
+            int(config.get("absoluteMaximumTime", 1000)),
+            granulado.core.DEFAULT_RPM,
+        )
 
     def end_experiment(self):
         """
         Handles writing the new experiment to persistent memory
         """
         # stop motor
-        stopped = self.gran.stop_z_axis()
+        self.gran.stop_z_axis()
 
-        if not stopped:
-            ui_api.error_alert(
-                "Não foi possível parar o eixo Z. O Granulado está conectado?",
-            )
+        # if not stopped:
+        #     ui_api.error_alert(
+        #         "Não foi possível parar o eixo Z. O Granulado está conectado?",
+        #     )
         self.finalize_experiment()
 
     def finalize_experiment(self):
@@ -282,6 +308,7 @@ class AppHandler:
             ui_api.update_alert("Salvo com sucesso!", True, toast_id)
 
         ui_api.loading_alert("AGUARDE! Salvando no banco...", save_and_end)
+        self.reset_granulado_configs()
 
 
 bolinho_app = AppHandler()
