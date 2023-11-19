@@ -33,6 +33,7 @@ export interface GlobalConfigContextProps {
     absoluteMaximumTime: number;
     absoluteMaximumTravel: number;
     absoluteMaximumDeltaLoad: number;
+    absoluteMaximumSpeed: number; // Max speed in RPM
     port: string;
     animateGraph: boolean;
     zAxisLength: number; // Z axis length in millimeters
@@ -56,6 +57,7 @@ export const globalConfigDefault: GlobalConfigContextProps = {
     absoluteMaximumTime: 6000, // Global limit in seconds
     absoluteMaximumTravel: 1000, // Global limit in mm
     absoluteMaximumDeltaLoad: 1000, // Global limit in grams / second
+    absoluteMaximumSpeed: 30,
     port: "",
     animateGraph: true,
     zAxisLength: 1000,
