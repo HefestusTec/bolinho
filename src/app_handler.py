@@ -258,10 +258,10 @@ class AppHandler:
 
         if compress:
             print("Compress: moving to bottom")
-            self.gran.z_axis_bottom()
+            self.gran.z_axis_bottom(self.__db_experiment.z_axis_speed)
         else:
             print("Expand: moving to top")
-            self.gran.z_axis_top()
+            self.gran.z_axis_top(self.__db_experiment.z_axis_speed)
 
     def reset_granulado_configs(self):
         import exposed_core

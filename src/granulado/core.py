@@ -300,20 +300,22 @@ class Granulado:
             return False
         return True
 
-    def z_axis_top(self):
+    def z_axis_top(self, rpm: int = DEFAULT_RPM):
         """
         Send serial message to Granulado to return the z axis to top
         """
-        self.set_motor_rpm(DEFAULT_RPM)
-        eel.sleep(0.1)
+        self.set_motor_rpm(rpm)
+        eel.sleep(0.01)
         return self.__send_serial_message("t")
 
-    def z_axis_bottom(self):
+    def z_axis_bottom(self, rpm: int = DEFAULT_RPM):
         """
         Send serial message to Granulado to return the z axis to bottom
         """
-        self.set_motor_rpm(DEFAULT_RPM)
-        eel.sleep(0.1)
+        self.set_motor_rpm(rpm)
+
+        eel.sleep(0.01)
+
         return self.__send_serial_message("b")
 
     def stop_z_axis(self):
@@ -322,10 +324,12 @@ class Granulado:
         """
         return self.__send_serial_message("s")
 
-    def move_z_axis_millimeters(self, millimeters: int):
+    def move_z_axis_millimeters(self, millimeters: int, rpm: int = DEFAULT_RPM):
         """
         Send serial message to Granulado to move the z axis in millimeters
         """
+        self.set_motor_rpm(rpm)
+        eel.sleep(0.01)
 
         config = exposed_core.load_config_params()
         millimeters_per_revolution = float(config.get("mmPerRevolution", 0))
@@ -343,10 +347,12 @@ class Granulado:
         steps = millimeters // millimeters_per_step
         return self.__send_serial_message(f"m{steps}")
 
-    def move_z_axis_revolutions(self, revolutions: float):
+    def move_z_axis_revolutions(self, revolutions: float, rpm: int = DEFAULT_RPM):
         """
         Send serial message to Granulado to move the z axis in millimeters
         """
+        self.set_motor_rpm(rpm)
+        eel.sleep(0.01)
 
         steps = int(revolutions * MOTOR_STEPS * MOTOR_MICRO_STEPS)
         return self.__send_serial_message(f"m{steps}")
@@ -361,7 +367,6 @@ class Granulado:
         """
         Send serial message to Granulado to calibrate the z axis
         """
-        self.set_motor_rpm(DEFAULT_RPM)
         return self.__send_serial_message(f"z")
 
     def calibrate_known_weight(self):

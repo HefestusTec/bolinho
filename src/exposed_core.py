@@ -252,11 +252,6 @@ def move_z_axis_millimeters(distance):
 
     Returns 1 if succeeded (if the function was acknowledged).
     """
-    # set motor rpm
-    bolinho_app.gran.set_motor_rpm(granulado.core.DEFAULT_RPM)
-
-    eel.sleep(0.1)
-
     return bolinho_app.gran.move_z_axis_millimeters(distance)
 
 
@@ -269,10 +264,6 @@ def move_z_axis_revolutions(revolutions):
 
     Returns 1 if succeeded (if the function was acknowledged).
     """
-    bolinho_app.gran.set_motor_rpm(granulado.core.DEFAULT_RPM)
-
-    eel.sleep(0.1)
-
     return bolinho_app.gran.move_z_axis_revolutions(revolutions)
 
 
