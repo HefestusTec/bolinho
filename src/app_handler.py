@@ -37,7 +37,6 @@ class AppHandler:
     """
 
     def __init__(self):
-        self.gran = Granulado()
         self.__experiment_id: int = (
             -1
         )  # Id of the active experiment -1 means no selected experiment
@@ -55,6 +54,12 @@ class AppHandler:
         self.__max_pos = 0
         self.__max_delta_load = 0
         self.__db_experiment = None
+        self.gran = Granulado(self.forced_stop)
+
+    def forced_stop(self):
+        if app_state == StateE.RUNNING_EXPERIMENT:
+            self.finalize_experiment()
+
 
     def wait_for_connection(self):
         """
@@ -256,7 +261,9 @@ class AppHandler:
             ui_api.error_alert(
                 "Não foi possível parar o eixo Z. O Granulado está conectado?",
             )
-
+        self.finalize_experiment()
+    
+    def finalize_experiment(self):
         def save_and_end(toast_id):
             app_state.change_state(StateE.INSPECTING)
 
