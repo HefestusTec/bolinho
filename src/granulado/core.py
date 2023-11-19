@@ -164,8 +164,12 @@ class Granulado:
                         self.__delta_load = kg_s * KG_TO_NEWTONS
                     case "s":
                         ui_api.error_alert("O motor for interrompido")
-                        if(self.__forced_stop_callback):
+                        try:
+                            print("trying to call callback")
                             self.__forced_stop_callback()
+                            print("callback called")
+                        except e:
+                            print(e)
                     case "i":
                         print(f"GRANULADO says: {value}")
                     case _:
@@ -314,7 +318,7 @@ class Granulado:
         Send serial message to Granulado to stop the z axis
         """
         return self.__send_serial_message("s")
-    
+
     def move_z_axis_millimeters(self, millimeters: int):
         """
         Send serial message to Granulado to move the z axis in millimeters
@@ -328,12 +332,14 @@ class Granulado:
             )
             return False
 
-        millimeters_per_step = millimeters_per_revolution / (MOTOR_STEPS * MOTOR_MICRO_STEPS)
+        millimeters_per_step = millimeters_per_revolution / (
+            MOTOR_STEPS * MOTOR_MICRO_STEPS
+        )
 
         # convert millimeters to steps
         steps = millimeters // millimeters_per_step
         return self.__send_serial_message(f"m{steps}")
-    
+
     def move_z_axis_revolutions(self, revolutions: float):
         """
         Send serial message to Granulado to move the z axis in millimeters

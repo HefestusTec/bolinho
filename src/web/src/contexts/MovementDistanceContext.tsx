@@ -23,7 +23,7 @@ import {
 } from "react";
 
 export type ValidDistancesType =
-    | "1 mm"
+    | "5 mm"
     | "10 mm"
     | "100 mm"
     | "1000 mm"
@@ -32,7 +32,7 @@ export type ValidDistancesType =
     | "1 REV";
 
 export const ValidDistancesTypeArray: ValidDistancesType[] = [
-    "1 mm",
+    "5 mm",
     "10 mm",
     "100 mm",
     "1000 mm",
@@ -43,7 +43,7 @@ export const ValidDistancesTypeArray: ValidDistancesType[] = [
 
 export const MovementDistanceContext = createContext<
     [ValidDistancesType, Dispatch<SetStateAction<ValidDistancesType>>]
->(["1 mm", () => {}]);
+>(["5 mm", () => {}]);
 
 interface MovementDistanceProviderProps {
     children: any;
@@ -53,7 +53,7 @@ export const MovementDistanceProvider: FunctionComponent<
     MovementDistanceProviderProps
 > = ({ children }) => {
     const [distanceAmount, setDistanceAmount] =
-        useState<ValidDistancesType>("1 mm");
+        useState<ValidDistancesType>("5 mm");
 
     return (
         <MovementDistanceContext.Provider

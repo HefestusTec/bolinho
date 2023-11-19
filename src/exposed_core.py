@@ -146,17 +146,15 @@ def start_experiment_routine(experiment_id: int):
     globalMaxSpeed = int(config_params["absoluteMaximumSpeed"])
     globalZAxisLength = int(config_params["zAxisLength"])
     globalKnownWeight = int(config_params["knownWeight"])
-    
+
     experiment_motor_rpm = experiment.z_axis_speed
-
-
 
     if experiment.max_load > globalMaxLoad:
         ui_api.error_alert(
             f"Não foi possível iniciar o experimento. O LIMITE DE CARGA do experimento é maior que o limite global. Por favor verifique os valores!",
         )
         return 0
-    if experiment_motor_rpm < 0 or experiment_motor_rpm > globalMaxSpeed :
+    if experiment_motor_rpm < 0 or experiment_motor_rpm > globalMaxSpeed:
         ui_api.error_alert(
             f"Não foi possível iniciar o experimento. A VELOCIDADE DO MOTOR deve estar entre 1 e o limite global. Por favor verifique os valores!",
         )
@@ -230,7 +228,7 @@ def return_z_axis():
 
     Returns 1 if succeeded (if the function was acknowledged).
     """
-    return bolinho_app.gran.return_z_axis()
+    return bolinho_app.gran.z_axis_top()
 
 
 @eel.expose
@@ -254,6 +252,7 @@ def move_z_axis_millimeters(distance):
     """
     return bolinho_app.gran.move_z_axis_millimeters(distance)
 
+
 @eel.expose
 def move_z_axis_revolutions(revolutions):
     """
@@ -264,7 +263,6 @@ def move_z_axis_revolutions(revolutions):
     Returns 1 if succeeded (if the function was acknowledged).
     """
     return bolinho_app.gran.move_z_axis_revolutions(revolutions)
-
 
 
 @eel.expose

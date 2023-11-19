@@ -57,9 +57,11 @@ class AppHandler:
         self.gran = Granulado(self.forced_stop)
 
     def forced_stop(self):
-        if app_state == StateE.RUNNING_EXPERIMENT:
-            self.finalize_experiment()
-
+        print("Forced stop")
+        if app_state.state == StateE.RUNNING_EXPERIMENT:
+            print("Forced stop experiment")
+            self.end_experiment()
+            print("Forced stop experiment done")
 
     def wait_for_connection(self):
         """
@@ -203,7 +205,12 @@ class AppHandler:
         self.__max_time = globalMaxTime
 
     def set_granulado_experiment_configs(
-        self, globalMaxLoad, globalMaxTravel, globalMaximumDeltaLoad, globalMaxTime, experimentMotorRPM
+        self,
+        globalMaxLoad,
+        globalMaxTravel,
+        globalMaximumDeltaLoad,
+        globalMaxTime,
+        experimentMotorRPM,
     ):
         self.gran.set_max_load(globalMaxLoad)
         self.__max_load = globalMaxLoad
@@ -217,7 +224,6 @@ class AppHandler:
         self.gran.set_motor_rpm(experimentMotorRPM)
         eel.sleep(0.01)
         self.__max_time = globalMaxTime
-
 
     def start_experiment(self, experiment_id: int, compress: bool, z_axis_length: int):
         """
@@ -246,7 +252,7 @@ class AppHandler:
             self.__db_experiment.max_time,
             self.__db_experiment.z_axis_speed,
         )
-
+        print(z_axis_length)
         move_mm = z_axis_length * 2
         self.gran.move_z_axis_millimeters(move_mm * (-1 if compress else 1))
 
@@ -262,7 +268,7 @@ class AppHandler:
                 "Não foi possível parar o eixo Z. O Granulado está conectado?",
             )
         self.finalize_experiment()
-    
+
     def finalize_experiment(self):
         def save_and_end(toast_id):
             app_state.change_state(StateE.INSPECTING)
