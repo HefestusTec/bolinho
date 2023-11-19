@@ -1,4 +1,4 @@
-¹<!--
+<!--
  Copyright (C) 2023 Hefestus
  
  This file is part of Bolinho.
@@ -19,63 +19,47 @@
 
 # Configuração
 
-Este capitulo apresentará as informações de como configurar esse software.
-
-## Estrutura do programa
-
-A imagem a seguir apresenta a estrutura de arquivos do programa:
-![Alt text](image-9.png){ width="500" }
-
-* `src`: Contém os arquivos da aplicação, esse não deve ser alterado diretamente pelo usuário.
-* `persist`: Contém os dados gerados pelo uso
-    * `configParams.json`: Contém os parâmetros de configuração globais da aplicação, não é recomendado que o usuário os modifique manualmente.
-    * `bolinho.db`: É o **banco de dados** da aplicação, aqui são guardados todos os dados gerados por experimentos, materiais etc. É de suma importância que o usuário mantenha uma cópia desse arquivo para proteger contra percas.
-* `start.sh`: É o script de inicialização da aplicação. Esse arquivo deve ser executado para iniciar a aplicação.
-* `orange_setup.sh`: Baixa todas as dependências e realiza o setup da aplicação. Esse script deve ser executado ao instalar uma versão nova do Bolinho.
+Este capitulo apresentará as informações de como configurar os diferentes componentes do Bolinho.
 
 
-## Instalando o Bolinho pela primeira vez
+A página de configurações é acessada através do menu lateral
 
-O software Bolinho é distribuído através de um arquivo `.zip`. Com o seguinte nome `Bolinho_[versão].zip` por exemplo `Bolinho_178.zip`.
+![Alt text](image-13.png){ width="500" }
 
-1. Extraia o arquivo.
-2. Copie o arquivo `Bolinho` para sua `Área de trabalho`.
-3. Execute o script `orange_setup.sh`.
+## Temas
 
-Com isso seu programa deve estar instalado com todas suas dependências.
+O componente `Temas` permite que o usuário modifique a apresentação da interface gráfica
 
-## Executando o Bolinho
+![Alt text](image-14.png)
 
-Para utilizar o Bolinho execute o script `start.sh`.
+## Efeitos visuais
 
-Você deve ser recebido com uma tela como essa:
+O componente `Efeitos visuais` controla artificios extras da interface, os diferentes efeitos possuem um **impacto na performance**.
 
-![Página inicio](../resources/mainPageBolinho.png){ width="500" }
+* `Sombras`: Ativa ou desativa sombras
+    
+    > Desativar as sombras pode melhorar a performance da interface.
 
-## Conectando o Granulado
+* `Animações`: Modifica a velocidade das animações
+    * `Rápido`: Velocidade rápida das animações.
+    * `Normal`: Velocidade padrão das animações.
+    * `Desligado`: Desativa as animações.
+    > Desativar as animações pode melhorar a performance da interface.
 
-O primeiro passo para configurar o granulado é ligar seus periféricos de acordo com a seguinte sequência:
+* `Indicador de seleção`: Ativa ou desativa o indicador de seleção ao passar o mouse por cima.
+    
+    > Desativa-lo melhora a visualização em dispositivos *touch screen*.
 
-![Alt text](image-11.png){ width="500" }
+## Limites globais
 
-Após isso conecte o **USB** e os **Sensores de Fim de Curso**.
+Configura os **limites globais** da aplicação. Durante a criação de um experimento os limites de parada não poderão exceder os globais.
 
-![Alt text](image-12.png)
+!!! danger "Área perigosa"
+    É importante que os **limites globais** sejam configurados propriamente para que não possam ser criados experimentos excedam os limites operacionais de seu maquinário.
 
-!!! warning "Atenção"
-    Preste atenção à ordem dos sensores de fim de curso, sendo 
-    * `T`: Sensor **superior**.
-    * `B`: Sensor **inferior**.
+## Outros
+* `Texto`: Modifica o tamanho do texto da interface.
 
+* `Pontos visíveis`: Modifica o numero de pontos visíveis durante a inspeção de um experimento. Essa configuração determina a **precisão de visualização** ou seja, quanto maior maior será a precisão com o zoom afastado, entretanto ao dar zoom em um experimento sua **precisão** será melhorada automaticamente.
 
-A comunicação do Granulado com o Bolinho é feita via USB, portanto conecte-o a uma das portas USB do `host`.
-
-## Como atualizar o bolinho
-
-Antes de atualizar o Bolinho é de suma importância que seja criado **uma CÓPIA do `persist`** para prevenir que a atualização corrompa seus dados.  
-
-![Alt text](image-10.png)
-
-Note que a versão mais nova não possui o diretório `persist`.
-
-Para atualizar o Bolinho basta copiar **todos** os arquivos da `nova` versão para os da `atual`.
+    > Recomendamos deixar no padrão de ``1k pontos`` ou diminuir para ``500 pontos`` caso a performance esteja baixa.
