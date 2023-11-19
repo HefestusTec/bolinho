@@ -81,3 +81,9 @@ export function calculatePercentage(part: number, whole: number): number {
     const percentage = Math.round((part / whole) * 10000) / 100;
     return percentage;
 }
+
+export function isMillimeterString(input: string): boolean {
+    // Use a regular expression to check if the string matches the millimeter pattern
+    const millimeterPattern = /^\d+\smm$/;
+    return millimeterPattern.test(input);
+}

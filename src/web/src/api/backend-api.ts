@@ -146,7 +146,21 @@ export const moveZAxisMillimetersJS = async (
         return await eel.move_z_axis_millimeters(distance)();
     } catch (error) {
         console.error(error);
-        toast.error("Não foi possível mover o eixo Z.");
+        toast.error(`Não foi possível mover o eixo Z em ${distance} mm.`);
+        return 0;
+    }
+};
+
+export const moveZAxisRevolutionsJS = async (
+    nOfRevolutions: number
+): Promise<number> => {
+    try {
+        return await eel.move_z_axis_revolutions(nOfRevolutions)();
+    } catch (error) {
+        console.error(error);
+        toast.error(
+            `Não foi possível mover o eixo Z em ${nOfRevolutions} revoluções.`
+        );
         return 0;
     }
 };

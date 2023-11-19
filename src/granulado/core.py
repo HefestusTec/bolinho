@@ -22,16 +22,16 @@ from enum import Enum
 
 from bolinho_api.ui import ui_api
 from bolinho_api.core import core_api
+import exposed_core
 
 KG_TO_NEWTONS = 9.80665
 NEWTONS_TO_KG = 0.101971621
 MOTOR_STEPS = 200
-MILLIMETERS_PER_REVOLUTION = 235.62
-MILLIMETERS_PER_STEP = MILLIMETERS_PER_REVOLUTION / MOTOR_STEPS
+MOTOR_MICRO_STEPS = 64
 
 
 class Granulado:
-    def __init__(self, timeout: float = 2):
+    def __init__(self, forced_stop_callback):
         self.__hardware: serial.Serial | None = None
         self.__instant_load = 0
         self.__instant_position = 0
@@ -41,6 +41,7 @@ class Granulado:
         self.__time_since_last_refresh = 0
         self.__last_is_connected = None
         self.__serial_buffer = ""
+        self.__forced_stop_callback = forced_stop_callback
 
     def __del__(self):
         self.__end()
@@ -70,9 +71,7 @@ class Granulado:
         """
         Sends a message to Granulado to stop the z axis and prompts the user with the error message
         """
-        print(error_message)
 
-        return
         if not self.__send_serial_message("s"):
             ui_api.error_alert(
                 "Não foi possível parar o eixo Z. O Granulado está conectado?",
@@ -164,7 +163,9 @@ class Granulado:
                         # convert kg/s to Newtons/s 1kg = 9.80665N
                         self.__delta_load = kg_s * KG_TO_NEWTONS
                     case "s":
-                        ui_api.success_alert("O motor for interrompido")
+                        ui_api.error_alert("O motor for interrompido")
+                        if(self.__forced_stop_callback):
+                            self.__forced_stop_callback()
                     case "i":
                         print(f"GRANULADO says: {value}")
                     case _:
@@ -254,9 +255,8 @@ class Granulado:
         - knownWeight is greater than 0
         Else, the user is prompted to set the parameters
         """
-        from exposed_core import load_config_params
 
-        config = load_config_params()
+        config = exposed_core.load_config_params()
         checks = [
             int(config.get("absoluteMaximumLoad", 0)) > 0,
             int(config.get("absoluteMaximumTravel", 0)) > 0,
@@ -314,12 +314,32 @@ class Granulado:
         Send serial message to Granulado to stop the z axis
         """
         return self.__send_serial_message("s")
+    
     def move_z_axis_millimeters(self, millimeters: int):
         """
         Send serial message to Granulado to move the z axis in millimeters
         """
+
+        config = exposed_core.load_config_params()
+        millimeters_per_revolution = float(config.get("mmPerRevolution", 0))
+        if millimeters_per_revolution <= 0:
+            ui_api.error_alert(
+                "Não foi possível mover o Eixo-z, o parâmetro Milímetros por Revolução está fora dos limites."
+            )
+            return False
+
+        millimeters_per_step = millimeters_per_revolution / (MOTOR_STEPS * MOTOR_MICRO_STEPS)
+
         # convert millimeters to steps
-        steps = millimeters // MILLIMETERS_PER_STEP
+        steps = millimeters // millimeters_per_step
+        return self.__send_serial_message(f"m{steps}")
+    
+    def move_z_axis_revolutions(self, revolutions: float):
+        """
+        Send serial message to Granulado to move the z axis in millimeters
+        """
+
+        steps = int(revolutions * MOTOR_STEPS * MOTOR_MICRO_STEPS)
         return self.__send_serial_message(f"m{steps}")
 
     def tare_load(self):

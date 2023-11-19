@@ -18,7 +18,11 @@ import { CSSProperties, FunctionComponent, useContext } from "react";
 import styleModule from "./UpDownButtons.module.css";
 import CustomButton from "components/customSubComponents/customButton/customButton";
 import { MovementDistanceContext } from "contexts/MovementDistanceContext";
-import { moveZAxisMillimetersJS } from "api/backend-api";
+import {
+    moveZAxisMillimetersJS,
+    moveZAxisRevolutionsJS,
+} from "api/backend-api";
+import { isMillimeterString } from "helpers";
 
 // along with Bolinho.  If not, see <http://www.gnu.org/licenses/>.
 interface UpDownButtonsProps {
@@ -34,14 +38,31 @@ const UpDownButtons: FunctionComponent<UpDownButtonsProps> = ({ style }) => {
     const [distanceAmount] = useContext(MovementDistanceContext);
 
     const moveZAxisCallback = (direction: MovementDirection) => {
-        const movementAmountAsNumber: number = Number(
-            distanceAmount.match(/\d+/)
-        );
-        moveZAxisMillimetersJS(
-            direction === MovementDirection.UP
-                ? -movementAmountAsNumber
-                : movementAmountAsNumber
-        );
+        if (isMillimeterString(distanceAmount)) {
+            console.log(distanceAmount);
+            const absoluteMovementAmountAsNumber: number = Number(
+                distanceAmount.match(/\d+/)
+            );
+            console.log(absoluteMovementAmountAsNumber);
+
+            const movementAmountAsNumber =
+                direction === MovementDirection.UP
+                    ? -absoluteMovementAmountAsNumber
+                    : absoluteMovementAmountAsNumber;
+
+            moveZAxisMillimetersJS(movementAmountAsNumber);
+        } else {
+            const match = distanceAmount.match(/^(\d+(\.\d+)?) REV$/);
+            if (!match) return;
+            const absoluteMovementAmountAsNumber: number = parseFloat(match[1]);
+
+            const movementAmountAsNumber =
+                direction === MovementDirection.UP
+                    ? -absoluteMovementAmountAsNumber
+                    : absoluteMovementAmountAsNumber;
+
+            moveZAxisRevolutionsJS(movementAmountAsNumber);
+        }
     };
 
     return (

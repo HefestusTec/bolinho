@@ -326,6 +326,26 @@ ___
     ```
 
 ___
+
+### moveZAxisRevolutionsJS(revolutions)
+!!! quote "moveZAxisRevolutionsJS(revolutions)"
+    This function calls the `move_z_axis_revolutions(revolutions)` on the backend.
+    Moves the z-axis [revolutions].
+
+    This distance is set in revolutions
+
+    Returns 1 if succeeded (if the function was acknowledged).
+
+    ``` javaScript title="React usage example"
+    import { moveZAxisRevolutionsJS } from "./api/backend-api";
+    
+    onClick(()=>{
+        moveZAxisRevolutionsJS(0.5);
+    };)
+    ```
+
+___
+
 ### getAvailablePortsListJS()
 !!! quote "getAvailablePortsListJS()"
     This function calls the `get_available_ports_list()` on the backend.
