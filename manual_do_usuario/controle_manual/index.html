@@ -423,6 +423,8 @@
         
           
         
+          
+        
       
       
         
@@ -443,6 +445,20 @@
         </label>
         <ul class="md-nav__list" data-md-scrollfix>
           
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../instalacao/" class="md-nav__link">
+        Instalação
+      </a>
+    </li>
+  
+
             
           
             
@@ -502,9 +518,81 @@
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Controle manual
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         Controle manual
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#ativando-o-motor" class="md-nav__link">
+    Ativando o motor
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pagina-controlar" class="md-nav__link">
+    Página Controlar
+  </a>
+  
+    <nav class="md-nav" aria-label="Página Controlar">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#componente-comandos" class="md-nav__link">
+    Componente Comandos
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#componente-leituras" class="md-nav__link">
+    Componente Leituras
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#componente-controle" class="md-nav__link">
+    Componente Controle
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#componente-botao-de-parada" class="md-nav__link">
+    Componente Botão de parada
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -738,6 +826,62 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#ativando-o-motor" class="md-nav__link">
+    Ativando o motor
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pagina-controlar" class="md-nav__link">
+    Página Controlar
+  </a>
+  
+    <nav class="md-nav" aria-label="Página Controlar">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#componente-comandos" class="md-nav__link">
+    Componente Comandos
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#componente-leituras" class="md-nav__link">
+    Componente Leituras
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#componente-controle" class="md-nav__link">
+    Componente Controle
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#componente-botao-de-parada" class="md-nav__link">
+    Componente Botão de parada
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -775,7 +919,41 @@
 -->
 
 <h1 id="controle-manual">Controle manual<a class="headerlink" href="#controle-manual" title="Permanent link">&para;</a></h1>
-<p>Como controlar o maquinário manualmente.</p>
+<p>Este capitulo discutirá como controlar o maquinário manualmente. Essa função é importante para posicionar a célula de carga na posição correta para iniciar um experimento.</p>
+<h2 id="ativando-o-motor">Ativando o motor<a class="headerlink" href="#ativando-o-motor" title="Permanent link">&para;</a></h2>
+<p>Primeiro conecte o Granulado ao Bolinho, vide: <a href="../instalacao/#instalando-o-granulado">Instalando o Granulado</a> e <a href="../calibracao/#conectando-ao-granulado">Conectando ao Granulado</a>.</p>
+<div class="admonition danger">
+<p class="admonition-title">PERIGO</p>
+<p>Garanta que você seguiu os passos de <a href="../instalacao/#precaucoes-com-o-motor-de-passo">Precauções com o motor de passo</a>.</p>
+</div>
+<p>Após garantir que o Granulado está conectado e que as <strong>precauções de segurança</strong> foram tomadas <strong>Ative o motor de carga</strong>.</p>
+<p>Nesse momento o motor <strong>Não deve estar fazendo um ruído continuo</strong>.</p>
+<h2 id="pagina-controlar">Página <code>Controlar</code><a class="headerlink" href="#pagina-controlar" title="Permanent link">&para;</a></h2>
+<p>Através do <strong>menu lateral</strong> acesse a página <code>Controlar</code>. Você deve ser recebido com uma tela similar a:</p>
+<p><img alt="Alt text" src="../image-17.png" width="500" /></p>
+<p>Conhecendo os componentes:</p>
+<h3 id="componente-comandos">Componente <code>Comandos</code><a class="headerlink" href="#componente-comandos" title="Permanent link">&para;</a></h3>
+<ul>
+<li><code>Distância de Movimento</code>: Modifica a distância de movimento. Esse é setado ou em <code>mm</code> (Milímetros) ou em <code>REV</code> (Revoluções).</li>
+</ul>
+<div class="admonition tip">
+<p class="admonition-title">Dica<p>Utilize o <code>REV</code> para encontrar a quantidade de <strong>mm por revolução</strong> necessário para calibração do eixo-z.</p>
+</p>
+</div>
+<ul>
+<li><code>Retornar Eixo-Z</code>: Retorna o eixo-z ao ponto superior.</li>
+</ul>
+<h3 id="componente-leituras">Componente <code>Leituras</code><a class="headerlink" href="#componente-leituras" title="Permanent link">&para;</a></h3>
+<p>Esse componente apresenta as <strong>leituras atuais</strong> em tempo real que recebeu do Granulado.</p>
+<p>Ver <a href="../calibracao/#componente-leituras">Componente <code>Leituras</code></a></p>
+<h3 id="componente-controle">Componente <code>Controle</code><a class="headerlink" href="#componente-controle" title="Permanent link">&para;</a></h3>
+<p>Envia o comando para o motor mover em <code>Distância de Movimento</code>.</p>
+<h3 id="componente-botao-de-parada">Componente <code>Botão de parada</code><a class="headerlink" href="#componente-botao-de-parada" title="Permanent link">&para;</a></h3>
+<p>Esse componente envia um comando de <strong>parar o motor imediatamente</strong> ao Granulado.</p>
+<div class="admonition warning">
+<p class="admonition-title">Atenção</p>
+<p>Não deve ser usado como parada de emergência, sempre esteja pronto para acionar o <strong>Botão de emergência FÍSICO</strong></p>
+</div>
 
 
 
