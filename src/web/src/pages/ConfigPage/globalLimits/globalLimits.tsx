@@ -53,16 +53,22 @@ const GlobalLimits: FunctionComponent<GlobalLimitsProps> = ({
         globalConfig.absoluteMaximumDeltaLoad
     );
 
+    const [maxSpeed, setMaxSpeed] = useState<number>(
+        globalConfig.absoluteMaximumSpeed
+    );
+
     const [maxForceAlert, setMaxForceAlert] = useState<boolean>(false);
     const [maxTimeAlert, setMaxTimeAlert] = useState<boolean>(false);
     const [maxTravelAlert, setMaxTravelAlert] = useState<boolean>(false);
     const [maxDeltaLoadAlert, setMaxDeltaLoadAlert] = useState<boolean>(false);
+    const [maxSpeedAlert, setMaxSpeedAlert] = useState<boolean>(false);
 
     const refreshValues = () => {
         setMaxLoad(globalConfig.absoluteMaximumLoad);
         setMaxTime(globalConfig.absoluteMaximumTime);
         setMaxTravel(globalConfig.absoluteMaximumTravel);
         setMaxDeltaLoad(globalConfig.absoluteMaximumDeltaLoad);
+        setMaxSpeed(globalConfig.absoluteMaximumSpeed);
     };
     const saveValues = () => {
         setGlobalConfig({
@@ -71,6 +77,7 @@ const GlobalLimits: FunctionComponent<GlobalLimitsProps> = ({
             absoluteMaximumTime: maxTime,
             absoluteMaximumTravel: maxTravel,
             absoluteMaximumDeltaLoad: maxDeltaLoad,
+            absoluteMaximumSpeed: maxSpeed,
         });
     };
 
@@ -81,7 +88,8 @@ const GlobalLimits: FunctionComponent<GlobalLimitsProps> = ({
         setMaxDeltaLoadAlert(
             maxDeltaLoad !== globalConfig.absoluteMaximumDeltaLoad
         );
-    }, [globalConfig, maxLoad, maxTime, maxTravel, maxDeltaLoad]);
+        setMaxSpeedAlert(maxSpeed !== globalConfig.absoluteMaximumSpeed);
+    }, [globalConfig, maxLoad, maxTime, maxTravel, maxDeltaLoad, maxSpeed]);
 
     return (
         <ZoomComponent className={className} scaleOrigin={scaleOrigin}>
@@ -138,6 +146,15 @@ const GlobalLimits: FunctionComponent<GlobalLimitsProps> = ({
                     inputType="number"
                     suffix="N/s"
                     alert={maxDeltaLoadAlert}
+                    alertColor="var(--positive_button_color)"
+                />
+                <CustomTextInput
+                    title="Velocidade máxima"
+                    setValue={setMaxSpeed}
+                    value={maxSpeed}
+                    inputType="number"
+                    suffix="RPM"
+                    alert={maxSpeedAlert}
                     alertColor="var(--positive_button_color)"
                 />
             </ContainerComponent>

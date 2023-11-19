@@ -143,19 +143,22 @@ def start_experiment_routine(experiment_id: int):
     globalMaxTravel = int(config_params["absoluteMaximumTravel"])
     globalMaxTime = float(config_params["absoluteMaximumTime"])
     globalMaximumDeltaLoad = float(config_params["absoluteMaximumDeltaLoad"])
+    globalMaxSpeed = int(config_params["absoluteMaximumSpeed"])
     globalZAxisLength = int(config_params["zAxisLength"])
     globalKnownWeight = int(config_params["knownWeight"])
     
     experiment_motor_rpm = experiment.z_axis_speed
+
+
 
     if experiment.max_load > globalMaxLoad:
         ui_api.error_alert(
             f"Não foi possível iniciar o experimento. O LIMITE DE CARGA do experimento é maior que o limite global. Por favor verifique os valores!",
         )
         return 0
-    if experiment_motor_rpm < 0 or experiment_motor_rpm > 600 :
+    if experiment_motor_rpm < 0 or experiment_motor_rpm > globalMaxSpeed :
         ui_api.error_alert(
-            f"Não foi possível iniciar o experimento. A VELOCIDADE DO MOTOR deve estar entre 1 e 600 RPM. Por favor verifique os valores!",
+            f"Não foi possível iniciar o experimento. A VELOCIDADE DO MOTOR deve estar entre 1 e o limite global. Por favor verifique os valores!",
         )
         return 0
     if experiment.max_travel > globalMaxTravel:
