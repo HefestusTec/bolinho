@@ -46,10 +46,6 @@ const ReadingsContainer: FunctionComponent<ReadingsContainerProps> = ({
                     value={`${readingsContext.status}`}
                 />
                 <CustomText
-                    title="Eixo-Z Relativo"
-                    value={`${readingsContext.z_axis_pos} mm`}
-                />
-                <CustomText
                     title="Carga atual"
                     value={`${readingsContext.current_load} N`}
                 />
