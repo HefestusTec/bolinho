@@ -64,6 +64,7 @@ def save_config_params(new_params):
         globalMaximumDeltaLoad = float(new_params["absoluteMaximumDeltaLoad"])
         globalZAxisLength = int(new_params["zAxisLength"])
         globalKnownWeight = int(new_params["knownWeight"])
+        globalMmPerRevolution = int(new_params["mmPerRevolution"])
 
         bolinho_app.set_granulado_configs(
             globalMaxLoad,
@@ -72,6 +73,7 @@ def save_config_params(new_params):
             globalZAxisLength,
             globalMaxTime,
             globalKnownWeight,
+            globalMmPerRevolution,
         )
 
 
@@ -148,6 +150,7 @@ def start_experiment_routine(experiment_id: int):
     globalMaxSpeed = int(config_params["absoluteMaximumSpeed"])
     globalZAxisLength = int(config_params["zAxisLength"])
     globalKnownWeight = int(config_params["knownWeight"])
+    globalMmPerRevolution = int(config_params["mmPerRevolution"])
 
     experiment_motor_rpm = experiment.z_axis_speed
 
@@ -185,6 +188,12 @@ def start_experiment_routine(experiment_id: int):
         )
         return 0
 
+    if globalMmPerRevolution <= 0:
+        ui_api.error_alert(
+            f"Não foi possível iniciar o experimento. O tamanho do Eixo-z não pôde ser carregado. Por favor verifique os valores!",
+        )
+        return 0
+
     bolinho_app.set_granulado_configs(
         globalMaxLoad,
         globalMaxTravel,
@@ -192,6 +201,7 @@ def start_experiment_routine(experiment_id: int):
         globalZAxisLength,
         globalMaxTime,
         globalKnownWeight,
+        globalMmPerRevolution,
     )
 
     core_api.go_to_experiment_page()

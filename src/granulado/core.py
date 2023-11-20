@@ -43,6 +43,7 @@ class Granulado:
         self.__last_is_connected = None
         self.__serial_buffer = ""
         self.__forced_stop_callback = forced_stop_callback
+        self.mm_per_revolution = 0
 
     def __del__(self):
         self.__end()
@@ -146,7 +147,9 @@ class Granulado:
                         # convert kg to Newtons 1kg = 9.80665N
                         self.__instant_load = load * KG_TO_NEWTONS
                     case "g":
-                        self.__instant_position = int(value)
+                        self.__instant_position = (
+                            int(value) / (MOTOR_STEPS * MOTOR_MICRO_STEPS)
+                        ) * self.mm_per_revolution
                     case "j":
                         self.__z_axis_length = int(value)
                     case "b":
@@ -406,7 +409,9 @@ class Granulado:
         """
         Send serial message to Granulado to set the max travel in millimeters
         """
-        return self.__send_serial_message(f"v{max_travel}")
+        return self.__send_serial_message(
+            f"v{(max_travel / self.mm_per_revolution) * MOTOR_STEPS * MOTOR_MICRO_STEPS}"
+        )
 
     def set_max_delta_load(self, max_delta_load: float):
         """

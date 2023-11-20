@@ -60,16 +60,6 @@ class AppHandler:
     def forced_stop(self):
         if app_state.state == StateE.RUNNING_EXPERIMENT:
             self.end_experiment()
-        else:
-            if self.__experiment_id == -2:
-                self.__experiment_id = -1
-
-                def save_and_end(toast_id):
-                    db_handler.batch_post_reading(self.__experiment)
-                    ui_api.update_alert("Salvo com sucesso!", True, toast_id)
-                    self.reset_granulado_configs()
-
-                ui_api.loading_alert("AGUARDE! Salvando no banco...", save_and_end)
 
     def wait_for_connection(self):
         """
@@ -90,10 +80,7 @@ class AppHandler:
                 self.gran.loop()
 
                 experiment_api.set_readings(self.__current_readings)
-                if self.__experiment_id == -2:
-                    self.gran.stop_z_axis()
                 eel.sleep(0.1)  # 10 FPS refresh rate
-
             case StateE.RUNNING_EXPERIMENT:
                 if (
                     self.__current_time - 500 > self.__time_since_last_refresh
@@ -138,9 +125,6 @@ class AppHandler:
                 eel.sleep(
                     0
                 )  # allows Eel to gracefully shutdown the process when the WebUi is disconnected
-
-    # def __check_experiment_limits(self):
-    #     if self.__current_readings.current_load >=
 
     def __update_current_readings(self):
         """
@@ -198,7 +182,10 @@ class AppHandler:
         globalZAxisLength,
         globalMaxTime,
         globalKnownWeight,
+        globalMmPerRevolution,
     ):
+        self.__max_time = globalMaxTime
+        self.gran.mm_per_revolution = globalMmPerRevolution
         self.gran.set_max_load(globalMaxLoad)
         self.__max_load = globalMaxLoad
         eel.sleep(0.1)
@@ -212,7 +199,6 @@ class AppHandler:
         eel.sleep(0.1)
         self.gran.set_known_weight(globalKnownWeight)
         eel.sleep(0.1)
-        self.__max_time = globalMaxTime
 
     def set_granulado_experiment_configs(
         self,
@@ -301,9 +287,19 @@ class AppHandler:
         self.finalize_experiment()
 
     def finalize_experiment(self):
-        app_state.change_state(StateE.INSPECTING)
-        core_api.go_to_home_page()
-        self.__experiment_id = -2
+        def save_and_end(toast_id):
+            app_state.change_state(StateE.INSPECTING)
+
+            # Write data as batch
+            db_handler.batch_post_reading(self.__experiment)
+
+            core_api.go_to_home_page()
+            # send to home page
+            self.__experiment_id = -1
+            ui_api.update_alert("Salvo com sucesso!", True, toast_id)
+
+        ui_api.loading_alert("AGUARDE! Salvando no banco...", save_and_end)
+        self.reset_granulado_configs()
 
 
 bolinho_app = AppHandler()
