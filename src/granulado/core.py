@@ -368,12 +368,6 @@ class Granulado:
         """
         return self.__send_serial_message("@")
 
-    def calibrate_z_axis(self):
-        """
-        Send serial message to Granulado to calibrate the z axis
-        """
-        return self.__send_serial_message(f"z")
-
     def calibrate_known_weight(self):
         """
         Send serial message to Granulado to calibrate the load cell with the known weight

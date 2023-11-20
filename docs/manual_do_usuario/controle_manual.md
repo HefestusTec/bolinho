@@ -31,6 +31,9 @@ Após garantir que o Granulado está conectado e que as **precauções de segura
 
 Nesse momento o motor **Não deve estar fazendo um ruído continuo**.
 
+!!! info
+    A velocidade padrão do motor durante controle manual é de `15 RPM`.
+
 ## Página `Controlar`
 
 Através do **menu lateral** acesse a página `Controlar`. Você deve ser recebido com uma tela similar a:

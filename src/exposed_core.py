@@ -348,15 +348,6 @@ def set_known_weight(weight):
     return bolinho_app.gran.set_known_weight(weight)
 
 
-@eel.expose
-def calibrate_z_axis():
-    """
-    Calibrates z axis of the machine
-
-    Returns 1 if succeeded (if the function was acknowledged).
-    """
-    return bolinho_app.gran.calibrate_z_axis()
-
 
 @eel.expose
 def get_granulado_is_connected():

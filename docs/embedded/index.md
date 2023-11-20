@@ -68,8 +68,6 @@ A instruction is divided in three parts:
 
 * `j` -> Get z-axis length 
 
-* `z` -> Calibrate z-axis 
-
 * `d` -> Get delta load 
 
 * `l[str]` -> Set max load 

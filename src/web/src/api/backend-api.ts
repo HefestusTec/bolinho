@@ -217,16 +217,6 @@ export const calibrateKnownWeightJS = async (): Promise<number> => {
     }
 };
 
-export const calibrateZAxisJS = async (): Promise<number> => {
-    try {
-        return await eel.calibrate_z_axis()();
-    } catch (error) {
-        console.error(error);
-        toast.error("Não foi possível calibrar o eixo-z.");
-        return 0;
-    }
-};
-
 export const getGranuladoIsConnectedJS = async (): Promise<boolean> => {
     try {
         return await eel.get_granulado_is_connected()();
