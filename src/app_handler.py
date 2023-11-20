@@ -74,15 +74,11 @@ class AppHandler:
 
     def process(self):
         self.__update_current_readings()
-        try:
-            self.gran.loop()
-        except SerialException:
-            ui_api.error_alert(f"Erro de conexão com o Granulado")
-            self.gran = Granulado()
-            app_state.change_state(StateE.INSPECTING)
 
         match app_state.state:
             case StateE.INSPECTING:
+                self.gran.loop()
+
                 experiment_api.set_readings(self.__current_readings)
                 eel.sleep(0.1)  # 10 FPS refresh rate
             case StateE.RUNNING_EXPERIMENT:
@@ -95,9 +91,9 @@ class AppHandler:
                     experiment_api.set_time(self.__current_time / 1000)
                 if (
                     self.__current_time - 12.5 > self.__time_since_last_data_refresh
-                ):  # ~80Hz refresh rate
+                ):  # 100 ~10Hz refresh rate # 12.5 ~80hz
                     self.__time_since_last_data_refresh = self.__current_time
-
+                    self.gran.loop()
                     # check stop conditions
                     stop_conditions = [
                         self.__current_time / 1000 > self.__max_time,
@@ -192,17 +188,17 @@ class AppHandler:
     ):
         self.gran.set_max_load(globalMaxLoad)
         self.__max_load = globalMaxLoad
-        eel.sleep(0.01)
+        eel.sleep(0.1)
         self.gran.set_max_travel(globalMaxTravel)
         self.__max_pos = globalMaxTravel
-        eel.sleep(0.01)
+        eel.sleep(0.1)
         self.gran.set_max_delta_load(globalMaximumDeltaLoad)
         self.__max_delta_load = globalMaximumDeltaLoad
-        eel.sleep(0.01)
+        eel.sleep(0.1)
         self.gran.set_z_axis_length(globalZAxisLength)
-        eel.sleep(0.01)
+        eel.sleep(0.1)
         self.gran.set_known_weight(globalKnownWeight)
-        eel.sleep(0.01)
+        eel.sleep(0.1)
         self.__max_time = globalMaxTime
 
     def set_granulado_experiment_configs(
@@ -211,19 +207,13 @@ class AppHandler:
         globalMaxTravel,
         globalMaximumDeltaLoad,
         globalMaxTime,
-        experimentMotorRPM,
     ):
         self.gran.set_max_load(globalMaxLoad)
         self.__max_load = globalMaxLoad
-        eel.sleep(0.01)
         self.gran.set_max_travel(globalMaxTravel)
         self.__max_pos = globalMaxTravel
-        eel.sleep(0.01)
         self.gran.set_max_delta_load(globalMaximumDeltaLoad)
         self.__max_delta_load = globalMaximumDeltaLoad
-        eel.sleep(0.01)
-        self.gran.set_motor_rpm(experimentMotorRPM)
-        eel.sleep(0.01)
         self.__max_time = globalMaxTime
 
     def start_experiment(self, experiment_id: int, compress: bool, z_axis_length: int):
@@ -252,16 +242,19 @@ class AppHandler:
             self.__db_experiment.max_travel,
             self.__db_experiment.load_loss_limit,
             self.__db_experiment.max_time,
-            self.__db_experiment.z_axis_speed,
         )
         print(f"Z axis speed db: {self.__db_experiment.z_axis_speed}")
 
         if compress:
             print("Compress: moving to bottom")
-            self.gran.z_axis_bottom(self.__db_experiment.z_axis_speed)
+            self.gran.move_z_axis_millimeters(
+                10000, int(self.__db_experiment.z_axis_speed)
+            )
         else:
             print("Expand: moving to top")
-            self.gran.z_axis_top(self.__db_experiment.z_axis_speed)
+            self.gran.move_z_axis_millimeters(
+                -10000, int(self.__db_experiment.z_axis_speed)
+            )
 
     def reset_granulado_configs(self):
         import exposed_core
@@ -279,7 +272,6 @@ class AppHandler:
             int(config.get("absoluteMaximumTravel", 1000)),
             int(config.get("absoluteMaximumDeltaLoad", 1000)),
             int(config.get("absoluteMaximumTime", 1000)),
-            granulado.core.DEFAULT_RPM,
         )
 
     def end_experiment(self):

@@ -43,7 +43,7 @@ export const ValidDistancesTypeArray: ValidDistancesType[] = [
 
 export const MovementDistanceContext = createContext<
     [ValidDistancesType, Dispatch<SetStateAction<ValidDistancesType>>]
->(["5 mm", () => {}]);
+>(["100 mm", () => {}]);
 
 interface MovementDistanceProviderProps {
     children: any;
@@ -53,7 +53,7 @@ export const MovementDistanceProvider: FunctionComponent<
     MovementDistanceProviderProps
 > = ({ children }) => {
     const [distanceAmount, setDistanceAmount] =
-        useState<ValidDistancesType>("5 mm");
+        useState<ValidDistancesType>("100 mm");
 
     return (
         <MovementDistanceContext.Provider

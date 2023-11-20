@@ -331,6 +331,8 @@ class Granulado:
         self.set_motor_rpm(rpm)
         eel.sleep(0.01)
 
+        print(f"move {millimeters}mm PYTHON")
+
         config = exposed_core.load_config_params()
         millimeters_per_revolution = float(config.get("mmPerRevolution", 0))
         if millimeters_per_revolution <= 0:
