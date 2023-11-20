@@ -297,7 +297,7 @@ class AppHandler:
             # send to home page
             self.__experiment_id = -1
             ui_api.update_alert("Salvo com sucesso!", True, toast_id)
-
+        self.gran.loop()
         ui_api.loading_alert("AGUARDE! Salvando no banco...", save_and_end)
         self.reset_granulado_configs()
 
