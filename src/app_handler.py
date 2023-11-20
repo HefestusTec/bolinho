@@ -40,7 +40,7 @@ class AppHandler:
     def __init__(self):
         self.__experiment_id: int = (
             -1
-        )  # Id of the active experiment -1 means no selected experiment
+        )  # Id of the active experiment -1 means no selected experiment, -2 means unsaved experiment
         self.__started_experiment_time = 0.0
         self.__experiment: list[dict] = []
         self.__time_since_last_refresh = 0.0
@@ -80,7 +80,16 @@ class AppHandler:
                 self.gran.loop()
 
                 experiment_api.set_readings(self.__current_readings)
+                if self.__experiment_id == -2:
+                    def save_and_end(toast_id):
+                        db_handler.batch_post_reading(self.__experiment)
+                        ui_api.update_alert("Salvo com sucesso!", True, toast_id)
+                        self.__experiment_id = -1
+
+                    ui_api.loading_alert("AGUARDE! Salvando no banco...", save_and_end)
+
                 eel.sleep(0.1)  # 10 FPS refresh rate
+
             case StateE.RUNNING_EXPERIMENT:
                 if (
                     self.__current_time - 500 > self.__time_since_last_refresh
@@ -150,9 +159,10 @@ class AppHandler:
         self.__current_readings.z_axis_pos = current_pos
         self.__current_readings.current_delta_load = round(self.__delta_load, 2)
         self.__current_readings.status = "Conectado"
+            
 
         # check if is running experiment
-        if self.__experiment_id == -1:
+        if self.__experiment_id == -1 or self.__experiment_id == -2:
             return
 
         realTimeR.load_over_time_realtime_readings.put_nowait(
@@ -288,18 +298,9 @@ class AppHandler:
         self.finalize_experiment()
 
     def finalize_experiment(self):
-        def save_and_end(toast_id):
-            app_state.change_state(StateE.INSPECTING)
-
-            # Write data as batch
-            db_handler.batch_post_reading(self.__experiment)
-
-            core_api.go_to_home_page()
-            # send to home page
-            self.__experiment_id = -1
-            ui_api.update_alert("Salvo com sucesso!", True, toast_id)
-
-        ui_api.loading_alert("AGUARDE! Salvando no banco...", save_and_end)
+        app_state.change_state(StateE.INSPECTING)
+        core_api.go_to_home_page()
+        self.__experiment_id = -2
         self.reset_granulado_configs()
 
 
