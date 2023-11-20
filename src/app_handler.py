@@ -67,9 +67,9 @@ class AppHandler:
                 def save_and_end(toast_id):
                     db_handler.batch_post_reading(self.__experiment)
                     ui_api.update_alert("Salvo com sucesso!", True, toast_id)
+                    self.reset_granulado_configs()
 
                 ui_api.loading_alert("AGUARDE! Salvando no banco...", save_and_end)
-
 
     def wait_for_connection(self):
         """
@@ -163,7 +163,6 @@ class AppHandler:
         self.__current_readings.z_axis_pos = current_pos
         self.__current_readings.current_delta_load = round(self.__delta_load, 2)
         self.__current_readings.status = "Conectado"
-            
 
         # check if is running experiment
         if self.__experiment_id == -1 or self.__experiment_id == -2:
@@ -305,7 +304,6 @@ class AppHandler:
         app_state.change_state(StateE.INSPECTING)
         core_api.go_to_home_page()
         self.__experiment_id = -2
-        self.reset_granulado_configs()
 
 
 bolinho_app = AppHandler()
