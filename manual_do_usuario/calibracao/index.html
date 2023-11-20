@@ -987,7 +987,7 @@
 <p>Nesse momento o Bolinho está conectado ao Granulado.</p>
 <h2 id="pagina-calibrar">Página <code>Calibrar</code><a class="headerlink" href="#pagina-calibrar" title="Permanent link">&para;</a></h2>
 <p>Através do <strong>menu lateral</strong> acesse a página <code>Calibrar</code>. Você deve ser recebido com uma tela similar a:</p>
-<p><img alt="Alt text" src="../image-18.png" width="500" /></p>
+<p><img alt="Alt text" src="../image-19.png" width="500" /></p>
 <p>Conhecendo os componentes:</p>
 <h3 id="componente-comandos">Componente <code>Comandos</code><a class="headerlink" href="#componente-comandos" title="Permanent link">&para;</a></h3>
 <p>Esse componente envia alguns comandos para o Granulado executar.</p>
@@ -998,9 +998,6 @@
 <li>
 <p><code>Calibrar peso padrão</code>: Calibra a célula de carga para um peso conhecido.</p>
 </li>
-<li>
-<p><code>Calibrar eixo-z</code>: Calibra o eixo-z, o motor travessa todo o eixo-z e conta a quantidade de passos.</p>
-</li>
 </ul>
 <h3 id="componente-leituras">Componente <code>Leituras</code><a class="headerlink" href="#componente-leituras" title="Permanent link">&para;</a></h3>
 <p>Esse componente apresenta as <strong>leituras atuais</strong> em tempo real que recebeu do Granulado.</p>
@@ -1009,7 +1006,7 @@
 <p><code>Status</code>: Status do Granulado <code>Desconectado</code> ou <code>Conectado</code>.</p>
 </li>
 <li>
-<p><code>Eixo-z</code>: Posição atual do eixo-z.</p>
+<p><code>Eixo-z Relativo</code>: Posição atual do eixo-z relativa ao ultimo movimento.</p>
 </li>
 <li>
 <p><code>Carga atual</code>: Carga atual na célula de carga.</p>
@@ -1053,9 +1050,14 @@ Garanta que você seguiu os passos de <a href="../instalacao/#precaucoes-com-o-m
 </li>
 <li>Conecte o Granulado ao Bolinho.</li>
 <li>Ligue o motor de passo.</li>
-<li>Vá a página de calibração</li>
-<li>Verifique a configuração do <strong>Tamanho do eixo Z</strong> e <strong>mm por revolução</strong></li>
-<li>Pressione <strong>Calibrar Eixo-z</strong></li>
+<li>Vá para a pagina <code>Calibrar</code></li>
+<li>Insira o <strong>Tamanho do eixo Z</strong></li>
+<li>Vá para a pagina <code>Controlar</code></li>
+<li>Execute <code>1 revolução</code></li>
+<li>Meça quantos <code>mm</code> a máquina avançou em 1 revolução.</li>
+<li>Vá para a pagina <code>Calibrar</code></li>
+<li>Insira o <strong>mm por revolução</strong></li>
+<li>Salve</li>
 <li>
 <div class="admonition success">
 <p class="admonition-title">Sucesso!</p>
