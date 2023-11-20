@@ -61,4 +61,3 @@
 * Exposed funcs
   * `tare_load()` -> saves the no load reading in the global variables
   * `calibrate_known_weight(weight)` -> saves the calibration parameter [gramas/volt] to the global variables
-  * `calibrate_z_axis()` -> chama a rotina de calibração do eixo-z

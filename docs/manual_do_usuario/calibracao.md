@@ -43,7 +43,7 @@ Nesse momento o Bolinho está conectado ao Granulado.
 
 Através do **menu lateral** acesse a página `Calibrar`. Você deve ser recebido com uma tela similar a:
 
-![Alt text](image-18.png){ width="500" }
+![Alt text](image-19.png){ width="500" }
 
 Conhecendo os componentes:
 
@@ -55,15 +55,13 @@ Esse componente envia alguns comandos para o Granulado executar.
     
 * `Calibrar peso padrão`: Calibra a célula de carga para um peso conhecido.
 
-* `Calibrar eixo-z`: Calibra o eixo-z, o motor travessa todo o eixo-z e conta a quantidade de passos.
-
 ### Componente `Leituras`
 
 Esse componente apresenta as **leituras atuais** em tempo real que recebeu do Granulado.
 
 * `Status`: Status do Granulado `Desconectado` ou `Conectado`.
     
-* `Eixo-z`: Posição atual do eixo-z.
+* `Eixo-z Relativo`: Posição atual do eixo-z relativa ao ultimo movimento.
 
 * `Carga atual`: Carga atual na célula de carga.
 
@@ -105,8 +103,13 @@ A seguir é apresentado um simples fluxo de trabalho de como calibrar os diferen
     Garanta que você seguiu os passos de [Precauções com o motor de passo](./instalacao.md#precaucoes-com-o-motor-de-passo).
 1. Conecte o Granulado ao Bolinho.
 1. Ligue o motor de passo.
-1. Vá a página de calibração
-1. Verifique a configuração do **Tamanho do eixo Z** e **mm por revolução**
-1. Pressione **Calibrar Eixo-z**
+1. Vá para a pagina `Calibrar`
+1. Insira o **Tamanho do eixo Z**
+1. Vá para a pagina `Controlar`
+1. Execute `1 revolução`
+1. Meça quantos `mm` a máquina avançou em 1 revolução.
+1. Vá para a pagina `Calibrar`
+1. Insira o **mm por revolução**
+1. Salve
 1. !!! success "Sucesso!"
     Seu eixo-z deve estar calibrado!

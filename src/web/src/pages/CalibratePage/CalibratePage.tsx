@@ -22,7 +22,6 @@ import { FunctionComponent } from "react";
 import BigButton from "components/customSubComponents/BigButton/BigButton";
 import {
     calibrateKnownWeightJS,
-    calibrateZAxisJS,
     stopZAxisJS,
     tareLoadJs,
 } from "api/backend-api";
@@ -84,18 +83,6 @@ const CalibratePage: FunctionComponent<CalibratePageProps> = () => {
                             width="90%"
                         >
                             Calibrar peso padrão
-                        </CustomButton>
-                    </CustomButtonArray>
-                    <CustomButtonArray>
-                        <CustomButton
-                            bgColor="var(--content_background_color)"
-                            fontColor="var(--font_color)"
-                            clickCallBack={() => {
-                                calibrateZAxisJS();
-                            }}
-                            width="90%"
-                        >
-                            Calibrar Eixo-z
                         </CustomButton>
                     </CustomButtonArray>
                 </ContainerComponent>
