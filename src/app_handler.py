@@ -60,6 +60,16 @@ class AppHandler:
     def forced_stop(self):
         if app_state.state == StateE.RUNNING_EXPERIMENT:
             self.end_experiment()
+        else:
+            if self.__experiment_id == -2:
+                self.__experiment_id = -1
+
+                def save_and_end(toast_id):
+                    db_handler.batch_post_reading(self.__experiment)
+                    ui_api.update_alert("Salvo com sucesso!", True, toast_id)
+
+                ui_api.loading_alert("AGUARDE! Salvando no banco...", save_and_end)
+
 
     def wait_for_connection(self):
         """
@@ -81,13 +91,7 @@ class AppHandler:
 
                 experiment_api.set_readings(self.__current_readings)
                 if self.__experiment_id == -2:
-                    def save_and_end(toast_id):
-                        db_handler.batch_post_reading(self.__experiment)
-                        ui_api.update_alert("Salvo com sucesso!", True, toast_id)
-                        self.__experiment_id = -1
-
-                    ui_api.loading_alert("AGUARDE! Salvando no banco...", save_and_end)
-
+                    self.gran.stop_z_axis()
                 eel.sleep(0.1)  # 10 FPS refresh rate
 
             case StateE.RUNNING_EXPERIMENT:
