@@ -20,7 +20,7 @@ import styleModule from "./ExperimentSideBar.module.css";
 import ProgressWidget from "./ProgressWidget/ProgressWidget";
 import { ExperimentPageContext } from "api/contexts/ExperimentPageContext";
 import { ExperimentType } from "types/DataBaseTypes";
-import { calculatePercentage } from "helpers";
+import { calculatePercentage, oneDecimal } from "helpers";
 import { ReadingsType } from "types/ReadingsType";
 
 interface ExperimentSideBarProps {
@@ -39,31 +39,35 @@ const ExperimentSideBar: FunctionComponent<ExperimentSideBarProps> = ({
             <span className={styleModule.widgets_span}>
                 <div className={styleModule.bolinho_logo} />
                 <ProgressWidget
-                    value={calculatePercentage(
+                    percentage={calculatePercentage(
                         readings.current_load,
                         experiment.max_load
                     )}
+                    value={`${oneDecimal(readings.current_load)} N`}
                     title="Carga"
                 />
                 <ProgressWidget
-                    value={calculatePercentage(
+                    percentage={calculatePercentage(
                         experimentPageContext.time,
                         experiment.max_time
                     )}
+                    value={`${oneDecimal(experimentPageContext.time)} s`}
                     title="Tempo"
                 />
                 <ProgressWidget
-                    value={calculatePercentage(
+                    percentage={calculatePercentage(
                         readings.z_axis_pos,
                         experiment.max_travel
                     )}
+                    value={`${oneDecimal(readings.z_axis_pos)} mm`}
                     title="Distância"
                 />
                 <ProgressWidget
-                    value={calculatePercentage(
+                    percentage={calculatePercentage(
                         readings.current_delta_load,
                         experiment.load_loss_limit
                     )}
+                    value={`${oneDecimal(readings.current_delta_load)} N/s`}
                     title="Δ Carga"
                 />
                 <footer className={styleModule.side_bar_footer} />

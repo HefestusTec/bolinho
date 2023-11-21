@@ -56,6 +56,7 @@ Configura os **limites globais** da aplicação. Durante a criação de um exper
 
 !!! danger "Área perigosa"
     É importante que os **limites globais** sejam configurados propriamente para que não possam ser criados experimentos excedam os limites operacionais de seu maquinário.
+    Preste muita atenção ao configurar a `Velocidade máxima`, valores muito altos podem **DANIFICAR O EQUIPAMENTO** e colocar a segurança do operador em risco.
 
 ## Outros
 * `Texto`: Modifica o tamanho do texto da interface.

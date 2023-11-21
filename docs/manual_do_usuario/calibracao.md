@@ -61,8 +61,6 @@ Esse componente apresenta as **leituras atuais** em tempo real que recebeu do Gr
 
 * `Status`: Status do Granulado `Desconectado` ou `Conectado`.
     
-* `Eixo-z Relativo`: Posição atual do eixo-z relativa ao ultimo movimento.
-
 * `Carga atual`: Carga atual na célula de carga.
 
 * `Δ Carga atual`: Variação da carga em tempo real.

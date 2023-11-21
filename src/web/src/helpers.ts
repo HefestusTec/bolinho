@@ -73,6 +73,10 @@ export const getFormattedBodyParams = (bodyParams: BodyType) => {
 export const getRandomColor = () =>
     "#" + Math.floor(Math.random() * 16777215).toString(16);
 
+export function oneDecimal(num: number): number {
+    return Math.round(num * 10) / 10;
+}
+
 export function calculatePercentage(part: number, whole: number): number {
     if (whole === 0) {
         return 100;

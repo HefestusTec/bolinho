@@ -19,11 +19,13 @@ import { FunctionComponent } from "react";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 
 interface ProgressWidgetProps {
-    value: number;
+    percentage: number;
+    value: string;
     title: string;
 }
 
 const ProgressWidget: FunctionComponent<ProgressWidgetProps> = ({
+    percentage,
     value,
     title,
 }) => {
@@ -48,8 +50,8 @@ const ProgressWidget: FunctionComponent<ProgressWidgetProps> = ({
                 {title}
                 <b>
                     <CircularProgressbar
-                        value={value}
-                        text={`${value}%`}
+                        value={percentage}
+                        text={value}
                         styles={buildStyles({
                             textColor: "var(--positive_button_color)",
                             pathColor: "var(--positive_button_color)",
