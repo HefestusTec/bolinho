@@ -563,6 +563,74 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#iniciando-experimento" class="md-nav__link">
+    Iniciando experimento
+  </a>
+  
+    <nav class="md-nav" aria-label="Iniciando experimento">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#checagem-de-limites" class="md-nav__link">
+    Checagem de limites
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#durante-o-experimento" class="md-nav__link">
+    Durante o experimento
+  </a>
+  
+    <nav class="md-nav" aria-label="Durante o experimento">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#barra-lateral" class="md-nav__link">
+    Barra lateral
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dados-do-experimento" class="md-nav__link">
+    Dados do experimento
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#visor" class="md-nav__link">
+    Visor
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#plot-em-tempo-real" class="md-nav__link">
+    Plot em tempo real
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#apos-o-experimento" class="md-nav__link">
+    Após o experimento
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -798,6 +866,74 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#iniciando-experimento" class="md-nav__link">
+    Iniciando experimento
+  </a>
+  
+    <nav class="md-nav" aria-label="Iniciando experimento">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#checagem-de-limites" class="md-nav__link">
+    Checagem de limites
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#durante-o-experimento" class="md-nav__link">
+    Durante o experimento
+  </a>
+  
+    <nav class="md-nav" aria-label="Durante o experimento">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#barra-lateral" class="md-nav__link">
+    Barra lateral
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dados-do-experimento" class="md-nav__link">
+    Dados do experimento
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#visor" class="md-nav__link">
+    Visor
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#plot-em-tempo-real" class="md-nav__link">
+    Plot em tempo real
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#apos-o-experimento" class="md-nav__link">
+    Após o experimento
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -839,14 +975,76 @@
 <h1 id="novo-experimento">Novo experimento<a class="headerlink" href="#novo-experimento" title="Permanent link">&para;</a></h1>
 <p>Como criar um novo experimento.</p>
 <h2 id="criando-um-material-novo">Criando um material novo<a class="headerlink" href="#criando-um-material-novo" title="Permanent link">&para;</a></h2>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>Esse passo é opcional, para caso deseje criar um novo material. Caso queira executar um experimento para um material que <strong>já existe</strong> pode pular essa parte.</p>
+</div>
 <p>Pressione o botão <code>Novo</code> no componente <strong>Seletor de experimentos</strong></p>
 <p><img alt="Alt text" src="../image-4.png" width="500" /></p>
 <p>Ao pressionar o  você será apresentado o seguinte prompt de <strong>Criação de Material</strong></p>
 <p><img alt="Alt text" src="../image-3.png" width="500" /></p>
 <p>Preencha com os dados de seu material e pressione <code>Criar</code>.</p>
+<h2 id="iniciando-experimento">Iniciando experimento<a class="headerlink" href="#iniciando-experimento" title="Permanent link">&para;</a></h2>
+<p>Ao pressionar no <code>Botão de ensaio</code> a página de <strong>Criação de experimento</strong> aparecerá. Você deve preenche-la <strong>atentamente</strong>.</p>
+<div class="admonition tip">
+<p class="admonition-title">Dica</p>
+<p>Um <strong>experimento bem configurado</strong> é aquele que inicia e finaliza <strong>automaticamente</strong> sem intervenção do operador, ou seja, aquele que os <code>Limites de parada</code> estão bem configurados.</p>
+</div>
+<div class="admonition danger">
+<p class="admonition-title">Perigo</p>
+<p>Atente-se ao configurar a <code>Velocidade máxima</code>, valores muito altos podem <strong>DANIFICAR O EQUIPAMENTO</strong> e colocar a segurança do operador em risco.</p>
+</div>
+<h3 id="checagem-de-limites">Checagem de limites<a class="headerlink" href="#checagem-de-limites" title="Permanent link">&para;</a></h3>
+<p>Ao finalizar a configuração de seu experimento algumas checagens serão feitas automaticamente para minimizar erros de operação:</p>
+<ul>
+<li>
+<p><strong>Check de carga</strong>: O experimento não será iniciado se a carga atual for <strong>maior que</strong> <code>10N</code>, isso busca garantir que a célula de carga foi <strong>tarada</strong> antes de iniciar o experimento.</p>
+</li>
+<li>
+<p><strong>Check de limites globais</strong>: O experimento não será iniciado se qualquer um dos <strong>parâmetros do experimento</strong> como <code>Limite de carga</code>, <code>Limite de distância</code> etc. for <strong>maior que</strong> o seu respectivo <a href="../configuracao/#limites-globais"><strong>Limite global</strong></a>.</p>
+</li>
+</ul>
+<h2 id="durante-o-experimento">Durante o experimento<a class="headerlink" href="#durante-o-experimento" title="Permanent link">&para;</a></h2>
+<p>Ao iniciar um experimento você será redirecionado à <code>Pagina de experimento</code>. Os dados dessa página são atualizados à uma taxa de aproximadamente <code>2hz</code> para poder <strong>alocar mais recursos ao experimento</strong>.</p>
 <div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Durante um experimento o plote de dados deve ser lido apenas como uma <strong>sugestão</strong> do resultado, já que enquanto um experimento está sendo executado a <strong>quantidade de pontos apresentados no gráfico é reduzido</strong> para poder alocar mais recursos ao experimento em si.</p>
+<p class="admonition-title">Nota</p>
+<p>A taxa de amostragem do experimento é bem maior que a de atualização da interface.</p>
+</div>
+<p><img alt="Alt text" src="../image-20.png" width="500" /></p>
+<p>A <code>Pagina de experimento</code> é composta por alguns componentes:</p>
+<h3 id="barra-lateral">Barra lateral<a class="headerlink" href="#barra-lateral" title="Permanent link">&para;</a></h3>
+<p>A barra lateral apresenta para o usuário duas informações:</p>
+<ul>
+<li>
+<p><strong>Circulo externo</strong>: Apresenta a porcentagem daquele valor em relação a <strong>seu limite</strong>, ou seja ao completar significa que esse limite foi atingido e o experimento se encerará. </p>
+</li>
+<li>
+<p><strong>Valor interno</strong>: Apresenta o valor atual daquele dado. </p>
+</li>
+</ul>
+<p><img alt="Alt text" src="../image-21.png" width="500" /></p>
+<h3 id="dados-do-experimento">Dados do experimento<a class="headerlink" href="#dados-do-experimento" title="Permanent link">&para;</a></h3>
+<p>No canto inferior são encontrados os diversos dados do experimento atual.</p>
+<p><img alt="Alt text" src="../image-22.png" width="500" /></p>
+<h3 id="visor">Visor<a class="headerlink" href="#visor" title="Permanent link">&para;</a></h3>
+<p>O visor apresenta a leitura atual da célula e o <code>Botão de encerrar</code>.</p>
+<div class="admonition tip">
+<p class="admonition-title">Dica</p>
+<p>Como apresentado em <a href="./#iniciando-experimento">Iniciando experimento</a>, um experimento bem configurado <strong>nunca precisará que o operador encerre manualmente</strong>. </p>
+</div>
+<p><img alt="Alt text" src="../image-23.png" width="500" /></p>
+<h3 id="plot-em-tempo-real">Plot em tempo real<a class="headerlink" href="#plot-em-tempo-real" title="Permanent link">&para;</a></h3>
+<p>Por fim temos o Plot em tempo real, ele conta com as mesmas funcionalidades que o <a href="../inspecionando/#plot-de-experimentos">Plot de experimentos - Inspecionando</a>.</p>
+<p><img alt="Alt text" src="../image-24.png" width="500" /></p>
+<div class="admonition note">
+<p class="admonition-title">Nota</p>
+<p>Durante um experimento o plot de dados deve ser lido apenas como uma <strong>sugestão</strong>, já que enquanto um experimento está sendo executado a <strong>quantidade de pontos apresentados no gráfico é reduzido</strong> para poder alocar mais recursos ao experimento em si.</p>
+</div>
+<h2 id="apos-o-experimento">Após o experimento<a class="headerlink" href="#apos-o-experimento" title="Permanent link">&para;</a></h2>
+<p>Ao finalizar um experimento seus dados serão <strong>salvos ao banco de dados</strong> automaticamente.</p>
+<div class="admonition warning">
+<p class="admonition-title">Atenção</p>
+<p><strong>NÃO</strong> encerre o Bolinho durante a escrita ao banco de dados, isso pode <strong>corromper</strong> seus dados.</p>
 </div>
 
 
