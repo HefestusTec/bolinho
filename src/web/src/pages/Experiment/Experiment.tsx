@@ -24,7 +24,7 @@ import MainMonitor from "./MainMonitor/MainMonitor";
 import { ExperimentPageContext } from "api/contexts/ExperimentPageContext";
 import { ReadingsContext } from "api/contexts/ReadingsContext";
 import ReadingsContainer from "components/ReadingsContainer/ReadingsContainer";
-import GenerateDebugPoints from "components/GenerateDebugPoints/GenerateDebugPoints";
+// import GenerateDebugPoints from "components/GenerateDebugPoints/GenerateDebugPoints";
 import MaterialTable from "components/InfoTables/MaterialTable";
 import tableStyleModule from "components/InfoTables/MaterialTable.module.css";
 import BodyTable from "components/InfoTables/BodyTable";
@@ -47,7 +47,7 @@ const Experiment: FunctionComponent<ExperimentProps> = () => {
 
     return (
         <div className={styleModule.experiment_div}>
-            <GenerateDebugPoints />
+            {/* <GenerateDebugPoints /> */}
             <ExperimentSideBar
                 experiment={experimentPageContext.experiment}
                 readings={readingsContext}

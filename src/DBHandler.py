@@ -243,64 +243,52 @@ class DBHandler:
     def __populate(self):
         self.post_material(
             {
-                "name": "Steel",
-                "batch": "S1",
-                "supplier_name": "Supplier 1",
-                "supplier_contact_info": "Contact info 1",
-                "extra_info": "Extra info 1",
+                "name": "Padrão",
+                "batch": "Lote Padrão",
+                "supplier_name": "Fornecedor Padrão",
+                "supplier_contact_info": "(xx) 9xxxx-xxxx (Padrão)",
+                "extra_info": "Extra info padrão",
             }
         )
-        self.post_material(
+
+        self.post_body(
             {
-                "name": "Iron",
-                "batch": "I1",
-                "supplier_name": "Supplier 2",
-                "supplier_contact_info": "Contact info 2",
-                "extra_info": "Extra info 2",
+                "type": 1,
+                "material_id": 1,
+                "param_a": 1,
+                "param_b": 1,
+                "height": 1,
+                "extra_info": "Extra info",
             }
         )
 
-        for i in range(10):
-            self.post_body(
+        self.post_experiment(
+            {
+                "name": "Experimento Exemplo",
+                "body_id": 1,
+                "date_time": datetime.datetime.now(),
+                "load_loss_limit": 100,
+                "max_load": 100,
+                "max_travel": 100,
+                "max_time": 100,
+                "compress": 0,
+                "z_axis_speed": 100,
+                "extra_info": "Extra info",
+                "plot_color": "#A51B28",
+                "max_x": 50,
+                "max_z_pos": 50,
+            }
+        )
+
+        for i in range(50):
+            self.post_reading(
                 {
-                    "type": i % 3 + 1,
-                    "material_id": i % 2 + 1,
-                    "param_a": 0.1 + i / 10,
-                    "param_b": 0.1 + 2 * i / 10,
-                    "height": 0.1 + 3 * i / 10,
-                    "extra_info": "Extra info " + str(i),
+                    "x": i,
+                    "experiment_id": 1,
+                    "load": random.randint(0, 100),
+                    "z_pos": (i * 2) - 50,
                 }
             )
-
-        for i in range(10):
-            self.post_experiment(
-                {
-                    "name": "Exp " + str(i),
-                    "body_id": i % 10 + 1,
-                    "date_time": datetime.datetime.now(),
-                    "load_loss_limit": 0.1 + i / 10,
-                    "max_load": 0.1 + 2 * i / 10,
-                    "max_travel": 0.1 + 3 * i / 10,
-                    "max_time": 0.1 + 4 * i / 10,
-                    "compress": i % 2 == 0,
-                    "z_axis_speed": 0.1 + 4 * i / 10,
-                    "extra_info": "Extra info " + str(i),
-                    "plot_color": "#" + str(random.randint(0, 999999)),
-                    "max_x": 49,
-                    "max_z_pos": 48,
-                }
-            )
-
-        for i in range(10):
-            for j in range(50):
-                self.post_reading(
-                    {
-                        "x": j,
-                        "experiment_id": i % 10 + 1,
-                        "load": random.randint(0, 200),
-                        "z_pos": (j * 2) - 50,
-                    }
-                )
 
         # test all queries
         print("Testing get_materials")
