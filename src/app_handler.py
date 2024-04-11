@@ -98,7 +98,7 @@ class AppHandler:
                     stop_conditions = [
                         self.__current_time / 1000 > self.__max_time,
                         self.__current_readings.current_load > self.__max_load,
-                        self.__current_readings.z_axis_pos > self.__max_pos,
+                        abs(self.__current_readings.z_axis_pos) > self.__max_pos,
                         self.__delta_load > self.__max_delta_load,
                     ]
 
