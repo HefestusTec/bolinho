@@ -10,6 +10,7 @@
         "test": "cd src/web && npm run test"
     },
     "devDependencies": {
+        "@types/react": "^18.2.58",
         "concurrently": "^7.6.0"
     },
     "dependencies": {

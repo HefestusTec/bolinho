@@ -1,10 +1,11 @@
-bottle==0.12.23
+bottle==0.12.25
 bottle-websocket==0.2.9
 future==0.18.3
 whichcraft==0.6.1
 pyinstaller==5.13
-eel==0.15.1
+eel==0.15.3
 pyserial==3.5
 peewee==3.16.2
 black==23.7.0
 numpy==1.26.1
+# auto-py-to-exe==2.43.3
