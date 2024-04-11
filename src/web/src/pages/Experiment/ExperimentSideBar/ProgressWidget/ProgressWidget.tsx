@@ -53,8 +53,8 @@ const ProgressWidget: FunctionComponent<ProgressWidgetProps> = ({
                         value={percentage}
                         text={value}
                         styles={buildStyles({
-                            textColor: "var(--positive_button_color)",
-                            pathColor: "var(--positive_button_color)",
+                            textColor: "var(--font_color)",
+                            pathColor: "var(--font_color)",
                         })}
                     />
                 </b>{" "}

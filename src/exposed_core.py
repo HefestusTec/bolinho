@@ -348,7 +348,6 @@ def set_known_weight(weight):
     return bolinho_app.gran.set_known_weight(weight)
 
 
-
 @eel.expose
 def get_granulado_is_connected():
     """

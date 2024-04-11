@@ -86,5 +86,12 @@ class UiAPI:
 
         eel.setSaveExperimentProgressJS(total, amount)
 
+    def close_frontend(self):
+        """
+        Closes the front end
+        """
+
+        eel.closeFrontEndJS()
+
 
 ui_api = UiAPI()

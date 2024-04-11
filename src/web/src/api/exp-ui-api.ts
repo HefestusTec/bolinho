@@ -52,3 +52,12 @@ export function toastUpdateJS(msg: string, success: boolean, id: number) {
 try {
     window.eel.expose(toastUpdateJS, "toastUpdateJS");
 } catch (error) {}
+
+
+export function closeFrontEndJS(){
+    window.close()
+    return 1
+}
+try {
+    window.eel.expose(closeFrontEndJS, "closeFrontEndJS");
+} catch (error) {}

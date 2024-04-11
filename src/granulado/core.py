@@ -325,7 +325,7 @@ class Granulado:
         """
         Send serial message to Granulado to stop the z axis
         """
-        
+
         return self.__hardware.write(bytes("s\n", "utf-8"))
 
     def move_z_axis_millimeters(self, millimeters: int, rpm: int = DEFAULT_RPM):

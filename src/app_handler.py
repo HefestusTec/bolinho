@@ -277,6 +277,9 @@ class AppHandler:
         """
         Handles writing the new experiment to persistent memory
         """
+        if not app_state.state == StateE.RUNNING_EXPERIMENT:
+            return
+
         # stop motor
         self.gran.stop_z_axis()
 
@@ -297,9 +300,20 @@ class AppHandler:
             # send to home page
             self.__experiment_id = -1
             ui_api.update_alert("Salvo com sucesso!", True, toast_id)
+
+            ui_api.close_frontend()
+
+            import os
+            import sys
+
+            python = sys.executable
+            os.execl(python, python, *sys.argv)
+
         self.gran.loop()
         ui_api.loading_alert("AGUARDE! Salvando no banco...", save_and_end)
         self.reset_granulado_configs()
+
+        # bro how many bananas do you have??
 
 
 bolinho_app = AppHandler()
