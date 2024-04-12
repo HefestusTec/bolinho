@@ -28,7 +28,7 @@ db_path = "persist/bolinho.db"
 
 class BaseModel(Model):
     class Meta:
-        database = SqliteDatabase(db_path)
+        database = SqliteDatabase(db_path, pragmas={"foreign_keys": 1})
 
 
 class Material(BaseModel):
@@ -64,7 +64,7 @@ class Body(BaseModel):
 
     id = AutoField()
     type = IntegerField()
-    material = ForeignKeyField(Material, backref="bodies")
+    material = ForeignKeyField(Material, backref="bodies", on_delete="CASCADE")
     param_a = FloatField()
     param_b = FloatField()
     height = FloatField()
@@ -89,7 +89,7 @@ class Experiment(BaseModel):
 
     id = AutoField()
     name = CharField()
-    body = ForeignKeyField(Body, backref="experiments")
+    body = ForeignKeyField(Body, backref="experiments", on_delete="CASCADE")
     date_time = DateTimeField(default=datetime.datetime.now())
     load_loss_limit = FloatField()
     max_load = FloatField()
@@ -114,7 +114,7 @@ class Reading(BaseModel):
     """
 
     id = AutoField()
-    experiment = ForeignKeyField(Experiment, backref="readings")
+    experiment = ForeignKeyField(Experiment, backref="readings", on_delete="CASCADE")
     x = IntegerField()
     load = FloatField()
     z_pos = FloatField()
