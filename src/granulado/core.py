@@ -197,9 +197,9 @@ class Granulado:
         # self.__instant_position += 1
         #   return random.randrange(0, 100), self.__instant_position
 
-        if self.get_load() and self.get_position():
-            return self.__instant_load, self.__instant_position
-        return -1, -1
+        if self.get_load() and self.get_position() and self.__update_delta_load():
+            return self.__instant_load, self.__instant_position, self.__delta_load
+        return -1, -1, -1
 
     def get_position(self):
         """

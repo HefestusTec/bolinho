@@ -94,12 +94,17 @@ class AppHandler:
                 ):  # 100 ~10Hz refresh rate # 12.5 ~80hz
                     self.__time_since_last_data_refresh = self.__current_time
                     self.gran.loop()
+
+                    is_compress = self.__db_experiment.compress == 1
+
                     # check stop conditions
                     stop_conditions = [
                         self.__current_time / 1000 > self.__max_time,
                         self.__current_readings.current_load > self.__max_load,
                         abs(self.__current_readings.z_axis_pos) > self.__max_pos,
-                        self.__delta_load > self.__max_delta_load,
+                        self.__delta_load < -self.__max_delta_load
+                        if is_compress
+                        else self.__delta_load > self.__max_delta_load,
                     ]
 
                     stop_message = [
@@ -136,9 +141,9 @@ class AppHandler:
 
         self.__current_readings = b_classes.Readings()
 
-        [current_load, current_pos] = self.gran.get_readings()
+        current_load, current_pos, current_delta_load = self.gran.get_readings()
 
-        self.__delta_load = self.gran.get_delta_load()
+        self.__delta_load = current_delta_load
 
         current_pos = current_pos - self.__starting_z_axis_pos
         self.__current_time = int(time.time() * 1000) - self.__started_experiment_time
@@ -225,7 +230,7 @@ class AppHandler:
 
         app_state.change_state(StateE.RUNNING_EXPERIMENT)
 
-        [_, current_pos] = self.gran.get_readings()
+        [_, current_pos, _] = self.gran.get_readings()
 
         self.__experiment_id = experiment_id
         self.__started_experiment_time = int(time.time() * 1000)
