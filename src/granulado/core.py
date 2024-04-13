@@ -296,11 +296,11 @@ class Granulado:
         Check if the current load is lesser than a threshold
         TODO: Set the threshold in the config file
         """
-        if self.__instant_load > 10:
-            ui_api.error_alert(
-                "A máquina está sob carga. Retire a carga e tente novamente."
-            )
-            return False
+        # if self.__instant_load > 10:
+        #     ui_api.error_alert(
+        #         "A máquina está sob carga. Retire a carga e tente novamente."
+        #     )
+        #    return False
         return True
 
     def z_axis_top(self, rpm: int = DEFAULT_RPM):
