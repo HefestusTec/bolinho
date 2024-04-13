@@ -64,7 +64,7 @@ def save_config_params(new_params):
         globalMaximumDeltaLoad = float(new_params["absoluteMaximumDeltaLoad"])
         globalZAxisLength = int(new_params["zAxisLength"])
         globalKnownWeight = int(new_params["knownWeight"])
-        globalMmPerRevolution = int(new_params["mmPerRevolution"])
+        globalMmPerRevolution = float(new_params["mmPerRevolution"])
 
         bolinho_app.set_granulado_configs(
             globalMaxLoad,
