@@ -1,4 +1,4 @@
-name: build-web 
+name: build-bins 
 on:
   workflow_run:
     workflows: ["build-web"]
