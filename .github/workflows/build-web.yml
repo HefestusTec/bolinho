@@ -12,38 +12,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      # - uses: actions/setup-python@v4
-      #   with:
-      #     python-version: 3.11.x
       - name: Installing dep
         run: | 
             npm run installWebDep
       - name: Building Webapp
         run: npm run buildWeb
-      - name: Zip web build
-        run: zip -r Web_Bolinho_${{ github.run_number }}.zip ./src/web/build/*
-      - name: Upload web build as artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: web
-          path: Web_Bolinho_${{ github.run_number }}.zip
-      # - name: Prepare files for release
-      #   run: |
-      #     xcopy ./src ./Bolinho/ /e /q
-      #     mkdir Bolinho\src\web
-      #     xcopy ./src/web/build ./Bolinho/src/web/build /e /q
-      #     copy ./requirements.txt ./Bolinho/src
-      #     zip -r Bolinho_${{ github.run_number }}.zip ./Bolinho/*
-      # - name: Build Exe
-      #   run: |
-      #     python -m eel src/main.py src/web/build --onefile --name Bolinho --icon ./src/web/build/favicon.ico
-      # - uses: "marvinpinto/action-automatic-releases@latest"
-      #   with:
-      #     repo_token: "${{ secrets.GITHUB_TOKEN }}"
-      #     automatic_release_tag: "latest"
-      #     prerelease: false
-      #     title: "Development Build ${{ github.run_number }}"
-      #     files: |
-      #       ./Bolinho_${{ github.run_number }}.zip
-      #       ./Bolinho/dist/Bolinho.exe
-
+      - name: Deploy
+        uses: s0/git-publish-subdir-action@develop
+        env:
+          REPO: self
+          BRANCH: web-build
+          FOLDER: ./src/web/build
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
