@@ -13,7 +13,7 @@ jobs:
   deploy:
     env:
         ENABLE_PDF_EXPORT: 1
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-python@v4
