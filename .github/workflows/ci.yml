@@ -22,9 +22,9 @@ jobs:
       #   run: npm run buildWeb
       - name: Prepare files for release
         run: |
-          xcopy /E /I ./src ./Bolinho/
+          xcopy ./src ./Bolinho/ /e /q
           mkdir Bolinho\src\web
-          xcopy /E /I ./src/web/build ./Bolinho/src/web/build
+          xcopy ./src/web/build ./Bolinho/src/web/build /e /q
           copy ./requirements.txt ./Bolinho/src
           zip -r Bolinho_${{ github.run_number }}.zip ./Bolinho/*
       - name: Build Exe
