@@ -20,17 +20,17 @@ jobs:
             npm run installDep
       - name: Building Webapp
         run: npm run buildWeb
-      - name: Create Release
+      - name: Prepare files for release
         run: |
-          cp -r ./src ./Bolinho/
-          rm -fr ./Bolinho/src/web
-          rm -fr ./Bolinho/src/dist
-          rm -fr ./Bolinho/src/__pycache__
-          rm -f ./Bolinho/src/.gitignore
-          rm -f ./Bolinho/src/*.spec
-          mkdir Bolinho/src/web
-          cp -r ./src/web/build ./Bolinho/src/web/build
-          cp requirements.txt ./Bolinho/src      
+          xcopy /E /I ./src ./Bolinho/
+          rmdir /s /q ./Bolinho/src/web
+          rmdir /s /q ./Bolinho/src/dist
+          del /s /q ./Bolinho/src/__pycache__
+          del /s /q ./Bolinho/src/.gitignore
+          del /s /q ./Bolinho/src/*.spec
+          mkdir Bolinho\src\web
+          xcopy /E /I ./src/web/build ./Bolinho/src/web/build
+          copy ./requirements.txt ./Bolinho/src
           zip -r Bolinho_${{ github.run_number }}.zip ./Bolinho/*
       - name: Build Exe
         run: |
