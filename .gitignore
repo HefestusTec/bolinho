@@ -6,3 +6,5 @@ node_modules/
 persist/
 src/build
 *.db
+build/
+dist/

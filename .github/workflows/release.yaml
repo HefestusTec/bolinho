@@ -1,0 +1,34 @@
+name: release
+on:
+    push:
+        branches:
+            - main
+permissions:
+    contents: write
+jobs:
+    deploy:
+        runs-on: windows-latest
+        steps:
+            - uses: actions/checkout@v3
+            - uses: actions/setup-python@v4
+              with:
+                  python-version: 3.11.x
+            - name: Installing dep
+              run: |
+                  npm run installDep
+            - name: Building Webapp
+              run: npm run buildWeb
+            - name: Building Binaries
+              run: npm run buildBin
+            - name: Rename and zip portable
+              run: |
+                  ren dist Bolinho_Portable
+                  tar.exe -a -c -f Bolinho_${{ github.run_number }}.zip Bolinho_Portable
+            - uses: "marvinpinto/action-automatic-releases@latest"
+              with:
+                  repo_token: "${{ secrets.GITHUB_TOKEN }}"
+                  automatic_release_tag: "latest"
+                  prerelease: false
+                  title: "Development Build ${{ github.run_number }}"
+                  files: |
+                      ./Bolinho_${{ github.run_number }}.zip
