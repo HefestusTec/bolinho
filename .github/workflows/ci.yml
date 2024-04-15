@@ -23,11 +23,11 @@ jobs:
       - name: Prepare files for release
         run: |
           xcopy /E /I ./src ./Bolinho/
-          del /s /q ./Bolinho/src/web
-          del /s /q ./Bolinho/src/dist
-          del /s /q ./Bolinho/src/__pycache__
-          del /s /q ./Bolinho/src/.gitignore
-          del /s /q ./Bolinho/src/*.spec
+          del /s ./Bolinho/src/web
+          del /s ./Bolinho/src/dist
+          del /s ./Bolinho/src/__pycache__
+          del /s ./Bolinho/src/.gitignore
+          del /s ./Bolinho/src/*.spec
           mkdir Bolinho\src\web
           xcopy /E /I ./src/web/build ./Bolinho/src/web/build
           copy ./requirements.txt ./Bolinho/src
