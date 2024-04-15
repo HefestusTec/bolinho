@@ -1,0 +1,36 @@
+name: doc-build 
+on:
+  push:
+    branches:
+      - main
+permissions:
+  contents: write
+jobs:
+  deploy:
+    env:
+        ENABLE_PDF_EXPORT: 1
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: 3.11.x
+      - name: Installing dep
+        run: | 
+            npm run installDep
+            pip install -r docs/requirements.txt
+      - name: Building Webapp
+        run: npm run buildWeb
+      - name: Building Documentation
+        run: |
+            mkdocs build
+            cp -r ./src/web/build ./site/
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        # If you're changing the branch from main,
+        # also change the `main` in `refs/heads/main`
+        # below accordingly.
+        if: ${{ github.ref == 'refs/heads/main' }}
+        with:
+            github_token: ${{ secrets.GITHUB_TOKEN }}
+            publish_dir: ./site
