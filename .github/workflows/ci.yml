@@ -15,16 +15,16 @@ jobs:
       - uses: actions/setup-python@v4
         with:
           python-version: 3.11.x
-      - name: Installing dep
-        run: | 
-            npm run installDep
-      - name: Building Webapp
-        run: npm run buildWeb
+      # - name: Installing dep
+      #   run: | 
+      #       npm run installDep
+      # - name: Building Webapp
+      #   run: npm run buildWeb
       - name: Prepare files for release
         run: |
           xcopy /E /I ./src ./Bolinho/
-          rmdir /s /q ./Bolinho/src/web
-          rmdir /s /q ./Bolinho/src/dist
+          del /s /q ./Bolinho/src/web
+          del /s /q ./Bolinho/src/dist
           del /s /q ./Bolinho/src/__pycache__
           del /s /q ./Bolinho/src/.gitignore
           del /s /q ./Bolinho/src/*.spec

@@ -12,7 +12,7 @@ web.pnp.js
 web/coverage
 
 # production
-build/
+# build/
 
 # misc
 web/.DS_Store
