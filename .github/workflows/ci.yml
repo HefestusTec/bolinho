@@ -9,12 +9,12 @@ jobs:
   deploy:
     env:
         ENABLE_PDF_EXPORT: 1
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-python@v4
         with:
-          python-version: 3.x
+          python-version: 3.11.x
       - name: Installing dep
         run: | 
             npm run installDep
@@ -46,6 +46,9 @@ jobs:
           cp -r ./src/web/build ./Bolinho/src/web/build
           cp requirements.txt ./Bolinho/src      
           zip -r Bolinho_${{ github.run_number }}.zip ./Bolinho/*
+      - name: Build Exe
+        run: |
+          python -m eel src/main.py src/web/build --onefile --name Bolinho --icon ./src/web/build/favicon.ico
       - uses: "marvinpinto/action-automatic-releases@latest"
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
@@ -54,4 +57,5 @@ jobs:
           title: "Development Build ${{ github.run_number }}"
           files: |
             ./Bolinho_${{ github.run_number }}.zip
+            ./Bolinho/dist/Bolinho.exe
 
