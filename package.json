@@ -7,6 +7,7 @@
         "buildWeb": "cd src/web && npm run build",
         "buildBin": "cd src/web && npm run build && cd .. && cd .. && python -m eel src/main.py src/web/build --onefile --name Bolinho --icon ./src/web/build/favicon.ico",
         "installDep": "npm install && pip install -r requirements.txt && cd src/web && npm install",
+        "installWebDep": "cd src/web && npm install",
         "test": "cd src/web && npm run test"
     },
     "devDependencies": {
